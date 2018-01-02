@@ -1,0 +1,27 @@
+﻿<Page x:Class="IntentConnectWeighing.RegisterOnePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:IntentConnectWeighing"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="RegisterOnePage">
+
+    <Grid>
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock                    
+                    FontSize="14"
+                    Padding="40,20,40,10"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Text="{StaticResource registerAlertInfo}" 
+                    TextWrapping="Wrap" />
+        </StackPanel>
+        <WrapPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10">
+            <TextBlock FontSize="14" Text=" 公司类型："/>
+            <RadioButton Margin="10,2" x:Name="primaryCompanyRB" Checked="primaryCompanyRB_Checked">主公司</RadioButton>
+            <RadioButton Margin="4,2" x:Name="sonCompanyRB" Checked="sonCompanyRB_Checked">子公司</RadioButton>
+        </WrapPanel>
+    </Grid>
+</Page>

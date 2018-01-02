@@ -1,0 +1,108 @@
+﻿<local:BaseWindow x:Class="IntentConnectWeighing.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IntentConnectWeighing"     
+        Icon="/IntentConnectWeighing;component/aislogo_48.ico"              
+        Closing="BaseWindow_Closing" 
+        Title="MainWindow" MinHeight="610" MinWidth="910" Height="680" Width="986"  
+         Loaded="MainWindow_Loaded" WindowStartupLocation="CenterScreen" StateChanged="BaseWindow_StateChanged" Activated="BaseWindow_Activated">
+    <Grid x:Name="Body" SizeChanged="Body_SizeChanged">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"  Height="50" Orientation="Horizontal"  SnapsToDevicePixels="True" Margin="0,-50,0,0" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel x:Name="LogoStackPanel" Orientation="Horizontal"  Grid.Column="0">
+                    <Ellipse x:Name="userHeaderImage"  Width="40" Height="40" HorizontalAlignment="Left" Margin="4,0" MouseLeftButtonUp="userHeaderImage_MouseLeftButtonUp">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/IntentConnectWeighing;component/aislogo_48.ico" Stretch="Fill"/>
+                        </Ellipse.Fill>
+                        <Ellipse.Effect>
+                            <DropShadowEffect ShadowDepth="0" Color="White"/>
+                        </Ellipse.Effect>
+                        <Ellipse.ToolTip>
+                            <Image x:Name="ConpanyLogo" Source="/IntentConnectWeighing;component/aislogo_48.ico"/>
+                        </Ellipse.ToolTip>
+                    </Ellipse>
+                    <StackPanel >
+                        <TextBlock x:Name="companyName" FontSize="14" Foreground="White" Margin="4,10,0,0" Text="{DynamicResource CompanyName}"/>
+                        <TextBlock x:Name="userName" FontSize="12" Foreground="White" Margin="4,2,0,0" Text="{DynamicResource UserName}"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel  x:Name="MenuStackPanel"  Orientation="Horizontal"   HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column="1">
+
+                    <local:NavMenuButton  GroupName="NavGroup"  x:Name="Home"  Content="{StaticResource MenuIndex}"  
+                                           ActivityedImageUrl ="/IntentConnectWeighing;component/Themes/Img/Menu/index_white.png"
+                                          NomalImageUrl="/IntentConnectWeighing;component/Themes/Img/Menu/index.png"  
+                                          Click="NavGroupRadioButton_Click" IsShowContent="True" IsShowAlertNumber="True" AlertNumber="0" IsChecked="True">
+                    </local:NavMenuButton>
+
+                    <local:NavMenuButton  GroupName="NavGroup"  x:Name="InWeighing"  Content="{StaticResource MenuInWrighing}"  
+                                           ActivityedImageUrl ="/IntentConnectWeighing;component/Themes/Img/Menu/InWeight_white.png"
+                                          NomalImageUrl="/IntentConnectWeighing;component/Themes/Img/Menu/InWeight.png" 
+                                          AlertNumber="{DynamicResource MenuInWeighingNumber}"
+                                          Click="NavGroupRadioButton_Click" IsShowContent="True" IsShowAlertNumber="False" >
+                    </local:NavMenuButton>
+
+                    <local:NavMenuButton  GroupName="NavGroup"  x:Name="OutWeighing"  Content="{StaticResource MenuOutWrighing}"  
+                                           ActivityedImageUrl ="/IntentConnectWeighing;component/Themes/Img/Menu/OutWeight_white.png"
+                                          NomalImageUrl="/IntentConnectWeighing;component/Themes/Img/Menu/OutWeight.png" 
+                                          AlertNumber="{DynamicResource MenuOutWeighingNumber}"
+                                          Click="NavGroupRadioButton_Click" IsShowContent="True" IsShowAlertNumber="True" >
+                    </local:NavMenuButton>
+
+                    <local:NavMenuButton  GroupName="NavGroup"  x:Name="Report"  Content="{StaticResource MenuReport}"  
+                                           ActivityedImageUrl ="/IntentConnectWeighing;component/Themes/Img/Menu/report_white.png"
+                                          NomalImageUrl="/IntentConnectWeighing;component/Themes/Img/Menu/report.png" 
+                                        IsShowAlertNumber="False"  AlertNumber="{DynamicResource MenuReportNumber}"
+                                          Click="NavGroupRadioButton_Click" IsShowContent="True" >
+                    </local:NavMenuButton>
+
+                    <local:NavMenuButton  GroupName="NavGroup"  x:Name="BaseData"  Content="{StaticResource MenuBaseData}"  
+                                          Click="NavGroupRadioButton_Click" IsShowContent="True"
+                                          IsShowAlertNumber="True" AlertNumber="{DynamicResource MenuBaseDataNumber}" 
+                                          ActivityedImageUrl ="/IntentConnectWeighing;component/Themes/Img/Menu/basedata_white.png"
+                                          NomalImageUrl ="/IntentConnectWeighing;component/Themes/Img/Menu/basedata.png">
+                    </local:NavMenuButton>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden" >
+
+        </Frame>
+        <Popup x:Name="userMenuPopup" Grid.Row="1" Width="160" Height="Auto" HorizontalAlignment="Left" 
+               AllowsTransparency="True" StaysOpen="False" VerticalOffset="5" HorizontalOffset="-4"
+               PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
+               IsOpen="False" PlacementTarget="{Binding ElementName=userHeaderImage}" Placement="Top">
+            <Border BorderBrush="{StaticResource MenuBorderBrush}" BorderThickness="1" CornerRadius="0" Background="White" Margin="0,0,2,2">
+                <Border.Effect>
+                    <DropShadowEffect Opacity="0.4" Color="RoyalBlue" ShadowDepth="1" BlurRadius="2"></DropShadowEffect>
+                </Border.Effect>
+                <StackPanel Background="White">
+                    <MenuItem Header="设置" Icon="&#xe74c;"  Style="{StaticResource IconMenuItem}" />
+                    <MenuItem Icon="&#xe617;" Header="插件管理"  Style="{StaticResource IconMenuItem}" />
+                    <MenuItem Icon="&#xe655;"  Header="用户管理"  Style="{StaticResource IconMenuItem}"/>
+                    <MenuItem Icon="&#xe64a;" Header="修改密码"  Style="{StaticResource IconMenuItem}"/>
+                    <MenuItem Icon="&#xe782;" Header="在线更新"  Style="{StaticResource IconMenuItem}"/>
+                    <Separator Style="{StaticResource HorizontalSeparatorStyle}"/>
+                    <MenuItem Icon="&#xe657;" Header="问题反馈"  Style="{StaticResource IconMenuItem}">
+                        <MenuItem Icon="&#xe657;" Header="问题反馈"  Style="{StaticResource IconMenuItem}"/>
+                        <MenuItem Icon="&#xe61e;" Header="技术支持"  Style="{StaticResource IconMenuItem}"/>
+                        <MenuItem Icon="&#xe60e;" Header="帮助"  Style="{StaticResource IconMenuItem}"/>
+                        <MenuItem Icon="&#xe635;" Header="关于"  Style="{StaticResource IconMenuItem}" />
+                    </MenuItem>
+                    <MenuItem Icon="&#xe61e;" Header="技术支持"  Style="{DynamicResource IconMenuItem}"/>
+                    <MenuItem Icon="&#xe60e;" Header="帮助"  Style="{DynamicResource IconMenuItem}"/>
+                    <MenuItem x:Name="quitBtn" Icon="&#xe635;" Header="{StaticResource OptionQuit}"  Style="{DynamicResource IconMenuItem}" Click="quitBtn_Click"/>
+                </StackPanel>
+            </Border>
+        </Popup>
+    </Grid>
+</local:BaseWindow>

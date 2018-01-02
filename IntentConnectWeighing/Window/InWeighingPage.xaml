@@ -1,0 +1,15 @@
+﻿<Page x:Class="IntentConnectWeighing.InWeighingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:IntentConnectWeighing"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="InWeighingPage">
+
+    <Grid>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25">InWeighingPage</TextBlock>
+        <!--<ProgressBar Style="{DynamicResource LoopProcessBarStyle}" Value="10" x:Name="pro2" Margin="0" Width="200" Height="200" BorderThickness="20" BorderBrush="#EF436F"/>-->
+    </Grid>
+</Page>

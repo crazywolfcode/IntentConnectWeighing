@@ -1,0 +1,29 @@
+﻿<StackPanel 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:IntentConnectWeighing"
+            Orientation="Horizontal" Height="90" >
+    <Image x:Name="logo" Source="/IntentConnectWeighing;component/Themes/Img/Temp/loginbg01.jpg" Width="80" Height="80" VerticalAlignment="Center"></Image>
+    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+        <TextBlock x:Name="CompanyName" Text="{StaticResource CompanyName}"></TextBlock>
+        <TextBlock x:Name="UserName" Text="{StaticResource UserName}"></TextBlock>
+    </StackPanel>
+    <local:ImageButton x:Name="AddBtn"            
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Margin="0,4,4,0" ToolTip="Add" 
+            Width="25" Height="25" 
+            BorderBrush="{x:Null}"           
+            Style="{DynamicResource ImageButtonStyle}">
+        <local:ImageButton.Background>
+            <ImageBrush ImageSource="/IntentConnectWeighing;component/Themes/Img/Button/add_nomal.png"></ImageBrush>
+        </local:ImageButton.Background>
+        <local:ImageButton.MouseOverBackground>
+            <ImageBrush ImageSource="/IntentConnectWeighing;component/Themes/Img/Button/add_mover.png"></ImageBrush>
+        </local:ImageButton.MouseOverBackground>
+        <local:ImageButton.MouseEnterBackground>
+            <ImageBrush ImageSource="/IntentConnectWeighing;component/Themes/Img/Button/add_enter.png"></ImageBrush>
+        </local:ImageButton.MouseEnterBackground>
+    </local:ImageButton>
+
+</StackPanel>

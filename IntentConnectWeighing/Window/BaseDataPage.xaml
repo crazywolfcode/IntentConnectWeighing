@@ -1,0 +1,29 @@
+﻿<Page x:Class="IntentConnectWeighing.BaseDataPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:IntentConnectWeighing"
+      mc:Ignorable="d"  Loaded="Page_Loaded"
+     d:DesignHeight="630" d:DesignWidth="600"   
+      Title="BaseDataPage">
+
+    <DockPanel LastChildFill="True" x:Name="RootView">
+        <Grid  DockPanel.Dock="Left" MinWidth="200" MaxWidth="250" >
+            <ScrollViewer      
+                    Background="#eee"                   
+                    Height="{Binding ElementName=RootView ,Path=ActualHeight}" 
+                    Width="{Binding Source=StackPanel,Path=ActualWidth}" 
+                    Style="{StaticResource DefaultScrollViewer}" >
+                <StackPanel x:Name="ContentStackPanel"  Width="{Binding Source=StackPanel,Path=ActualWidth}">
+                    
+                </StackPanel>
+            </ScrollViewer>
+
+            <Button x:Name="GlobAdd" Style="{StaticResource ImageButtonStyle}"></Button>
+        </Grid>
+        <StackPanel>
+            <TextBlock Name="textblock" Text="NavBaseDataPage..." Margin="200,200"  FontSize="20" ></TextBlock>
+        </StackPanel>
+    </DockPanel>
+</Page>

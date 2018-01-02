@@ -1,0 +1,57 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:local="clr-namespace:IntentConnectWeighing">
+    <!--Login Window-->
+    <sys:Double x:Key="LoginWindowWidth">400</sys:Double>
+    <sys:Double x:Key="LoginWindowHeight">500</sys:Double>
+
+    <SolidColorBrush x:Key="LoginWindowMainBackground" Color="#ebf2f9"></SolidColorBrush>
+    <Style x:Key="LoginWindowStyle" TargetType="local:Login">
+        <Setter Property="AllowsTransparency" Value="True"></Setter>
+        <Setter Property="Width" Value="{DynamicResource LoginWindowWidth}"></Setter>
+        <Setter Property="Height" Value="{DynamicResource LoginWindowHeight}"></Setter>
+        <Setter Property="Template" Value="{DynamicResource LoginWindowControlTemplate}"></Setter>
+     
+    </Style>
+    <ControlTemplate x:Key="LoginWindowControlTemplate" TargetType="local:Login">
+
+        <Border  Margin="5">
+            <Border.Effect>
+                <DropShadowEffect Color="Black" ShadowDepth="0" BlurRadius="4" Opacity="0.5"></DropShadowEffect>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border  x:Name="windowTitle" Grid.Row="0" Height="140" CornerRadius="4,4,0,0"  
+                    BorderBrush="{DynamicResource ControlBorderBrush}"    >
+                    <Border.Background>
+                        <ImageBrush ImageSource="/IntentConnectWeighing;component/Themes/Img/Temp/loginbg01.jpg" TileMode="FlipXY"></ImageBrush>
+                    </Border.Background>
+                    <!--关闭按钮-->
+                    <local:WindowButton  BorderBrush="{x:Null}" Width="27" Height="22"  Margin="0,2,2,0" Content="" x:Name="CloseBtn" HorizontalAlignment="Right"  VerticalAlignment="Top">
+                        <local:WindowButton.MyMoverBrush>
+                            <ImageBrush ImageSource="/IntentConnectWeighing;component/Themes/Img/Button/xm.png"></ImageBrush>
+                        </local:WindowButton.MyMoverBrush>
+                        <local:WindowButton.MyEnterBrush>
+                            <ImageBrush ImageSource="/IntentConnectWeighing;component/Themes/Img/Button/xe.png"></ImageBrush>
+                        </local:WindowButton.MyEnterBrush>
+                        <local:WindowButton.Background>
+                            <ImageBrush ImageSource="/IntentConnectWeighing;component/Themes/Img/Button/xn.png"></ImageBrush>
+                        </local:WindowButton.Background>
+                    </local:WindowButton >
+                </Border>
+                <Border Grid.Row="1"  Background="{TemplateBinding Background}" 
+                    BorderBrush="{TemplateBinding BorderBrush}"                     
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Width="Auto" Height="Auto" CornerRadius="0,0,4,4">
+                    <AdornerDecorator>
+                        <ContentPresenter />
+                    </AdornerDecorator>
+                </Border>
+            </Grid>
+        </Border>
+    </ControlTemplate>
+</ResourceDictionary>

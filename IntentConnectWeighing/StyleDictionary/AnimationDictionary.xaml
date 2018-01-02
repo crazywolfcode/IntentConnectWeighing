@@ -1,0 +1,7 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:IntentConnectWeighing">
+    
+    <DoubleAnimation x:Key="foreverLoopAnimation" RepeatBehavior="Forever"  Storyboard.TargetProperty="RenderTransform.Angle" To="360" From="0" Duration="0:0:2.5"></DoubleAnimation>
+    
+</ResourceDictionary>

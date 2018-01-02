@@ -1,0 +1,92 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"                   
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:local="clr-namespace:IntentConnectWeighing.StyleDictionary">
+
+
+    <!--menu alert number-->
+    <sys:Int32 x:Key="MenuInWeighingNumber">0</sys:Int32>
+    <sys:Int32 x:Key="MenuOutWeighingNumber">0</sys:Int32>
+    <sys:Int32 x:Key="MenuReportNumber">1</sys:Int32>
+    <sys:Int32 x:Key="MenuBaseDataNumber">0</sys:Int32>
+    <sys:Int32 x:Key="MenuIndexNumber">1</sys:Int32>
+
+    <sys:String x:Key="man">1</sys:String>
+    <sys:String x:Key="feman">0</sys:String>
+    <sys:String x:Key="nan">男</sys:String>
+    <sys:String x:Key="nv">女</sys:String>
+    <sys:String x:Key="registerAlertInfo" >本软件由CrazyCode个人提供，若您是子公司，而总公司已经注册拉该软件的使用权，子公司不需要再注册。也不需要再支付任何费用，只需要总公司的管理员，添加一下子公司的信息。那下面的公司类型你选择子公司去激活就可以正常使用该软件。</sys:String>
+    <!--Login Window-->
+    <sys:Double x:Key="LoginWindowWidth">400</sys:Double>
+    <sys:Double x:Key="LoginWindowHeight">500</sys:Double>
+    
+    <!--scroll bar-->
+    <sys:Double x:Key="ScrollBarSize">8</sys:Double>
+
+    <!--Effect -->
+    <DropShadowEffect x:Key="WindowDropShadow" Color="#F472F4" BlurRadius="8" ShadowDepth="0" Direction="0" Opacity="0.7" />
+    <!--边框：Menu-->
+    <DropShadowEffect x:Key="DefaultDropShadow" Color="Black" BlurRadius="5" ShadowDepth="2" Direction="315" Opacity="0.6" />
+    <!--Menu-->
+    <SolidColorBrush x:Key="MenuForeground" Color="#676765"></SolidColorBrush>
+    <SolidColorBrush x:Key="MenuBackground" Color="White"></SolidColorBrush>
+    <SolidColorBrush x:Key="MenuBorderBrush" Color="RoyalBlue"></SolidColorBrush>
+    <SolidColorBrush x:Key="MenuMouseOverBackground" Color="#0D3CD2"></SolidColorBrush>
+    <SolidColorBrush x:Key="MenuMouseOverForeground" Color="White"></SolidColorBrush>
+    <SolidColorBrush x:Key="MenuPressedBackground" Color="#082CA0"></SolidColorBrush>
+    <SolidColorBrush x:Key="MenuPressedForeground" Color="White"></SolidColorBrush>
+
+    <SolidColorBrush x:Key="myBlue" Color="#3ca9fe"/>
+    <sys:Int32 x:Key="ControlBorderThickness">1</sys:Int32>
+    
+    <FontFamily x:Key="FontFamily" >Microsoft YaHei</FontFamily>
+    <sys:Double x:Key="FontSize">14</sys:Double>
+    <sys:Double x:Key="DisableOpacity">0.5</sys:Double>
+    <sys:Double x:Key="ReadonlyOpacity">0.88</sys:Double>
+    <sys:Double x:Key="WatermarkOpacity">0.4</sys:Double>
+    <sys:String x:Key="DateFormat">yyyy年MM月dd日</sys:String>
+    <sys:String x:Key="DateTimeFormat">yyyy-MM-dd HH:mm:ss</sys:String>
+
+    <!--高亮：日历Today-->
+    <SolidColorBrush x:Key="ItemHighlighteBackground" Color="Blue"></SolidColorBrush>
+    <SolidColorBrush x:Key="ItemHighlighteForeground" Color="White"></SolidColorBrush>
+
+    <!--TextBox默认Label颜色-->
+    <SolidColorBrush x:Key="TextLabelBackground" Color="#508AB6"></SolidColorBrush>
+    <!--输入组件-->
+    <SolidColorBrush x:Key="TextForeground" Color="#fff"></SolidColorBrush>
+    <SolidColorBrush x:Key="TextBackground" Color="#0D234B"></SolidColorBrush>
+    <SolidColorBrush x:Key="TextSelectionBrush" Color="#8F8787"></SolidColorBrush>
+    <!--输入框-->
+    <SolidColorBrush x:Key="ControlBorderBrush" Color="#999C9F"></SolidColorBrush>
+    <SolidColorBrush x:Key="MouseOverBorderBrush" Color="#F6D1D1"></SolidColorBrush>
+    <SolidColorBrush x:Key="FocusBackground" Color="#365080"></SolidColorBrush>
+    <SolidColorBrush x:Key="FocusBorderBrush" Color="#EBCECE"></SolidColorBrush>
+    <!--Popup,ComboBox-->
+    <SolidColorBrush x:Key="PopupBackground" Color="#066EB3"></SolidColorBrush>
+    
+    <SolidColorBrush x:Key="E4" Color="#e4e4e4"></SolidColorBrush>
+    <SolidColorBrush x:Key="F9" Color="#f9f9f9"></SolidColorBrush>
+
+    <!--普通无背景按钮-->
+    <SolidColorBrush x:Key="CheckedForeground" Color="White"></SolidColorBrush>
+    <SolidColorBrush x:Key="MouseOverForeground" Color="#333"></SolidColorBrush>
+    <SolidColorBrush x:Key="PressedForeground" Color="RoyalBlue"></SolidColorBrush>
+    <SolidColorBrush x:Key="LinkForeground" Color="#0816BB"></SolidColorBrush>
+
+    <SolidColorBrush x:Key="ScrollBarForeround" Color="#877F7F"></SolidColorBrush>
+    <SolidColorBrush x:Key="ScrollBarBackground" Color="#3E3E42"></SolidColorBrush>
+
+    <!--ItemsControl:DataGrid,Tree-->
+    <sys:Double x:Key="HeaderFontSize">14</sys:Double>
+    <SolidColorBrush x:Key="HeaderBorderBrush" Color="#A6FFA500"></SolidColorBrush>
+    <SolidColorBrush x:Key="HeaderBackground" Color="#0A48D3"></SolidColorBrush>
+    <SolidColorBrush x:Key="ItemsContentBackground" Color="#1389D7"></SolidColorBrush>
+    <SolidColorBrush x:Key="ItemsAlternationContentBackground" Color="#128EE0"></SolidColorBrush>
+    <SolidColorBrush x:Key="GridLinesBrush" Color="#A6D0C2A7"></SolidColorBrush>
+    <SolidColorBrush x:Key="ItemSelectedForeground" Color="White"></SolidColorBrush>
+    <SolidColorBrush x:Key="ItemSelectedBackground" Color="#A145F8"></SolidColorBrush>
+    <SolidColorBrush x:Key="ItemMouseOverBackground" Color="#BA7DF4"></SolidColorBrush>
+    <SolidColorBrush x:Key="ItemMouseOverForeground" Color="White"></SolidColorBrush>
+  
+</ResourceDictionary>
