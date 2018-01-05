@@ -144,8 +144,7 @@ namespace MyHelper
             }
             if (isFind == false)
             {
-                group.AppendChild(createXmlNode(doc, configName, value, groupName));
-                doc.AppendChild(group);
+                group.AppendChild(createXmlNode(doc, configName, value, groupName));               
             }
             doc.Save(filePath);
         }

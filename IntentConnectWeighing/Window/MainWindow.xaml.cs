@@ -24,15 +24,26 @@ namespace IntentConnectWeighing
             InitializeComponent();
             this.CommandBindings.Add(ShowSettingWindowsCommand.commandBinding);
         }
+        private void BaseWindow_Activated(object sender, EventArgs e)
+        {
+            if (this.IsLoaded && this.WindowState != WindowState.Minimized) {
+                //refresh all data TODO
+            }
+        }
+
         // 窗口加载
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             base.myInitializeStyle(this, MyWindowsStyle.main);
-            centerNavMenu();
-            App.currWindow = this;
+            centerNavMenu();      
             HomePage index = new HomePage();
             index.ParentWindow = this;
-            this.MainFrame.Navigate(index);
+            this.MainFrame.Navigate(index);            
+        }
+
+        private void BaseWindow_ContentRendered(object sender, EventArgs e)
+        {
+            App.setCurrentWindow(this);
 
             //create sync_table info 
             // wait 1 minutes start Synchronization sync_up、 sync_down、up_bill
@@ -102,14 +113,6 @@ namespace IntentConnectWeighing
             this.Close();
         }
 
-        private void BaseWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            e.Cancel = true;
-            this.WindowState = WindowState.Minimized;
-            App.notifyIcon.BalloonTipTitle = "minimiaced ";
-            App.notifyIcon.BalloonTipText = "minimiaced  in there";
-        }
-
         private void BaseWindow_StateChanged(object sender, EventArgs e)
         {
             if (this.WindowState == WindowState.Minimized)
@@ -121,10 +124,14 @@ namespace IntentConnectWeighing
                 this.ShowInTaskbar = true;
             }
         }
-
-        private void BaseWindow_Activated(object sender, EventArgs e)
+   
+        private void BaseWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-           
+            e.Cancel = true;
+            this.WindowState = WindowState.Minimized;
+            App.notifyIcon.BalloonTipTitle = "minimiaced ";
+            App.notifyIcon.BalloonTipText = "minimiaced  in there";
         }
+       
     }
 }

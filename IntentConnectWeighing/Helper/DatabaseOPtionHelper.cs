@@ -8,13 +8,13 @@ using MyHelper;
 using System.Data;
 namespace IntentConnectWeighing
 {
-    class DatabaseOPtionHelper
+   public class DatabaseOPtionHelper
     {
-        private static MySqlHelper mysqlHelper;
-        private static SQLiteHelper sqliteHelper;
+        private  MySqlHelper mysqlHelper;
+        private  SQLiteHelper sqliteHelper;
         private static string dbType;
 
-        static DatabaseOPtionHelper()
+       public  DatabaseOPtionHelper()
         {
             dbType = ConfigurationHelper.GetConfig(ConfigItemName.dbType.ToString());
             if (dbType == DbType.mysql.ToString())

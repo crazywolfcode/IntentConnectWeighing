@@ -4,9 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IntentConnectWeighing"
-        mc:Ignorable="d" Loaded="BaseWindow_Loaded"
+        mc:Ignorable="d"                  
         WindowStartupLocation="CenterScreen" 
-        Title="InitializationSettingW" Height="550" Width="650">
+        Title="InitializationSettingW" Height="550" Width="650"
+        Loaded="BaseWindow_Loaded" ContentRendered="BaseWindow_ContentRendered" Closed="BaseWindow_Closed"
+                  
+        >
     <Window.Resources>
         <local:CheckedToVisibleConverter x:Key="CheckedToVisibleConverter"></local:CheckedToVisibleConverter>
     </Window.Resources>

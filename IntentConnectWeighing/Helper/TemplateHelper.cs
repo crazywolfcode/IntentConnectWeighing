@@ -42,11 +42,11 @@ namespace IntentConnectWeighing
 
         public static FrameworkElement getFrameworkElementFromXaml(string path)
         {
-            // XmlTextReader reader = new XmlTextReader(path);
-            FileStream fs;
-            fs = new FileStream(path, FileMode.Open);
-            FrameworkElement element = XamlReader.Load(fs) as FrameworkElement;
-            fs.Close();          
+            XmlTextReader reader = new XmlTextReader(path);
+            //FileStream fs;
+            //fs = new FileStream(path, FileMode.Open);
+            FrameworkElement element = XamlReader.Load(reader) as FrameworkElement;
+            //fs.Close();          
             return element;
         }
 

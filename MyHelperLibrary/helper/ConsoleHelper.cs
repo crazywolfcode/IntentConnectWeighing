@@ -12,11 +12,11 @@ namespace MyHelper
     {
         private static string Tag = "------------------>";
 
-        public static void writeLine(String msg)
+        public static void writeLine(string msg)
         {
             Console.WriteLine(Tag + msg);
         }
-        public static void write(String msg)
+        public static void write(string msg)
         {
             Console.Write(Tag + msg);
         }

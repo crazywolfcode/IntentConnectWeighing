@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using MyHelper;
 namespace IntentConnectWeighing
 {
     /// <summary>
@@ -21,25 +21,47 @@ namespace IntentConnectWeighing
     public partial class RegisterW : Window
     {
         public string companyOrganizationType = string.Empty;
-        public RegisterW()
+        public bool organizationChanged = false;
+        public string currentRegisterStep = null;
+        public RegisterW(string registerStep)
         {
             InitializeComponent();
+            currentRegisterStep = registerStep;
         }
 
-        private void BaseWindow_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Activated(object sender, EventArgs e)
         {
-            this.mainFrame.Content = new RegisterOnePage(this);
-            initializationBtn();
+            // judge windows state and is loaded
+            if (this.IsLoaded)
+            {
+                initializationBtn();
+            }
         }
-        /// <summary>
-        /// show or hiden option button
-        /// </summary>
-        private void initializationBtn()
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            upBtn.Visibility = Visibility.Collapsed;
-            saveBtn.Visibility = Visibility.Collapsed;
-            activationBtn.Visibility = Visibility.Collapsed;
+            if (string.IsNullOrWhiteSpace(currentRegisterStep) || currentRegisterStep == CompanyRegisterStep.RegisterOnePage.ToString())
+            {
+                this.mainFrame.Content = new RegisterOnePage(this);
+            }
+            else if (currentRegisterStep == CompanyRegisterStep.RegisterPrimaryPage.ToString())
+            {
+                this.mainFrame.Content = new RegisterPrimaryPage(this);
+            }
+            else if (currentRegisterStep == CompanyRegisterStep.RegisterSonLicencePage.ToString())
+            {
+                this.mainFrame.Content = new RegisterSonLicencePage(this);
+            }
+            else if (currentRegisterStep == CompanyRegisterStep.RegisterPayPage.ToString())
+            {
+                this.mainFrame.Content = new RegisterPayPage(this);
+            }
         }
+        private void Window_ContentRendered(object sender, EventArgs e)
+        {
+            App.setCurrentWindow(this);
+        }
+
 
         /// <summary>
         /// window move event
@@ -53,25 +75,65 @@ namespace IntentConnectWeighing
                 this.DragMove();
             }
         }
-
+        /// <summary>
+        ///save and next 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void nextBtn_Click(object sender, RoutedEventArgs e)
         {
-            Page page;
-            if (this.mainFrame.CanGoForward)
+            string tag = mainFrame.Tag.ToString();
+            //save
+
+            //next
+            if (organizationChanged)
             {
-                this.mainFrame.GoForward();
-            }
-            else
-            {
-                if (companyOrganizationType == CompanyOrganizationType.primary.ToString())
+                if (companyOrganizationType == CompanyOrganizationType.Primary.ToString())
                 {
-                    page = new RegisterPrimaryPage(this);
+                    if (tag == CompanyRegisterStep.RegisterPrimaryPage.ToString())
+                    {
+                        this.mainFrame.Content = new RegisterPrimaryLicencePage(this);
+                    }
+                    else if (tag == CompanyRegisterStep.RegisterPrimaryLicencePage.ToString())
+                    {
+                        this.mainFrame.Content = new RegisterPayPage(this);
+                    }
+                    else if (tag == CompanyRegisterStep.RegisterPayPage.ToString())
+                    {
+                        this.mainFrame.Content = new RegisterFinishedPage(this);
+                    }
+                    else
+                    {
+                        this.mainFrame.Content = new RegisterPrimaryPage(this);
+                    }
                 }
                 else
                 {
-                    page = new RegisterSonPage(this);
+                    if (tag == CompanyRegisterStep.RegisterSonPage.ToString())
+                    {
+                        this.mainFrame.Content = new RegisterSonLicencePage(this);
+                    }
+                    else if (tag == CompanyRegisterStep.RegisterSonLicencePage.ToString())
+                    {
+                        this.mainFrame.Content = new RegisterPayPage(this);
+                    }
+                    else if (tag == CompanyRegisterStep.RegisterPayPage.ToString())
+                    {
+                        this.mainFrame.Content = new RegisterFinishedPage(this);
+                    }
+                    else
+                    {
+                        this.mainFrame.Content = new RegisterSonPage(this);
+                    }
+                
                 }
-                this.mainFrame.Content = page;
+            }
+            else
+            {
+                if (this.mainFrame.CanGoForward)
+                {
+                    this.mainFrame.GoForward();
+                }
             }
         }
 
@@ -90,29 +152,72 @@ namespace IntentConnectWeighing
         }
 
         /// <summary>
-        /// save TODO
+        /// finished TODO
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void saveBtn_Click(object sender, RoutedEventArgs e)
+        private void finishedBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            new ActivationW().Show();
+            this.Close();
         }
-        /// <summary>
-        /// activation son company TODO
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void activationBtn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
 
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+
+        private void mainFrame_ContentRendered(object sender, EventArgs e)
+        {
+            string tag = this.mainFrame.Content.ToString();
+            string[] tags = tag.Split('.');
+            if (tags.Length > 1)
+            {
+                mainFrame.Tag = tags[tags.Length - 1];
+            }
+            else
+            {
+                mainFrame.Tag = tag;
+            }
+
+            initializationBtn();
+        }
+
+
+
+        /// <summary>
+        /// show or hiden option button
+        /// </summary>
+        private void initializationBtn()
+        {
+            string step = string.Empty;
+            step = this.mainFrame.Tag != null ? this.mainFrame.Tag.ToString() : string.Empty;
+            nextBtn.Visibility = Visibility.Visible;
+            upBtn.Visibility = Visibility.Visible;
+            finishedBtn.Visibility = Visibility.Visible;
+            if (step == CompanyRegisterStep.RegisterOnePage.ToString())
+            {
+                upBtn.Visibility = Visibility.Collapsed;
+                finishedBtn.Visibility = Visibility.Collapsed;
+            }
+            else if (step == CompanyRegisterStep.RegisterFinishedPage.ToString())
+            {
+                nextBtn.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                finishedBtn.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (App.currWindow == this) {
+                App.setCurrentWindow();
+                App.ShowCurrentWindow();
+            }            
         }
     }
 }

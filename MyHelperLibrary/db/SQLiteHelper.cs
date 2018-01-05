@@ -16,7 +16,7 @@ namespace MyHelper
         private static string connStrTemplate = " Data Source={0};Version=3;Pooling=False;Max Pool Size=100;";
         private static string sqliteDbName = ConfigurationHelper.GetConfig("sqliteDbName");
         private static string dbPath = ConfigurationHelper.GetConfig("sqliteDbPath");
-        private static string sqliteConnectionString = ConfigurationHelper.GetConnectionConfig("sqliteConnectionString");
+        private static string sqliteConnectionString = ConfigurationHelper.GetConnectionConfig("sqliteConn");
 
         private SQLiteConnection connection;
 
@@ -28,13 +28,30 @@ namespace MyHelper
                 {
                     //using (connection = new SQLiteConnection(String.Format(sqliteConnectionString, dbPath)))
                     //{
-                    connection = new SQLiteConnection(String.Format(sqliteConnectionString, dbPath));
-                    connection.Open();
+                    connection = new SQLiteConnection(String.Format(connStrTemplate, sqliteConnectionString));
+                    if (connection.State != ConnectionState.Open) {
+                        try {
+                            connection.Open();
+                        } catch (Exception e){
+                            ConsoleHelper.writeLine("数据库打开失败：" + e.Message);
+                        }
+                    }                    
                     return connection;
                     //}
                 }
                 else
                 {
+                    if (connection.State != ConnectionState.Open)
+                    {
+                        try
+                        {
+                            connection.Open();
+                        }
+                        catch (Exception e)
+                        {
+                            ConsoleHelper.writeLine("数据库打开失败：2"+e.Message);
+                        }
+                    }
                     return connection;
                 }
             }
@@ -47,13 +64,14 @@ namespace MyHelper
         /// <returns></returns>
         public static string createConnString(string dbname)
         {
-            return string.Format(connStrTemplate, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data", dbname));
+            return string.Format(connStrTemplate, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data"))+"\\" +dbname;
         }
         /// <summary>
         /// get the save path of the database
         /// </summary>
         /// <returns></returns>
-        public static string getDbSavePath() {
+        public static string getDbSavePath()
+        {
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data");
         }
 
@@ -67,25 +85,27 @@ namespace MyHelper
 
             if (string.IsNullOrEmpty(dbPath))
             {
-                dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data", sqliteDbName);
+                dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data");
                 ConfigurationHelper.SetConfig("sqliteDbPath", dbPath);
             }
 
             if (sqliteConnectionString == null || sqliteConnectionString.Length <= 0)
             {
-                sqliteConnectionString = string.Format(connStrTemplate, dbPath);
-                ConfigurationHelper.SetConnectionConfig("sqliteConnectionString", sqliteConnectionString);
+                sqliteConnectionString = string.Format(connStrTemplate, dbPath+"\\"+sqliteDbName);
+                ConfigurationHelper.SetConnectionConfig("sqliteConn", sqliteConnectionString);
             }
-            if (!File.Exists(dbPath))
+
+            if (FileHelper.FolderExistsCreater(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data")))
             {
-                if (FileHelper.FolderExistsCreater(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data")))
+                if (!File.Exists(dbPath + "/" + sqliteDbName))
                 {
-                    using (File.Create(dbPath))
+                    using (File.Create(dbPath + "/" + sqliteDbName))
                     {
 
                     }
                 }
             }
+
         }
 
         #region 没有实现的方法
@@ -154,6 +174,22 @@ namespace MyHelper
             return this.ExcuteDataTable(sql, null);
         }
 
+        /// <summary>
+        /// get the all table's name of in the database
+        /// </summary>
+        /// <returns></returns>
+        public string[] getAllTableName()
+        {
+            DataTable dt = getAllTable();
+            if (dt.Rows.Count <= 0) { return null; }
+            string[] result = new string[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                result[i] = dt.Rows[i]["name"].ToString();
+            }
+            return result;
+        }
+
         /// <summary>  
         /// 获取多行  
         /// </summary>  
@@ -191,8 +227,10 @@ namespace MyHelper
                 {
                     command.Parameters.AddRange(parameters);
                 }
-                SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
-                adapter.Fill(dt);
+                //SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
+                //adapter.Fill(dt);
+                SQLiteDataReader reader = command.ExecuteReader();
+                dt.Load(reader);
                 return dt;
             }
         }

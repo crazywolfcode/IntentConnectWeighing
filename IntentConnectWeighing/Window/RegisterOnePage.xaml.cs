@@ -31,8 +31,17 @@ namespace IntentConnectWeighing
 
         private void sonCompanyRB_Checked(object sender, RoutedEventArgs e)
         {
+
             if (sonCompanyRB.IsChecked == true) {
-                ((RegisterW)parentWindow).companyOrganizationType = CompanyOrganizationType.son.ToString();
+                RegisterW w = (RegisterW)parentWindow;
+                if (w.companyOrganizationType == CompanyOrganizationType.son.ToString())
+                {
+                   w.organizationChanged = false;
+                }
+                else {
+                  w.organizationChanged = true;
+                }
+               w.companyOrganizationType = CompanyOrganizationType.son.ToString();
             }
         }
 
@@ -40,7 +49,16 @@ namespace IntentConnectWeighing
         {
             if (primaryCompanyRB.IsChecked == true)
             {
-                ((RegisterW)parentWindow).companyOrganizationType = CompanyOrganizationType.primary.ToString();
+                RegisterW w = (RegisterW)parentWindow;
+                if (w.companyOrganizationType == CompanyOrganizationType.Primary.ToString())
+                {
+                 w.organizationChanged = false;
+                }
+                else
+                {
+                w.organizationChanged = true;
+                }
+                w.companyOrganizationType = CompanyOrganizationType.Primary.ToString();
             }
         }
     }

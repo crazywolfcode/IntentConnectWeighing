@@ -37,6 +37,10 @@ namespace IntentConnectWeighing
 
         private void getinitializationConfig()
         {
+            if (ConfigurationHelper.GetConfig(ConfigItemName.softwareVersion.ToString())== SoftwareVersion.localSingle.ToString()){
+                MysqlRB.IsChecked = true;
+                SqliteRB.Visibility = Visibility.Collapsed;
+            }
             currentDbType = ConfigurationHelper.GetConfig(ConfigItemName.dbType.ToString());
             if (currentDbType == DbType.sqlite.ToString())
             {
@@ -50,26 +54,26 @@ namespace IntentConnectWeighing
 
         private void SaveMysqlBtn_Click(object sender, RoutedEventArgs e)
         {
-            //string connstring = connStr.Text;
-            //if (connstring.Length <= 0)
-            //{
-            //    MessageBox.Show("请填写所的配置项");
-            //}
-            //if (MySqlHelper.CheckConn(connstring))
-            //{
-            //    try
-            //    {
-            //        ConfigurationHelper.SetConnectionConfig(ConfigItemName.mysqlConn.ToString(), connstring);
-            //        ConfigurationHelper.SetConfig(ConfigItemName.dbType.ToString(), DbType.mysql.ToString());
-            //        AlertInfoTB.Text = "连接数据库成功";
-            //        //disable save button
-            //        SaveMysqlBtn.IsEnabled = false;
-            //    }
-            //    catch (Exception)
-            //    {
-            //        AlertInfoTB.Text = "无法连接数据库";
-            //    }
-            //}
+            string connstring = connStr.Text;
+            if (connstring.Length <= 0)
+            {
+                MessageBox.Show("请填写所的配置项");
+            }
+            if (MySqlHelper.CheckConn(connstring))
+            {
+                try
+                {
+                    ConfigurationHelper.SetConnectionConfig(ConfigItemName.mysqlConn.ToString(), connstring);
+                    ConfigurationHelper.SetConfig(ConfigItemName.dbType.ToString(), DbType.mysql.ToString());
+                    AlertInfoTB.Text = "连接数据库成功";
+                    //disable save button
+                    SaveMysqlBtn.IsEnabled = false;
+                }
+                catch (Exception)
+                {
+                    AlertInfoTB.Text = "无法连接数据库";
+                }
+            }
         }
 
         private void buildConnString()
@@ -114,7 +118,7 @@ namespace IntentConnectWeighing
         {
             if (MysqlRB.IsChecked == true)
             {
-                string conn = ConfigurationHelper.GetConnectionConfig(ConfigItemName.sqliteConn.ToString());
+                string conn = ConfigurationHelper.GetConnectionConfig(ConfigItemName.mysqlConn.ToString());
                 if (!string.IsNullOrEmpty(conn))
                 {
                     connStr.Text = conn;
@@ -159,6 +163,16 @@ namespace IntentConnectWeighing
             {
                 SqliteAlertTB.Text = "Sqlite 数据库配置失败";
             }
+        }
+
+        private void BaseWindow_ContentRendered(object sender, EventArgs e)
+        {
+            App.setCurrentWindow(this);
+        }
+
+        private void BaseWindow_Closed(object sender, EventArgs e)
+        {
+            new Login().Show();
         }
     }
 }

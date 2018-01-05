@@ -12,7 +12,6 @@ namespace MyHelper
         public static readonly char splitChar = '`';
 
         public static readonly string valueSplitChar = "'";
-
         //软删除的数据字段名
         public static readonly string softDeletedbName = "is_delete";
         //软删除的实体类属性名
@@ -26,6 +25,13 @@ namespace MyHelper
         public static readonly string notSoftDeleteWhere = splitChar + softDeletedbName + splitChar + "=" + valueSplitChar + nomalStatusTag + valueSplitChar;
 
         public static readonly string selectSqlTemplqte = "SELECT {0} FROM {1} WHERE {2} ;";
+
+        public static readonly string groupByTemplate = " GROUP BY {0} ";
+        public static readonly string orderByTemplate = " ORDER BY {0} ";
+        public static readonly string havingTemplate = " HAVING  {0} ";
+        public static readonly string LimitTemplate = " LIMIT  {0} ";
+        public static readonly string offsetTemplate = " OFFSET  {0} ";
+        
 
         public static readonly string insertSqlTemplqte = "INSERT INTO {0} ({1}) VALUES ({2});";
 
@@ -67,7 +73,6 @@ namespace MyHelper
             List<T> list = new List<T>();
             Type type = typeof(T);
             List<string> colums = new List<string>();
-
             foreach (DataRow row in dataTable.Rows)
             {
                 //集合属性数组  
@@ -88,7 +93,7 @@ namespace MyHelper
                     }
                     catch (Exception)
                     {
-
+                       
                     }
                 }
                 list.Add(entity);
@@ -192,14 +197,24 @@ namespace MyHelper
             return name;
         }
 
+
+
+
         /// <summary>
-        ///获得查询SQL语句 自动加上软删除的条件
+        /// 获得查询SQL语句 自动加上软删除的条件
         /// </summary>
-        /// <typeparam name="T">类型</typeparam>
-        /// <param name="obj">类型的对像</param>
-        /// <returns>插入SQL语句</returns>
-        public static string getSelectSql(string tableName, string fields=null, string conditon=null)
+        /// <param name="tableName"></param>
+        /// <param name="fields"></param>
+        /// <param name="conditon"></param>
+        /// <param name="groupBy"></param>
+        /// <param name="having"></param>
+        /// <param name="orderBy"></param>
+        /// <param name="limit"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
+        public static string getSelectSql(string tableName, string fields=null, string conditon=null,string groupBy =null,string having = null,string orderBy = null,int limit =0,int offset=-1)
         {
+            string sql = string.Empty;
             if (string.IsNullOrEmpty(fields))
             {
                 fields = " * ";
@@ -211,7 +226,30 @@ namespace MyHelper
             else {
                 conditon = "(" + conditon + ")" + " and " + notSoftDeleteWhere;
             }
-            return string.Format(selectSqlTemplqte, fields, tableName, conditon);
+            sql= string.Format(selectSqlTemplqte, fields, tableName, conditon);
+
+            if (!string.IsNullOrEmpty(groupBy)) {
+                sql = sql.Replace(";", string.Format(groupByTemplate, groupBy) + " ;");
+            }
+
+            if (!string.IsNullOrEmpty(having)) {
+                sql = sql.Replace(";", string.Format(havingTemplate, having) + " ;");
+            }
+
+            if (!string.IsNullOrEmpty(orderBy))
+            {
+                sql = sql.Replace(";", string.Format(orderByTemplate, orderBy) + " ;");
+            }
+            if (limit>0)
+            {
+                sql = sql.Replace(";", string.Format(LimitTemplate, limit) + " ;");
+            }
+
+            if (offset >-1)
+            {
+                sql = sql.Replace(";", string.Format(offsetTemplate, offset) + " ;");
+            }
+            return sql;
         }
 
         /// <summary>

@@ -27,7 +27,7 @@ namespace IntentConnectWeighing
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
 
-            string path = "../../DynamicTemplate/ItemPage.xaml";
+            string path = "../../DynamicTemplate/TestItem.xaml";
            
             for (int i = 0; i < 12; i++)
             {

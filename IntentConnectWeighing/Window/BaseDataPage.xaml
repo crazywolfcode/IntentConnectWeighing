@@ -9,9 +9,9 @@
       Title="BaseDataPage">
 
     <DockPanel LastChildFill="True" x:Name="RootView">
-        <Grid  DockPanel.Dock="Left" MinWidth="200" MaxWidth="250" >
+        <Border  DockPanel.Dock="Left" MinWidth="200" MaxWidth="250"  CornerRadius="0,0,0,4"  Background="{StaticResource F9}" Padding="4" >
             <ScrollViewer      
-                    Background="#eee"                   
+                Background="Transparent"
                     Height="{Binding ElementName=RootView ,Path=ActualHeight}" 
                     Width="{Binding Source=StackPanel,Path=ActualWidth}" 
                     Style="{StaticResource DefaultScrollViewer}" >
@@ -20,8 +20,7 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <Button x:Name="GlobAdd" Style="{StaticResource ImageButtonStyle}"></Button>
-        </Grid>
+        </Border>
         <StackPanel>
             <TextBlock Name="textblock" Text="NavBaseDataPage..." Margin="200,200"  FontSize="20" ></TextBlock>
         </StackPanel>

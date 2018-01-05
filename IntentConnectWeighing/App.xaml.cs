@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Data;
 using System.Linq;
@@ -13,38 +14,55 @@ namespace IntentConnectWeighing
     /// </summary>
     public partial class App : Application
     {
+        public static User currentUser;
         public static Window currWindow;
+        public static Window prevWindow;
         public static System.Windows.Forms.NotifyIcon notifyIcon;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            if (CheckLogin() == true)
-            {
-                MainWindow window = new MainWindow();
-                currWindow = window;
-                window.Show();
-            }
-            else {
-                Login loginWindow = new Login();
-                currWindow = loginWindow;
-                loginWindow.Show();
-            }
             createNotifyIcon();
 
             createClientId();
+            string registerStep = "";
+            if (string.IsNullOrWhiteSpace(ConfigurationHelper.GetConfig(ConfigItemName.softwareVersion.ToString())))
+            {
+                SelectVersionW selectW = new SelectVersionW();
+                registerStep = ConfigurationHelper.GetConfig(ConfigItemName.companyRegisterStep.ToString());
+                selectW.Show();
+            }
+            else if (registerStep != CompanyRegisterStep.RegisterFinishedPage.ToString())
+            {
+                new RegisterW(registerStep).Show();
+            }
+            else if (CheckLogin() == true)
+            {
+                MainWindow win = new MainWindow();
+                win.Show();
+            }
+            else
+            {
+                Login loginWindow = new Login();
+                loginWindow.Show();
+            }
         }
 
-        private void createClientId() {
-            if (string.IsNullOrEmpty(ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString()))) {
+        private void createClientId()
+        {
+            if (string.IsNullOrEmpty(ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString())))
+            {
                 ConfigurationHelper.SetConfig(ConfigItemName.clientId.ToString(), getClientId());
             }
         }
 
-        private string getClientId() {
+        private string getClientId()
+        {
             return Guid.NewGuid().ToString();
         }
 
-        public bool CheckLogin() {
-            if (Constract.currentUser == null) {
+        public bool CheckLogin()
+        {
+            if (Constract.currentUser == null)
+            {
                 return false;
             }
             else
@@ -76,31 +94,15 @@ namespace IntentConnectWeighing
 
         private void NotifyIcon_Click(object sender, EventArgs e)
         {
-            if (currWindow.WindowState == WindowState.Minimized)
-            {
-                currWindow.WindowState = WindowState.Normal;
-                currWindow.Activate();
-            }
-            else
-            {
-                currWindow.WindowState = WindowState.Minimized;
-            }
+            ShowCurrentWindow();
         }
 
         private void NotifyIcon_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (currWindow.WindowState == WindowState.Minimized)
-            {
-                currWindow.WindowState = WindowState.Normal;
-                currWindow.Activate();
-            }
-            else
-            {
-                currWindow.WindowState = WindowState.Minimized;
-            }
+            ShowCurrentWindow();
         }
 
-     
+
 
         /// <summary>
         /// 创建Notify icon Menu
@@ -127,10 +129,215 @@ namespace IntentConnectWeighing
             {
                 Application.Current.Shutdown();
             }
-            else {
-                currWindow.WindowState = WindowState.Normal;              
+            else
+            {
+                currWindow.WindowState = WindowState.Normal;
             }
         }
         #endregion
+
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            ConsoleHelper.writeLine("There are unhandled exceptions in the program");
+        }
+        /// <summary>
+        /// save the config file's config Item to database 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            DateTime start = DateTime.Now;
+            //    try
+            //    {
+            //        insertOrUpdateConnectionStrings();
+            //}
+            //    catch (Exception exception)
+            //    {
+            //        ConsoleHelper.writeLine("save app ConnectionStrings to dabase error: " + exception.Message);
+            //    }
+            //try
+            //{
+            insertOrUpdateAppSettings();
+            //}
+            //catch (Exception exception)
+            //{
+            //    ConsoleHelper.writeLine("save AppSettings to dabase error: " + exception.Message);
+            //}
+            double time = DateTimeHelper.DateDifflMilliseconds(start, DateTime.Now);
+
+            ConsoleHelper.writeLine("suer time :" + time + " ms");
+
+        }
+        /// <summary>
+        /// insert Or Update Connection Strings
+        /// </summary>
+        private void insertOrUpdateConnectionStrings()
+        {
+            ConnectionStringSettingsCollection conns = ConfigurationManager.ConnectionStrings;
+            DatabaseOPtionHelper helper = null;
+            string sql = string.Empty;
+            for (int i = 0; i < conns.Count; i++)
+            {
+                Config config = null;
+                if (!conns[i].Name.Contains("Local"))
+                {
+                    sql = DbBaseHelper.getSelectSql("config", null, "client_id =' " + ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString()) + "' and config_name = ' " + conns[i].Name + "'", null, null, null, 1);
+                    if (helper == null)
+                    {
+                        helper = new DatabaseOPtionHelper();
+                    }
+                    DataTable dt = helper.select(sql);
+                    if (dt.Rows.Count > 0)
+                    {
+                        config = JsonHelper.JsonToObject(JsonHelper.ObjectToJson(dt.Rows[0]), typeof(Config)) as Config;
+                        if (config != null)
+                        {
+                            if (config.configValue != conns[i].ConnectionString)
+                            {
+                                config.configValue = conns[i].ConnectionString;
+                                config.syncTime = DateTimeHelper.ConvertDateTimeToInt(DateTime.Now);
+                                config.lastUpdateTime = DateTimeHelper.getCurrentDateTime();
+                                if (App.currentUser != null)
+                                {
+                                    config.lastUpdateUserId = config.addUserId;
+                                    config.lastUpdateUserName = config.addUserName;
+                                }
+                            }
+                            helper.update(config);
+                        }
+                        else
+                        {
+                            //conveter error
+                        }
+                    }
+                    else
+                    {
+                        config = new Config();
+                        config.id = Guid.NewGuid().ToString();
+                        config.clientId = ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString());
+                        config.configName = conns[i].Name;
+                        config.configValue = conns[i].ConnectionString;
+                        config.addtime = DateTimeHelper.getCurrentDateTime();
+                        config.configType = (int)ConfigType.ClientAppConfig;
+                        config.lastUpdateTime = config.addtime;
+                        config.syncTime = DateTimeHelper.ConvertDateTimeToInt(DateTime.Now);
+                        if (App.currentUser != null)
+                        {
+                            config.addUserId = App.currentUser.id;
+                            config.addUserName = App.currentUser.name;
+                            config.lastUpdateUserId = config.addUserId;
+                            config.lastUpdateUserName = config.addUserName;
+                        }
+                        helper.insert(config);
+                    }
+
+                }
+            }
+        }
+        /// <summary>
+        /// insert Or Update App Settings
+        /// </summary>
+        private void insertOrUpdateAppSettings()
+        {
+            DatabaseOPtionHelper helper = null;
+            string sql = string.Empty;
+            NameValueCollection collection = ConfigurationManager.AppSettings;
+            string[] keys = collection.AllKeys;
+            foreach (string key in keys)
+            {
+                Config config = null;
+                if (helper == null)
+                {
+                    helper = new DatabaseOPtionHelper();
+                }
+                sql = DbBaseHelper.getSelectSql("config", null, "client_id =' " + ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString()) + "' and config_name = ' " + key + "'", null, null, null, 1);
+                DataTable dt = helper.select(sql);
+                if (dt.Rows.Count > 0)
+                {
+                    config = JsonHelper.JsonToObject(JsonHelper.ObjectToJson(dt.Rows[0]), typeof(Config)) as Config;
+                    if (config != null)
+                    {
+                        if (config.configValue != collection[key].ToString())
+                        {
+                            config.configValue = collection[key].ToString();
+                            config.syncTime = DateTimeHelper.ConvertDateTimeToInt(DateTime.Now);
+                            config.lastUpdateTime = DateTimeHelper.getCurrentDateTime();
+                            if (App.currentUser != null)
+                            {
+                                config.lastUpdateUserId = config.addUserId;
+                                config.lastUpdateUserName = config.addUserName;
+                            }
+                        }
+                        helper.update(config);
+                    }
+                    else
+                    {
+                        //conveter error
+                    }
+                }
+                else
+                {
+                    config = new Config();
+                    config.id = Guid.NewGuid().ToString();
+                    config.addtime = DateTimeHelper.getCurrentDateTime();
+                    config.configName = key;
+                    config.clientId = ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString());
+                    config.configValue = collection[key].ToString();
+                    config.configType = (int)ConfigType.ClientAppConfig;
+                    config.lastUpdateTime = config.addtime;
+                    config.syncTime = DateTimeHelper.ConvertDateTimeToInt(DateTime.Now);
+                    if (App.currentUser != null)
+                    {
+                        config.addUserId = App.currentUser.id;
+                        config.addUserName = App.currentUser.name;
+                        config.lastUpdateUserId = config.addUserId;
+                        config.lastUpdateUserName = config.addUserName;
+                    }
+                    helper.insert(config);
+                }
+
+            }
+        }
+        /// <summary>
+        /// Show Current Window
+        /// </summary>
+        public static void ShowCurrentWindow()
+        {
+            if (currWindow == null) {
+                return;
+            }            
+            if (currWindow.WindowState == WindowState.Minimized)
+            {
+                currWindow.WindowState = WindowState.Normal;
+                currWindow.Activate();
+            }
+            else
+            {
+                currWindow.WindowState = WindowState.Minimized;
+            }
+        }
+        /// <summary>
+        /// set the current window
+        /// </summary>
+        /// <param name="win"></param>
+        public static void setCurrentWindow(Window win = null)
+        {
+            if (win == null)
+            {
+                currWindow = prevWindow;
+            }
+            else
+            {
+                if (currWindow == null)
+                { currWindow = prevWindow = win; }
+                else
+                {
+                    prevWindow = currWindow;
+                    currWindow = win;
+                }
+            }
+        }
+
     }
 }

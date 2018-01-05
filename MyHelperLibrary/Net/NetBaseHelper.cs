@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 
 
 namespace MyHelper
@@ -36,7 +37,59 @@ namespace MyHelper
             }
             return parametes;
         }
+        /// <summary>
+        /// check whether the internet is normal
+        /// </summary>
+        /// <param name="url"> host name or ip address</param>
+        /// <returns>true or false</returns>
+        public static bool IsConnectedToInternet(string url)
+        {
+            if (string.IsNullOrEmpty(url))
+            {
+                return false;
+            }
+            Ping ping = new Ping();
+            PingReply reply = ping.Send(url);
+            if(reply.Status == IPStatus.Success)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private const int INTERNET_CONNECTION_MODEM = 1;
+        private const int INTERNET_CONNECTION_LAN = 2;
+
+        [System.Runtime.InteropServices.DllImport("winInet.dll")]
+        private static extern bool InternetGetConnectedState(ref int dwFlag, int dwReserved);
+
+        /// <summary>
+        /// 获取本地的连接状态
+        /// get local internet connection status
+        /// </summary>
+        /// <returns>0 未连网 1 采用网卡上网 2 采用调制解调器上网</returns>
+        public static int getLocalConnectionStatus()
+        {
+            Int32 dwFlag = new Int32();
+            if (!InternetGetConnectedState(ref dwFlag, 0))
+            {
+                return 0;
+            }
+            else
+            {
+                if ((dwFlag & INTERNET_CONNECTION_MODEM) != 0)
+                {
+                    return 2;
+                }
+                else if ((dwFlag & INTERNET_CONNECTION_LAN) != 0)
+                {
+                    return 1;
+                }
+            }
+            return 0;
+        }
     }
+    
     public class RequestContent
     {
         /// <summary>

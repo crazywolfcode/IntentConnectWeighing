@@ -18,7 +18,7 @@ namespace IntentConnectWeighing
             }
 
 
-            public static void setStringToDictionaryResource(ResourceName resourceName, String value)
+            public static void setStringToDictionaryResource(ResourceName resourceName, string value)
             {
                 App.Current.Resources[resourceName.ToString()] = value;
             }

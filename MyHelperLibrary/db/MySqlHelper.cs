@@ -15,6 +15,8 @@ namespace MyHelper
         //"Data Source=192.168.1.64;Initial Catalog=classzone;Persist Security Info=True;User ID=root;Password=root;Pooling=False;charset=utf8;MAX Pool Size=2000;Min Pool Size=1;Connection Lifetime=30;";
         // "Database=weightsys;Data Source=192.168.88.3;User Id=admin;Password=Txmy0071;pooling=false;CharSet=utf8;port=33069";
 
+        private static readonly string getTableSql = "SELECT table_name as `name` from information_schema.tables where table_schema='weighing' and table_type='base table';";
+
         private MySqlConnection connection;
 
         private MySqlConnection mConnection
@@ -42,6 +44,17 @@ namespace MyHelper
                 }
                 else
                 {
+                    if (connection.State != ConnectionState.Open)
+                    {
+                        try
+                        {
+                            connection.Open();
+                        }
+                        catch (Exception e)
+                        {
+                            ConsoleHelper.writeLine("联接数据库失败、/r/n 有可能是Server关机或者mysql没有启动  " + e.Message);
+                        }
+                    }
                     return connection;
                 }
             }
@@ -86,10 +99,23 @@ namespace MyHelper
         /// <returns></returns>
         public DataTable getAllTable()
         {
-            string sql = "SELECT table_name as `name` from information_schema.tables where table_schema='weighing' and table_type='base table';";
-            return this.ExcuteDataTable(sql, null);
+            return this.ExcuteDataTable(getTableSql, null);
         }
-
+        /// <summary>
+        /// get the all table's name of in the database
+        /// </summary>
+        /// <returns></returns>
+        public string[] getAllTableName()
+        {
+            DataTable dt = getAllTable();
+            if (dt.Rows.Count <= 0) { return null; }
+            string[] result = new string[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                result[i] = dt.Rows[i]["name"].ToString();
+            }
+            return result;
+        }
         /// <summary>
         /// 创建Mysql 的连接字符串
         /// </summary>

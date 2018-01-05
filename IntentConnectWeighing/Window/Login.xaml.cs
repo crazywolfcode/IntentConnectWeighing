@@ -15,7 +15,7 @@ using System.Windows.Threading;
 using System.Threading.Tasks;
 using System.Data;
 using MyHelper;
-
+using System.Net.NetworkInformation;
 
 namespace IntentConnectWeighing
 {
@@ -34,8 +34,9 @@ namespace IntentConnectWeighing
             InitializeComponent();
             WindowBehavior behavior = new WindowBehavior(this);
             behavior.RepairWindowDefaultBehavior();
-
         }
+
+
         /// <summary>
         /// 窗口加载
         /// </summary>
@@ -43,7 +44,6 @@ namespace IntentConnectWeighing
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            App.currWindow = this;
             initTitleDragEvent();
             initCloseBtn(this);
             this.HistoryUsers = LoginHelper.getHostoryUser();
@@ -53,6 +53,12 @@ namespace IntentConnectWeighing
 
             //new Thread(new ThreadStart(ASynchronization)).Start();
             //initialization base config 初始基本配置
+        }
+
+
+        private void Window_ContentRendered(object sender, EventArgs e)
+        {
+            App.setCurrentWindow(this);
         }
 
         public async void ASynchronization()
@@ -176,8 +182,8 @@ namespace IntentConnectWeighing
             ////get data from db;
             //string sql = DbBaseHelper.getSelectSql("company",null,null);
             //// MessageBox.Show(sql);
-            //SQLiteHelper sqliteHelper = new SQLiteHelper();
-            MySqlHelper helper = new MySqlHelper();
+            SQLiteHelper sqliteHelper = new SQLiteHelper();
+            //MySqlHelper helper = new MySqlHelper();
             // DataTable dt = sqliteHelper.ExcuteDataTable(sql, null);
 
             ////datatabole to list
@@ -192,15 +198,28 @@ namespace IntentConnectWeighing
             //    updateSql = DbBaseHelper.getUpdateSql<Company>(cp);              
             //   sqliteHelper.ExecuteNonQuery(updateSql, null);
             //}
-
-            DataTable dt = helper.getAllTable();
-            foreach (DataRow row in dt.Rows)
+            if (SQLiteHelper.CheckConn(ConfigurationHelper.GetConnectionConfig(ConfigItemName.sqliteConn.ToString())))
             {
-                MessageBox.Show(row["name"].ToString());
+                MessageBox.Show("open");
+                string[] tables = sqliteHelper.getAllTableName();
+                MessageBox.Show(tables[0]);
             }
+            else {
+                MessageBox.Show("closed");
+            }
+           
             //ASynchronization();
 
             //   new Thread(new ThreadStart(updata)).Start();
+            //PingReply reply = new Ping().Send("180.130.175.145");
+            //ConsoleHelper.writeLine("reply.status:" + reply.Status);          
+            //ConsoleHelper.writeLine("reply.Buffer:" + reply.Buffer);
+            //ConsoleHelper.writeLine("reply.Address:" + reply.Address);
+            //ConsoleHelper.writeLine("reply.RoundtripTime:" + reply.RoundtripTime);
+            //ConsoleHelper.writeLine("reply.Options:" + reply.Options);
+            //ConsoleHelper.writeLine("reply.Options.Ttl:" + reply.Options.Ttl);
+            //MessageBox.Show(NetBaseHelper.getLocalConnectionStatus()+"");
+
         }
 
         public void updata()
@@ -306,10 +325,16 @@ namespace IntentConnectWeighing
             //MainWindow window = new MainWindow();
             //this.Close();
             //window.Show();                            
-                AnimationHelper.getVibrationAnimation(this, Orientation.Vertical).Begin();        
+            AnimationHelper.getVibrationAnimation(this, Orientation.Vertical, handle).Begin();
         }
 
-   
+        public void handle(object sender, EventArgs e)
+        {
+            MainWindow window = new MainWindow();
+            this.Close();
+            window.Show();
+        }
+
         private void Dt_Tick(object sender, EventArgs e)
         {
             DispatcherTimer dt = (DispatcherTimer)sender;
@@ -342,12 +367,11 @@ namespace IntentConnectWeighing
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (loginSuccess == false)
-            {
-                e.Cancel = true;
-                this.WindowState = WindowState.Minimized;
-                this.ShowInTaskbar = false;
-            }
+            this.WindowState = WindowState.Minimized;
+            this.ShowInTaskbar = false;
+            App.setCurrentWindow();
+            App.ShowCurrentWindow();
+            e.Cancel = true;
         }
 
         private void Window_StateChanged(object sender, EventArgs e)
@@ -398,9 +422,10 @@ namespace IntentConnectWeighing
 
         private void RegisterBtn_Click(object sender, RoutedEventArgs e)
         {
-            RegisterW w = new RegisterW();
-            w.Show();
-            this.WindowState= WindowState.Minimized;
+            this.Close();
+            SelectVersionW w = new SelectVersionW();
+            w.Show();           
         }
+
     }
 }

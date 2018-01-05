@@ -11,7 +11,7 @@ namespace IntentConnectWeighing
     /// 
     ///</summary>
 
-    public  class user
+    public  class User
     {
         public String id { get; set; }
 

@@ -124,9 +124,6 @@
     <Compile Include="Converter\ThicknessToDoubleConverter.cs" />
     <Compile Include="Converter\TreeViewMarginConverter.cs" />
     <Compile Include="Converter\TrueToFalseConverter.cs" />
-    <Compile Include="DynamicTemplate\itemPage.xaml.cs">
-      <DependentUpon>itemPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Entity\BillImage.cs" />
     <Compile Include="Entity\CameraInfo.cs" />
     <Compile Include="Entity\CarInfo.cs" />
@@ -175,8 +172,26 @@
     <Compile Include="Window\RegisterOnePage.xaml.cs">
       <DependentUpon>RegisterOnePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Window\RegisterFinishedPage.xaml.cs">
+      <DependentUpon>RegisterFinishedPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window\RegisterPrimaryLicencePage.xaml.cs">
+      <DependentUpon>RegisterPrimaryLicencePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Window\RegisterPrimaryPage.xaml.cs">
       <DependentUpon>RegisterPrimaryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window\RegisterSonLicencePage.xaml.cs">
+      <DependentUpon>RegisterSonLicencePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window\RegisterPayPage.xaml.cs">
+      <DependentUpon>RegisterPayPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window\ActivationW.xaml.cs">
+      <DependentUpon>ActivationW.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window\SelectVersionW.xaml.cs">
+      <DependentUpon>SelectVersionW.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window\RegisterW.xaml.cs">
       <DependentUpon>RegisterW.xaml</DependentUpon>
@@ -184,17 +199,13 @@
     <Compile Include="Window\ReportPage.xaml.cs">
       <DependentUpon>ReportPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Window\RegsterSonPage.xaml.cs">
-      <DependentUpon>RegsterSonPage.xaml</DependentUpon>
+    <Compile Include="Window\RegisterSonPage.xaml.cs">
+      <DependentUpon>RegisterSonPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window\SettingW.xaml.cs">
       <DependentUpon>SettingW.xaml</DependentUpon>
     </Compile>
     <Page Include="Control\SwitchCheckBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="DynamicTemplate\itemPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -322,9 +333,33 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Window\RegisterFinishedPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Window\RegisterPrimaryLicencePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Window\RegisterPrimaryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window\RegisterSonLicencePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window\RegisterPayPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Window\ActivationW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Window\SelectVersionW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Window\RegisterW.xaml">
       <SubType>Designer</SubType>
@@ -334,7 +369,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Window\RegsterSonPage.xaml">
+    <Page Include="Window\RegisterSonPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -361,7 +396,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

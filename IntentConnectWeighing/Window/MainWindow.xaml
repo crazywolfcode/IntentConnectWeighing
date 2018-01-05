@@ -4,10 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IntentConnectWeighing"     
-        Icon="/IntentConnectWeighing;component/aislogo_48.ico"              
+        Icon="/IntentConnectWeighing;component/aislogo_48.ico"    
+        Activated="BaseWindow_Activated"
+        Loaded="MainWindow_Loaded" 
+        ContentRendered="BaseWindow_ContentRendered"
+        StateChanged="BaseWindow_StateChanged"
         Closing="BaseWindow_Closing" 
         Title="MainWindow" MinHeight="610" MinWidth="910" Height="680" Width="986"  
-         Loaded="MainWindow_Loaded" WindowStartupLocation="CenterScreen" StateChanged="BaseWindow_StateChanged" Activated="BaseWindow_Activated">
+        WindowStartupLocation="CenterScreen"  >
     <Grid x:Name="Body" SizeChanged="Body_SizeChanged">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

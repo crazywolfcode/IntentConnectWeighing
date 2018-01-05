@@ -11,9 +11,9 @@ namespace IntentConnectWeighing
     /// 
     ///</summary>
 
-    public  class config
+    public  class Config
     {
-        public Int64 id { get; set; }
+        public String id { get; set; }
 
         public String clientId { get; set; }
 
@@ -21,7 +21,7 @@ namespace IntentConnectWeighing
 
         public String configName { get; set; }
 
-        public Byte configValue { get; set; }
+        public String configValue { get; set; }
 
         public Int64 configType { get; set; }
 

@@ -24,6 +24,7 @@
                 <RadioButton x:Name="ScaleSetting" Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"   >磅秤</RadioButton>
                 <RadioButton x:Name="cameraSetting" Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"  >视频</RadioButton>
                 <RadioButton x:Name="BalanceSetting" Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"   >平衡</RadioButton>
+                <RadioButton x:Name="HighSetting" Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"   >高级</RadioButton>
                 <RadioButton x:Name="OtherSetting" Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"   >其它</RadioButton>
              
             </StackPanel>
@@ -82,6 +83,10 @@
                         <TextBlock  FontSize="25"> BalanceSetting</TextBlock>
                     </StackPanel>
 
+                    <StackPanel HorizontalAlignment="Center" Visibility="{Binding ElementName=HighSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
+                        <TextBlock  FontSize="25"> HighSetting</TextBlock>
+                    </StackPanel>
+                    
                     <StackPanel HorizontalAlignment="Center" Visibility="{Binding ElementName=OtherSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
                         <TextBlock  FontSize="25"> OtherSetting</TextBlock>
                     </StackPanel>
