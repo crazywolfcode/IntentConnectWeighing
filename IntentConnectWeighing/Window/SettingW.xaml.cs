@@ -27,6 +27,7 @@ namespace IntentConnectWeighing
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             new WindowBehavior(this).RepairWindowDefaultBehavior();
+
         }
 
         public void InitializingEvent()
@@ -44,6 +45,9 @@ namespace IntentConnectWeighing
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
+           WindowButton wb = sender as WindowButton;
+            MessageBox.Show(wb.Style.ToString());
+            Console.WriteLine(wb.Style.ToString());
             this.Close();
         }
 
@@ -52,6 +56,34 @@ namespace IntentConnectWeighing
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 this.DragMove();
+            }
+        }
+
+        private void updateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            MessageBox.Show(btn.Tag.ToString());
+        }
+
+        private void deleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            MessageBox.Show(btn.Tag.ToString());
+        }
+
+        private void AddCameraBtn_Click(object sender, RoutedEventArgs e)
+        {
+            new CameraAddW().ShowDialog();
+        }
+
+        private void SaveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string sql = MyHelper.DbBaseHelper.getSelectSql("company", null, null);
+            System.Data.DataTable dt = new MyHelper.MySqlHelper().select(sql);
+            for (int i = 0; i < dt.Columns.Count; i++)
+            {
+               
+                MyHelper.ConsoleHelper.writeLine("name:"+dt.Columns[i].ColumnName+" type:" +dt.Columns[i].DataType.ToString());
             }
         }
     }

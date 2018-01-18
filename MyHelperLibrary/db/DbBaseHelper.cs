@@ -258,17 +258,47 @@ namespace MyHelper
         /// <typeparam name="T">类型</typeparam>
         /// <param name="obj">类型的对像</param>
         /// <returns>插入SQL语句</returns>
-        public static string getSelectSqlNoSoftDeleteCondition(string tableName, string fields, string conditon)
+        public static string getSelectSqlNoSoftDeleteCondition(string tableName, string fields = null, string conditon = null, string groupBy = null, string having = null, string orderBy = null, int limit = 0, int offset = -1)
         {
+            string sql = string.Empty;
             if (string.IsNullOrEmpty(fields))
             {
                 fields = " * ";
             }
             if (string.IsNullOrEmpty(conditon))
             {
-                conditon = " 1 = 1 ";
-            }         
-            return string.Format(selectSqlTemplqte, fields, tableName, conditon);
+                conditon = notSoftDeleteWhere;
+            }
+            else
+            {
+                conditon = "(" + conditon + ")";
+            }
+            sql = string.Format(selectSqlTemplqte, fields, tableName, conditon);
+
+            if (!string.IsNullOrEmpty(groupBy))
+            {
+                sql = sql.Replace(";", string.Format(groupByTemplate, groupBy) + " ;");
+            }
+
+            if (!string.IsNullOrEmpty(having))
+            {
+                sql = sql.Replace(";", string.Format(havingTemplate, having) + " ;");
+            }
+
+            if (!string.IsNullOrEmpty(orderBy))
+            {
+                sql = sql.Replace(";", string.Format(orderByTemplate, orderBy) + " ;");
+            }
+            if (limit > 0)
+            {
+                sql = sql.Replace(";", string.Format(LimitTemplate, limit) + " ;");
+            }
+
+            if (offset > -1)
+            {
+                sql = sql.Replace(";", string.Format(offsetTemplate, offset) + " ;");
+            }
+            return sql;
         }
         /// <summary>
         ///拼装通用的插入SQL语句

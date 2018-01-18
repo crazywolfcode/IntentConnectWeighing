@@ -5,18 +5,159 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:IntentConnectWeighing"
       mc:Ignorable="d" 
-      Loaded="Page_Loaded"
-      d:DesignHeight="300" d:DesignWidth="300"
+      Loaded="Page_Loaded"      
+      d:DesignHeight="520" d:DesignWidth="650"
       Title="RegisterPrimaryPage">
+    <Page.Resources>
+        <local:CheckedToVisibleConverter x:Key="CheckedToVisibleConverter"></local:CheckedToVisibleConverter>
+    </Page.Resources>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" HorizontalAlignment="Right" Margin=" 0,0,10,0" Orientation="Horizontal">
+            <local:TabButton   
+                    x:Name="InputRB" Content="手动录入" Checked="InputRB_Checked"
+                    Foreground="#666"
+                    ActiveForground="RoyalBlue"
+                    IndicatorHeight="3" 
+                    Margin="0,0,4,0"
+                    IconMargin="0,0,3,0"
+                    IconSize="18"
+                    Icon="&#xe6f0;" 
+                    ActiveIndicatorColor="RoyalBlue"/>
+            <local:TabButton   
+                IsChecked="True" x:Name="AutomaticRecognitionRB" Content="自动识别" Checked="AutomaticRecognitionRB_Checked"
+                Foreground="#666"
+                ActiveForground="RoyalBlue"
+                IndicatorHeight="3" 
+                Margin="0,0,4,0"
+                IconMargin="0,0,3,0"
+                IconSize="18"
+                Icon="&#xe901;" 
+                ActiveIndicatorColor="RoyalBlue"/>
+        </StackPanel>
+        
+        <DockPanel Grid.Row="1"  Visibility="{Binding ElementName=AutomaticRecognitionRB,Path=IsChecked,Converter={StaticResource CheckedToVisibleConverter}}">
+            <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,4,0,4">
+                    <Label FontSize="14">营业执照：</Label>
+                    <WrapPanel Orientation="Vertical">
+                        <TextBox x:Name="filePathTB" Width="300" Height="28" VerticalContentAlignment="Center"/>
+                    </WrapPanel>
+                    <local:IconButton 
+                                x:Name="choseImgBtn" Click="choseImgBtn_Click"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Padding="1"
+                                Icon="&#xe8d4;"
+                                IsShowIcon="True"                
+                                Style="{StaticResource IconButtonStyle}"                 
+                                BorderBrush="#999" 
+                                Foreground="#666"
+                                BorderThickness="1" 
+                                Width="100"
+                                Height="28"                 
+                                CornerRadius="0"                                      
+                                FontWeight="Bold" 
+                                HorizontalAlignment="Center"      
+                                HorizontalContentAlignment="Center"
+                                MouseOverForeground="Black"
+                                MouseOverBackground="White" Content="选择图片" />
+                </StackPanel>
+            </StackPanel>
+            <ScrollViewer DockPanel.Dock="Top" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Left" x:Name="showImgaePanel"  VerticalAlignment="Top">
+                        <Image x:Name="licenseImage" Stretch="UniformToFill" VerticalAlignment="Top" MouseLeftButtonDown="licenseImage_MouseLeftButtonDown" MaxWidth="420"/>
+                    </StackPanel>
+                    <StackPanel DockPanel.Dock="Right" x:Name="showRecognitionInfoPanel" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,10,10,0">
+                        <WrapPanel>
+                            <Label>公司类型：</Label>
+                            <TextBlock x:Name="recognitionCompanyType" Text="私营" VerticalAlignment="Center"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label>公司名称：</Label>
+                            <TextBlock x:Name="recognitionCompanyName" VerticalAlignment="Center" Text="{Binding Path=name,Mode=OneWay}"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label>执照编号：</Label>
+                            <TextBlock x:Name="recognitionLicenseeNumber" VerticalAlignment="Center" Text="{Binding  Path=busineseLicenseNumber,Mode=OneWay}"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label>信用代码：</Label>
+                            <TextBlock x:Name="CreditNumber" VerticalAlignment="Center" Text="{Binding  Path=creditNumber,Mode=OneWay}"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label>有效日期：</Label>
+                            <TextBlock x:Name="ExpriseDateNumber" VerticalAlignment="Center" Text="{Binding  Path=liceseEspriseTime,Mode=OneWay}"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label>法人：</Label>
+                            <TextBlock x:Name="LegalPerson" Text="{Binding  Path=legalPerson,Mode=OneWay}" VerticalAlignment="Center"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label>地址：</Label>
+                            <TextBlock x:Name="recognitionAddress" TextWrapping="Wrap" Text="{Binding  Path=address,Mode=OneWay}" VerticalAlignment="Center"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </DockPanel>
+            </ScrollViewer>           
+        </DockPanel>
 
-    <Grid>
-        <RichTextBox Margin="3" x:Name="licenceText">
-            <FlowDocument>
-                <Paragraph>                   
-                    <LineBreak />
-                    <Run x:Name="licenceContent"></Run>
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>        
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding ElementName=InputRB,Path=IsChecked,Converter={StaticResource CheckedToVisibleConverter}}">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,4,0,4">
+                <Label FontSize="14">公司类型：</Label>
+                <WrapPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <RadioButton x:Name="privateRb">私营</RadioButton>
+                    <RadioButton x:Name="StateOwnedRb" Margin="10,0,10,0">国营</RadioButton>
+                    <RadioButton x:Name="governmentRB">政府</RadioButton>
+                </WrapPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,4,0,4">
+                <Label FontSize="14">公司名称：</Label>
+                <WrapPanel Orientation="Vertical">
+                    <TextBox x:Name="FullNameTB" Width="300" Height="25" VerticalContentAlignment="Center"/>
+                    <Label >公司名称的全称，和营业执照上面保持一致</Label>
+                </WrapPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,4,0,4">
+                <Label FontSize="14">执照编号：</Label>
+                <WrapPanel Orientation="Vertical">
+                    <TextBox x:Name="LicenceNumberTB" Width="300" Height="25" VerticalContentAlignment="Center"/>
+                    <Label >公司营业执照编号，和营业执照上面保持一致</Label>
+                </WrapPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,4,0,4">
+                <Label FontSize="14">公司简称：</Label>
+                <WrapPanel Orientation="Vertical">
+                    <TextBox x:Name="AbbreviationTB" Width="300" Height="25" VerticalContentAlignment="Center"/>
+                    <Label >公司名称的简称</Label>
+                </WrapPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,4,0,4">
+                <Label FontSize="14">法 人：</Label>
+                <WrapPanel Orientation="Vertical">
+                    <TextBox x:Name="LegalPersonTB" Width="300" Height="25" Margin="20,0,0,0" VerticalContentAlignment="Center"/>
+                    <Label  Margin="20,0,0,0">公司法人，和营业执照上面保持一致</Label>
+                </WrapPanel>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,4,0,4">
+                <Label FontSize="14">管理员姓名：</Label>
+                <WrapPanel Orientation="Vertical">
+                    <TextBox x:Name="AdminTB" Width="286" Height="25" VerticalContentAlignment="Center"/>
+                    <Label>软件的初始管理员真实姓名</Label>
+                </WrapPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,4,0,4">
+                <Label FontSize="14">管理员密码：</Label>
+                <WrapPanel Orientation="Vertical">
+                    <TextBox x:Name="PasswordTB" Width="286" Height="25" VerticalContentAlignment="Center"/>
+                    <Label >密码必须大于6位</Label>
+                </WrapPanel>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

@@ -51,8 +51,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\IntentConnectWeighing\dll\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>E:\C#Dll\Newtonsoft.Json.dll_jb51.net\X64\3.5.0.0\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -70,9 +71,11 @@
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.106.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -82,6 +85,10 @@
   <ItemGroup>
     <Compile Include="CommomHelpre.cs" />
     <Compile Include="ConfigurationHelper.cs" />
+    <Compile Include="db\DbSchema.cs" />
+    <Compile Include="db\MysqlTabeSchema.cs" />
+    <Compile Include="db\MysqlTableColumnSchema.cs" />
+    <Compile Include="db\TableSchema.cs" />
     <Compile Include="helper\ConsoleHelper.cs" />
     <Compile Include="helper\DateTimeHelper.cs" />
     <Compile Include="db\DbBaseHelper.cs" />

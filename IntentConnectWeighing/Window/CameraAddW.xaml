@@ -1,0 +1,107 @@
+﻿<Window x:Class="IntentConnectWeighing.CameraAddW"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"     
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:form="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:local="clr-namespace:IntentConnectWeighing"
+        mc:Ignorable="d" AllowsTransparency="False"
+        Icon="/IntentConnectWeighing;component/aislogo_48.ico"
+        WindowStartupLocation="CenterScreen" Style="{StaticResource  settingWindowStyle}"
+        Title="添加摄像头" Height="430" Width="560"
+        Loaded="Window_Loaded" 
+        ContentRendered="Window_ContentRendered" 
+        Closing="Window_Closing">
+    <Grid>        
+        <Grid.RowDefinitions>            
+            <RowDefinition Height="64"/>
+            <RowDefinition/>
+            <RowDefinition Height="45"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" CornerRadius="4,4,0,0" x:Name="headerBorder" MouseMove="headerBorder_MouseMove"  Background="#f9f9f9">
+            <StackPanel Orientation="Horizontal" Background="Transparent" MouseMove="headerBorder_MouseMove">
+                <Image Source="/IntentConnectWeighing;component/aislogo_48.ico" Width="48" Height="48" HorizontalAlignment="Left" Margin="10"></Image>
+                <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="添加摄像头" VerticalAlignment="Center" FontSize="20" FontWeight="Black" Foreground="#787972"></TextBlock>
+            </StackPanel>
+        </Border>
+        <!--关闭按钮-->
+        <local:WindowButton Grid.Row="0"  BorderBrush="{x:Null}" Width="27" Height="22"  Margin="0,4,4,0" Content="" x:Name="CloseBtn" HorizontalAlignment="Right" VerticalAlignment="Top"   Click="CloseBtn_Click">
+            <local:WindowButton.MyMoverBrush>
+                <ImageBrush ImageSource="/IntentConnectWeighing;component/Themes/Img/Button/xm.png"/>
+            </local:WindowButton.MyMoverBrush>
+            <local:WindowButton.MyEnterBrush>
+                <ImageBrush ImageSource="/IntentConnectWeighing;component/Themes/Img/Button/xe.png"/>
+            </local:WindowButton.MyEnterBrush>
+            <local:WindowButton.Background>
+                <ImageBrush ImageSource="/IntentConnectWeighing;component/Themes/Img/Button/xn.png" TileMode="FlipXY"/>
+            </local:WindowButton.Background>
+        </local:WindowButton>
+
+        <Border  Background="{StaticResource F9}" Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="60"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" x:Name="previewStackPanel">
+                    <WindowsFormsHost Background="{StaticResource F9}" x:Name="previewFormsHost" ToolTip=" 视频预览"  MouseLeftButtonDown="previewFormsHost_MouseLeftButtonDown">
+                        <form:PictureBox   Name="previewImage" SizeMode="CenterImage"  />
+                    </WindowsFormsHost>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                            <Label>地 址：</Label>
+                            <TextBox x:Name="IpTB" Width="160" ToolTip="摄像头IP或域名" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
+                            <Label>端 口：</Label>
+                            <TextBox x:Name="portTB" Width="160" ToolTip="摄像头IP或域名" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <Label>账 号：</Label>
+                            <TextBox x:Name="userNameTB" Width="160" ToolTip="摄像头登录的账号" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
+                            <Label>密 码：</Label>
+                            <TextBox x:Name="pwdTB" Width="160" ToolTip="摄像头登录的密码" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
+
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel  VerticalAlignment="Center" Width="120">
+                        <local:IconButton x:Name="lookBtn" ToolTip="预览" 
+                                Click="lookBtn_Click" CornerRadius="6" BorderThickness="1"
+                                Style="{DynamicResource IconButtonStyle}" 
+                                Icon="&#xe8d6;" Width="50" Height="50" IconSize="40"/>
+                        <local:IconButton x:Name="nulookBtn" ToolTip="关闭预览" 
+                                Click="nulookBtn_Click" CornerRadius="6" BorderThickness="1"
+                                Style="{DynamicResource IconButtonStyle}" Visibility="Collapsed"
+                                Icon="&#xe8d7;" Width="50" Height="50" IconSize="40"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="2" CornerRadius="0,0,4,4"   Background="{StaticResource E4}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                <local:IconButton 
+                    x:Name="saveBtn" 
+                    Click="saveBtn_Click"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Padding="1"
+                    Icon="&#xe77a;"
+                    IsShowIcon="False"
+                    Margin="10,0,15,0"                      
+                    Style="{StaticResource IconButtonStyle}"                 
+                    BorderBrush="#e0e0e0" 
+                    Foreground="#666"
+                    BorderThickness="1" 
+                    Width="100"
+                    Height="35"                 
+                    CornerRadius="4"                                      
+                    FontWeight="Bold" 
+                    HorizontalAlignment="Center"      
+                    HorizontalContentAlignment="Center"
+                    MouseOverForeground="Black"
+                    MouseOverBackground="White" Content="保 存" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

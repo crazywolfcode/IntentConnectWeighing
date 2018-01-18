@@ -1,37 +1,88 @@
-﻿
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
-namespace IntentConnectWeighing
+ namespace IntentConnectWeighing
 {
 
-	/// <summary>
-    /// 
-    ///</summary>
+	 /// <summary>
+	 /// 过磅时系统自动截取图片
+	 /// 数据条数:0
+	 /// 数据大小:16KB
+	 /// </summary>
 
-    public  class billImage
-    {
-        public String id { get; set; }
 
-        public String positon { get; set; }
+	  public  class BillImage
+	 {
 
-        public String address { get; set; }
+	 /// <summary>
+	 /// 可空:NO
+	 /// </summary>
 
-        public String billId { get; set; }
+	 public String id{ get; set; }
 
-        public String billNumber { get; set; }
+	 /// <summary>
+	 /// 注释:1 前 2 后 3上
+	 /// 可空:NO
+	 ///默认值:1
+	 /// </summary>
 
-        public String type { get; set; }
+	 public Int32 positon{ get; set; }
 
-        public String isUp { get; set; }
+	 /// <summary>
+	 /// 可空:NO
+	 /// </summary>
 
-        public String upTime { get; set; }
+	 public String address{ get; set; }
 
-        public String isDelete { get; set; }
+	 /// <summary>
+	 /// 可空:NO
+	 /// </summary>
 
-        public String deleteTime { get; set; }
+	 public String billId{ get; set; }
 
-    }
+	 /// <summary>
+	 /// 可空:NO
+	 /// </summary>
+
+	 public String billNumber{ get; set; }
+
+	 /// <summary>
+	 /// 注释:1 入场 2出场
+	 /// 可空:NO
+	 ///默认值:1
+	 /// </summary>
+
+	 public Int32 type{ get; set; }
+
+	 /// <summary>
+	 /// 注释:0 未上传 1 已经上传
+	 /// 可空:NO
+	 ///默认值:0
+	 /// </summary>
+
+	 public Int32 isUp{ get; set; }
+
+	 /// <summary>
+	 /// 注释:上传时间
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String upTime{ get; set; }
+
+	 /// <summary>
+	 /// 可空:NO
+	 ///默认值:0
+	 /// </summary>
+
+	 public Int32 isDelete{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String deleteTime{ get; set; }
+
+	 }
 }

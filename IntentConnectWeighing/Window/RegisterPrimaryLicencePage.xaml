@@ -4,11 +4,44 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:IntentConnectWeighing"
-      mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      mc:Ignorable="d"
+      d:DesignHeight="300" d:DesignWidth="500"
       Title="RegisterPrimaryLicencePage">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Register Primary Licence Page</TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+          <Image x:Name="LicenseImg" Stretch="UniformToFill"></Image>
+        </StackPanel>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,4,0,4">
+                <Label FontSize="14"> 选择图片：</Label>
+                <WrapPanel Orientation="Vertical">
+                    <TextBox x:Name="filePathTB" Width="300" Height="28" VerticalContentAlignment="Center"/>
+                </WrapPanel>
+                <local:IconButton 
+                                x:Name="choseImgBtn" Click="choseImgBtn_Click"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Padding="1"
+                                Icon="&#xe8d4;"
+                                IsShowIcon="True"                
+                                Style="{StaticResource IconButtonStyle}"                 
+                                BorderBrush="#999" 
+                                Foreground="#666"
+                                BorderThickness="1" 
+                                Width="100"
+                                Height="28"                 
+                                CornerRadius="0"                                      
+                                FontWeight="Bold" 
+                                HorizontalAlignment="Center"      
+                                HorizontalContentAlignment="Center"
+                                MouseOverForeground="Black"
+                                MouseOverBackground="White" Content="选择图片" />
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

@@ -12,7 +12,13 @@ namespace MyHelper
     public class NetBaseHelper
     {
         public static readonly string keepAlive = "keep-alive";
-
+        public static readonly string defaultUrl = "www.baidu.com";
+        public static readonly string ContentTypeFormUrlEncoded = "application/x-www-form-urlencoded";
+        /// <summary>
+        /// get request Parameters
+        /// </summary>
+        /// <param name="postData">like A=b&C=d</param>
+        /// <returns></returns>
         public static List<KeyValuePair<string, string>> getListKeyValuePAir(string postData)
         {
             List<KeyValuePair<string, string>> parametes = new List<KeyValuePair<string, string>>();
@@ -42,11 +48,11 @@ namespace MyHelper
         /// </summary>
         /// <param name="url"> host name or ip address</param>
         /// <returns>true or false</returns>
-        public static bool IsConnectedToInternet(string url)
+        public static bool IsConnectedToInternet(string url = null)
         {
             if (string.IsNullOrEmpty(url))
             {
-                return false;
+                url = defaultUrl;
             }
             Ping ping = new Ping();
             PingReply reply = ping.Send(url);

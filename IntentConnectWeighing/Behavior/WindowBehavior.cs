@@ -7,6 +7,7 @@ using System.Windows.Interop;
 using System.Runtime.InteropServices;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
+
 namespace IntentConnectWeighing
 {
     class WindowBehavior

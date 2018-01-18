@@ -13,11 +13,15 @@
         Title="MainWindow" MinHeight="610" MinWidth="910" Height="680" Width="986"  
         WindowStartupLocation="CenterScreen"  >
     <Grid x:Name="Body" SizeChanged="Body_SizeChanged">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0"  Height="50" Orientation="Horizontal"  SnapsToDevicePixels="True" Margin="0,-50,0,0" >
+        <StackPanel Grid.Row="0"  Height="50" Orientation="Horizontal"  SnapsToDevicePixels="True" Margin="0,-50,0,0" Grid.ColumnSpan="2" >
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -78,13 +82,13 @@
                 </StackPanel>
             </Grid>
         </StackPanel>
-        <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden" >
+        <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" >
 
         </Frame>
         <Popup x:Name="userMenuPopup" Grid.Row="1" Width="160" Height="Auto" HorizontalAlignment="Left" 
                AllowsTransparency="True" StaysOpen="False" VerticalOffset="5" HorizontalOffset="-4"
                PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
-               IsOpen="False" PlacementTarget="{Binding ElementName=userHeaderImage}" Placement="Top">
+               IsOpen="False" PlacementTarget="{Binding ElementName=userHeaderImage}" Placement="Top" Grid.Column="1" Margin="-25,0,0,0">
             <Border BorderBrush="{StaticResource MenuBorderBrush}" BorderThickness="1" CornerRadius="0" Background="White" Margin="0,0,2,2">
                 <Border.Effect>
                     <DropShadowEffect Opacity="0.4" Color="RoyalBlue" ShadowDepth="1" BlurRadius="2"></DropShadowEffect>

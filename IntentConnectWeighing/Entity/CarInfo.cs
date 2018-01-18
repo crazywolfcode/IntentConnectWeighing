@@ -1,47 +1,111 @@
-﻿
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
-namespace IntentConnectWeighing
+ namespace IntentConnectWeighing
 {
 
-	/// <summary>
-    /// 
-    ///</summary>
+	 /// <summary>
+	 /// 数据条数:0
+	 /// 数据大小:16KB
+	 /// </summary>
 
-    public  class carInfo
-    {
-        public String id { get; set; }
 
-        public String plateNumber { get; set; }
+	  public  class CarInfo
+	 {
 
-        public String driver { get; set; }
+	 /// <summary>
+	 /// 可空:NO
+	 /// </summary>
 
-        public String driverMobile { get; set; }
+	 public String id{ get; set; }
 
-        public String driverIdnumber { get; set; }
+	 /// <summary>
+	 /// 可空:NO
+	 /// </summary>
 
-        public String addtime { get; set; }
+	 public String plateNumber{ get; set; }
 
-        public String addUserId { get; set; }
+	 /// <summary>
+	 /// 可空:NO
+	 /// </summary>
 
-        public String addUserName { get; set; }
+	 public String driver{ get; set; }
 
-        public String lastUpdateTime { get; set; }
+	 /// <summary>
+	 /// 可空:NO
+	 /// </summary>
 
-        public String lastUpdateUserId { get; set; }
+	 public String driverMobile{ get; set; }
 
-        public String lastUpdateUserName { get; set; }
+	 /// <summary>
+	 /// 可空:NO
+	 /// </summary>
 
-        public String isDelete { get; set; }
+	 public Int32 driverIdnumber{ get; set; }
 
-        public String deleteTime { get; set; }
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
 
-        public String syncTime { get; set; }
+	 public String addtime{ get; set; }
 
-        public String status { get; set; }
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
 
-    }
+	 public String addUserId{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String addUserName{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String lastUpdateTime{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String lastUpdateUserId{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String lastUpdateUserName{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public Int32 isDelete{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String deleteTime{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public Int32 syncTime{ get; set; }
+
+	 /// <summary>
+	 /// 注释:0 未启用 1 正常启用
+	 /// 可空:NO
+	 ///默认值:1
+	 /// </summary>
+
+	 public Int32 status{ get; set; }
+
+	 }
 }

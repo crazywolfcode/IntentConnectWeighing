@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.IO;
-
+using System.Threading.Tasks;
+using System.Net.Http;
 namespace MyHelper
 {
     /// <summary>
@@ -106,7 +107,7 @@ namespace MyHelper
             byte[] data = Encoding.GetEncoding("UTF-8").GetBytes(postData);
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
             webRequest.Method = "post";
-            webRequest.ContentType = contentType +";"+ encodeType;
+            webRequest.ContentType = contentType + ";" + encodeType;
             webRequest.ContentLength = data.Length;
             webRequest.Timeout = timeoput;
             requestStream = webRequest.GetRequestStream();
@@ -252,5 +253,38 @@ namespace MyHelper
             streamReader = new StreamReader(responseStream, Encoding.UTF8);
             return streamReader.ReadToEnd();
         }
+
+
+        public static async Task<string> baiduRecognition(string url, string token, string filePath)
+        {
+            string requestUrl = url + "?access_token = " + token;
+            Encoding encoding = Encoding.GetEncoding("UTF-8");
+            string base64 = FileHelper.getFileBase64(filePath);          
+            String str = "image=" + System.Web.HttpUtility.UrlEncode(base64);
+            byte[] buffer = encoding.GetBytes(str);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUrl);
+            request.Method = "post";
+            request.KeepAlive = true;
+            request.ContentType = NetBaseHelper.ContentTypeFormUrlEncoded;
+            request.ContentLength = buffer.Length;
+            request.GetRequestStream().Write(buffer, 0, buffer.Length);
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.Default);
+            string result = reader.ReadToEnd();          
+            return result;
+        }
+
+        public static async Task<string> getBaiduAcesessToken(string tokenUrl, string clientId, string clientSecret)
+        {
+            string token = string.Empty;
+            List<KeyValuePair<String, String>> paraList = new List<KeyValuePair<string, string>>();
+            paraList.Add(new KeyValuePair<string, string>("grant_type", "client_credentials"));
+            paraList.Add(new KeyValuePair<string, string>("client_id", clientId));
+            paraList.Add(new KeyValuePair<string, string>("client_secret", clientSecret));
+            HttpResponseMessage response = new HttpClient().PostAsync(tokenUrl, new FormUrlEncodedContent(paraList)).Result;
+            token = response.Content.ReadAsStringAsync().Result;
+            return token;
+        }
+
     }
 }

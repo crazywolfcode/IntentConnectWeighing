@@ -15,7 +15,6 @@ using System.Windows.Threading;
 using System.Threading.Tasks;
 using System.Data;
 using MyHelper;
-using System.Net.NetworkInformation;
 
 namespace IntentConnectWeighing
 {
@@ -182,7 +181,7 @@ namespace IntentConnectWeighing
             ////get data from db;
             //string sql = DbBaseHelper.getSelectSql("company",null,null);
             //// MessageBox.Show(sql);
-            SQLiteHelper sqliteHelper = new SQLiteHelper();
+            //SQLiteHelper sqliteHelper = new SQLiteHelper();
             //MySqlHelper helper = new MySqlHelper();
             // DataTable dt = sqliteHelper.ExcuteDataTable(sql, null);
 
@@ -198,16 +197,7 @@ namespace IntentConnectWeighing
             //    updateSql = DbBaseHelper.getUpdateSql<Company>(cp);              
             //   sqliteHelper.ExecuteNonQuery(updateSql, null);
             //}
-            if (SQLiteHelper.CheckConn(ConfigurationHelper.GetConnectionConfig(ConfigItemName.sqliteConn.ToString())))
-            {
-                MessageBox.Show("open");
-                string[] tables = sqliteHelper.getAllTableName();
-                MessageBox.Show(tables[0]);
-            }
-            else {
-                MessageBox.Show("closed");
-            }
-           
+
             //ASynchronization();
 
             //   new Thread(new ThreadStart(updata)).Start();
@@ -219,7 +209,9 @@ namespace IntentConnectWeighing
             //ConsoleHelper.writeLine("reply.Options:" + reply.Options);
             //ConsoleHelper.writeLine("reply.Options.Ttl:" + reply.Options.Ttl);
             //MessageBox.Show(NetBaseHelper.getLocalConnectionStatus()+"");
-
+          
+            MessageBox.Show(BaiDuAcesessTokenHelper.getBaiDuAcesessToken());
+           
         }
 
         public void updata()

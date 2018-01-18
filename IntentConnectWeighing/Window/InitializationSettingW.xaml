@@ -121,7 +121,7 @@
                 <TextBox x:Name="connStr" TextWrapping="Wrap"  Height="50" Margin="10"></TextBox>
 
                 <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                    <TextBlock x:Name="AlertInfoTB" FontSize="16"  Margin="0,0,5,0"  Padding="2,3,2,3" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="AlertInfoTB" FontSize="16"  Margin="0,0,5,0"  Padding="2,3,2,3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
                     <local:IconButton 
                          x:Name="SaveMysqlBtn" 
@@ -134,12 +134,13 @@
                             BorderThickness="1" 
                             CornerRadius="4"                                      
                             FontWeight="Bold" 
-                            IsShowIcon="False"           
+                            IsShowIcon="False"    
+                            Content="保 存"
                             Click="SaveMysqlBtn_Click"
                             HorizontalAlignment="Center"      
                             HorizontalContentAlignment="Center"
                             MouseOverForeground="Black"
-                            MouseOverBackground="White">                         保 存</local:IconButton>
+                            MouseOverBackground="White"/> 
                 </WrapPanel>
             </StackPanel>
 

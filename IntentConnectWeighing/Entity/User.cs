@@ -1,63 +1,169 @@
-﻿
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
-namespace IntentConnectWeighing
+ namespace IntentConnectWeighing
 {
 
-	/// <summary>
-    /// 
-    ///</summary>
+	 /// <summary>
+	 /// 数据条数:0
+	 /// 数据大小:16KB
+	 /// </summary>
 
-    public  class User
-    {
-        public String id { get; set; }
 
-        public String name { get; set; }
+	  public  class User
+	 {
 
-        public Int64 sex { get; set; }
+	 /// <summary>
+	 /// 可空:NO
+	 /// </summary>
 
-        public String loginName { get; set; }
+	 public String id{ get; set; }
 
-        public String passwprd { get; set; }
+	 /// <summary>
+	 /// 可空:NO
+	 /// </summary>
 
-        public String weichat { get; set; }
+	 public String name{ get; set; }
 
-        public String qq { get; set; }
+	 /// <summary>
+	 /// 注释:0 女 1 男 3变态
+	 /// 可空:NO
+	 ///默认值:0
+	 /// </summary>
 
-        public String email { get; set; }
+	 public Int32 sex{ get; set; }
 
-        public String mobilephone { get; set; }
+	 /// <summary>
+	 /// 注释:登陆的账户名称
+	 /// 可空:NO
+	 /// </summary>
 
-        public String headerImgUrl { get; set; }
+	 public String loginName{ get; set; }
 
-        public String birthDate { get; set; }
+	 /// <summary>
+	 /// 注释:用户密码
+	 /// 可空:NO
+	 /// </summary>
 
-        public String idNumber { get; set; }
+	 public String passwprd{ get; set; }
 
-        public Int64 roleLevel { get; set; }
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
 
-        public String addtime { get; set; }
+	 public String weichat{ get; set; }
 
-        public String addUserId { get; set; }
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
 
-        public String addUserName { get; set; }
+	 public String qq{ get; set; }
 
-        public String affiliatedCompanyId { get; set; }
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
 
-        public String affiliatedCompany { get; set; }
+	 public String email{ get; set; }
 
-        public Int64 isDelete { get; set; }
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
 
-        public String deleteTime { get; set; }
+	 public String mobilephone{ get; set; }
 
-        public Int64 syncTime { get; set; }
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
 
-        public Int64 status { get; set; }
+	 public String headerImgUrl{ get; set; }
 
-        public String remark { get; set; }
+	 /// <summary>
+	 /// 注释:出生年月日
+	 /// 可空:NO
+	 /// </summary>
 
-    }
+	 public String birthDate{ get; set; }
+
+	 /// <summary>
+	 /// 可空:NO
+	 /// </summary>
+
+	 public String idNumber{ get; set; }
+
+	 /// <summary>
+	 /// 注释:1 过磅员工 2 过磅管理员工 3公司管理员工 4老总
+	 /// 可空:NO
+	 ///默认值:1
+	 /// </summary>
+
+	 public Int32 roleLevel{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String addtime{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String addUserId{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String addUserName{ get; set; }
+
+	 /// <summary>
+	 /// 注释:所属公司的ID
+	 /// 可空:NO
+	 /// </summary>
+
+	 public String affiliatedCompanyId{ get; set; }
+
+	 /// <summary>
+	 /// 注释:所属公司
+	 /// 可空:NO
+	 /// </summary>
+
+	 public String company{ get; set; }
+
+	 /// <summary>
+	 /// 可空:NO
+	 ///默认值:0
+	 /// </summary>
+
+	 public Int32 isDelete{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String deleteTime{ get; set; }
+
+	 /// <summary>
+	 /// 可空:NO
+	 /// </summary>
+
+	 public Int32 syncTime{ get; set; }
+
+	 /// <summary>
+	 /// 注释:0 未审核 1 正常使用地磅
+	 /// 可空:NO
+	 ///默认值:0
+	 /// </summary>
+
+	 public Int32 status{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String remark{ get; set; }
+
+	 }
 }

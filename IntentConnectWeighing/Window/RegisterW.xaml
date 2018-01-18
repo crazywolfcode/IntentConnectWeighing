@@ -7,7 +7,7 @@
         mc:Ignorable="d" 
         Icon="/IntentConnectWeighing;component/aislogo_48.ico"
         WindowStartupLocation="CenterScreen" Style="{StaticResource  settingWindowStyle}"
-        Title="RegisterW" Height="550" Width="650"
+        Title="RegisterW" Height="600" Width="650"
         Activated="Window_Activated" 
         Loaded="Window_Loaded" ContentRendered="Window_ContentRendered" Closing="Window_Closing">
     <Grid>

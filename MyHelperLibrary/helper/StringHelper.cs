@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Microsoft.International.Converters.PinYinConverter;
 
 namespace MyHelper
 {
-   public class StringHelper
+    public class StringHelper
     {
         /// <summary>
         /// 得到中文字符串的首字母(不全)
@@ -182,13 +183,14 @@ namespace MyHelper
             {
                 char[] array = name.ToCharArray();
                 string result = string.Empty;
-                for (int i=0;i<array.Length;i++)
+                for (int i = 0; i < array.Length; i++)
                 {
                     if (i == 0)
                     {
-                        result +=  array[i].ToString().ToLower();
+                        result += array[i].ToString().ToLower();
                     }
-                    else {
+                    else
+                    {
                         if (isUpper(array[i]))
                         {
                             result += "_" + array[i].ToString().ToLower();
@@ -197,13 +199,44 @@ namespace MyHelper
                         {
                             result += array[i].ToString();
                         }
-                    }                   
+                    }
                 }
                 return result;
             }
             return "";
         }
 
+        public static string jsonCamelCaseToDBnameing(string json)
+        {
+            if (string.IsNullOrEmpty(json))
+            {
+                return null;
+            }
+            string resultString = string.Empty;
+            string pattern = "([\"](\\w+?)[\"][:]{1}?)";
+            MatchCollection colls = Regex.Matches(json, pattern);
+            for (int i = 0; i < colls.Count; i++)
+            {
+                json = json.Replace(colls[i].ToString(), DBNamingToCamelCase(colls[i].ToString()));
+            }          
+            return json;
+        }
+
+        public static string jsonDBnameingToCamelCase(string json)
+        {
+            if (string.IsNullOrEmpty(json))
+            {
+                return null;
+            }
+            string resultString = string.Empty;
+            string pattern = "([\"](\\w+?)[\"][:]{1}?)";
+            MatchCollection colls = Regex.Matches(json, pattern);
+            for (int i = 0; i < colls.Count; i++)
+            {
+                json = json.Replace(colls[i].ToString(), camelCaseToDBnameing(colls[i].ToString()));
+            }
+            return json;
+        }
         /// <summary>
         /// 数据库表名转化为类名
         /// </summary>
@@ -240,6 +273,26 @@ namespace MyHelper
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 邮箱格式验证
+        /// </summary>
+        /// <returns></returns>
+        public static string CheckMail(string strEmail)
+        {
+            string result = "";
+            Regex regex = new Regex(@"[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}");
+            Match match = regex.Match(strEmail);
+            if (match.Success)
+            {
+                result = strEmail;
+            }
+            else
+            {
+                result = "无效邮箱";
+            }
+            return result;
         }
     }
 }

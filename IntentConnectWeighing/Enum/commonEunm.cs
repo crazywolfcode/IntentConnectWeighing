@@ -25,8 +25,7 @@ namespace IntentConnectWeighing
         mysql,
         sqlite
     }
-
-    enum ConfigItemName
+     enum ConfigItemName
     {
         //connectionStrings
         appSettings,
@@ -51,11 +50,23 @@ namespace IntentConnectWeighing
         tryUseTimes,
         startUseTime,
         expiryDate,
-    
+        mysqlHost,
+        mysqlDatabaseName,
+        mysqlPort,
+        mysqlUserId,
+        mysqlPassword,
+
         //url
+        serverBaseUrl, 
         syncUp,
         syncDown,
+        baiduUrl,
 
+        baiduAppId,
+        baiduApiKey,
+        baiduApiSecretKey,
+        baiduSecretKey,
+        baiduAccessKey,
     }
 
     public enum CompanyOrganizationType
@@ -99,5 +110,12 @@ namespace IntentConnectWeighing
         platformAppConfig,
         platformConfig
     }
-
+    //0 未知 1私营 2 国营 3政府
+    public enum CompanyType
+    {
+        Other,
+        PrivaterEnterprise,
+        StateOwnedEnterprise,
+        GovernmentSector
+    }
 }

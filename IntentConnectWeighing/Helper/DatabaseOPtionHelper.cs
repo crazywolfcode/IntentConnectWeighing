@@ -39,11 +39,11 @@ namespace IntentConnectWeighing
         /// 获取数据中所有表
         /// </summary>
         /// <returns></returns>
-        public DataTable getAllTable()
+        public DataTable getAllTable(string dbname)
         {
             if (dbType == DbType.mysql.ToString())
             {
-                return mysqlHelper.getAllTable();
+                return mysqlHelper.getAllTable(dbname);
             }
             else
             {

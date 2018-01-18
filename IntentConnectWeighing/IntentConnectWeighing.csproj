@@ -13,6 +13,10 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,12 +29,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -76,15 +76,28 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>IntentConnectWeighing.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AipSdk, Version=3.3.0.29135, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Baidu.AI.3.3.0.29135\lib\net35\AipSdk.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Expression.Drawing">
       <HintPath>C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.0\Libraries\Microsoft.Expression.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -92,9 +105,11 @@
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -102,6 +117,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behavior\WindowBehavior.cs" />
+    <Compile Include="CameraSdk\CHCNetSDK.cs" />
+    <Compile Include="CameraSdk\PlayCtrl.cs" />
     <Compile Include="Command\ShowSettingWindowsCommand.cs" />
     <Compile Include="Commom\AddCommand.cs" />
     <Compile Include="Commom\Constract.cs" />
@@ -124,6 +141,12 @@
     <Compile Include="Converter\ThicknessToDoubleConverter.cs" />
     <Compile Include="Converter\TreeViewMarginConverter.cs" />
     <Compile Include="Converter\TrueToFalseConverter.cs" />
+    <Compile Include="Entity\baidu\baiduBandCardRecognition.cs" />
+    <Compile Include="Entity\baidu\BaiduDriverLicenseRecognition.cs" />
+    <Compile Include="Entity\baidu\baiduIDRecogniton.cs" />
+    <Compile Include="Entity\baidu\BaiduLicenseRecognition.cs" />
+    <Compile Include="Entity\baidu\baiduVehicleRecognition.cs" />
+    <Compile Include="Entity\baidu\BDAccessToken.cs" />
     <Compile Include="Entity\BillImage.cs" />
     <Compile Include="Entity\CameraInfo.cs" />
     <Compile Include="Entity\CarInfo.cs" />
@@ -141,6 +164,9 @@
     <Compile Include="Enum\ResourceName.cs" />
     <Compile Include="Enum\MyWindowsStyle.cs" />
     <Compile Include="Helper\AnimationHelper.cs" />
+    <Compile Include="Helper\BaiDuAcesessTokenHelper.cs" />
+    <Compile Include="Helper\BaiduAipHelper.cs" />
+    <Compile Include="Helper\CameraHelper.cs" />
     <Compile Include="Helper\DatabaseOPtionHelper.cs" />
     <Compile Include="Helper\helpers.cs" />
     <Compile Include="Helper\LoginHelper.cs" />
@@ -189,6 +215,9 @@
     </Compile>
     <Compile Include="Window\ActivationW.xaml.cs">
       <DependentUpon>ActivationW.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window\CameraAddW.xaml.cs">
+      <DependentUpon>CameraAddW.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window\SelectVersionW.xaml.cs">
       <DependentUpon>SelectVersionW.xaml</DependentUpon>
@@ -357,6 +386,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Window\CameraAddW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Window\SelectVersionW.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -399,6 +432,8 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="nuget.sh" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -509,6 +544,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="software_using_protocol.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Img\pay.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

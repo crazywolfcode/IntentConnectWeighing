@@ -10,13 +10,11 @@ namespace MyHelper
 {
     public class MySqlHelper : DbBaseHelper
     {
-        private static readonly string connectionString = ConfigurationHelper.GetConnectionConfig("mysqlConn");
+        private static  string connectionString = ConfigurationHelper.GetConnectionConfig("mysqlConn");
         private static readonly string connectionStringTemplate = "Database={0};Data Source={1};User Id={2};Password={3};pooling=false;CharSet=utf8;port={4}";
         //"Data Source=192.168.1.64;Initial Catalog=classzone;Persist Security Info=True;User ID=root;Password=root;Pooling=False;charset=utf8;MAX Pool Size=2000;Min Pool Size=1;Connection Lifetime=30;";
         // "Database=weightsys;Data Source=192.168.88.3;User Id=admin;Password=Txmy0071;pooling=false;CharSet=utf8;port=33069";
-
-        private static readonly string getTableSql = "SELECT table_name as `name` from information_schema.tables where table_schema='weighing' and table_type='base table';";
-
+      
         private MySqlConnection connection;
 
         private MySqlConnection mConnection
@@ -25,8 +23,6 @@ namespace MyHelper
             {
                 if (connection == null)
                 {
-                    //using ()
-                    //{
                     connection = new MySqlConnection(connectionString);
                     if (connection.State != ConnectionState.Open)
                     {
@@ -40,7 +36,6 @@ namespace MyHelper
                         }
                     }
                     return connection;
-                    //}
                 }
                 else
                 {
@@ -64,8 +59,11 @@ namespace MyHelper
         /// <summary>
         /// 构造方法
         /// </summary>
-        public MySqlHelper()
+        public MySqlHelper(string connstring = null)
         {
+            if (!string.IsNullOrEmpty(connstring)) {
+                connectionString = connstring;
+            }
             if (connectionString == null || connectionString.Length <= 0)
             {
                 throw new Exception("Mysql 数据没有正常的配制！");
@@ -97,17 +95,18 @@ namespace MyHelper
         /// 获取数据中所有表
         /// </summary>
         /// <returns></returns>
-        public DataTable getAllTable()
+        public DataTable getAllTable(string dbbame)
         {
-            return this.ExcuteDataTable(getTableSql, null);
+            string sql =$"SELECT table_name as `name` from information_schema.tables where table_schema='{dbbame}' and table_type='base table';";
+            return this.ExcuteDataTable(sql, null);
         }
         /// <summary>
         /// get the all table's name of in the database
         /// </summary>
         /// <returns></returns>
-        public string[] getAllTableName()
+        public string[] getAllTableName(string dbbame)
         {
-            DataTable dt = getAllTable();
+            DataTable dt = getAllTable(dbbame);
             if (dt.Rows.Count <= 0) { return null; }
             string[] result = new string[dt.Rows.Count];
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -116,6 +115,64 @@ namespace MyHelper
             }
             return result;
         }
+
+
+        public List<DbSchema> getAllTableSchema(string dbname) {
+            List<DbSchema> dss = new List<DbSchema>();
+            string sql=$"SELECT TABLE_NAME as tableName,TABLE_COMMENT as tableComment,CREATE_TIME as createTime,UPDATE_TIME as updateTime ,TABLE_ROWS as tableRows,DATA_LENGTH as dataLength   from information_schema.tables where table_schema='{dbname}'  and table_type='base table';";
+            DataTable dt = this.ExcuteDataTable(sql, null);
+            string json= JsonHelper.ObjectToJson(dt);
+            dss = (List<DbSchema>) JsonHelper.JsonToObject(json, typeof(List<DbSchema>));
+            return dss;
+        }
+        /// <summary>
+        /// get the schema of table
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
+        public List<MysqlTabeSchema> getTableSchema(string tableName)
+        {
+            if (string.IsNullOrEmpty(tableName))
+            {
+                return null;
+            }
+            List<MysqlTabeSchema> ts = null;
+            string sql = string.Format(" desc {0};", tableName);
+            DataTable dt = this.ExcuteDataTable(sql, null);
+            String json = JsonHelper.ObjectToJson(dt);
+            ts = (List<MysqlTabeSchema>)JsonHelper.JsonToObject(json, typeof(List<MysqlTabeSchema>));
+            return ts;
+        }
+
+        public List<MysqlTableColumnSchema> getTableColumnSchema(string dbname,string tablename) {
+            List<MysqlTableColumnSchema> list=null;
+            if (string.IsNullOrEmpty(dbname) && string.IsNullOrEmpty(tablename)) {
+                return null;
+            }
+            string sqlT = @"select COLUMN_NAME as columnName ,
+                                   COLUMN_TYPE as type,
+			                       COLUMN_DEFAULT as defaultValue,
+			                       IS_NULLABLE as isNullable,
+			                       COLUMN_COMMENT as commentValue
+                            from information_schema.columns 
+                            where table_schema ='{0}'  and table_name = '{1}';";
+            string sql = string.Format(sqlT, dbname, tablename);
+            DataTable dt = this.ExcuteDataTable(sql, null);
+            String json = JsonHelper.ObjectToJson(dt);
+            list = (List<MysqlTableColumnSchema>)JsonHelper.JsonToObject(json, typeof(List<MysqlTableColumnSchema>));
+            return list;
+        }
+
+        public string getCreateSql(string tableName)
+        {
+            string  sql= $"show create table {tableName};";
+            DataTable dt = this.ExcuteDataTable(sql, null);
+            if (dt.Rows.Count > 0) {
+                return dt.Rows[0][1].ToString();
+            }
+            return null;
+        }
+
         /// <summary>
         /// 创建Mysql 的连接字符串
         /// </summary>

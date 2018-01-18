@@ -1,8 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"                   
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                    xmlns:local="clr-namespace:IntentConnectWeighing.StyleDictionary">
-
+                    xmlns:local="clr-namespace:IntentConnectWeighing">
 
     <!--menu alert number-->
     <sys:Int32 x:Key="MenuInWeighingNumber">0</sys:Int32>
@@ -10,7 +9,6 @@
     <sys:Int32 x:Key="MenuReportNumber">1</sys:Int32>
     <sys:Int32 x:Key="MenuBaseDataNumber">0</sys:Int32>
     <sys:Int32 x:Key="MenuIndexNumber">1</sys:Int32>
-
     <sys:String x:Key="man">1</sys:String>
     <sys:String x:Key="feman">0</sys:String>
     <sys:String x:Key="nan">男</sys:String>

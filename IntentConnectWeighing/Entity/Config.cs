@@ -1,51 +1,131 @@
-﻿
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
-namespace IntentConnectWeighing
+ namespace IntentConnectWeighing
 {
 
-	/// <summary>
-    /// 
-    ///</summary>
+	 /// <summary>
+	 /// 配置表
+	 /// 数据条数:31
+	 /// 数据大小:16KB
+	 /// </summary>
 
-    public  class Config
-    {
-        public String id { get; set; }
 
-        public String clientId { get; set; }
+	  public  class Config
+	 {
 
-        public String clientNumber { get; set; }
+	 /// <summary>
+	 /// 可空:NO
+	 ///默认值:0
+	 /// </summary>
 
-        public String configName { get; set; }
+	 public String id{ get; set; }
 
-        public String configValue { get; set; }
+	 /// <summary>
+	 /// 可空:NO
+	 ///默认值:0
+	 /// </summary>
 
-        public Int64 configType { get; set; }
+	 public String clientId{ get; set; }
 
-        public String description { get; set; }
+	 /// <summary>
+	 /// 可空:NO
+	 ///默认值:0
+	 /// </summary>
 
-        public String addtime { get; set; }
+	 public String clientNumber{ get; set; }
 
-        public String addUserId { get; set; }
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
 
-        public String addUserName { get; set; }
+	 public String configName{ get; set; }
 
-        public String lastUpdateTime { get; set; }
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
 
-        public String lastUpdateUserId { get; set; }
+	 public String configValue{ get; set; }
 
-        public String lastUpdateUserName { get; set; }
+	 /// <summary>
+	 /// 注释:0  其它配置 1 用户客户端配置 2应用客户端配置 3 用户平台配置 4应用平台配置 5平台配置
+	 /// 可空:NO
+	 ///默认值:1
+	 /// </summary>
 
-        public Int64 syncTime { get; set; }
+	 public Int32 configType{ get; set; }
 
-        public Int64 isDelete { get; set; }
+	 /// <summary>
+	 /// 注释:说明
+	 /// 可空:YES
+	 /// </summary>
 
-        public String deleteTime { get; set; }
+	 public String description{ get; set; }
 
-        public Int64 status { get; set; }
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
 
-    }
+	 public String addtime{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String addUserId{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String addUserName{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String lastUpdateTime{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String lastUpdateUserId{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String lastUpdateUserName{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 ///默认值:0
+	 /// </summary>
+
+	 public Int64 syncTime{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public Int32 isDelete{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String deleteTime{ get; set; }
+
+	 /// <summary>
+	 /// 注释:0 未启用 1 正常启用
+	 /// 可空:NO
+	 ///默认值:1
+	 /// </summary>
+
+	 public Int32 status{ get; set; }
+
+	 }
 }

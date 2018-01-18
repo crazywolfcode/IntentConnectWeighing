@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 using MyHelper;
+using Baidu.Aip;
 
 namespace IntentConnectWeighing
 {
@@ -23,6 +24,14 @@ namespace IntentConnectWeighing
             createNotifyIcon();
 
             createClientId();
+
+            //devlepment
+            new SettingW().Show();
+
+            //navigation();
+        }
+
+        private void navigation() {
             string registerStep = "";
             if (string.IsNullOrWhiteSpace(ConfigurationHelper.GetConfig(ConfigItemName.softwareVersion.ToString())))
             {
@@ -147,7 +156,7 @@ namespace IntentConnectWeighing
         /// <param name="e"></param>
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            DateTime start = DateTime.Now;
+            //DateTime start = DateTime.Now;
             //    try
             //    {
             //        insertOrUpdateConnectionStrings();
@@ -164,9 +173,9 @@ namespace IntentConnectWeighing
             //{
             //    ConsoleHelper.writeLine("save AppSettings to dabase error: " + exception.Message);
             //}
-            double time = DateTimeHelper.DateDifflMilliseconds(start, DateTime.Now);
+            //double time = DateTimeHelper.DateDifflMilliseconds(start, DateTime.Now);
 
-            ConsoleHelper.writeLine("suer time :" + time + " ms");
+            //ConsoleHelper.writeLine("suer time :" + time + " ms");
 
         }
         /// <summary>
@@ -251,13 +260,15 @@ namespace IntentConnectWeighing
                 {
                     helper = new DatabaseOPtionHelper();
                 }
-                sql = DbBaseHelper.getSelectSql("config", null, "client_id =' " + ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString()) + "' and config_name = ' " + key + "'", null, null, null, 1);
+                sql = DbBaseHelper.getSelectSql("config", null, "client_id ='" + ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString()) + "' and config_name = '" + key + "'", null, null, null, 1);
                 DataTable dt = helper.select(sql);
                 if (dt.Rows.Count > 0)
                 {
-                    config = JsonHelper.JsonToObject(JsonHelper.ObjectToJson(dt.Rows[0]), typeof(Config)) as Config;
-                    if (config != null)
+                    
+                    List<Config> configs = JsonHelper.TableToEntity<Config>(dt);
+                    if (configs[0]!= null)
                     {
+                        config = configs[0];
                         if (config.configValue != collection[key].ToString())
                         {
                             config.configValue = collection[key].ToString();

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -65,8 +65,21 @@ namespace IntentConnectWeighing
                 {
                     ConfigurationHelper.SetConnectionConfig(ConfigItemName.mysqlConn.ToString(), connstring);
                     ConfigurationHelper.SetConfig(ConfigItemName.dbType.ToString(), DbType.mysql.ToString());
+                    ConfigurationHelper.SetConfig(ConfigItemName.mysqlHost.ToString(), IPAddress.Text.Trim());
+                    ConfigurationHelper.SetConfig(ConfigItemName.mysqlPort.ToString(), Port.Text.Trim());
+                    ConfigurationHelper.SetConfig(ConfigItemName.mysqlDatabaseName.ToString(), DbName.Text.Trim());
+                    ConfigurationHelper.SetConfig(ConfigItemName.mysqlUserId.ToString(), UserID.Text.Trim());
+
                     AlertInfoTB.Text = "连接数据库成功";
+
+
+
                     //disable save button
+
+
+                    
+
+
                     SaveMysqlBtn.IsEnabled = false;
                 }
                 catch (Exception)
@@ -90,8 +103,7 @@ namespace IntentConnectWeighing
 
         private void Pwd_TextChanged(object sender, TextChangedEventArgs e)
         {
-            buildConnString();
-
+            buildConnString();          
         }
 
         private void UserID_TextChanged(object sender, TextChangedEventArgs e)
@@ -122,6 +134,11 @@ namespace IntentConnectWeighing
                 if (!string.IsNullOrEmpty(conn))
                 {
                     connStr.Text = conn;
+                    IPAddress.Text = ConfigurationHelper.GetConfig(ConfigItemName.mysqlHost.ToString());
+                    DbName.Text = ConfigurationHelper.GetConfig(ConfigItemName.mysqlDatabaseName.ToString());
+                    Port.Text = ConfigurationHelper.GetConfig(ConfigItemName.mysqlPort.ToString());
+                    UserID.Text = ConfigurationHelper.GetConfig(ConfigItemName.mysqlUserId.ToString());
+                    Pwd.Text = ConfigurationHelper.GetConfig(ConfigItemName.mysqlPassword.ToString());
                     AlertInfoTB.Text = "数据库已经配置成功，建议不要轻易改变";
                 }
             }
@@ -135,6 +152,10 @@ namespace IntentConnectWeighing
             if (string.IsNullOrEmpty(currentDbType))
             {
                 SqliteAlertTB.Text = "数据库已经配置成功，建议不要轻易改变";
+            }
+
+            if (SQLiteHelper.CheckConn(defaultconn)) {
+                SqliteRB.IsEnabled = false;
             }
         }
 
@@ -156,7 +177,7 @@ namespace IntentConnectWeighing
                 ConfigurationHelper.SetConfig(ConfigItemName.sqliteDbPath.ToString(), SQLiteHelper.getDbSavePath());
                 ConfigurationHelper.SetConfig(ConfigItemName.dbType.ToString(),DbType.sqlite.ToString());
                 SqliteAlertTB.Text = "Sqlite 数据库配置成功";
-                //disable save button
+                //disable save button               
                 SaveSqliteBtn.IsEnabled = false;
             }
             else

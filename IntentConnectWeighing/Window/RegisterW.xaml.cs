@@ -60,6 +60,7 @@ namespace IntentConnectWeighing
         private void Window_ContentRendered(object sender, EventArgs e)
         {
             App.setCurrentWindow(this);
+            MessageBox.Show(BaiDuAcesessTokenHelper.getBaiDuAcesessToken());
         }
 
 

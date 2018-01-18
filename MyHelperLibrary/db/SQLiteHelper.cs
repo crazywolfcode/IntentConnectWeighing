@@ -17,7 +17,7 @@ namespace MyHelper
         private static string sqliteDbName = ConfigurationHelper.GetConfig("sqliteDbName");
         private static string dbPath = ConfigurationHelper.GetConfig("sqliteDbPath");
         private static string sqliteConnectionString = ConfigurationHelper.GetConnectionConfig("sqliteConn");
-
+        private static string getTableSchemaSql = "SELECT name as tableName FROM sqlite_master WHERE type='table' ORDER BY name; ";
         private SQLiteConnection connection;
 
         private SQLiteConnection mConnection
@@ -26,34 +26,20 @@ namespace MyHelper
             {
                 if (connection == null)
                 {
-                    //using (connection = new SQLiteConnection(String.Format(sqliteConnectionString, dbPath)))
-                    //{
-                    connection = new SQLiteConnection(String.Format(connStrTemplate, sqliteConnectionString));
-                    if (connection.State != ConnectionState.Open) {
-                        try {
-                            connection.Open();
-                        } catch (Exception e){
-                            ConsoleHelper.writeLine("数据库打开失败：" + e.Message);
-                        }
-                    }                    
-                    return connection;
-                    //}
+                    connection = new SQLiteConnection(sqliteConnectionString);
                 }
-                else
+                if (connection.State != ConnectionState.Open)
                 {
-                    if (connection.State != ConnectionState.Open)
+                    try
                     {
-                        try
-                        {
-                            connection.Open();
-                        }
-                        catch (Exception e)
-                        {
-                            ConsoleHelper.writeLine("数据库打开失败：2"+e.Message);
-                        }
+                        connection.Open();
                     }
-                    return connection;
+                    catch (Exception e)
+                    {
+                        ConsoleHelper.writeLine(e.Message);
+                    }
                 }
+                return connection;
             }
             set { connection = value; }
         }
@@ -64,7 +50,7 @@ namespace MyHelper
         /// <returns></returns>
         public static string createConnString(string dbname)
         {
-            return string.Format(connStrTemplate, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data"))+"\\" +dbname;
+            return string.Format(connStrTemplate, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data")) + "\\" + dbname;
         }
         /// <summary>
         /// get the save path of the database
@@ -75,35 +61,41 @@ namespace MyHelper
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data");
         }
 
-        public SQLiteHelper()
+        public SQLiteHelper( string connstr=null)
         {
-            if (sqliteDbName == null || sqliteDbName.Length <= 0)
+            if (string.IsNullOrEmpty(connstr))
             {
-                sqliteDbName = "interConnectionData.db";
-                ConfigurationHelper.SetConfig("sqliteDbName", sqliteDbName);
-            }
-
-            if (string.IsNullOrEmpty(dbPath))
-            {
-                dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data");
-                ConfigurationHelper.SetConfig("sqliteDbPath", dbPath);
-            }
-
-            if (sqliteConnectionString == null || sqliteConnectionString.Length <= 0)
-            {
-                sqliteConnectionString = string.Format(connStrTemplate, dbPath+"\\"+sqliteDbName);
-                ConfigurationHelper.SetConnectionConfig("sqliteConn", sqliteConnectionString);
-            }
-
-            if (FileHelper.FolderExistsCreater(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data")))
-            {
-                if (!File.Exists(dbPath + "/" + sqliteDbName))
+                if (sqliteDbName == null || sqliteDbName.Length <= 0)
                 {
-                    using (File.Create(dbPath + "/" + sqliteDbName))
-                    {
+                    sqliteDbName = "interConnectionData.db";
+                    ConfigurationHelper.SetConfig("sqliteDbName", sqliteDbName);
+                }
 
+                if (string.IsNullOrEmpty(dbPath))
+                {
+                    dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data");
+                    ConfigurationHelper.SetConfig("sqliteDbPath", dbPath);
+                }
+
+                if (sqliteConnectionString == null || sqliteConnectionString.Length <= 0)
+                {
+                    sqliteConnectionString = string.Format(connStrTemplate, dbPath + "\\" + sqliteDbName);
+                    ConfigurationHelper.SetConnectionConfig("sqliteConn", sqliteConnectionString);
+                }
+
+                if (FileHelper.FolderExistsCreater(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data")))
+                {
+                    if (!File.Exists(dbPath + "/" + sqliteDbName))
+                    {
+                        using (File.Create(dbPath + "/" + sqliteDbName))
+                        {
+
+                        }
                     }
                 }
+            }
+            else {
+                sqliteConnectionString = connstr;
             }
 
         }
@@ -174,6 +166,40 @@ namespace MyHelper
             return this.ExcuteDataTable(sql, null);
         }
 
+        public List<DbSchema> getAllTableSchema()
+        {
+            List<DbSchema> dss = new List<DbSchema>();
+            DataTable dt = this.ExcuteDataTable(getTableSchemaSql, null);
+            string json = JsonHelper.ObjectToJson(dt);
+            dss = (List<DbSchema>)JsonHelper.JsonToObject(json, typeof(List<DbSchema>));
+            return dss;
+        }
+
+        public string getCreateSql(string tablename) {
+            string sql = $"SELECT name,sql FROM sqlite_master WHERE type='table' and name = '{tablename}' ORDER BY name  ; ";
+            DataTable dt = this.ExcuteDataTable(sql, null);
+            if (dt.Rows.Count > 0)
+            {
+                return dt.Rows[0][1].ToString();
+            }
+            return null;
+        }
+        /// <summary>
+        /// get the schema of table
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
+        public List<SqliteTableSchema> getTableSchema(string tableName) {
+            if (string.IsNullOrEmpty(tableName)) {
+                return null;
+            }
+            List<SqliteTableSchema> ts = null;
+            string sql = string.Format( " PRAGMA table_info({0});", tableName);
+            DataTable dt = this.ExcuteDataTable(sql,null);
+            String json = JsonHelper.ObjectToJson(dt);
+            ts = (List<SqliteTableSchema>) JsonHelper.JsonToObject(json, typeof(List<SqliteTableSchema>));
+            return ts;
+        }
         /// <summary>
         /// get the all table's name of in the database
         /// </summary>
@@ -221,16 +247,15 @@ namespace MyHelper
         public DataTable ExcuteDataTable(string sql, SQLiteParameter[] parameters)
         {
             DataTable dt = new DataTable();
-            using (SQLiteCommand command = new SQLiteCommand(sql, mConnection))
+            using (SQLiteCommand command = mConnection.CreateCommand())
             {
+                command.CommandText = sql;
                 if (parameters != null)
                 {
                     command.Parameters.AddRange(parameters);
                 }
-                //SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
-                //adapter.Fill(dt);
-                SQLiteDataReader reader = command.ExecuteReader();
-                dt.Load(reader);
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
+                adapter.Fill(dt);
                 return dt;
             }
         }
@@ -283,7 +308,6 @@ namespace MyHelper
             finally
             {
                 mConnection.Cancel();
-                // mConnection.Close();
             }
             return affectedRows;
         }

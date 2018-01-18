@@ -9,6 +9,6 @@
       Title="ResisterSunPage">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="pay"/>
+        <Image x:Name="LicenseImg" Stretch="Uniform" Source="/IntentConnectWeighing;component/Themes/Img/pay.jpg"></Image>
     </Grid>
 </Page>
