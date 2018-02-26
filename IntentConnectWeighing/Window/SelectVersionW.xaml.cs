@@ -45,7 +45,7 @@ namespace IntentConnectWeighing
         }
         private void Window_ContentRendered(object sender, EventArgs e)
         {
-            App.setCurrentWindow(this);
+            App.SetCurrentWindow(this);
         }
         
         /// <summary>
@@ -91,7 +91,7 @@ namespace IntentConnectWeighing
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            App.setCurrentWindow();
+            App.SetCurrentWindow();
             App.ShowCurrentWindow();            
         }
     }

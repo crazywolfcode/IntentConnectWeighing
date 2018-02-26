@@ -13,7 +13,7 @@ namespace IntentConnectWeighing
 {
     class TemplateHelper
     {
-        public static string getTemplateXamlCode(System.Windows.Controls.Control control)
+        public static string GetTemplateXamlCode(Control control)
         {
             FrameworkTemplate template = control.Template;
             string xaml = "";
@@ -41,7 +41,7 @@ namespace IntentConnectWeighing
             return xaml;
         }
 
-        public static FrameworkElement getFrameworkElementFromXaml(string path)
+        public static FrameworkElement GetFrameworkElementFromXaml(string path)
         {
             XmlTextReader reader = new XmlTextReader(path);
             //FileStream fs;
@@ -51,7 +51,7 @@ namespace IntentConnectWeighing
             return element;
         }
 
-        public static FrameworkElement getFrameworkElementFromResource(string resourseFilePath)
+        public static FrameworkElement GetFrameworkElementFromResource(string resourseFilePath)
         {
             Uri uri = new Uri(resourseFilePath, UriKind.RelativeOrAbsolute);
             if (uri == null) return null;
@@ -60,7 +60,7 @@ namespace IntentConnectWeighing
             return XamlReader.Load(stream) as FrameworkElement;
         }
 
-        public FrameworkElement getFrameworkElementFromString(string strXaml)
+        public FrameworkElement GetFrameworkElementFromString(string strXaml)
         {
             StringReader strreader = new StringReader(strXaml);
             XmlTextReader xmlreader = new XmlTextReader(strreader);
@@ -71,7 +71,7 @@ namespace IntentConnectWeighing
         /// </summary>
         /// <param name="name">资源名称</param>
         /// <returns></returns>
-        public static ControlTemplate getControlTemplate(ResourceName name) {
+        public static ControlTemplate GetControlTemplate(ResourceName name) {
          return   (ControlTemplate)App.Current.Resources[name.ToString()];
         }
 

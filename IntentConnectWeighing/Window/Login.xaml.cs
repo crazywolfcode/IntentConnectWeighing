@@ -23,10 +23,8 @@ namespace IntentConnectWeighing
     /// </summary>
     public partial class Login : Window
     {
-        private loginedUser currentUser;
-        private List<loginedUser> HistoryUsers;
-        private bool loginSuccess = false;
-        double h = 0;
+        private User currentUser;
+        private List<User> HistoryUsers;
         public Login()
         {
             this.Style = (Style)App.Current.Resources[ResourceName.LoginWindowStyle.ToString()];
@@ -43,8 +41,8 @@ namespace IntentConnectWeighing
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            initTitleDragEvent();
-            initCloseBtn(this);
+            InitTitleDragEvent();
+            InitCloseBtn(this);
             this.HistoryUsers = LoginHelper.getHostoryUser();
             this.UserNameCb.ItemsSource = this.HistoryUsers;
             this.UserNameCb.DisplayMemberPath = "Name";
@@ -57,7 +55,7 @@ namespace IntentConnectWeighing
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
-            App.setCurrentWindow(this);
+            App.SetCurrentWindow(this);
         }
 
         public async void ASynchronization()
@@ -95,13 +93,13 @@ namespace IntentConnectWeighing
         /// 绑定窗口的拖动和双击事件
         /// </summary>
         /// <param name="isCanDrag"></param>
-        public void initTitleDragEvent(bool isCanDrag = true)
+        public void InitTitleDragEvent(bool isCanDrag = true)
         {
             if (isCanDrag == true)
             {
-                Border windowTitle = (Border)TemplateHelper.getControlTemplate(ResourceName.LoginWindowControlTemplate).FindName("windowTitle", this);
-                windowTitle.MouseMove += windowTitle_MouseMove;
-                windowTitle.MouseDown += windowTitle_MouseDown;
+                Border windowTitle = (Border)TemplateHelper.GetControlTemplate(ResourceName.LoginWindowControlTemplate).FindName("windowTitle", this);
+                windowTitle.MouseMove += WindowTitle_MouseMove;
+                windowTitle.MouseDown += WindowTitle_MouseDown;
             }
         }
         /// <summary>
@@ -109,7 +107,7 @@ namespace IntentConnectWeighing
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void windowTitle_MouseMove(object sender, MouseEventArgs e)
+        protected void WindowTitle_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -122,7 +120,7 @@ namespace IntentConnectWeighing
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected virtual void windowTitle_MouseDown(object sender, MouseButtonEventArgs e)
+        protected virtual void WindowTitle_MouseDown(object sender, MouseButtonEventArgs e)
         {
             //如果是右键点击，直接返回
             if (e.RightButton == MouseButtonState.Pressed)
@@ -151,9 +149,9 @@ namespace IntentConnectWeighing
         /// </summary>
         /// <param name="isShow"> 是否显示 </param>
         /// <param name="window">控件</param>
-        public void initCloseBtn(System.Windows.Window window, bool isShow = true)
+        public void InitCloseBtn(System.Windows.Window window, bool isShow = true)
         {
-            WindowButton closeBtn = (WindowButton)TemplateHelper.getControlTemplate(ResourceName.LoginWindowControlTemplate).FindName("CloseBtn", window);
+            WindowButton closeBtn = (WindowButton)TemplateHelper.GetControlTemplate(ResourceName.LoginWindowControlTemplate).FindName("CloseBtn", window);
             if (isShow == true)
             {
                 closeBtn.Visibility = Visibility.Visible;
@@ -214,7 +212,7 @@ namespace IntentConnectWeighing
            
         }
 
-        public void updata()
+        public void Updata()
         {
             string url = HttpClientHelper.baseAddress + "/api/index/syncUp.html";
             //SQLiteHelper helper = new SQLiteHelper();
@@ -317,10 +315,10 @@ namespace IntentConnectWeighing
             //MainWindow window = new MainWindow();
             //this.Close();
             //window.Show();                            
-            AnimationHelper.getVibrationAnimation(this, Orientation.Vertical, handle).Begin();
+            AnimationHelper.getVibrationAnimation(this, Orientation.Vertical, Handle).Begin();
         }
 
-        public void handle(object sender, EventArgs e)
+        public void Handle(object sender, EventArgs e)
         {
             MainWindow window = new MainWindow();
             this.Close();
@@ -357,14 +355,7 @@ namespace IntentConnectWeighing
 
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
-            this.ShowInTaskbar = false;
-            App.setCurrentWindow();
-            App.ShowCurrentWindow();
-            e.Cancel = true;
-        }
+
 
         private void Window_StateChanged(object sender, EventArgs e)
         {
@@ -382,7 +373,7 @@ namespace IntentConnectWeighing
         {
             if (this.UserNameCb.SelectedItem != null)
             {
-                currentUser = (loginedUser)this.UserNameCb.SelectedItem;
+                currentUser = (User)this.UserNameCb.SelectedItem;
             }
             else
             {
@@ -406,7 +397,7 @@ namespace IntentConnectWeighing
             }
         }
 
-        private void initSettintBtn_Click(object sender, RoutedEventArgs e)
+        private void InitSettintBtn_Click(object sender, RoutedEventArgs e)
         {
             InitializationSettingW initW = new InitializationSettingW();
             initW.ShowDialog();
@@ -419,5 +410,13 @@ namespace IntentConnectWeighing
             w.Show();           
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+            this.ShowInTaskbar = false;
+            App.SetCurrentWindow();
+            App.ShowCurrentWindow();
+            e.Cancel = true;
+        }
     }
 }

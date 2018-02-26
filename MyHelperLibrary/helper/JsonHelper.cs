@@ -58,7 +58,7 @@ namespace MyHelper
         /// <typeparam name="T"></typeparam>
         /// <param name="dt"></param>
         /// <returns></returns>
-        public static List<T> TableToEntity<T>(DataTable dt) where T : class, new()
+        public static List<T> DataTableToEntity<T>(DataTable dt) where T : class, new()
         {
             Type type = typeof(T);
             List<T> list = new List<T>();

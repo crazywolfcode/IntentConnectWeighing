@@ -79,7 +79,7 @@ namespace IntentConnectWeighing
             string apiKey = ConfigurationHelper.GetConfig(ConfigItemName.baiduApiKey.ToString());
             string apiScret = ConfigurationHelper.GetConfig(ConfigItemName.baiduApiSecretKey.ToString());
             Ocr ocr = new Ocr(apiKey,apiScret);         
-            Newtonsoft.Json.Linq.JObject ob = ocr.BusinessLicense(FileHelper.getBytes(imagePath));
+            Newtonsoft.Json.Linq.JObject ob = ocr.BusinessLicense(FileHelper.GetBytes(imagePath));
             BaiduLicenseRecognition baiduLicense = BaiduAipHelper.getLicenseRecognition(ob);
             bindingControlValue(baiduLicense);
         }

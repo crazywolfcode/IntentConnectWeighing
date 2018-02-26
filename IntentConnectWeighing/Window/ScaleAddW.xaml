@@ -1,0 +1,102 @@
+﻿<Window x:Class="IntentConnectWeighing.ScaleAddW"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"     
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:form="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:local="clr-namespace:IntentConnectWeighing"
+        mc:Ignorable="d" ResizeMode="NoResize"
+        Icon="/IntentConnectWeighing;component/aislogo_48.ico"
+        WindowStartupLocation="CenterScreen" WindowStyle="None"   Style="{DynamicResource settingWindowStyle}"  
+        Title="添加摄像头" Height="430" Width="560"
+        Loaded="Window_Loaded" 
+        ContentRendered="Window_ContentRendered" 
+        Closing="Window_Closing" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="65"/>
+            <RowDefinition/>
+            <RowDefinition Height="45"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" CornerRadius="4,4,0,0" x:Name="headerBorder" MouseMove="headerBorder_MouseMove"  Background="{DynamicResource E4}">
+            <StackPanel Orientation="Horizontal" Background="Transparent" MouseMove="headerBorder_MouseMove">
+                <Image Source="/IntentConnectWeighing;component/aislogo_48.ico" Width="48" Height="48" HorizontalAlignment="Left" Margin="10"></Image>
+                <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="添加摄像头" VerticalAlignment="Center" FontSize="20" FontWeight="Black" Foreground="#787972"></TextBlock>
+            </StackPanel>
+        </Border>
+        <!--关闭按钮-->
+        <local:WindowButton Grid.Row="0"  BorderBrush="{x:Null}" Width="27" Height="22"  Margin="0,4,4,0" Content="" x:Name="CloseBtn" HorizontalAlignment="Right" VerticalAlignment="Top"   Click="CloseBtn_Click">
+            <local:WindowButton.MyMoverBrush>
+                <ImageBrush ImageSource="/IntentConnectWeighing;component/Themes/Img/Button/xm.png"/>
+            </local:WindowButton.MyMoverBrush>
+            <local:WindowButton.MyEnterBrush>
+                <ImageBrush ImageSource="/IntentConnectWeighing;component/Themes/Img/Button/xe.png"/>
+            </local:WindowButton.MyEnterBrush>
+            <local:WindowButton.Background>
+                <ImageBrush ImageSource="/IntentConnectWeighing;component/Themes/Img/Button/xn.png" TileMode="FlipXY"/>
+            </local:WindowButton.Background>
+        </local:WindowButton>
+
+        <Border  Background="{StaticResource F9}" Grid.Row="1">
+            <StackPanel>         
+                <StackPanel  HorizontalAlignment="Center">
+                    <WrapPanel Margin="0,10,0,0" >
+                        <Label>磅秤名称：</Label>
+                        <TextBox  Width="160" x:Name="NameTb" ToolTip="磅秤名称" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
+                    </WrapPanel>
+                    <WrapPanel Margin="0,10,0,0" >
+                        <Label>串 口 码 ：</Label>
+                        <TextBox  Width="160" x:Name="ComTb" ToolTip="磅秤的接连电脑的COM串口" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>                        
+                    </WrapPanel>
+                    <WrapPanel Margin="0,10,0,0" >
+                        <Label>波 特 率 ：</Label>
+                        <TextBox  Width="160" x:Name="BaudRateTB" ToolTip="磅秤的波特率" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
+                    </WrapPanel>
+                    <WrapPanel Margin="0,10,0,0" >
+                        <Label>数据位数：</Label>
+                        <TextBox  Width="160"  x:Name="DataByteTB" ToolTip="磅秤的数据位数" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
+                    </WrapPanel>
+                    <WrapPanel Margin="0,10,0,0" >
+                        <Label>结束位数：</Label>
+                        <TextBox  Width="160" x:Name="EndByteTB" ToolTip="磅秤的结束位数" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
+                    </WrapPanel>
+                    <WrapPanel Margin="0,10,0,0" >
+                        <Label>品牌名称：</Label>
+                        <TextBox  Width="160" x:Name="BrandTB" ToolTip="磅秤的品牌名称" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
+                    </WrapPanel>
+
+                    <WrapPanel Margin="0,10,0,0" >
+                        <Label>磅秤系列：</Label>
+                        <TextBox  Width="160" x:Name="SeriesTB" ToolTip="磅秤的磅秤系列号" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
+                    </WrapPanel>
+                </StackPanel>               
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="2" CornerRadius="0,0,4,4"   Background="{StaticResource F9}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                <local:IconButton 
+                    x:Name="saveBtn" 
+                    Click="saveBtn_Click"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Padding="1"
+                    Icon="&#xe77a;"
+                    IsShowIcon="False"
+                    Margin="10,0,15,0"                      
+                    Style="{StaticResource IconButtonStyle}"                 
+                    BorderBrush="#e0e0e0" 
+                    Foreground="#666"
+                    BorderThickness="1" 
+                    Width="100"
+                    Height="35"                 
+                    CornerRadius="4"                                      
+                    FontWeight="Bold" 
+                    HorizontalAlignment="Center"      
+                    HorizontalContentAlignment="Center"
+                    MouseOverForeground="Black"
+                    MouseOverBackground="White" Content="保 存" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

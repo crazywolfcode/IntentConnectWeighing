@@ -34,7 +34,7 @@ namespace IntentConnectWeighing
                 {
                     if (!FileHelper.Exists(tokenXmlFilePath))
                     {
-                        FileHelper.createFile(tokenXmlFilePath);
+                        FileHelper.CreateFile(tokenXmlFilePath);
                         return null;
                     }
                     string tokenstr = FileHelper.Reader(tokenXmlFilePath);

@@ -49,7 +49,7 @@ namespace MyHelper
                     dir.Create();
                     return true;
                 }
-                catch (Exception e)
+                catch
                 {
                     return false;
                 }
@@ -126,13 +126,14 @@ namespace MyHelper
         /// </summary>
         /// <param name="filename">路径包含文件名</param>
         /// <returns>true or false</returns>
-        public static bool createFile(string filename)
+        public static bool CreateFile(string filename)
         {
             if (File.Exists(filename) == false)
             {
                 try
                 {
-                    File.Create(filename);
+                    FileStream fs = File.Create(filename);
+                    fs.Dispose();
                     return true;
                 }
                 catch
@@ -171,7 +172,7 @@ namespace MyHelper
         /// </summary>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        public static string getFileBase64(string filePath)
+        public static string GetFileBase64(string filePath)
         {
             try
             {
@@ -197,7 +198,7 @@ namespace MyHelper
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public static byte[] getBytes(string imagePath)
+        public static byte[] GetBytes(string imagePath)
         {
             System.Drawing.Image img = System.Drawing.Image.FromFile(imagePath);
             System.IO.MemoryStream mstream = new System.IO.MemoryStream();
@@ -223,7 +224,7 @@ namespace MyHelper
                 ms.Close();
                 return bmp;
             }
-            catch (Exception ex)
+            catch 
             {
                 return null;
             }

@@ -86,5 +86,15 @@
     <SolidColorBrush x:Key="ItemSelectedBackground" Color="#A145F8"></SolidColorBrush>
     <SolidColorBrush x:Key="ItemMouseOverBackground" Color="#BA7DF4"></SolidColorBrush>
     <SolidColorBrush x:Key="ItemMouseOverForeground" Color="White"></SolidColorBrush>
-  
+
+    <Style TargetType="TextBlock" x:Key="DataGridContentVerticalCenter">
+        <Setter Property="VerticalAlignment"   Value="Center" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="DataGridContentHorizontalCenter">
+        <Setter Property="HorizontalAlignment"   Value="Center" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="DataGridContentCenter">
+        <Setter Property="VerticalAlignment"   Value="Center" />
+        <Setter Property="HorizontalAlignment"   Value="Center" />
+    </Style>
 </ResourceDictionary>

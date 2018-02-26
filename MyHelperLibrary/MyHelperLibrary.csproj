@@ -34,6 +34,12 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>helpsign.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ChnCharInfo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=18f031bd02e5e291, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.International.Converters.PinYinConverter.1.0.0\lib\ChnCharInfo.dll</HintPath>
@@ -96,6 +102,8 @@
     <Compile Include="helper\FileHelper.cs" />
     <Compile Include="helper\JsonHelper.cs" />
     <Compile Include="db\MySqlHelper.cs" />
+    <Compile Include="helper\ListHepler.cs" />
+    <Compile Include="helper\RegexHelper.cs" />
     <Compile Include="Net\HttpClientHelper.cs" />
     <Compile Include="Net\HttpWebRequestHelper.cs" />
     <Compile Include="Net\NetBaseHelper.cs" />
@@ -106,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="helpsign.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

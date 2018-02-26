@@ -8,11 +8,11 @@ namespace IntentConnectWeighing
 {
     public class LoginHelper
     {
-        public static List<loginedUser> getHostoryUser()
+        public static List<User> getHostoryUser()
         {
-            List<loginedUser> list = (List<loginedUser>)XmlHelper.Deserialize(typeof(List<loginedUser>), FileHelper.Reader(FileHelper.GetRunTimeRootPath() + "/users.xml"));
+            List<User> list = (List<User>)XmlHelper.Deserialize(typeof(List<User>), FileHelper.Reader(FileHelper.GetRunTimeRootPath() + "/users.xml"));
             if (list == null || list.Count <= 0) {
-                return new List<loginedUser>();
+                return new List<User>();
             }
             return list;
         }

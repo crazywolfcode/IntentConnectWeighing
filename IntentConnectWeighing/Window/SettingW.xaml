@@ -7,7 +7,7 @@
         Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"  WindowStyle="None" Style="{StaticResource  settingWindowStyle}"
-        Title="设置" Height="430" Width="560">
+        Title="设置" Height="430" Width="560" Activated="Window_Activated" ContentRendered="Window_ContentRendered">
     <Window.Resources>
         <local:CheckedToVisibleConverter x:Key="CheckedToVisibleConverter"> </local:CheckedToVisibleConverter>
     </Window.Resources>
@@ -19,13 +19,12 @@
         <Border Grid.Column="0" CornerRadius="4,0,0,4" Background="#e4e4e4" Padding="0"  MouseMove="ConfigItemPanel_MouseMove">
             <StackPanel x:Name="ConfigItemPanel" >
                 <TextBlock Style="{DynamicResource IFontStyle}" Width="80" Height="80" Text="&#xe74c;" Foreground="{StaticResource myBlue}" FontSize="50" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-
-                <RadioButton x:Name="BaseSetting"  Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"    >基本</RadioButton>
-                <RadioButton x:Name="ScaleSetting" Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"   >磅秤</RadioButton>
-                <RadioButton x:Name="cameraSetting" Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969" IsChecked="True" >视频</RadioButton>
-                <RadioButton x:Name="BalanceSetting" Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"   >平衡</RadioButton>
-                <RadioButton x:Name="HighSetting" Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"   >高级</RadioButton>
-                <RadioButton x:Name="OtherSetting" Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"   >其它</RadioButton>
+                <RadioButton x:Name="BaseSetting" Checked="BaseSetting_Checked"  Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"    >基本</RadioButton>
+                <RadioButton x:Name="ScaleSetting" Checked="ScaleSetting_Checked" Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"   IsChecked="True" >磅秤</RadioButton>
+                <RadioButton x:Name="CameraSetting" Checked="CameraSetting_Checked" Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969" >视频</RadioButton>
+                <RadioButton x:Name="BalanceSetting" Checked="BalanceSetting_Checked" Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"   >平衡</RadioButton>
+                <RadioButton x:Name="HighSetting" Checked="HighSetting_Checked" Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"   >高级</RadioButton>
+                <RadioButton x:Name="OtherSetting" Checked="OtherSetting_Checked" Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"   >其它</RadioButton>
              
             </StackPanel>
         </Border>
@@ -70,12 +69,57 @@
                     <StackPanel HorizontalAlignment="Center" Visibility="{Binding ElementName=BaseSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
                         <TextBlock  FontSize="25"> Center</TextBlock>
                     </StackPanel>
+                    <!-- Scale setting-->
+                    <Grid Visibility="{Binding ElementName=ScaleSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right">
+                            <local:IconButton ToolTip="添加磅秤"
+                                x:Name="AddScaleBtn" 
+                                Click="AddScaleBtn_Click"                                
+                                Padding="2"
+                                Icon="&#xe50d;" FontWeight="Bold"
+                                IsShowIcon="True"
+                                Margin="0,0,10,0"    
+                                Style="{StaticResource IconButtonTransparencyStyle}" 
+                                Foreground="{StaticResource myBlue}"                                
+                                Width="25"
+                                Height="25"                 
+                                CornerRadius="13"   
+                                MouseOverForeground="White"
+                                MouseOverBackground="{StaticResource myBlue}" />
+                        </StackPanel>
 
-                    <StackPanel  HorizontalAlignment="Center" Visibility="{Binding ElementName=ScaleSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
-                        <TextBlock  FontSize="25"> Scale setting</TextBlock>
-                    </StackPanel>
+                        <DataGrid Grid.Row="1" GridLinesVisibility="None" ColumnHeaderHeight="30"  MaxHeight="320"
+                                  Style="{x:Null}" x:Name="ScaleDataGrid" AutoGenerateColumns="False"  BorderThickness="0"
+                                  CanUserAddRows="False"  VerticalScrollBarVisibility="Auto" 
+                                  LoadingRow="ScaleDataGrid_LoadingRow">
+                            <DataGrid.Columns >
+                                <DataGridTextColumn Width="*" Header="名称" Binding="{Binding name}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                                <DataGridTextColumn Width="*" Header="COM 串口" Binding="{Binding com}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Header="波特率" Binding="{Binding baudRate}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Header="数据位数" Binding="{Binding dataByte}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Header="结束位" Binding="{Binding endByte}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Header="品牌" Binding="{Binding brand}" ElementStyle="{DynamicResource DataGridContentCenter}"></DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Header="系列" Binding="{Binding series}" ElementStyle="{DynamicResource DataGridContentCenter}"></DataGridTextColumn>
+                                <DataGridTemplateColumn Width="80" Header="操作" >
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <local:IconButton x:Name="updateScaleBtn" ToolTip="修改" Width="25" Tag="{Binding id}" Icon="&#xe6f0;"  Style="{DynamicResource IconButtonTransparencyStyle}" Click="updateScaleBtn_Click"/>
+                                                <local:IconButton x:Name="bundingBtn"  ToolTip="绑定摄像头" Width="25" Tag="{Binding id}" Icon="&#xe657;" MouseOverForeground="{DynamicResource myBlue}" Style="{DynamicResource IconButtonTransparencyStyle}" Click="bundingBtn_Click" />
+                                                <local:IconButton x:Name="deleteScaleBtn"  ToolTip="删除" Width="25" Tag="{Binding id}" Icon="&#xe615;" MouseOverForeground="Red" Style="{DynamicResource IconButtonTransparencyStyle}" Click="deleteScaleBtn_Click" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
                     <!--cameraSetting-->
-                    <Grid Visibility="{Binding ElementName=cameraSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
+                    <Grid Visibility="{Binding ElementName=CameraSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="35"/>
                             <RowDefinition Height="*"/>
@@ -97,19 +141,22 @@
                                 MouseOverBackground="{StaticResource myBlue}" />
                         </StackPanel>
                       
-                        <DataGrid Grid.Row="1" GridLinesVisibility="None" ColumnHeaderHeight="30" Style="{x:Null}">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Width="*" Header="Ip地址" Binding="{Binding ip}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="Auto" Header="端口" Binding="{Binding port}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="Auto" Header="登陆名称" Binding="{Binding userName}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="Auto" Header="密码" Binding="{Binding password}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="Auto" Header="位置" Binding="{Binding }"></DataGridTextColumn>
+                        <DataGrid Grid.Row="1" GridLinesVisibility="None" ColumnHeaderHeight="30"  MaxHeight="320"
+                                  Style="{x:Null}" x:Name="CamreaDataGrid" AutoGenerateColumns="False"  BorderThickness="0"
+                                  CanUserAddRows="False"  VerticalScrollBarVisibility="Auto" 
+                                  LoadingRow="CamreaDataGrid_LoadingRow">
+                            <DataGrid.Columns >
+                                <DataGridTextColumn Width="*" Header="Ip地址" Binding="{Binding ip}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Header="端口" Binding="{Binding port}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Header="登陆名称" Binding="{Binding userName}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Header="密码" Binding="{Binding password}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Header="位置" Binding="{Binding position}" ElementStyle="{DynamicResource DataGridContentCenter}"></DataGridTextColumn>
                                 <DataGridTemplateColumn Width="50" Header="操作" >
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <StackPanel>
-                                                <local:IconButton x:Name="updateBtn" Tag="{Binding id}" Icon="&#xe6f0;" Style="{DynamicResource IconButtonTransparencyStyle}" Click="updateBtn_Click"/>
-                                                <local:IconButton x:Name="deleteBtn" Tag="{Binding id}" Icon="&#xe615;" Style="{DynamicResource IconButtonTransparencyStyle}" Click="deleteBtn_Click"/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <local:IconButton x:Name="updateBtn" ToolTip="修改" Width="25" Tag="{Binding id}" Icon="&#xe6f0;"  Style="{DynamicResource IconButtonTransparencyStyle}" Click="updateBtn_Click"/>
+                                                <local:IconButton x:Name="deleteBtn"  ToolTip="删除" Width="25" Tag="{Binding id}" Icon="&#xe615;" MouseOverForeground="Red" Style="{DynamicResource IconButtonTransparencyStyle}" Click="deleteBtn_Click" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>

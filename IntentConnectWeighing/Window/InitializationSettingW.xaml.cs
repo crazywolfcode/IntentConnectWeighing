@@ -29,8 +29,8 @@ namespace IntentConnectWeighing
 
         private void BaseWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            base.myInitializeStyle(this, MyWindowsStyle.dialog);
-            base.setWindowTitle(this, "初始化基本设置");
+            base.MyInitializeStyle(this, MyWindowsStyle.dialog);
+            base.SetWindowTitle(this, "初始化基本设置");
             base.setIcon(this, helpers.getImageSourceParth("Themes/Img/Icon/setting-ico.png"));
             getinitializationConfig();
         }
@@ -188,7 +188,7 @@ namespace IntentConnectWeighing
 
         private void BaseWindow_ContentRendered(object sender, EventArgs e)
         {
-            App.setCurrentWindow(this);
+            App.SetCurrentWindow(this);
         }
 
         private void BaseWindow_Closed(object sender, EventArgs e)

@@ -59,7 +59,7 @@ namespace IntentConnectWeighing
         }
         private void Window_ContentRendered(object sender, EventArgs e)
         {
-            App.setCurrentWindow(this);
+            App.SetCurrentWindow(this);
             MessageBox.Show(BaiDuAcesessTokenHelper.getBaiDuAcesessToken());
         }
 
@@ -216,7 +216,7 @@ namespace IntentConnectWeighing
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (App.currWindow == this) {
-                App.setCurrentWindow();
+                App.SetCurrentWindow();
                 App.ShowCurrentWindow();
             }            
         }

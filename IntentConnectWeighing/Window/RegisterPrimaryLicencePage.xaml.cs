@@ -64,7 +64,7 @@ namespace IntentConnectWeighing
             string apiKey = ConfigurationHelper.GetConfig(ConfigItemName.baiduApiKey.ToString());
             string apiScret = ConfigurationHelper.GetConfig(ConfigItemName.baiduApiSecretKey.ToString());
             Ocr ocr = new Ocr(apiKey, apiScret);
-            Newtonsoft.Json.Linq.JObject ob = ocr.Idcard(FileHelper.getBytes(imagePath), "front");
+            Newtonsoft.Json.Linq.JObject ob = ocr.Idcard(FileHelper.GetBytes(imagePath), "front");
             //BaiduLicenseRecognition baiduLicense = BaiduAipHelper.getLicenseRecognition(ob);   
             ConsoleHelper.writeLine(ob.ToString());
             MessageBox.Show(ob.ToString());
@@ -72,21 +72,21 @@ namespace IntentConnectWeighing
 
         private void bankCardRecobnition()
         {
-            Newtonsoft.Json.Linq.JObject ob = getOcr().Bankcard(FileHelper.getBytes(imagePath));
+            Newtonsoft.Json.Linq.JObject ob = getOcr().Bankcard(FileHelper.GetBytes(imagePath));
             BaiduBandCardRecognition card = BaiduAipHelper.getBandCardRecognition(ob);
 
         }
 
         private void driverLicenseRecognition()
         {
-            Newtonsoft.Json.Linq.JObject ob = getOcr().DrivingLicense(FileHelper.getBytes(imagePath));
+            Newtonsoft.Json.Linq.JObject ob = getOcr().DrivingLicense(FileHelper.GetBytes(imagePath));
             BaiduDriverLicenseRecognition driver = BaiduAipHelper.getDriverRecognition(ob);
             MessageBox.Show(driver.name);
         }
 
         private void vehicleLicenseRecognition()
         {
-            Newtonsoft.Json.Linq.JObject ob = getOcr().VehicleLicense(FileHelper.getBytes(imagePath));
+            Newtonsoft.Json.Linq.JObject ob = getOcr().VehicleLicense(FileHelper.GetBytes(imagePath));
             baiduVehicleRecognition vehicle = BaiduAipHelper.getvehicleRecognition(ob);
             MessageBox.Show(vehicle.engineNumber + " :" + vehicle.carNumber);
         }

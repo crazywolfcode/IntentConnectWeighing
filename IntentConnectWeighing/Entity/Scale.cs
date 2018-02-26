@@ -7,7 +7,7 @@ using System.Text;
 {
 
 	 /// <summary>
-	 /// 数据条数:0
+	 /// 数据条数:2
 	 /// 数据大小:16KB
 	 /// </summary>
 
@@ -20,6 +20,13 @@ using System.Text;
 	 /// </summary>
 
 	 public String id{ get; set; }
+
+	 /// <summary>
+	 /// 注释:磅秤名称
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String name{ get; set; }
 
 	 /// <summary>
 	 /// 可空:NO
@@ -46,6 +53,7 @@ using System.Text;
 	 public Int32 endByte{ get; set; }
 
 	 /// <summary>
+	 /// 注释:品牌
 	 /// 可空:YES
 	 /// </summary>
 

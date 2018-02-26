@@ -32,7 +32,7 @@ namespace IntentConnectWeighing
         {
             if (this.ParentWindow != null)
             {
-                ParentWindow.changeAlertNumber(ResourceName.MenuIndexNumber, 1, 1);
+                ParentWindow.ChangeAlertNumber(ResourceName.MenuIndexNumber, 1, 1);
             }
 
         }

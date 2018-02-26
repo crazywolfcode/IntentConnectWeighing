@@ -140,17 +140,5 @@ using System.Text;
 
 	 public String deleteTime{ get; set; }
 
-	 /// <summary>
-	 /// 可空:YES
-	 /// </summary>
-
-	 public Double test{ get; set; }
-
-	 /// <summary>
-	 /// 可空:YES
-	 /// </summary>
-
-	 public Decimal tt{ get; set; }
-
 	 }
 }

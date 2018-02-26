@@ -34,19 +34,35 @@ namespace IntentConnectWeighing
         // 窗口加载
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            base.myInitializeStyle(this, MyWindowsStyle.main);
-            centerNavMenu();      
-            HomePage index = new HomePage();
-            index.ParentWindow = this;
-            this.MainFrame.Navigate(index);            
+            base.MyInitializeStyle(this, MyWindowsStyle.main);
+            centerNavMenu();
+            InitMainFrame();
         }
 
         private void BaseWindow_ContentRendered(object sender, EventArgs e)
         {
-            App.setCurrentWindow(this);
+            App.SetCurrentWindow(this);
 
             //create sync_table info 
             // wait 1 minutes start Synchronization sync_up、 sync_down、up_bill
+        }
+        /// <summary>
+        /// set the Main frame Default page
+        /// </summary>
+        private void InitMainFrame()
+        {
+            if (this.BaseData.IsChecked==true)
+            {
+                BaseDataPage baseDataPage = new BaseDataPage();
+                baseDataPage.paretntWindow= this;
+                this.MainFrame.Navigate(baseDataPage);
+            }
+            if (this.Home.IsChecked ==true) { 
+            HomePage index = new HomePage();
+            index.ParentWindow = this;
+            this.MainFrame.Navigate(index);
+                return;
+        }
         }
         /// <summary>
         /// 将导航菜单居中

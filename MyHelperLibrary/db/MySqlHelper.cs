@@ -126,6 +126,28 @@ namespace MyHelper
             return dss;
         }
         /// <summary>
+        /// judge the table is or not exist
+        /// </summary>
+        /// <param name="dbName"></param>
+        /// <param name="table"></param>
+        /// <returns></returns>
+        public bool existTable(string dbName,string table) {
+            if (string.IsNullOrEmpty(dbName) || string.IsNullOrEmpty(table)) {
+                return false;
+            }
+            string sql = $"SELECT * FROM information_schema.TABLES WHERE TABLE_SCHEMA = '{dbName}' and table_name ='{table}' and table_type='base table' ;";
+            DataTable dt = this.ExcuteDataTable(sql, null);
+            if (dt.Rows.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// get the schema of table
         /// </summary>
         /// <param name="tableName"></param>
@@ -240,6 +262,13 @@ namespace MyHelper
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                 adapter.Fill(dt);
                 return dt;
+            }
+        }
+
+        public int ExcuteNoQuery(string sql) {
+            using (MySqlCommand command = new MySqlCommand(sql, mConnection))
+            {
+             return   command.ExecuteNonQuery();              
             }
         }
 

@@ -3,7 +3,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:IntentConnectWeighing"
             Orientation="Horizontal" Height="90" >
-    <Image x:Name="logo" Source="/IntentConnectWeighing;component/Themes/Img/Temp/loginbg01.jpg" Width="80" Height="80" VerticalAlignment="Center"></Image>
+    <Image x:Name="logo" Stretch="UniformToFill" Source="/IntentConnectWeighing;component/Themes/Img/Temp/loginbg01.jpg" Width="80" Height="80" VerticalAlignment="Center"></Image>
     <StackPanel Orientation="Vertical" VerticalAlignment="Center">
         <TextBlock x:Name="CompanyName" Text="{StaticResource CompanyName}"></TextBlock>
         <TextBlock x:Name="UserName" Text="{StaticResource UserName}"></TextBlock>

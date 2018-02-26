@@ -10,8 +10,10 @@ namespace IntentConnectWeighing
       
         public static string BasePath = "/IntentConnectWeighing;component/";
 
-        public static loginedUser currentUser =null;
+        public static User currentUser =null;
 
+        public static string valueSplit = "'";
 
+        public static string templatePath=MyHelper.FileHelper.GetRunTimeRootPath()+"\\template\\";
     }
 }

@@ -15,7 +15,7 @@ namespace IntentConnectWeighing
         public BaseWindow()
         {
             InitializeStyle();
-            repairWindowDefaultEvent();
+            RepairWindowDefaultEvent();
         }
 
         private void InitializeStyle()
@@ -23,7 +23,7 @@ namespace IntentConnectWeighing
             this.Style = (Style)App.Current.Resources["BaseWindowStyle"];
         }
 
-        public void myInitializeStyle(System.Windows.Window window, MyWindowsStyle style)
+        public void MyInitializeStyle(System.Windows.Window window, MyWindowsStyle style)
         {
             switch (style)
             {
@@ -34,8 +34,8 @@ namespace IntentConnectWeighing
                     initMenu(window);
                     initThemeBtn(window);
                     initTitleDragEvent();
-                    hideIcon();
-                    hideWindowTitle();
+                    HideIcon();
+                    HideWindowTitle();
                     break;
                 case MyWindowsStyle.nomal:
                     initMinBtn(window);
@@ -44,7 +44,7 @@ namespace IntentConnectWeighing
                     initMenu(window, false);
                     initThemeBtn(window, false);
                     initTitleDragEvent();
-                    setWindowTitleHeight(window, 30);
+                    SetWindowTitleHeight(window, 30);
                     break;
                 case MyWindowsStyle.dialog:
                     initMinBtn(window, false);
@@ -53,7 +53,7 @@ namespace IntentConnectWeighing
                     initMenu(window, false);
                     initThemeBtn(window, false);
                     initTitleDragEvent();
-                    setWindowTitleHeight(window, 30);
+                    SetWindowTitleHeight(window, 30);
                     break;
             }
         }
@@ -61,16 +61,16 @@ namespace IntentConnectWeighing
         /// <summary>
         /// 缩放，最大化 等默认事件的修复
         /// </summary>
-        public void repairWindowDefaultEvent()
+        public void RepairWindowDefaultEvent()
         {
             WindowBehavior helper = new WindowBehavior(this);
             helper.RepairWindowDefaultBehavior();
         }
-        public ControlTemplate getBaseWindowTemplate()
+        public ControlTemplate GetBaseWindowTemplate()
         {
             if (baseWindowTemplate == null)
             {
-                baseWindowTemplate = TemplateHelper.getControlTemplate(ResourceName.BaseWindowControlTemplate);
+                baseWindowTemplate = TemplateHelper.GetControlTemplate(ResourceName.BaseWindowControlTemplate);
             }
             return baseWindowTemplate;
         }
@@ -83,7 +83,7 @@ namespace IntentConnectWeighing
         /// <param name="name">菜单的资源名称</param>
         /// <param name="value">增加或者是减少的值</param>
         /// <param name="type"> 1 增加 0 减少</param>
-        public void changeAlertNumber(ResourceName name, int value, int type)
+        public void ChangeAlertNumber(ResourceName name, int value, int type)
         {
             int temp = ResourceHelper.getIntFromDictionaryResource(name);
             if (type == 1)
@@ -105,9 +105,9 @@ namespace IntentConnectWeighing
         ///设置窗口标题栏的高度
         /// </summary>
         /// <param name="height">高度值</param>
-        public void setWindowTitleHeight(System.Windows.Window window, int height)
+        public void SetWindowTitleHeight(System.Windows.Window window, int height)
         {
-            Border border = getBaseWindowTemplate().FindName("windowTitle", window) as Border;
+            Border border = GetBaseWindowTemplate().FindName("windowTitle", window) as Border;
             border.Height = height;
         }
 
@@ -115,9 +115,9 @@ namespace IntentConnectWeighing
         ///隐藏窗口标题
         /// </summary>
         /// <param name="height">高度值</param>
-        public void hideWindowTitle()
+        public void HideWindowTitle()
         {
-            TextBlock t = getBaseWindowTemplate().FindName("WindowTitleText", this) as TextBlock;
+            TextBlock t = GetBaseWindowTemplate().FindName("WindowTitleText", this) as TextBlock;
             t.Visibility = Visibility.Collapsed;
         }
 
@@ -125,9 +125,9 @@ namespace IntentConnectWeighing
         ///设置窗口标题
         /// </summary>
         /// <param name="text">窗口的标题</param>
-        public void setWindowTitle(System.Windows.Window window, string text)
+        public void SetWindowTitle(System.Windows.Window window, string text)
         {
-            TextBlock t = getBaseWindowTemplate().FindName("WindowTitleText", window) as TextBlock;
+            TextBlock t = GetBaseWindowTemplate().FindName("WindowTitleText", window) as TextBlock;
             t.Text = text;
             t.Visibility = Visibility.Visible;
         }
@@ -136,9 +136,9 @@ namespace IntentConnectWeighing
         /// <summary>
         ///隐藏窗口Icon图标 todo
         /// </summary>
-        public void hideIcon()
+        public void HideIcon()
         {
-            Image i = getBaseWindowTemplate().FindName("Icon", this) as Image;
+            Image i = GetBaseWindowTemplate().FindName("Icon", this) as Image;
             i.Visibility = Visibility.Collapsed;
         }
 
@@ -149,7 +149,7 @@ namespace IntentConnectWeighing
         /// <param name="imageSource">icon 的图像地址</param>
         public void setIcon(System.Windows.Window window, string imageSource)
         {
-            Image i = getBaseWindowTemplate().FindName("Icon", window) as Image;
+            Image i = GetBaseWindowTemplate().FindName("Icon", window) as Image;
             i.Source = new BitmapImage(new Uri(imageSource, UriKind.RelativeOrAbsolute));
             if (i.Visibility != Visibility.Visible)
                 i.Visibility = Visibility.Visible;
@@ -165,7 +165,7 @@ namespace IntentConnectWeighing
         /// <param name="parent">父控件</param>
         public void initThemeBtn(System.Windows.Window window, bool isShow = true)
         {
-            WindowButton btn = getBaseWindowTemplate().FindName("ThemeBtn", window) as WindowButton;
+            WindowButton btn = GetBaseWindowTemplate().FindName("ThemeBtn", window) as WindowButton;
             if (isShow == true)
             {
                 btn.Visibility = Visibility.Visible;
@@ -182,7 +182,7 @@ namespace IntentConnectWeighing
         /// <param name="isShow"> 是否显示 </param>
         public void initMenu(System.Windows.Window window, bool isShow = true)
         {
-            Menu menu = (Menu)getBaseWindowTemplate().FindName("Menu", window);
+            Menu menu = (Menu)GetBaseWindowTemplate().FindName("Menu", window);
             if (isShow == true)
             {
                 menu.Visibility = Visibility.Visible;
@@ -202,7 +202,7 @@ namespace IntentConnectWeighing
         /// <param name="isShow"> 是否显示 </param>
         public void initMinBtn(System.Windows.Window window, bool isShow = true)
         {
-            WindowButton minBtn = (WindowButton)getBaseWindowTemplate().FindName("MinBtn", window);
+            WindowButton minBtn = (WindowButton)GetBaseWindowTemplate().FindName("MinBtn", window);
             if (isShow == true)
             {
                 minBtn.Visibility = Visibility.Visible;
@@ -219,7 +219,7 @@ namespace IntentConnectWeighing
         /// <param name="isShow"> 是否显示 </param>
         public void initMaxBtn(System.Windows.Window window, bool isShow = true)
         {
-            WindowButton maxBtn = (WindowButton)getBaseWindowTemplate().FindName("MaxBtn", window);
+            WindowButton maxBtn = (WindowButton)GetBaseWindowTemplate().FindName("MaxBtn", window);
             if (isShow == true)
             {
                 maxBtn.Visibility = Visibility.Visible;
@@ -237,7 +237,7 @@ namespace IntentConnectWeighing
         /// <param name="window">控件</param>
         public void initCloseBtn(System.Windows.Window window, bool isShow = true)
         {
-            WindowButton closeBtn = (WindowButton)getBaseWindowTemplate().FindName("CloseBtn", window);
+            WindowButton closeBtn = (WindowButton)GetBaseWindowTemplate().FindName("CloseBtn", window);
             if (isShow == true)
             {
                 closeBtn.Visibility = Visibility.Visible;
@@ -257,9 +257,9 @@ namespace IntentConnectWeighing
         {
             if (isCanDrag == true)
             {
-                Border windowTitle = (Border)getBaseWindowTemplate().FindName("windowTitle", this);
+                Border windowTitle = (Border)GetBaseWindowTemplate().FindName("windowTitle", this);
                 windowTitle.MouseMove += windowTitle_MouseMove;
-                windowTitle.MouseDown += windowTitle_MouseDown;
+                windowTitle.MouseDown +=   windowTitle_MouseDown;
             }
         }
         #endregion

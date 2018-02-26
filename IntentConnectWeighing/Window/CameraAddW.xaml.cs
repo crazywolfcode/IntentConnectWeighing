@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Data;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -22,20 +23,22 @@ namespace IntentConnectWeighing
     /// </summary>
     public partial class CameraAddW : Window
     {
-        private string ip = "180.130.175.145";
-        private string port = "8010";
-        private string userName = "admin";
-        private string pwd = "txmy8888";
+        private string ip = string.Empty;
+        private string port = string.Empty;
+        private string userName = string.Empty;
+        private string pwd = string.Empty;
+        private String mId;
+        private CameraInfo mCameraInfo;
         #region Camera   
         public Int32 currCameraId = -1;
         public bool isInitSDK;
         public bool isLogin = false;
         public bool isPreviewSuccess = false;        
         #endregion
-        public CameraAddW()
+        public CameraAddW(String cameraId = null)
         {
             InitializeComponent();
-
+            this.mId = cameraId;
         }
         public delegate void MyDebugInfo(string str);
         public void DebugInfo(string str)
@@ -44,17 +47,29 @@ namespace IntentConnectWeighing
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.IpTB.Text = "180.130.175.145";
-            this.portTB.Text = "8010";
-            this.userNameTB.Text = "admin";
-            this.pwdTB.Text = "txmy8888";
+            if (!String.IsNullOrEmpty(mId)) {
+                bindingCurrrCamera();
+            }                        
             setPreviewImageHeight();
         }
         private void Window_ContentRendered(object sender, EventArgs e)
         {
-            App.setCurrentWindow(this);
+            App.SetCurrentWindow(this);
         }
 
+        private void bindingCurrrCamera() {
+            String condition = CameraInfoEnum.id.ToString() + "=" + Constract.valueSplit + mId + Constract.valueSplit;
+            String sql = DbBaseHelper.getSelectSql(DataTabeName.camera_info.ToString(), null, condition);
+
+            DataTable dt = new DatabaseOPtionHelper().select(sql);
+            if (dt.Rows.Count > 0) {
+                mCameraInfo =( JsonHelper.DataTableToEntity<CameraInfo>(dt))[0];
+            }
+            this.IpTB.Text = mCameraInfo.ip;
+            this.portTB.Text = mCameraInfo.port;
+            this.userNameTB.Text = mCameraInfo.userName;
+            this.pwdTB.Text = mCameraInfo.password;
+        }
         private void setPreviewImageHeight()
         {
             this.previewFormsHost.Height = this.previewStackPanel.ActualHeight;
@@ -75,26 +90,89 @@ namespace IntentConnectWeighing
        
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (isInitSDK && isPreviewSuccess) {
-                CameraHelper.captureJpeg(Guid.NewGuid().ToString()+".jpg",currCameraId,1);
-                CameraHelper.captureBmp(Guid.NewGuid().ToString() + ".bmp",currCameraId);
-            }else{
-                ConsoleHelper.writeLine("captureJpeg failured");
+            //抓图
+            //if (isInitSDK && isPreviewSuccess) {
+            //    CameraHelper.captureJpeg(Guid.NewGuid().ToString()+".jpg",currCameraId,1);
+            //    CameraHelper.captureBmp(Guid.NewGuid().ToString() + ".bmp",currCameraId);
+            //}else{
+            //    ConsoleHelper.writeLine("captureJpeg failured");
+            //}
+
+            if (!IsInitialized) {
+                MessageBox.Show("摄像头初始化失败！");
+                return;
             }
 
+            if (!isPreviewSuccess) {
+                MessageBox.Show("保存摄像头之前必须先预览成功！");
+                return;
+            }
 
-            if (!checkInput())
+            if (checkInput())
             {
-                CameraInfo camera = new CameraInfo();
-                camera.clientId = ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString());
-                camera.companyId = ConfigurationHelper.GetConfig(ConfigItemName.companyId.ToString());
-                camera.status = 1;
-                camera.isdelete = 0;
-                camera.id = Guid.NewGuid().ToString();
-               // string sql = DbBaseHelper.getSelectSqlNoSoftDeleteCondition();
-            }
-           
+                String condition = String.Empty;
+                String sql = string.Empty;
+                if (!String.IsNullOrEmpty(mId)) {
+                    //update
+                    mCameraInfo.syncTime =(int) DateTimeHelper.GetTimeStamp();
+                    mCameraInfo.ip = this.IpTB.Text.Trim();
+                    mCameraInfo.port = this.portTB.Text.Trim();
+                    mCameraInfo.userName = this.userNameTB.Text.Trim();
+                    mCameraInfo.password = this.pwdTB.Text.Trim();
+                    int res = new DatabaseOPtionHelper().update(mCameraInfo);
+                    if (res > 0)
+                    {
+                        MessageBox.Show("修改成功！");
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("修改失败！");
+                        return;
+                    }
+                } else {
+                    //insert
+                    CameraInfo camera = new CameraInfo();
+                    string cid = ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString());                    
+                    condition = CameraInfoEnum.client_id.ToString() + "=" + Constract.valueSplit + cid + Constract.valueSplit + " and " +
+                        CameraInfoEnum.ip.ToString() + "=" + Constract.valueSplit + IpTB.Text.ToString() + Constract.valueSplit +
+                        " and " + CameraInfoEnum.port.ToString() + "=" + Constract.valueSplit + this.portTB.Text.ToString() + Constract.valueSplit;
+                    sql = DbBaseHelper.getSelectSqlNoSoftDeleteCondition(DbBaseHelper.getTableName(camera), null, condition, null, null, null, 1, 0);
+                    DatabaseOPtionHelper optionHelper = new DatabaseOPtionHelper();
+                    DataTable dt = optionHelper.select(sql);
+                    if (dt.Rows.Count > 0)
+                    {
+                        MessageBox.Show("该摄像头已经存在，不要再添加拉！");
+                        return;
+                    }
+                    else
+                    {
+                        camera.clientId = cid;
+                        camera.companyId = ConfigurationHelper.GetConfig(ConfigItemName.companyId.ToString());
+                        camera.status = 0;
+                        camera.isDelete = 0;
+                        camera.syncTime = 0;
+                        camera.ip = this.IpTB.Text.Trim();
+                        camera.port = this.portTB.Text.Trim();
+                        camera.userName = this.userNameTB.Text.Trim();
+                        camera.password = this.pwdTB.Text.Trim();
+                        camera.id = Guid.NewGuid().ToString();
+                        int res = optionHelper.insert(camera);
+                        if (res > 0)
+                        {
+                            MessageBox.Show("保存成功！");
+                            this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("保存失败！");
+                            return;
+                        }
+                    }
+                }
 
+               
+            }           
         }
         /// <summary>
         /// preview camera
@@ -111,12 +189,19 @@ namespace IntentConnectWeighing
             if (isInitSDK)
             {
                 CHCNetSDK.NET_DVR_DEVICEINFO_V30 info = new CHCNetSDK.NET_DVR_DEVICEINFO_V30();
-                currCameraId = CameraHelper.loginCamera(ip,port,userName,pwd ,ref info);
+                currCameraId = CameraHelper.loginCamera(this.IpTB.Text.Trim(),this.portTB.Text.Trim(),this.userNameTB.Text.Trim(),this.pwdTB.Text.Trim() ,ref info);
                 if (currCameraId >=0)
                 {
                    System.Windows.Forms.PictureBox pb = this.previewFormsHost.Child as System.Windows.Forms.PictureBox;
                     int chanlnum = (int)info.byChanNum;
                     isPreviewSuccess= CameraHelper.preview( ref pb, chanlnum, currCameraId);
+                    if (isPreviewSuccess)
+                    {
+                        MessageBox.Show("预览成功！");
+                    }
+                    else {
+                        MessageBox.Show("预览失败！");
+                    }
                 }
             }
             else
@@ -130,6 +215,8 @@ namespace IntentConnectWeighing
         {
            CameraHelper.stopPreview(currCameraId);
             CameraHelper.loginOutCamera(currCameraId);
+            System.Windows.Forms.PictureBox pb = this.previewFormsHost.Child as System.Windows.Forms.PictureBox;
+            pb.Image = null;
             isPreviewSuccess = false;
             switchBtnVisbility();
         }
@@ -146,9 +233,19 @@ namespace IntentConnectWeighing
                 this.IpTB.Focusable = true;
                 return false;
             }
+            if (!RegexHelper.IsIPv4(ip)) {
+                MessageBox.Show("摄像头的地址不是正确的IPV4地址");
+                this.IpTB.Focusable = true;
+                return false;
+            }
             if (string.IsNullOrEmpty(port))
             {
                 MessageBox.Show("端口不能为空");
+                this.portTB.Focusable = true;
+                return false;
+            }
+            if (!RegexHelper.IsNumber(port)) {
+                MessageBox.Show("端口只是是数字");
                 this.portTB.Focusable = true;
                 return false;
             }
@@ -160,7 +257,7 @@ namespace IntentConnectWeighing
             }
             if (string.IsNullOrEmpty(port))
             {
-                MessageBox.Show("摄像头的登vi录密码不能为空");
+                MessageBox.Show("摄像头的登录密码不能为空");
                 this.portTB.Focusable = true;
                 return false;
             }
@@ -195,7 +292,7 @@ namespace IntentConnectWeighing
             }
             if (App.currWindow == this)
             {
-                App.setCurrentWindow();
+                App.SetCurrentWindow();
                 App.ShowCurrentWindow();
             }
         }

@@ -49,7 +49,7 @@
                     <local:NavMenuButton  GroupName="NavGroup"  x:Name="Home"  Content="{StaticResource MenuIndex}"  
                                            ActivityedImageUrl ="/IntentConnectWeighing;component/Themes/Img/Menu/index_white.png"
                                           NomalImageUrl="/IntentConnectWeighing;component/Themes/Img/Menu/index.png"  
-                                          Click="NavGroupRadioButton_Click" IsShowContent="True" IsShowAlertNumber="True" AlertNumber="0" IsChecked="True">
+                                          Click="NavGroupRadioButton_Click" IsShowContent="True" IsShowAlertNumber="True" AlertNumber="0" >
                     </local:NavMenuButton>
 
                     <local:NavMenuButton  GroupName="NavGroup"  x:Name="InWeighing"  Content="{StaticResource MenuInWrighing}"  
@@ -74,7 +74,7 @@
                     </local:NavMenuButton>
 
                     <local:NavMenuButton  GroupName="NavGroup"  x:Name="BaseData"  Content="{StaticResource MenuBaseData}"  
-                                          Click="NavGroupRadioButton_Click" IsShowContent="True"
+                                          Click="NavGroupRadioButton_Click" IsShowContent="True" IsChecked="True"
                                           IsShowAlertNumber="True" AlertNumber="{DynamicResource MenuBaseDataNumber}" 
                                           ActivityedImageUrl ="/IntentConnectWeighing;component/Themes/Img/Menu/basedata_white.png"
                                           NomalImageUrl ="/IntentConnectWeighing;component/Themes/Img/Menu/basedata.png">

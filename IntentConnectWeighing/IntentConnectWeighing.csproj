@@ -141,6 +141,7 @@
     <Compile Include="Converter\ThicknessToDoubleConverter.cs" />
     <Compile Include="Converter\TreeViewMarginConverter.cs" />
     <Compile Include="Converter\TrueToFalseConverter.cs" />
+    <Compile Include="Entity\Address.cs" />
     <Compile Include="Entity\baidu\baiduBandCardRecognition.cs" />
     <Compile Include="Entity\baidu\BaiduDriverLicenseRecognition.cs" />
     <Compile Include="Entity\baidu\baiduIDRecogniton.cs" />
@@ -152,9 +153,8 @@
     <Compile Include="Entity\CarInfo.cs" />
     <Compile Include="Entity\Company.cs" />
     <Compile Include="Entity\Config.cs" />
-    <Compile Include="Entity\DbInterface.cs" />
-    <Compile Include="Entity\loginedUser.cs" />
     <Compile Include="Entity\Material.cs" />
+    <Compile Include="Entity\PeopleInfo.cs" />
     <Compile Include="Entity\Scale.cs" />
     <Compile Include="Entity\SyncInfo.cs" />
     <Compile Include="Entity\User.cs" />
@@ -163,6 +163,7 @@
     <Compile Include="Enum\SynchronizationStatus.cs" />
     <Compile Include="Enum\ResourceName.cs" />
     <Compile Include="Enum\MyWindowsStyle.cs" />
+    <Compile Include="Enum\Weighing.cs" />
     <Compile Include="Helper\AnimationHelper.cs" />
     <Compile Include="Helper\BaiDuAcesessTokenHelper.cs" />
     <Compile Include="Helper\BaiduAipHelper.cs" />
@@ -177,6 +178,9 @@
       <DependentUpon>BaseDataPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window\BaseWindow.cs" />
+    <Compile Include="Window\ScaleAddW.xaml.cs">
+      <DependentUpon>ScaleAddW.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Window\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -333,6 +337,10 @@
     <Page Include="Window\BaseDataPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window\ScaleAddW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Window\HomePage.xaml">
       <SubType>Designer</SubType>
@@ -549,6 +557,28 @@
     <Resource Include="Themes\Img\pay.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>@echo -----start----
+if not exist "$(TargetDir)temp" md "$(TargetDir)temp";
+@echo made dir temp successed
+if not exist "$(TargetDir)data" md "$(TargetDir)data";
+@echo made dir data successed
+if not exist "$(TargetDir)template" md "$(TargetDir)template";
+@echo made dir template successed
+@echo start copy dynamic template 
+copy "$(ProjectDir)DynamicTemplate\*.*" "$(TargetDir)template" ;
+@echo start copy dynamic template completed
+
+@echo start copy HC NET SDK
+copy "$(ProjectDir)bin\HCNetSDKCom\*.*" "$(TargetDir)\HCNetSDKCom" ;
+@echo start copy HC NET SDK dll
+copy "$(ProjectDir)bin\*.dll" "$(TargetDir)"
+@echo start copy HC NET SDK completed</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

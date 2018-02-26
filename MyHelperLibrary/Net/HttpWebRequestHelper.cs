@@ -255,11 +255,11 @@ namespace MyHelper
         }
 
 
-        public static async Task<string> baiduRecognition(string url, string token, string filePath)
+        public static async Task<string> BaiduRecognition(string url, string token, string filePath)
         {
             string requestUrl = url + "?access_token = " + token;
             Encoding encoding = Encoding.GetEncoding("UTF-8");
-            string base64 = FileHelper.getFileBase64(filePath);          
+            string base64 = FileHelper.GetFileBase64(filePath);          
             String str = "image=" + System.Web.HttpUtility.UrlEncode(base64);
             byte[] buffer = encoding.GetBytes(str);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUrl);

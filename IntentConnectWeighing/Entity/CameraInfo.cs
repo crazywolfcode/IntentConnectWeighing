@@ -8,7 +8,7 @@ using System.Text;
 
 	 /// <summary>
 	 /// 摄像头信息表
-	 /// 数据条数:0
+	 /// 数据条数:6
 	 /// 数据大小:16KB
 	 /// </summary>
 
@@ -90,7 +90,7 @@ using System.Text;
 	 ///默认值:0
 	 /// </summary>
 
-	 public Int32 isdelete{ get; set; }
+	 public Int32 isDelete{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES

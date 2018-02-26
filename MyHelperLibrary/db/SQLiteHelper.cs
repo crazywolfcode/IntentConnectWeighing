@@ -61,7 +61,7 @@ namespace MyHelper
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data");
         }
 
-        public SQLiteHelper( string connstr=null)
+        public SQLiteHelper(string connstr = null)
         {
             if (string.IsNullOrEmpty(connstr))
             {
@@ -94,7 +94,8 @@ namespace MyHelper
                     }
                 }
             }
-            else {
+            else
+            {
                 sqliteConnectionString = connstr;
             }
 
@@ -175,7 +176,8 @@ namespace MyHelper
             return dss;
         }
 
-        public string getCreateSql(string tablename) {
+        public string getCreateSql(string tablename)
+        {
             string sql = $"SELECT name,sql FROM sqlite_master WHERE type='table' and name = '{tablename}' ORDER BY name  ; ";
             DataTable dt = this.ExcuteDataTable(sql, null);
             if (dt.Rows.Count > 0)
@@ -189,15 +191,17 @@ namespace MyHelper
         /// </summary>
         /// <param name="tableName"></param>
         /// <returns></returns>
-        public List<SqliteTableSchema> getTableSchema(string tableName) {
-            if (string.IsNullOrEmpty(tableName)) {
+        public List<SqliteTableSchema> getTableSchema(string tableName)
+        {
+            if (string.IsNullOrEmpty(tableName))
+            {
                 return null;
             }
             List<SqliteTableSchema> ts = null;
-            string sql = string.Format( " PRAGMA table_info({0});", tableName);
-            DataTable dt = this.ExcuteDataTable(sql,null);
+            string sql = string.Format(" PRAGMA table_info({0});", tableName);
+            DataTable dt = this.ExcuteDataTable(sql, null);
             String json = JsonHelper.ObjectToJson(dt);
-            ts = (List<SqliteTableSchema>) JsonHelper.JsonToObject(json, typeof(List<SqliteTableSchema>));
+            ts = (List<SqliteTableSchema>)JsonHelper.JsonToObject(json, typeof(List<SqliteTableSchema>));
             return ts;
         }
         /// <summary>
@@ -237,6 +241,17 @@ namespace MyHelper
             return dt.Select();
         }
 
+        public bool ExistTable(string tableName)
+        {
+            if (string.IsNullOrEmpty(tableName))
+            {
+                return false;
+            }
+            string sql = $"SELECT name as tableName FROM sqlite_master WHERE type='table' and name ='{tableName}'; ";
+            DataTable dt = this.ExcuteDataTable(sql, null);
+            if (dt.Rows.Count > 0) return true;
+            return false;
+        }
 
         /// <summary>  
         /// SQLite查询  
@@ -312,7 +327,13 @@ namespace MyHelper
             return affectedRows;
         }
 
-
+        public  int ExcuteNoQuery(string sql)
+        {
+            using (SQLiteCommand command = new  SQLiteCommand(sql, mConnection))
+            {
+                return command.ExecuteNonQuery();
+            }
+        }
 
         /// <summary>
         /// 执行删除语句

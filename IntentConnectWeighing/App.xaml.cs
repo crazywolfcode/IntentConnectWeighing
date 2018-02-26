@@ -21,17 +21,17 @@ namespace IntentConnectWeighing
         public static System.Windows.Forms.NotifyIcon notifyIcon;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            createNotifyIcon();
+            CreateNotifyIcon();
 
-            createClientId();
+            CreateClientId();
 
             //devlepment
-            new SettingW().Show();
+           new MainWindow().Show();
 
-            //navigation();
+            //Navigation();
         }
 
-        private void navigation() {
+        private void Navigation() {
             string registerStep = "";
             if (string.IsNullOrWhiteSpace(ConfigurationHelper.GetConfig(ConfigItemName.softwareVersion.ToString())))
             {
@@ -55,15 +55,15 @@ namespace IntentConnectWeighing
             }
         }
 
-        private void createClientId()
+        private void CreateClientId()
         {
             if (string.IsNullOrEmpty(ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString())))
             {
-                ConfigurationHelper.SetConfig(ConfigItemName.clientId.ToString(), getClientId());
+                ConfigurationHelper.SetConfig(ConfigItemName.clientId.ToString(), GetClientId());
             }
         }
 
-        private string getClientId()
+        private string GetClientId()
         {
             return Guid.NewGuid().ToString();
         }
@@ -85,20 +85,22 @@ namespace IntentConnectWeighing
         /// <summary>
         /// 创建Notification
         /// </summary>
-        private void createNotifyIcon()
+        private void CreateNotifyIcon()
         {
-            notifyIcon = new System.Windows.Forms.NotifyIcon();
-            notifyIcon.BalloonTipTitle = "BalloonTipTitle";
-            notifyIcon.BalloonTipText = "BalloonTipText intel connectation weighing" + ResourceHelper.getStringFromDictionaryResource(ResourceName.CompanyName);
-            //notifyIcon.Icon = new System.Drawing.Icon("../../aislogo.ico");
-            notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.ExecutablePath);
-            notifyIcon.Visible = true;
-            notifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            notifyIcon = new System.Windows.Forms.NotifyIcon
+            {
+                BalloonTipTitle = "BalloonTipTitle",
+                BalloonTipText = "BalloonTipText intel connectation weighing" + ResourceHelper.getStringFromDictionaryResource(ResourceName.CompanyName),
+                //notifyIcon.Icon = new System.Drawing.Icon("../../aislogo.ico");
+                Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.ExecutablePath),
+                Visible = true,
+                BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info
+            };
             notifyIcon.ShowBalloonTip(1000);
             notifyIcon.Text = ResourceHelper.getStringFromDictionaryResource(ResourceName.AppTitle);
             notifyIcon.MouseDoubleClick += NotifyIcon_MouseDoubleClick;
             notifyIcon.Click += NotifyIcon_Click;
-            notifyIcon.ContextMenu = getNotifyMenu();
+            notifyIcon.ContextMenu = GetNotifyMenu();
         }
 
         private void NotifyIcon_Click(object sender, EventArgs e)
@@ -117,7 +119,7 @@ namespace IntentConnectWeighing
         /// 创建Notify icon Menu
         /// </summary>
         /// <returns></returns>
-        public System.Windows.Forms.ContextMenu getNotifyMenu()
+        public System.Windows.Forms.ContextMenu GetNotifyMenu()
         {
 
             System.Windows.Forms.MenuItem[] notifyMenu;
@@ -167,7 +169,7 @@ namespace IntentConnectWeighing
             //    }
             //try
             //{
-            insertOrUpdateAppSettings();
+            InsertOrUpdateAppSettings();
             //}
             //catch (Exception exception)
             //{
@@ -181,7 +183,7 @@ namespace IntentConnectWeighing
         /// <summary>
         /// insert Or Update Connection Strings
         /// </summary>
-        private void insertOrUpdateConnectionStrings()
+        private void InsertOrUpdateConnectionStrings()
         {
             ConnectionStringSettingsCollection conns = ConfigurationManager.ConnectionStrings;
             DatabaseOPtionHelper helper = null;
@@ -247,7 +249,7 @@ namespace IntentConnectWeighing
         /// <summary>
         /// insert Or Update App Settings
         /// </summary>
-        private void insertOrUpdateAppSettings()
+        private void InsertOrUpdateAppSettings()
         {
             DatabaseOPtionHelper helper = null;
             string sql = string.Empty;
@@ -265,7 +267,7 @@ namespace IntentConnectWeighing
                 if (dt.Rows.Count > 0)
                 {
                     
-                    List<Config> configs = JsonHelper.TableToEntity<Config>(dt);
+                    List<Config> configs = JsonHelper.DataTableToEntity<Config>(dt);
                     if (configs[0]!= null)
                     {
                         config = configs[0];
@@ -289,13 +291,15 @@ namespace IntentConnectWeighing
                 }
                 else
                 {
-                    config = new Config();
-                    config.id = Guid.NewGuid().ToString();
-                    config.addtime = DateTimeHelper.getCurrentDateTime();
-                    config.configName = key;
-                    config.clientId = ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString());
-                    config.configValue = collection[key].ToString();
-                    config.configType = (int)ConfigType.ClientAppConfig;
+                    config = new Config
+                    {
+                        id = Guid.NewGuid().ToString(),
+                        addtime = DateTimeHelper.getCurrentDateTime(),
+                        configName = key,
+                        clientId = ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString()),
+                        configValue = collection[key].ToString(),
+                        configType = (int)ConfigType.ClientAppConfig
+                    };
                     config.lastUpdateTime = config.addtime;
                     config.syncTime = DateTimeHelper.ConvertDateTimeToInt(DateTime.Now);
                     if (App.currentUser != null)
@@ -332,7 +336,7 @@ namespace IntentConnectWeighing
         /// set the current window
         /// </summary>
         /// <param name="win"></param>
-        public static void setCurrentWindow(Window win = null)
+        public static void SetCurrentWindow(Window win = null)
         {
             if (win == null)
             {

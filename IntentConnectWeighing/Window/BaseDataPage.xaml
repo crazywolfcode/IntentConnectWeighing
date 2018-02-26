@@ -5,24 +5,75 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:IntentConnectWeighing"
       mc:Ignorable="d"  Loaded="Page_Loaded"
-     d:DesignHeight="630" d:DesignWidth="600"   
+     d:DesignHeight="630" d:DesignWidth="880"   
       Title="BaseDataPage">
 
-    <DockPanel LastChildFill="True" x:Name="RootView">
-        <Border  DockPanel.Dock="Left" MinWidth="200" MaxWidth="250"  CornerRadius="0,0,0,4"  Background="{StaticResource F9}" Padding="4" >
-            <ScrollViewer      
-                Background="Transparent"
-                    Height="{Binding ElementName=RootView ,Path=ActualHeight}" 
-                    Width="{Binding Source=StackPanel,Path=ActualWidth}" 
-                    Style="{StaticResource DefaultScrollViewer}" >
-                <StackPanel x:Name="ContentStackPanel"  Width="{Binding Source=StackPanel,Path=ActualWidth}">
-                    
+    <Grid x:Name="RootView">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="230"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border  Grid.Column="0" MinWidth="200" MaxWidth="250"  CornerRadius="0,0,0,4"  Background="{StaticResource F9}" Padding="4" >
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                    <local:TabButton     
+                     Width="70" Height="30"
+                    IsChecked="True"
+                    x:Name="CompanyTabBtn"
+                    Foreground="#666"
+                    ActiveForground="RoyalBlue"
+                    IndicatorHeight="2" 
+                    Margin="0,0,4,0"
+                    IconMargin="0,0,3,0"
+                    IconSize="18"         
+                    Content="公司"
+                    ActiveIndicatorColor="RoyalBlue"/>                   
+                    <local:TabButton   
+                     Width="70" Height="30"
+                    x:Name="MaterialTabBtn"
+                    IsChecked="False"
+                    ActiveForground="RoyalBlue" 
+                    Foreground="#666"
+                    IndicatorHeight="3" 
+                    Margin="0,0,4,0"
+                    IconMargin="0,0,3,0"
+                    IconSize="18"                   
+                    ActiveIndicatorColor="RoyalBlue"
+                    Content="物资"/>
+                    <local:TabButton 
+                     Width="70" Height="30"
+                    x:Name="CarTabBtn"
+                    ActiveForground="RoyalBlue" 
+                    Foreground="#666"
+                    IndicatorHeight="3" 
+                    Margin="0,0,4,0"                  
+                    IconMargin="0,0,3,0"
+                    IconSize="18"
+                    Content="车辆"
+                    ActiveIndicatorColor="RoyalBlue" />                   
                 </StackPanel>
-            </ScrollViewer>
+                <StackPanel Height="1" Background="{DynamicResource E4}"></StackPanel>
+                <ScrollViewer x:Name="scrollViewer"
+                        Background="Transparent"
+                        Height="{Binding ElementName=RootView,Path=ActualHeight}" 
+                        Width="{Binding Source=StackPanel,Path=ActualWidth}" 
+                        Style="{StaticResource DefaultScrollViewer}" >
+                    <StackPanel x:Name="ContentStackPanel"  Width="{Binding Source=StackPanel,Path=ActualWidth}">
 
+                    </StackPanel>
+                </ScrollViewer>
+            </StackPanel>            
         </Border>
-        <StackPanel>
+        <local:IconButton x:Name="AddBtn"       Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Bottom"      
+            Margin="0,0,18,10" ToolTip="添加"  Click="AddBtn_Click"
+            Width="34" Height="30" 
+            IsShowIcon="True" CornerRadius="17"
+            Icon="&#xe626;" IconSize="30" IconMargin="0,-2,0,2"
+            MouseOverForeground ="{DynamicResource myBlue}" MouseOverBackground="{DynamicResource F9}"
+            BorderBrush="{x:Null}"           
+            Style="{DynamicResource  IconButtonTransparencyStyle}"/>
+        <Border Background="White"  Grid.Column="1" CornerRadius="0,0,4,0">
             <TextBlock Name="textblock" Text="NavBaseDataPage..." Margin="200,200"  FontSize="20" ></TextBlock>
-        </StackPanel>
-    </DockPanel>
+        </Border>
+    </Grid>
 </Page>
