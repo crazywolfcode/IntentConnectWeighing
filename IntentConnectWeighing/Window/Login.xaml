@@ -64,7 +64,7 @@
         <local:IconButton Grid.Row="1" x:Name="initSettintBtn" IconMargin="0" Icon="&#xe688;" IconSize="20" 
                           Style="{StaticResource IconButtonStyle}" Width="28" Height="28"
                           FontWeight="Bold"
-                         Click="initSettintBtn_Click"
+                         Click="InitSettintBtn_Click"
                           MouseOverForeground="White" 
                           MouseOverBackground="RoyalBlue" 
                           CornerRadius="2" 

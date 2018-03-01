@@ -42,6 +42,13 @@ namespace IntentConnectWeighing
         LoginWindowStyle,
         LoginWindowControlTemplate,
         LoginWindowMainBackground,
+
+        //base data
+        BaseDataExpenderStyle,
+        MaterialBaseDataTemplate,
+        ListViewItemMaterialBaseDataStyle,
+        ListViewItemBaseDataStyle,
+        BaseDataListViewStyle,
     }
 
 }

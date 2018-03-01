@@ -23,8 +23,8 @@
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/RadioButtonDictionary.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/CheckBoxDictionary.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/TabButtonStyle.xaml"></ResourceDictionary>
-        
-
+        <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/ListViewStyle.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/ExpanderStyle.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
-  
+    <local:CheckedToVisibleConverter x:Key="CheckedToVisibleConverter"></local:CheckedToVisibleConverter>
 </ResourceDictionary>

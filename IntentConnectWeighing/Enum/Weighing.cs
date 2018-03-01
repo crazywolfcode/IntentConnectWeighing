@@ -19,11 +19,10 @@ namespace IntentConnectWeighing
 	 	 company,
 	 	 config,
 	 	 material,
+	 	 material_category,
 	 	 people_info,
 	 	 scale,
 	 	 sync_info,
-	 	 test_inflr,
-	 	 text_table,
 	 	 user,
 	 	 weighing_bill,
 	 }
@@ -133,9 +132,9 @@ namespace IntentConnectWeighing
 	 	 addtime,
 	 	 add_user_id,
 	 	 add_user_name,
-	 	 last_update_time,
-	 	 last_update_user_id,
-	 	 last_update_user_name,
+	 	 update_time,
+	 	 update_user_id,
+	 	 update_user_name,
 	 	 sync_time,
 	 	 is_delete,
 	 	 delete_time,
@@ -146,18 +145,35 @@ namespace IntentConnectWeighing
 	 public enum MaterialEnum{
 	 	 id,
 	 	 name,
+	 	 category_id,
+	 	 category_name,
 	 	 name_first_case,
 	 	 description,
 	 	 addtime,
 	 	 add_user_id,
 	 	 add_user_name,
-	 	 last_update_time,
-	 	 last_update_user_id,
-	 	 last_update_user_name,
+	 	 update_time,
+	 	 update_user_id,
+	 	 update_user_name,
 	 	 is_delete,
 	 	 delete_time,
 	 	 sync_time,
 	 	 status,
+	 }
+
+
+	 public enum MaterialCategoryEnum{
+	 	 id,
+	 	 name,
+	 	 first_case,
+	 	 children_count,
+	 	 addtime,
+	 	 add_user_id,
+	 	 add_user_name,
+	 	 add_user_company,
+	 	 is_delete,
+	 	 delete_time,
+	 	 sync_time,
 	 }
 
 
@@ -197,19 +213,6 @@ namespace IntentConnectWeighing
 	 	 table_name,
 	 	 sync_time,
 	 	 last_update_time,
-	 }
-
-
-	 public enum TestInflrEnum{
-	 	 id,
-	 	 age,
-	 	 sex,
-	 }
-
-
-	 public enum TextTableEnum{
-	 	 id,
-	 	 id_id,
 	 }
 
 

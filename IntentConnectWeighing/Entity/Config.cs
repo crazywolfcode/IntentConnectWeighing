@@ -86,19 +86,19 @@ using System.Text;
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String lastUpdateTime{ get; set; }
+	 public String updateTime{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String lastUpdateUserId{ get; set; }
+	 public String updateUserId{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String lastUpdateUserName{ get; set; }
+	 public String updateUserName{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES

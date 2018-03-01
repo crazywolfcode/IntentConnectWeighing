@@ -16,6 +16,7 @@ namespace IntentConnectWeighing
     public partial class App : Application
     {
         public static User currentUser;
+        public static Company currentCompany;
         public static Window currWindow;
         public static Window prevWindow;
         public static System.Windows.Forms.NotifyIcon notifyIcon;
@@ -26,9 +27,21 @@ namespace IntentConnectWeighing
             CreateClientId();
 
             //devlepment
-           new MainWindow().Show();
-
+            new Login().Show();
+            // new TestExpender().Show();
             //Navigation();
+            currentCompany = new Company()
+            {
+                id = GetClientId(),
+                name = "富源县天鑫煤业有限公司",
+            };
+
+            currentUser = new User() {
+                id = GetClientId(),
+                name = "陈龙飞",
+                company = currentCompany.name,
+                affiliatedCompanyId = currentCompany.id
+            };
         }
 
         private void Navigation() {
@@ -70,7 +83,7 @@ namespace IntentConnectWeighing
 
         public bool CheckLogin()
         {
-            if (Constract.currentUser == null)
+            if (currentUser == null)
             {
                 return false;
             }
@@ -208,11 +221,11 @@ namespace IntentConnectWeighing
                             {
                                 config.configValue = conns[i].ConnectionString;
                                 config.syncTime = DateTimeHelper.ConvertDateTimeToInt(DateTime.Now);
-                                config.lastUpdateTime = DateTimeHelper.getCurrentDateTime();
+                                config.updateTime = DateTimeHelper.getCurrentDateTime();
                                 if (App.currentUser != null)
                                 {
-                                    config.lastUpdateUserId = config.addUserId;
-                                    config.lastUpdateUserName = config.addUserName;
+                                    config.updateUserId = config.addUserId;
+                                    config.updateUserName = config.addUserName;
                                 }
                             }
                             helper.update(config);
@@ -231,14 +244,14 @@ namespace IntentConnectWeighing
                         config.configValue = conns[i].ConnectionString;
                         config.addtime = DateTimeHelper.getCurrentDateTime();
                         config.configType = (int)ConfigType.ClientAppConfig;
-                        config.lastUpdateTime = config.addtime;
+                        config.updateTime = config.addtime;
                         config.syncTime = DateTimeHelper.ConvertDateTimeToInt(DateTime.Now);
                         if (App.currentUser != null)
                         {
                             config.addUserId = App.currentUser.id;
                             config.addUserName = App.currentUser.name;
-                            config.lastUpdateUserId = config.addUserId;
-                            config.lastUpdateUserName = config.addUserName;
+                            config.updateUserId = config.addUserId;
+                            config.updateUserName = config.addUserName;
                         }
                         helper.insert(config);
                     }
@@ -275,11 +288,11 @@ namespace IntentConnectWeighing
                         {
                             config.configValue = collection[key].ToString();
                             config.syncTime = DateTimeHelper.ConvertDateTimeToInt(DateTime.Now);
-                            config.lastUpdateTime = DateTimeHelper.getCurrentDateTime();
+                            config.updateTime = DateTimeHelper.getCurrentDateTime();
                             if (App.currentUser != null)
                             {
-                                config.lastUpdateUserId = config.addUserId;
-                                config.lastUpdateUserName = config.addUserName;
+                                config.updateUserId = config.addUserId;
+                                config.updateUserName = config.addUserName;
                             }
                         }
                         helper.update(config);
@@ -300,14 +313,14 @@ namespace IntentConnectWeighing
                         configValue = collection[key].ToString(),
                         configType = (int)ConfigType.ClientAppConfig
                     };
-                    config.lastUpdateTime = config.addtime;
+                    config.updateTime = config.addtime;
                     config.syncTime = DateTimeHelper.ConvertDateTimeToInt(DateTime.Now);
                     if (App.currentUser != null)
                     {
                         config.addUserId = App.currentUser.id;
                         config.addUserName = App.currentUser.name;
-                        config.lastUpdateUserId = config.addUserId;
-                        config.lastUpdateUserName = config.addUserName;
+                        config.updateUserId = config.addUserId;
+                        config.updateUserName = config.addUserName;
                     }
                     helper.insert(config);
                 }

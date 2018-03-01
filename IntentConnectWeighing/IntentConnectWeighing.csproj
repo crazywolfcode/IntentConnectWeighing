@@ -154,10 +154,13 @@
     <Compile Include="Entity\Company.cs" />
     <Compile Include="Entity\Config.cs" />
     <Compile Include="Entity\Material.cs" />
+    <Compile Include="Entity\MaterialCategory.cs" />
+    <Compile Include="Entity\model\CommonModel.cs" />
     <Compile Include="Entity\PeopleInfo.cs" />
     <Compile Include="Entity\Scale.cs" />
     <Compile Include="Entity\SyncInfo.cs" />
     <Compile Include="Entity\User.cs" />
+    <Compile Include="Entity\visual\MaterialV.cs" />
     <Compile Include="Entity\WeighingBill.cs" />
     <Compile Include="Enum\commonEunm.cs" />
     <Compile Include="Enum\SynchronizationStatus.cs" />
@@ -178,6 +181,12 @@
       <DependentUpon>BaseDataPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window\BaseWindow.cs" />
+    <Compile Include="Window\MaterialAddW.xaml.cs">
+      <DependentUpon>MaterialAddW.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window\MaterialCategoryAddW.xaml.cs">
+      <DependentUpon>MaterialCategoryAddW.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Window\ScaleAddW.xaml.cs">
       <DependentUpon>ScaleAddW.xaml</DependentUpon>
     </Compile>
@@ -238,6 +247,9 @@
     <Compile Include="Window\SettingW.xaml.cs">
       <DependentUpon>SettingW.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Window\testExpender.xaml.cs">
+      <DependentUpon>testExpender.xaml</DependentUpon>
+    </Compile>
     <Page Include="Control\SwitchCheckBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -270,6 +282,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="StyleDictionary\ExpanderStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="StyleDictionary\IconButtonStyleDictionary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -277,6 +293,10 @@
     <Page Include="StyleDictionary\IconFontDictionary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="StyleDictionary\ListViewStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StyleDictionary\LoginWindowDictionary.xaml">
       <SubType>Designer</SubType>
@@ -337,6 +357,14 @@
     <Page Include="Window\BaseDataPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window\MaterialAddW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Window\MaterialCategoryAddW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Window\ScaleAddW.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -415,6 +443,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Window\SettingW.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window\testExpender.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

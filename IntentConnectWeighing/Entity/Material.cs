@@ -7,7 +7,7 @@ using System.Text;
 {
 
 	 /// <summary>
-	 /// 数据条数:0
+	 /// 数据条数:8
 	 /// 数据大小:16KB
 	 /// </summary>
 
@@ -26,6 +26,18 @@ using System.Text;
 	 /// </summary>
 
 	 public String name{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String categoryId{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String categoryName{ get; set; }
 
 	 /// <summary>
 	 /// 注释:物质的首拼
@@ -63,19 +75,19 @@ using System.Text;
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String lastUpdateTime{ get; set; }
+	 public String updateTime{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String lastUpdateUserId{ get; set; }
+	 public String updateUserId{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String lastUpdateUserName{ get; set; }
+	 public String updateUserName{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
@@ -93,7 +105,7 @@ using System.Text;
 	 /// 可空:YES
 	 /// </summary>
 
-	 public Int32 syncTime{ get; set; }
+	 public Int64 syncTime{ get; set; }
 
 	 /// <summary>
 	 /// 注释:0 未启用 1 正常启用

@@ -314,13 +314,17 @@ namespace IntentConnectWeighing
             //Constract.currentUser = user;
             //MainWindow window = new MainWindow();
             //this.Close();
-            //window.Show();                            
+            //window.Show();              
+            
+            //TODO 将当前用户所在的公司 设置到当前的公司 里;
+
             AnimationHelper.getVibrationAnimation(this, Orientation.Vertical, Handle).Begin();
         }
 
         public void Handle(object sender, EventArgs e)
         {
             MainWindow window = new MainWindow();
+            App.currWindow = window;
             this.Close();
             window.Show();
         }
@@ -412,11 +416,11 @@ namespace IntentConnectWeighing
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if(App.currWindow == this) {
             this.WindowState = WindowState.Minimized;
-            this.ShowInTaskbar = false;
-            App.SetCurrentWindow();
-            App.ShowCurrentWindow();
+            this.ShowInTaskbar = false;          
             e.Cancel = true;
+            }
         }
     }
 }

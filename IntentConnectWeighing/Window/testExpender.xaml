@@ -1,0 +1,49 @@
+﻿<Window x:Class="IntentConnectWeighing.TestExpender"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IntentConnectWeighing"
+        mc:Ignorable="d" Loaded="Window_Loaded"
+        Title="testExpender" Height="300" Width="300">
+    <Window.Resources>
+        <collections:ArrayList x:Key="items">
+            <system:String >1111</system:String>
+            <system:String>2222</system:String>
+            <system:String>44444</system:String>
+            <system:String>555555</system:String>
+            <system:String>555555</system:String>
+            <system:String>包含附包含附加属性包</system:String>
+            <system:String>按钮的样式</system:String>
+            <system:String>21211313</system:String>
+        </collections:ArrayList>
+      
+        <DataTemplate x:Key="ExpanderHeaderTemplete">
+            <WrapPanel >
+                <TextBlock Text="{Binding name}" TextAlignment="Left"></TextBlock>
+                <TextBlock Text="{Binding num}" TextAlignment="Left"></TextBlock>
+            </WrapPanel>
+        </DataTemplate>
+
+    </Window.Resources>
+    <Grid>
+        <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+            <StackPanel>
+                <Expander  x:Name="expander"   IsExpanded="True"
+                 IsEnabledChanged="expander_IsEnabledChanged"    
+                  BorderThickness="0"  
+                  HeaderTemplate="{StaticResource ExpanderHeaderTemplete}"
+                  Background="{StaticResource E4}"
+                  Style="{DynamicResource  BaseDataExpenderStyle}">
+                    <Expander.Content>
+                        <ListView x:Name="listView" ItemsSource="{StaticResource items}" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Hidden" Style="{DynamicResource BaseDataListViewStyle}">
+
+                        </ListView>
+                    </Expander.Content>
+                </Expander>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

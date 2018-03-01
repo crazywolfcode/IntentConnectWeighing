@@ -7,12 +7,8 @@
         mc:Ignorable="d"                  
         WindowStartupLocation="CenterScreen" 
         Title="InitializationSettingW" Height="550" Width="650"
-        Loaded="BaseWindow_Loaded" ContentRendered="BaseWindow_ContentRendered" Closed="BaseWindow_Closed"
-                  
+        Loaded="BaseWindow_Loaded" ContentRendered="BaseWindow_ContentRendered" Closed="BaseWindow_Closed"                  
         >
-    <Window.Resources>
-        <local:CheckedToVisibleConverter x:Key="CheckedToVisibleConverter"></local:CheckedToVisibleConverter>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

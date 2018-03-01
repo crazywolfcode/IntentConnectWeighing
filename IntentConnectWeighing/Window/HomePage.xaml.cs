@@ -56,8 +56,5 @@ namespace IntentConnectWeighing
         {
             MessageBox.Show(CommomHelpre.getLoclIp());
         }
-
-
-
     }
 }
