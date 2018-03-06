@@ -8,13 +8,23 @@ using MyHelper;
 using System.Data;
 namespace IntentConnectWeighing
 {
-   public class DatabaseOPtionHelper
+    public class DatabaseOPtionHelper
     {
-        private  MySqlHelper mysqlHelper;
-        private  SQLiteHelper sqliteHelper;
+        private MySqlHelper mysqlHelper;
+        private SQLiteHelper sqliteHelper;
         private static string dbType;
 
-       public  DatabaseOPtionHelper()
+        public static DatabaseOPtionHelper Instance;
+
+        public static DatabaseOPtionHelper GetInstance()
+        {
+            if (Instance == null)
+            {
+                Instance = new DatabaseOPtionHelper();
+            }
+            return Instance;
+        }
+        private DatabaseOPtionHelper()
         {
             dbType = ConfigurationHelper.GetConfig(ConfigItemName.dbType.ToString());
             if (dbType == DbType.mysql.ToString())
@@ -186,6 +196,27 @@ namespace IntentConnectWeighing
             else
             {
                 return sqliteHelper.insertOrUpdate(obj);
+            }
+        }
+        /// <summary>
+        /// 多条Sql语句放在一个事务去执行
+        /// a  Transaction  Execute more Sql 
+        /// </summary>
+        /// <param name="sqls"></param>
+        /// <returns></returns>
+        public int TransactionExecute(String[] sqls)
+        {
+            if (sqls == null || sqls.Length <= 0)
+            {
+                return 0;
+            }
+            if (DbType.mysql.ToString() == dbType)
+            {
+                return mysqlHelper.TransactionExecute(sqls);
+            }
+            else
+            {
+                return sqliteHelper.TransactionExecute(sqls);
             }
         }
     }

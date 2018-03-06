@@ -21,27 +21,36 @@ namespace IntentConnectWeighing
     public partial class BaseDataPage : Page
     {
         private ListView currentListView;
-
         public Window paretntWindow;
+        private List<MaterialV> mMaterialVs = null;
+        private Boolean materialNeedRefresh = true;
+        private Boolean companyNeedRefresh = true;
+        private Boolean carNeedRefresh = true;
+        private Material currMaterial;
+        private CarInfo currCarInfo;
+        private List<CarHeaderV> mCarHeaderVs;
 
         public BaseDataPage()
         {
             InitializeComponent();
         }
-        private List<MaterialV> mMaterialVs = null;
-        private Boolean materialNeedRefresh = true;
-        private Boolean companyNeedRefresh = true;
-        private Boolean carNeedRefresh = true;
-        private List<CarInfo> mCarInfos = null;
-        private Material currMaterial;
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             this.scrollViewer.Height = this.scrollViewer.ActualHeight - 30;
 
             FillData();
         }
+
         #region 填充数据
 
+        private void TabBtn_Checked(object sender, RoutedEventArgs e)
+        {
+            if (this.IsLoaded)
+            {
+                FillData();
+            }
+        }
         /// <summary>
         /// 填充数据
         /// </summary>
@@ -148,7 +157,7 @@ namespace IntentConnectWeighing
             }
             List<MaterialCategory> cates = new List<MaterialCategory>();
             String CategorySql = DbBaseHelper.getSelectSql(DataTabeName.material_category.ToString());
-            DataTable cateDt = new DatabaseOPtionHelper().select(CategorySql);
+            DataTable cateDt = DatabaseOPtionHelper.GetInstance().select(CategorySql);
             if (cateDt.Rows.Count > 0)
             {
                 cates = JsonHelper.DataTableToEntity<MaterialCategory>(cateDt);
@@ -166,7 +175,7 @@ namespace IntentConnectWeighing
                     mc = cates[i];
                     condition = MaterialEnum.category_id + "=" + Constract.valueSplit + mc.id + Constract.valueSplit;
                     sql = DbBaseHelper.getSelectSql(DataTabeName.material.ToString(), null, condition);
-                    mDt = new DatabaseOPtionHelper().select(sql);
+                    mDt =  DatabaseOPtionHelper.GetInstance().select(sql);
                     List<Material> mlist = JsonHelper.DataTableToEntity<Material>(mDt);
                     MaterialV v = new MaterialV()
                     {
@@ -177,7 +186,7 @@ namespace IntentConnectWeighing
                 }
             }
         }
-
+        
         private void FillMaterialAlretData()
         {
             TextBlock tb = new TextBlock();
@@ -193,29 +202,118 @@ namespace IntentConnectWeighing
 
         private void FillCarData()
         {
-            if (mCarInfos == null || mCarInfos.Count <= 0)
+            GenerterCarheaderlVData();
+            if (mCarHeaderVs == null || mCarHeaderVs.Count <= 0)
             {
                 //  fill alert into
-                TextBlock tb = new TextBlock();
-                tb.Text = "没有任何车辆信息\n 右击此处可以刷新/n 你也可以点击下面的添加按键进行添加！";
-                tb.TextWrapping = TextWrapping.Wrap;
-                tb.Margin = new Thickness(10.0, 25.0, 10.0, 0);
-                tb.HorizontalAlignment = HorizontalAlignment.Center;
-                tb.VerticalAlignment = VerticalAlignment.Center;
-                tb.Foreground = Brushes.Gray;
-                this.CarListContentStackPanel.Children.Clear();
-                this.CarListContentStackPanel.Children.Add(tb);
+                FillCarAlretData();
             }
             else
             {
                 // fill true data
+                if (carNeedRefresh == false) {
+                    return;
+                }
+                carNeedRefresh = false;
+                this.CarListContentStackPanel.Children.Clear();
+                for (int i = 0; i < mCarHeaderVs.Count; i++)
+                {
+                    Expander expander = new Expander();
+                    expander.Style = FindResource(ResourceName.BaseDataExpenderStyle.ToString()) as Style;
+                    expander.Header = mCarHeaderVs[i].head;
+                    expander.HeaderTemplate = FindResource(ResourceName.CarBaseDataTemplate.ToString()) as DataTemplate;
 
+                    ListView listView = new ListView() { Name= "CarlistView" };
+                    listView.ItemsSource = mCarHeaderVs[i].carInfos;
+                    listView.Style = FindResource(ResourceName.BaseDataListViewStyle.ToString()) as Style;
+                    listView.ItemContainerStyle = FindResource(ResourceName.ListViewItemCarBaseDataStyle.ToString()) as Style;
+                    listView.SelectionChanged += CarlistView_SelectionChanged;
+                    expander.Content = listView;
+                    this.CarListContentStackPanel.Children.Add(expander);
+                }
+            }
+        }
+
+        private void CarlistView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListView lv = sender as ListView;
+            if (lv.SelectedIndex == -1)
+            {
+                return;
+            }
+            if (currentListView != lv)
+            {
+                if (currentListView != null)
+                {
+                    currentListView.SelectedIndex = -1;
+                }
+            }
+            currentListView = lv;
+            currCarInfo = lv.SelectedItem as CarInfo;
+             this.CarinfoDetailGrid.DataContext = currCarInfo;
+          //  MessageBox.Show(currCarInfo.carNumber);
+        }
+
+        private void FillCarAlretData() {
+            TextBlock tb = new TextBlock();
+            tb.Text = "没有任何车辆信息, 右击此处可以刷新, 你也可以点击下面的添加按键进行添加！";
+            tb.TextWrapping = TextWrapping.Wrap;
+            tb.Margin = new Thickness(10.0, 25.0, 10.0, 0);
+            tb.HorizontalAlignment = HorizontalAlignment.Center;
+            tb.VerticalAlignment = VerticalAlignment.Center;
+            tb.Foreground = Brushes.Gray;
+            this.CarListContentStackPanel.Children.Clear();
+            this.CarListContentStackPanel.Children.Add(tb);
+        }
+        private void GenerterCarheaderlVData()
+        {
+            if (mCarHeaderVs == null)
+            {
+                mCarHeaderVs = new List<CarHeaderV>();
+            }
+            if (carNeedRefresh == false)
+            {
+                return;
+            }
+            else
+            {
+                mCarHeaderVs.Clear();
+            }
+            List<CarHeader> cates = new List<CarHeader>();
+            String sql = DbBaseHelper.getSelectSql(DataTabeName.car_header.ToString(),null,null,null,null,CarHeaderEnum.content.ToString()+ " asc ");
+            DataTable Dt = DatabaseOPtionHelper.GetInstance().select(sql);
+            if (Dt.Rows.Count > 0)
+            {
+                cates = JsonHelper.DataTableToEntity<CarHeader>(Dt);
+                if (cates == null || cates.Count <= 0)
+                {
+                    FillMaterialAlretData();
+                    return;
+                }
+                CarHeader ch = null;
+                String condition = string.Empty;
+                String carsql = string.Empty;
+                DataTable mDt = null;
+                for (int i = 0; i < cates.Count; i++)
+                {
+                    ch = cates[i];
+                    condition = CarInfoEnum.car_number + " like " + Constract.valueSplit + ch.content + "%" + Constract.valueSplit;
+                    sql = DbBaseHelper.getSelectSql(DataTabeName.car_info.ToString(), null, condition);
+                    mDt = DatabaseOPtionHelper.GetInstance().select(sql);
+                    List<CarInfo> mlist = JsonHelper.DataTableToEntity<CarInfo>(mDt);
+                    if (mlist.Count > 0)
+                    {
+                        CarHeaderV v = new CarHeaderV()
+                        {
+                            head = ch,
+                            carInfos = mlist
+                        };
+                        mCarHeaderVs.Add(v);
+                    }
+                }
             }
         }
         #endregion
-
-
-
 
         #region add 添加
 
@@ -242,7 +340,9 @@ namespace IntentConnectWeighing
         {
             MessageBox.Show("公司信息不可这样添加，需要对方公司自己注册。");
         }
-        private void AddCar() { }
+        private void AddCar() {
+            new CarAddW() {ParentRefreshData = new Action<bool, bool, bool>(RefreshData) }.ShowDialog();
+        }
 
         private void AddMaterial()
         {
@@ -305,14 +405,6 @@ namespace IntentConnectWeighing
 
         #endregion
 
-        private void TabBtn_Checked(object sender, RoutedEventArgs e)
-        {
-            if (this.IsLoaded)
-            {
-                FillData();
-            }
-        }
-
         #region Material Update and delete event
 
         private void MaterialDetailUpdteBtn_Click(object sender, RoutedEventArgs e)
@@ -325,7 +417,7 @@ namespace IntentConnectWeighing
             MessageBoxResult result = MessageBox.Show($"你确定要删除 {currMaterial.name} 吗？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
             {
-                int res = new DatabaseOPtionHelper().delete(currMaterial);
+                int res = DatabaseOPtionHelper.GetInstance().delete(currMaterial);
                 if (res > 0)
                 {
                     String cateid = currMaterial.categoryId;
@@ -339,6 +431,38 @@ namespace IntentConnectWeighing
                     this.MatereialDetailInfoGrid.DataContext = null;
                     materialNeedRefresh = true;
                     FillMaterialData();
+                }
+                else
+                {
+                    MessageBox.Show("删除失败！");
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+        #endregion
+
+        #region CarInfo Update and Delete Event
+        private void CarinfoDetailUpdteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            new CarAddW(currCarInfo) { ParentRefreshData = new Action<bool, bool, bool>(RefreshData) }.ShowDialog();
+        }
+
+        private void DeleteCarInfoBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show($"你确定要删除 {currCarInfo.carNumber} 吗？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                int res = DatabaseOPtionHelper.GetInstance().delete(currCarInfo);
+                if (res > 0)
+                {                                
+                    MessageBox.Show("删除成功！");
+                    currMaterial = null;
+                    this.CarinfoDetailGrid.DataContext = null;
+                    carNeedRefresh = true;
+                    FillCarData();
                 }
                 else
                 {

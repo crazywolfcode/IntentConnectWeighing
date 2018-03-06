@@ -8,7 +8,7 @@ using System.Text;
 
 	 /// <summary>
 	 /// 物资的分类
-	 /// 数据条数:5
+	 /// 数据条数:4
 	 /// 数据大小:16KB
 	 /// </summary>
 

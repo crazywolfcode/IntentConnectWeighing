@@ -7,7 +7,7 @@ using System.Text;
 {
 
 	 /// <summary>
-	 /// 数据条数:0
+	 /// 数据条数:6
 	 /// 数据大小:16KB
 	 /// </summary>
 
@@ -25,7 +25,7 @@ using System.Text;
 	 /// 可空:NO
 	 /// </summary>
 
-	 public String plateNumber{ get; set; }
+	 public String carNumber{ get; set; }
 
 	 /// <summary>
 	 /// 可空:NO
@@ -40,10 +40,23 @@ using System.Text;
 	 public String driverMobile{ get; set; }
 
 	 /// <summary>
+	 /// 注释:驾驶员身份证号码
 	 /// 可空:NO
 	 /// </summary>
 
-	 public Int32 driverIdnumber{ get; set; }
+	 public String driverIdnumber{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String ownerId{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String ownerName{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
@@ -67,19 +80,19 @@ using System.Text;
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String lastUpdateTime{ get; set; }
+	 public String updateTime{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String lastUpdateUserId{ get; set; }
+	 public String updateUserId{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String lastUpdateUserName{ get; set; }
+	 public String updateUserName{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
@@ -97,7 +110,14 @@ using System.Text;
 	 /// 可空:YES
 	 /// </summary>
 
-	 public Int32 syncTime{ get; set; }
+	 public Int64 syncTime{ get; set; }
+
+	 /// <summary>
+	 /// 注释:行驶证ID
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String vehicleId{ get; set; }
 
 	 /// <summary>
 	 /// 注释:0 未启用 1 正常启用
@@ -106,6 +126,12 @@ using System.Text;
 	 /// </summary>
 
 	 public Int32 status{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String remark{ get; set; }
 
 	 }
 }

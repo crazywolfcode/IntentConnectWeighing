@@ -15,7 +15,7 @@ namespace IntentConnectWeighing
             {
                 string set = fieldName + "=" + fieldName + " + " + number;
                 string sql = DbBaseHelper.getUpdateSql(tableName, set, condition);
-                res = new DatabaseOPtionHelper().update(sql);               
+                res =  DatabaseOPtionHelper.GetInstance().update(sql);               
                 return res;
             }
             catch 
@@ -31,7 +31,7 @@ namespace IntentConnectWeighing
             {
                 string set = fieldName + "=" + fieldName + " - " + number;
                 string sql = DbBaseHelper.getUpdateSql(tableName, set, condition);
-                res = new DatabaseOPtionHelper().update(sql);          
+                res = DatabaseOPtionHelper.GetInstance().update(sql);          
                 return res;
             }
             catch

@@ -53,7 +53,7 @@ namespace IntentConnectWeighing
         {
             String condition = CameraInfoEnum.id.ToString() + "=" + Constract.valueSplit + mId + Constract.valueSplit;
             String sql = DbBaseHelper.getSelectSql(DataTabeName.camera_info.ToString(), null, condition);
-            DataTable dt = new DatabaseOPtionHelper().select(sql);
+            DataTable dt =  DatabaseOPtionHelper.GetInstance().select(sql);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace IntentConnectWeighing
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
 
-            DatabaseOPtionHelper optionHelper = new DatabaseOPtionHelper();
+            DatabaseOPtionHelper optionHelper =  DatabaseOPtionHelper.GetInstance();
             String condition = String.Empty;
             String sql = string.Empty;
             int res = 0;
@@ -89,7 +89,7 @@ namespace IntentConnectWeighing
                     mMaterialCategory.firstCase = mMaterialCategory.name;
                 }
                 mMaterialCategory.syncTime = (Int32)DateTimeHelper.GetTimeStamp();
-                res = new DatabaseOPtionHelper().update(mMaterialCategory);
+                res =  DatabaseOPtionHelper.GetInstance().update(mMaterialCategory);
                 if (res > 0)
                 {
                     MessageBox.Show("修改成功！");
@@ -179,7 +179,7 @@ namespace IntentConnectWeighing
         {
             string condition = MaterialCategoryEnum.name.ToString() + "=" + Constract.valueSplit + name + Constract.valueSplit;
             string sql = DbBaseHelper.getSelectSqlNoSoftDeleteCondition(DataTabeName.material_category.ToString(), null, condition, null, null, null, 1, 0);
-            DataTable dt = new DatabaseOPtionHelper().select(sql);
+            DataTable dt =  DatabaseOPtionHelper.GetInstance().select(sql);
             List<MaterialCategory> list = JsonHelper.DataTableToEntity<MaterialCategory>(dt);
             if (list == null || list.Count <= 0)
             {

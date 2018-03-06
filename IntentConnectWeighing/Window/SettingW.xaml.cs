@@ -108,14 +108,14 @@ namespace IntentConnectWeighing
         private void refreshScaleSettingData()
         {
             String sql = DbBaseHelper.getSelectSql(DataTabeName.scale.ToString());
-            DataTable dt = new DatabaseOPtionHelper().select(sql);
+            DataTable dt =  DatabaseOPtionHelper.GetInstance().select(sql);
             mScales = JsonHelper.DataTableToEntity<Scale>(dt);
             this.ScaleDataGrid.ItemsSource = mScales;
         }
         private void refreshCameraSettingData()
         {
             String sql = DbBaseHelper.getSelectSql(DataTabeName.camera_info.ToString());
-            DataTable dt = new DatabaseOPtionHelper().select(sql);
+            DataTable dt =  DatabaseOPtionHelper.GetInstance().select(sql);
             mCameraInfos = JsonHelper.DataTableToEntity<CameraInfo>(dt);
             this.CamreaDataGrid.ItemsSource = mCameraInfos;
         }
@@ -142,7 +142,7 @@ namespace IntentConnectWeighing
                     return;
                 }
                 String sql = DbBaseHelper.getDeleteSql(DataTabeName.camera_info.ToString(), CameraInfoEnum.id.ToString() + "=" + Constract.valueSplit + id + Constract.valueSplit);
-                int res = new DatabaseOPtionHelper().delete(sql);
+                int res =  DatabaseOPtionHelper.GetInstance().delete(sql);
                 if (res > 0)
                 {
                     MessageBox.Show("删除成功！");
@@ -210,7 +210,7 @@ namespace IntentConnectWeighing
                     return;
                 }
                 String sql = DbBaseHelper.getDeleteSql(DataTabeName.scale.ToString(), ScaleEnum.id.ToString() + "=" + Constract.valueSplit + id + Constract.valueSplit);
-                int res = new DatabaseOPtionHelper().delete(sql);
+                int res = DatabaseOPtionHelper.GetInstance().delete(sql);
                 if (res > 0)
                 {
                     MessageBox.Show("删除成功！");

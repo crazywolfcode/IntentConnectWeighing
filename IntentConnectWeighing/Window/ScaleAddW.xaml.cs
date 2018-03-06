@@ -63,7 +63,7 @@ namespace IntentConnectWeighing
         private void bindingCurrrScale() {
             String condition = ScaleEnum.id.ToString() + "=" + Constract.valueSplit + mScale.id + Constract.valueSplit;
             String sql = DbBaseHelper.getSelectSql(DataTabeName.scale.ToString(), null, condition);
-            DataTable dt = new DatabaseOPtionHelper().select(sql);
+            DataTable dt =  DatabaseOPtionHelper.GetInstance().select(sql);
             if (dt.Rows.Count > 0) {
                 mScale =( JsonHelper.DataTableToEntity<Scale>(dt))[0];
             }
@@ -108,7 +108,7 @@ namespace IntentConnectWeighing
                     }
                     mScale.isDefault = 0;
                     mScale.syncTime = 0;
-                    res = new DatabaseOPtionHelper().insert(mScale);
+                    res =  DatabaseOPtionHelper.GetInstance().insert(mScale);
                     if (res > 0)
                     {
                         MessageBox.Show("添加成功！");
@@ -121,7 +121,7 @@ namespace IntentConnectWeighing
                 } else {
                     //update
                     mScale.com.Replace("c", "C").Replace("o", "O").Replace("m", "M");
-                    res = new DatabaseOPtionHelper().update(mScale);
+                    res =  DatabaseOPtionHelper.GetInstance().update(mScale);
                     if (res > 0)
                     {
                         MessageBox.Show("修改成功！");

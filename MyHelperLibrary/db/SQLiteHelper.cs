@@ -326,7 +326,39 @@ namespace MyHelper
             }
             return affectedRows;
         }
-
+        /// <summary>
+        /// 事务处理多条多条操作
+        /// </summary>
+        /// <param name="sqls"></param>
+        /// <returns></returns>
+        public int TransactionExecute(string[] sqls)
+        {
+            int affectedRows = 0;
+            System.Data.Common.DbTransaction transation = mConnection.BeginTransaction();
+            try
+            {
+                using (SQLiteCommand command = new SQLiteCommand())
+                {
+                    command.Connection = mConnection;
+                    for (int i = 0; i < sqls.Length; i++)
+                    {
+                        command.CommandText = sqls[i];
+                        affectedRows = command.ExecuteNonQuery();
+                    }
+                    transation.Commit();
+                }
+            }
+            catch (Exception)
+            {
+                transation.Rollback();
+                throw;
+            }
+            finally
+            {
+                mConnection.Close();
+            }
+            return affectedRows;
+        }
         public  int ExcuteNoQuery(string sql)
         {
             using (SQLiteCommand command = new  SQLiteCommand(sql, mConnection))

@@ -26,5 +26,6 @@
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/ListViewStyle.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/ExpanderStyle.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
-    <local:CheckedToVisibleConverter x:Key="CheckedToVisibleConverter"></local:CheckedToVisibleConverter>
+    <local:CheckedToVisibleConverter x:Key="CheckedToVisibleConverter"/>
+    <local:StatusConverter x:Key="StatusConverter"/>
 </ResourceDictionary>

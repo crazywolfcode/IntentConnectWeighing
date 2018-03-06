@@ -97,7 +97,7 @@ namespace IntentConnectWeighing
             string port = Port.Text.Trim();
             string pwd = Pwd.Text.Trim();
             if (string.IsNullOrEmpty(dbname) || string.IsNullOrEmpty(address) || string.IsNullOrEmpty(userid) || string.IsNullOrEmpty(port)) { return; }
-            string conn = MyHelper.MySqlHelper.buildConnectionString(address, dbname, userid, pwd, port);
+            string conn = MyHelper.MySqlHelper.BuildConnectionString(address, dbname, userid, pwd, port);
             connStr.Text = conn;
         }
 

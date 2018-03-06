@@ -13,17 +13,21 @@ namespace IntentConnectWeighing
 
 	  public enum DataTabeName{
 	 	 address,
+	 	 bank_card,
 	 	 bill_image,
 	 	 camera_info,
+	 	 car_header,
 	 	 car_info,
 	 	 company,
 	 	 config,
+	 	 driving_license,
 	 	 material,
 	 	 material_category,
 	 	 people_info,
 	 	 scale,
 	 	 sync_info,
 	 	 user,
+	 	 vchicle_license,
 	 	 weighing_bill,
 	 }
 
@@ -45,6 +49,17 @@ namespace IntentConnectWeighing
 	 	 is_delete,
 	 	 delete_time,
 	 	 sync_time,
+	 }
+
+
+	 public enum BankCardEnum{
+	 	 id,
+	 	 affiliated_user_id,
+	 	 affiliated_user_name,
+	 	 brank_name,
+	 	 address,
+	 	 number,
+	 	 type,
 	 }
 
 
@@ -79,22 +94,34 @@ namespace IntentConnectWeighing
 	 }
 
 
+	 public enum CarHeaderEnum{
+	 	 id,
+	 	 content,
+	 	 sync_time,
+	 	 is_delete,
+	 }
+
+
 	 public enum CarInfoEnum{
 	 	 id,
-	 	 plate_number,
+	 	 car_number,
 	 	 driver,
 	 	 driver_mobile,
 	 	 driver_idnumber,
+	 	 owner_id,
+	 	 owner_name,
 	 	 addtime,
 	 	 add_user_id,
 	 	 add_user_name,
-	 	 last_update_time,
-	 	 last_update_user_id,
-	 	 last_update_user_name,
+	 	 update_time,
+	 	 update_user_id,
+	 	 update_user_name,
 	 	 is_delete,
 	 	 delete_time,
 	 	 sync_time,
+	 	 vehicle_id,
 	 	 status,
+	 	 remark,
 	 }
 
 
@@ -138,6 +165,29 @@ namespace IntentConnectWeighing
 	 	 sync_time,
 	 	 is_delete,
 	 	 delete_time,
+	 	 status,
+	 }
+
+
+	 public enum DrivingLicenseEnum{
+	 	 id,
+	 	 name,
+	 	 number,
+	 	 sex,
+	 	 nationality,
+	 	 address,
+	 	 birthday,
+	 	 first_time,
+	 	 driver_class,
+	 	 local_img,
+	 	 remote_img,
+	 	 effict_year,
+	 	 start_time,
+	 	 end_time,
+	 	 affiliated_user_id,
+	 	 is_delete,
+	 	 delete_time,
+	 	 sync_time,
 	 	 status,
 	 }
 
@@ -220,6 +270,7 @@ namespace IntentConnectWeighing
 	 	 id,
 	 	 name,
 	 	 sex,
+	 	 nation,
 	 	 login_name,
 	 	 passwprd,
 	 	 weichat,
@@ -238,8 +289,30 @@ namespace IntentConnectWeighing
 	 	 is_delete,
 	 	 delete_time,
 	 	 sync_time,
+	 	 address,
+	 	 user_type,
 	 	 status,
 	 	 remark,
+	 }
+
+
+	 public enum VchicleLicenseEnum{
+	 	 id,
+	 	 car_number,
+	 	 car_type,
+	 	 owner,
+	 	 address,
+	 	 use_character,
+	 	 brand,
+	 	 vin,
+	 	 engine_number,
+	 	 register_date,
+	 	 issue_date,
+	 	 affiliated_car_id,
+	 	 is_delete,
+	 	 delete_time,
+	 	 sync_time,
+	 	 status,
 	 }
 
 

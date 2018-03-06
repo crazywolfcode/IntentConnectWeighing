@@ -19,6 +19,24 @@
         <ContextMenu  x:Key="CarContextMenu" Style="{DynamicResource DefaultContextMenu}">
             <MenuItem x:Name="RefreshCarCategory" Icon="&#xe752;" Header="刷新" IsEnabled="True"  Click="RefreshCarCategory_Click"></MenuItem>
         </ContextMenu>
+        <Style x:Key="DetailAlertLeableStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#444444"/>
+            <Setter Property="Margin" Value="4,2,4,2"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Height" Value="20"/>
+        </Style>
+        <Style x:Key="DetailValueStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#696969"/>
+            <Setter Property="Margin" Value="0,2,4,2"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="Height" Value="20"/>
+        </Style>
+
+        
     </Page.Resources>
     <Grid x:Name="RootView">
         <Grid.ColumnDefinitions>
@@ -44,7 +62,7 @@
                             Width="70" Height="30"  FontSize="14"
                             x:Name="MaterialTabBtn" ContextMenu="{DynamicResource MaterialContextMenu}"
                             Checked="TabBtn_Checked"
-                            IsChecked="True"
+                            IsChecked="False"
                             ActiveForground="RoyalBlue" 
                             Foreground="#666"
                             IndicatorHeight="3" 
@@ -55,7 +73,7 @@
                             Content="物资"/>
                     <local:TabButton 
                      Width="70" Height="30"  FontSize="14"
-                    x:Name="CarTabBtn"
+                    x:Name="CarTabBtn" IsChecked="True"
                     Checked="TabBtn_Checked"
                     ActiveForground="RoyalBlue" 
                     Foreground="#666"
@@ -179,19 +197,20 @@
                                                         Margin="0,0,4,0" />
                                         </StackPanel>
                                     </Border>
+                                    <TextBlock Grid.Row="0" Margin="20,0,0,0" TextAlignment="Left" VerticalAlignment="Center" Text="{Binding name}" Foreground="{DynamicResource myBlue}" FontSize="20"/>
                                     <Border Grid.Row="1" Background="White" BorderThickness="1" BorderBrush="{DynamicResource E4}" CornerRadius="0,0,4,4">
                                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,30,0,30">
                                             <StackPanel>
-                                                <TextBlock FontSize="14" Foreground="#444444" Margin="4,2,4,2" VerticalAlignment="Center" TextAlignment="Right" Height="20" Text="物资名称："/>
-                                                <TextBlock FontSize="14" Foreground="#444444" Margin="4,2,4,2" VerticalAlignment="Center" TextAlignment="Right" Height="20" Text="所属分类："/>
-                                                <TextBlock FontSize="14" Foreground="#444444" Margin="4,2,4,2" VerticalAlignment="Center" TextAlignment="Right" Height="20" Text="添加用户："/>
-                                                <TextBlock FontSize="14" Foreground="#444444" Margin="4,2,4,2" VerticalAlignment="Center" TextAlignment="Right" Height="20" Text="添加时间："/>
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="物资名称："/>
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="所属分类："/>
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="添加用户："/>
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="添加时间："/>
                                             </StackPanel>
                                             <StackPanel>
-                                                <TextBlock FontSize="12" Foreground="#797979" Margin="0,2,4,2" VerticalAlignment="Center" TextAlignment="Left" Height="20" Text="{Binding name}"/>
-                                                <TextBlock FontSize="12" Foreground="#797979" Margin="0,2,4,2" VerticalAlignment="Center" TextAlignment="Left" Height="20" Text="{Binding categoryName}"/>
-                                                <TextBlock FontSize="12" Foreground="#797979" Margin="0,2,4,2" VerticalAlignment="Center" TextAlignment="Left" Height="20" Text="{Binding addUserName}"/>
-                                                <TextBlock FontSize="12" Foreground="#797979" Margin="0,2,4,2" VerticalAlignment="Center" TextAlignment="Left" Height="20" Text="{Binding addtime}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding name}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding categoryName}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding addUserName}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding addtime}"/>
                                             </StackPanel>
                                         </StackPanel>
                                     </Border>
@@ -200,7 +219,53 @@
 
                             <!--Car-->
                             <StackPanel x:Name="CarContentStackPanel" Visibility="{Binding Path=IsChecked,ElementName=CarTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" >
-                                <TextBlock HorizontalAlignment="Center">Car BaseDAtaPage...</TextBlock>
+                                <Grid Width="300" Margin="0,0,0,0" x:Name="CarinfoDetailGrid">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="80" />
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="0" Background="{DynamicResource E4}" CornerRadius="4,4,0,0" >                                        
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                            <local:IconButton                
+                                                   x:Name="CarinfoDetailUpdteBtn" Click="CarinfoDetailUpdteBtn_Click"
+                                                   Style="{DynamicResource  IconButtonTransparencyStyle}"
+                                                   MouseOverForeground="{DynamicResource myBlue}"
+                                                   VerticalAlignment="Bottom" ToolTip="修改"
+                                                   IsShowIcon="True" Icon="&#xe74e;" IconSize="20"
+                                                   Width="30" Height="30" IconMargin="-2,0,0,0"
+                                                   Margin="0,0,4,0" />
+                                            <local:IconButton                
+                                                        x:Name="DeleteCarInfoBtn" Click="DeleteCarInfoBtn_Click"
+                                                        Style="{DynamicResource  IconButtonTransparencyStyle}"
+                                                        MouseOverForeground="Red" ToolTip="删除"
+                                                        VerticalAlignment="Bottom"
+                                                        IsShowIcon="True" Icon="&#xe615;" IconSize="24"
+                                                        Width="30" Height="30" IconMargin="-2,0,0,0"
+                                                        Margin="0,0,4,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <TextBlock Grid.Row="0" Margin="20,0,0,0" TextAlignment="Left" VerticalAlignment="Center" Text="{Binding carNumber}" Foreground="{DynamicResource myBlue}" FontSize="20"/>
+                                    <Border Grid.Row="1" Background="White" BorderThickness="1" BorderBrush="{DynamicResource E4}" CornerRadius="0,0,4,4">
+                                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,30,0,30">
+                                            <StackPanel>
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="车牌号："/>
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="驾驶员："/>
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="电话："/>
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="证件号："/>
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="状态："/>
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="添加时间："/>
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding carNumber}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding driver}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding driverMobile}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding driverIdnumber}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding status ,Converter= {StaticResource StatusConverter}}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding addtime}"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
                             </StackPanel>
                         </StackPanel>
                     </ScrollViewer>

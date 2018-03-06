@@ -73,7 +73,7 @@ namespace IntentConnectWeighing
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-            DatabaseOPtionHelper optionHelper = new DatabaseOPtionHelper();
+            DatabaseOPtionHelper optionHelper =  DatabaseOPtionHelper.GetInstance();
             int res = 0;
             if (!String.IsNullOrEmpty(mMaterial.id))
             {
@@ -81,7 +81,7 @@ namespace IntentConnectWeighing
                 mMaterial.name = this.nameTb.Text;
                 mMaterial.nameFirstCase = StringHelper.GetFirstPinyin(mMaterial.name);
                 mMaterial.syncTime = (Int32)DateTimeHelper.GetTimeStamp();
-                res = new DatabaseOPtionHelper().update(mMaterial);
+                res = optionHelper.update(mMaterial);
                 if (res > 0)
                 {
                     MessageBox.Show("修改成功！");
@@ -162,7 +162,7 @@ namespace IntentConnectWeighing
                 set = MaterialCategoryEnum.children_count.ToString() + " = " + MaterialCategoryEnum.children_count.ToString() +"-"+" 1";
             }
             sql = DbBaseHelper.getUpdateSql(DataTabeName.material_category.ToString(), set, condition);
-            new DatabaseOPtionHelper().update(sql);
+             DatabaseOPtionHelper.GetInstance().update(sql);
         }
 
         //Refresh Parent Data
@@ -185,7 +185,7 @@ namespace IntentConnectWeighing
                 + " and "
                 + MaterialEnum.category_id.ToString() + "+" + Constract.valueSplit + mMaterial.categoryId + Constract.valueSplit;
             string sql = DbBaseHelper.getSelectSqlNoSoftDeleteCondition(DataTabeName.material.ToString(), null, condition, null, null, null, 1, 0);
-            DataTable dt = new DatabaseOPtionHelper().select(sql);
+            DataTable dt =  DatabaseOPtionHelper.GetInstance().select(sql);
             List<Material> list = JsonHelper.DataTableToEntity<Material>(dt);
             if (list == null || list.Count <= 0)
             {
@@ -241,7 +241,7 @@ namespace IntentConnectWeighing
         private void InitCateGoryData()
         {
             String sql = DbBaseHelper.getSelectSql(DataTabeName.material_category.ToString());
-            DataTable dt = new DatabaseOPtionHelper().select(sql);
+            DataTable dt =  DatabaseOPtionHelper.GetInstance().select(sql);
             mMaterialCategorys = JsonHelper.DataTableToEntity<MaterialCategory>(dt);
             this.CateNameCb.ItemsSource = mMaterialCategorys;
             for (int i = 0; i < this.CateNameCb.Items.Count; i++)

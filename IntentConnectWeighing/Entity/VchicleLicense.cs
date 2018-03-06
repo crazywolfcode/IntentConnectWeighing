@@ -7,12 +7,13 @@ using System.Text;
 {
 
 	 /// <summary>
-	 /// 数据条数:11
+	 /// 行驶证
+	 /// 数据条数:6
 	 /// 数据大小:16KB
 	 /// </summary>
 
 
-	  public  class Material
+	  public  class VchicleLicense
 	 {
 
 	 /// <summary>
@@ -25,72 +26,72 @@ using System.Text;
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String name{ get; set; }
+	 public String carNumber{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String categoryId{ get; set; }
+	 public String carType{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String categoryName{ get; set; }
-
-	 /// <summary>
-	 /// 注释:物质的首拼
-	 /// 可空:YES
-	 /// </summary>
-
-	 public String nameFirstCase{ get; set; }
-
-	 /// <summary>
-	 /// 注释:说明
-	 /// 可空:YES
-	 /// </summary>
-
-	 public String description{ get; set; }
+	 public String owner{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String addtime{ get; set; }
+	 public String address{ get; set; }
+
+	 /// <summary>
+	 /// 注释:使用性质
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String useCharacter{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String addUserId{ get; set; }
+	 public String brand{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String addUserName{ get; set; }
+	 public String vin{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String updateTime{ get; set; }
+	 public String engineNumber{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String updateUserId{ get; set; }
+	 public String registerDate{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String updateUserName{ get; set; }
+	 public String issueDate{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
+	 /// </summary>
+
+	 public String affiliatedCarId{ get; set; }
+
+	 /// <summary>
+	 /// 可空:NO
+	 ///默认值:0
 	 /// </summary>
 
 	 public Int32 isDelete{ get; set; }
@@ -102,15 +103,15 @@ using System.Text;
 	 public String deleteTime{ get; set; }
 
 	 /// <summary>
-	 /// 可空:YES
+	 /// 可空:NO
 	 /// </summary>
 
 	 public Int64 syncTime{ get; set; }
 
 	 /// <summary>
-	 /// 注释:0 未启用 1 正常启用
+	 /// 注释:0 未审核 1 正常使用地磅
 	 /// 可空:NO
-	 ///默认值:1
+	 ///默认值:0
 	 /// </summary>
 
 	 public Int32 status{ get; set; }

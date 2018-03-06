@@ -131,7 +131,7 @@ namespace MyHelper
         /// <param name="dbName"></param>
         /// <param name="table"></param>
         /// <returns></returns>
-        public bool existTable(string dbName,string table) {
+        public bool ExistTable(string dbName,string table) {
             if (string.IsNullOrEmpty(dbName) || string.IsNullOrEmpty(table)) {
                 return false;
             }
@@ -204,7 +204,7 @@ namespace MyHelper
         /// <param name="pwd">密码</param>
         /// <param name="port">端口</param>
         /// <returns></returns>
-        public static string buildConnectionString(string dataSource, string db, string userId, string pwd, string port)
+        public static string BuildConnectionString(string dataSource, string db, string userId, string pwd, string port)
         {
             return string.Format(connectionStringTemplate, db, dataSource, userId, pwd, port);
         }
@@ -307,9 +307,39 @@ namespace MyHelper
             }
             return affectedRows;
         }
-
-
-
+        /// <summary>
+        /// 事务处理多条多条操作
+        /// </summary>
+        /// <param name="sqls"></param>
+        /// <returns></returns>
+        public int TransactionExecute(string[] sqls)
+        {
+            int affectedRows = 0;
+            System.Data.Common.DbTransaction transation = mConnection.BeginTransaction();
+            try
+            {
+                using (MySqlCommand command = new MySqlCommand())
+                {
+                    command.Connection = mConnection;
+                    for (int i = 0; i < sqls.Length; i++)
+                    {
+                        command.CommandText = sqls[i];
+                        affectedRows = command.ExecuteNonQuery();
+                    }               
+                    transation.Commit();
+                }
+            }
+            catch (Exception)
+            {
+                transation.Rollback();
+                throw;
+            }
+            finally
+            {
+                mConnection.Close();
+            }
+            return affectedRows;
+        }
         /// <summary>
         /// 执行删除语句
         /// </summary>

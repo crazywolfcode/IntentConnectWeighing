@@ -11,7 +11,7 @@ namespace MyHelper
     /// <summary>
     /// 加密和解密码类
     /// </summary>
-    class EncryptHelper
+   public class EncryptHelper
     {
         /// <summary>
         /// MD5 加密

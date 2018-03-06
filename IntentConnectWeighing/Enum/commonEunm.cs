@@ -36,6 +36,7 @@ namespace IntentConnectWeighing
         programVersion,
         coryRight,
         dbType,
+        defaultPwd,
         mysqlConn,
         sqliteConn,
         sqliteDbPath,
@@ -117,5 +118,17 @@ namespace IntentConnectWeighing
         PrivaterEnterprise,
         StateOwnedEnterprise,
         GovernmentSector
+    }
+
+   public enum BankCardType {
+        CreditCard,
+        SavingsDepositCard
+    }
+    //0系统人员1公司人员，2驾驶员 3车主
+    public enum UserType {
+        System,
+        Company,
+        Driver,
+        CarOwner
     }
 }

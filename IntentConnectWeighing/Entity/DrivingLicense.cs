@@ -7,12 +7,13 @@ using System.Text;
 {
 
 	 /// <summary>
-	 /// 数据条数:11
+	 /// 驾驶证
+	 /// 数据条数:6
 	 /// 数据大小:16KB
 	 /// </summary>
 
 
-	  public  class Material
+	  public  class DrivingLicense
 	 {
 
 	 /// <summary>
@@ -31,66 +32,96 @@ using System.Text;
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String categoryId{ get; set; }
+	 public String number{ get; set; }
+
+	 /// <summary>
+	 /// 注释:0 f 1 m
+	 /// 可空:YES
+	 ///默认值:1
+	 /// </summary>
+
+	 public Int32 sex{ get; set; }
+
+	 /// <summary>
+	 /// 注释:国籍
+	 /// 可空:NO
+	 /// </summary>
+
+	 public String nationality{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String categoryName{ get; set; }
+	 public String address{ get; set; }
 
 	 /// <summary>
-	 /// 注释:物质的首拼
+	 /// 注释:初次领证时间
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String nameFirstCase{ get; set; }
-
-	 /// <summary>
-	 /// 注释:说明
-	 /// 可空:YES
-	 /// </summary>
-
-	 public String description{ get; set; }
+	 public String birthday{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String addtime{ get; set; }
+	 public String firstTime{ get; set; }
 
 	 /// <summary>
+	 /// 注释:准驾车型
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String addUserId{ get; set; }
+	 public String driverClass{ get; set; }
 
 	 /// <summary>
+	 /// 注释:本地图片地址
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String addUserName{ get; set; }
+	 public String localImg{ get; set; }
 
 	 /// <summary>
+	 /// 注释:远程图片地址
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String updateTime{ get; set; }
+	 public String remoteImg{ get; set; }
 
 	 /// <summary>
+	 /// 注释:期限
+	 /// 可空:NO
+	 ///默认值:6
+	 /// </summary>
+
+	 public Int32 effictYear{ get; set; }
+
+	 /// <summary>
+	 /// 注释:起始时间
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String updateUserId{ get; set; }
+	 public String startTime{ get; set; }
 
 	 /// <summary>
+	 /// 注释:失效时间
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String updateUserName{ get; set; }
+	 public String endTime{ get; set; }
 
 	 /// <summary>
-	 /// 可空:YES
+	 /// 注释:所属驾驶员
+	 /// 可空:NO
+	 ///默认值:0
+	 /// </summary>
+
+	 public String affiliatedUserId{ get; set; }
+
+	 /// <summary>
+	 /// 可空:NO
+	 ///默认值:0
 	 /// </summary>
 
 	 public Int32 isDelete{ get; set; }
@@ -102,15 +133,15 @@ using System.Text;
 	 public String deleteTime{ get; set; }
 
 	 /// <summary>
-	 /// 可空:YES
+	 /// 可空:NO
 	 /// </summary>
 
 	 public Int64 syncTime{ get; set; }
 
 	 /// <summary>
-	 /// 注释:0 未启用 1 正常启用
+	 /// 注释:0 未审核 1 正常使用地磅
 	 /// 可空:NO
-	 ///默认值:1
+	 ///默认值:0
 	 /// </summary>
 
 	 public Int32 status{ get; set; }

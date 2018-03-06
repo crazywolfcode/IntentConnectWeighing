@@ -209,7 +209,7 @@ namespace IntentConnectWeighing
                     sql = DbBaseHelper.getSelectSql("config", null, "client_id =' " + ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString()) + "' and config_name = ' " + conns[i].Name + "'", null, null, null, 1);
                     if (helper == null)
                     {
-                        helper = new DatabaseOPtionHelper();
+                        helper = DatabaseOPtionHelper.GetInstance();
                     }
                     DataTable dt = helper.select(sql);
                     if (dt.Rows.Count > 0)
@@ -273,7 +273,7 @@ namespace IntentConnectWeighing
                 Config config = null;
                 if (helper == null)
                 {
-                    helper = new DatabaseOPtionHelper();
+                    helper =  DatabaseOPtionHelper.GetInstance();
                 }
                 sql = DbBaseHelper.getSelectSql("config", null, "client_id ='" + ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString()) + "' and config_name = '" + key + "'", null, null, null, 1);
                 DataTable dt = helper.select(sql);

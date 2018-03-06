@@ -61,7 +61,7 @@ namespace IntentConnectWeighing
             String condition = CameraInfoEnum.id.ToString() + "=" + Constract.valueSplit + mId + Constract.valueSplit;
             String sql = DbBaseHelper.getSelectSql(DataTabeName.camera_info.ToString(), null, condition);
 
-            DataTable dt = new DatabaseOPtionHelper().select(sql);
+            DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
             if (dt.Rows.Count > 0) {
                 mCameraInfo =( JsonHelper.DataTableToEntity<CameraInfo>(dt))[0];
             }
@@ -119,7 +119,7 @@ namespace IntentConnectWeighing
                     mCameraInfo.port = this.portTB.Text.Trim();
                     mCameraInfo.userName = this.userNameTB.Text.Trim();
                     mCameraInfo.password = this.pwdTB.Text.Trim();
-                    int res = new DatabaseOPtionHelper().update(mCameraInfo);
+                    int res = DatabaseOPtionHelper.GetInstance().update(mCameraInfo);
                     if (res > 0)
                     {
                         MessageBox.Show("修改成功！");
@@ -138,7 +138,7 @@ namespace IntentConnectWeighing
                         CameraInfoEnum.ip.ToString() + "=" + Constract.valueSplit + IpTB.Text.ToString() + Constract.valueSplit +
                         " and " + CameraInfoEnum.port.ToString() + "=" + Constract.valueSplit + this.portTB.Text.ToString() + Constract.valueSplit;
                     sql = DbBaseHelper.getSelectSqlNoSoftDeleteCondition(DbBaseHelper.getTableName(camera), null, condition, null, null, null, 1, 0);
-                    DatabaseOPtionHelper optionHelper = new DatabaseOPtionHelper();
+                    DatabaseOPtionHelper optionHelper =  DatabaseOPtionHelper.GetInstance();
                     DataTable dt = optionHelper.select(sql);
                     if (dt.Rows.Count > 0)
                     {
