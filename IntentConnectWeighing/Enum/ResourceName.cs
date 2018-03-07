@@ -45,8 +45,10 @@ namespace IntentConnectWeighing
 
         //base data
         BaseDataExpenderStyle,
+        CompanyBaseDataTemplate,
         MaterialBaseDataTemplate,
         CarBaseDataTemplate,
+        ListViewItemCompanyBaseDataStyle,
         ListViewItemMaterialBaseDataStyle,
         ListViewItemCarBaseDataStyle,
         ListViewItemBaseDataStyle,

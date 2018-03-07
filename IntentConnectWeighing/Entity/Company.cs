@@ -118,7 +118,7 @@ using System.Text;
 	 ///默认值:0
 	 /// </summary>
 
-	 public Int32 syncTime{ get; set; }
+	 public Int64 syncTime{ get; set; }
 
 	 /// <summary>
 	 /// 可空:NO
@@ -139,6 +139,45 @@ using System.Text;
 	 /// </summary>
 
 	 public String deleteTime{ get; set; }
+
+	 /// <summary>
+	 /// 注释:0  未使用系统 1 使用系统
+	 /// 可空:NO
+	 ///默认值:0
+	 /// </summary>
+
+	 public Int32 isUseSystem{ get; set; }
+
+	 /// <summary>
+	 /// 注释:0 别人添加 1 自已注册
+	 /// 可空:NO
+	 ///默认值:1
+	 /// </summary>
+
+	 public Int32 regesterType{ get; set; }
+
+	 /// <summary>
+	 /// 注释:0 个人 1 公司
+	 /// 可空:NO
+	 ///默认值:1
+	 /// </summary>
+
+	 public Int32 customerType{ get; set; }
+
+	 /// <summary>
+	 /// 注释:所属省份
+	 /// 可空:YES
+	 ///默认值:0
+	 /// </summary>
+
+	 public Int32 affiliatedProvinceId{ get; set; }
+
+	 /// <summary>
+	 /// 注释:所属省份
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String affiliatedProvince{ get; set; }
 
 	 }
 }

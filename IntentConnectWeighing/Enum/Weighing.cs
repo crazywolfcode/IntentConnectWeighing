@@ -24,6 +24,7 @@ namespace IntentConnectWeighing
 	 	 material,
 	 	 material_category,
 	 	 people_info,
+	 	 province,
 	 	 scale,
 	 	 sync_info,
 	 	 user,
@@ -145,6 +146,11 @@ namespace IntentConnectWeighing
 	 	 is_delete,
 	 	 address,
 	 	 delete_time,
+	 	 is_use_system,
+	 	 regester_type,
+	 	 customer_type,
+	 	 affiliated_province_id,
+	 	 affiliated_province,
 	 }
 
 
@@ -231,6 +237,16 @@ namespace IntentConnectWeighing
 	 	 id,
 	 	 name,
 	 	 people_name,
+	 }
+
+
+	 public enum ProvinceEnum{
+	 	 id,
+	 	 province_name,
+	 	 children_count,
+	 	 is_delete,
+	 	 abbreviation,
+	 	 capital,
 	 }
 
 

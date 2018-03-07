@@ -8,9 +8,7 @@
       Loaded="Page_Loaded"      
       d:DesignHeight="520" d:DesignWidth="650"
       Title="RegisterPrimaryPage">
-    <Page.Resources>
-        <local:CheckedToVisibleConverter x:Key="CheckedToVisibleConverter"></local:CheckedToVisibleConverter>
-    </Page.Resources>
+ 
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -19,7 +17,7 @@
         <StackPanel Grid.Row="0" HorizontalAlignment="Right" Margin=" 0,0,10,0" Orientation="Horizontal">
             <local:TabButton   
                     x:Name="InputRB" Content="手动录入" Checked="InputRB_Checked"
-                    Foreground="#666"
+                    Foreground="#666" IsChecked="True"
                     ActiveForground="RoyalBlue"
                     IndicatorHeight="3" 
                     Margin="0,0,4,0"
@@ -28,7 +26,7 @@
                     Icon="&#xe6f0;" 
                     ActiveIndicatorColor="RoyalBlue"/>
             <local:TabButton   
-                IsChecked="True" x:Name="AutomaticRecognitionRB" Content="自动识别" Checked="AutomaticRecognitionRB_Checked"
+                IsChecked="False" x:Name="AutomaticRecognitionRB" Content="自动识别" Checked="AutomaticRecognitionRB_Checked"
                 Foreground="#666"
                 ActiveForground="RoyalBlue"
                 IndicatorHeight="3" 

@@ -23,11 +23,13 @@ namespace IntentConnectWeighing
         private ListView currentListView;
         public Window paretntWindow;
         private List<MaterialV> mMaterialVs = null;
+        private List<ProvinceV> mProvinceVs = null;
         private Boolean materialNeedRefresh = true;
         private Boolean companyNeedRefresh = true;
         private Boolean carNeedRefresh = true;
         private Material currMaterial;
         private CarInfo currCarInfo;
+        private Company currCompany;
         private List<CarHeaderV> mCarHeaderVs;
 
         public BaseDataPage()
@@ -75,19 +77,119 @@ namespace IntentConnectWeighing
 
         private void FillCompanyData()
         {
-            string path = Constract.templatePath + "TestItem.xaml";
-            this.CompanyListContentStackPanel.Children.Clear();
-            for (int i = 0; i < 10; i++)
+            GenerterProvinceVData();
+            if (mProvinceVs == null || mProvinceVs.Count <= 0)
             {
-                FrameworkElement element = TemplateHelper.GetFrameworkElementFromXaml(path);
-                Button addbtn;
-                addbtn = element.FindName("AddBtn") as Button;
-                addbtn.Tag = "ButtonTag" + i;
-                addbtn.Command = AddCommand.ShowSelfTagCommand;
-                addbtn.CommandBindings.Add(AddCommand.ShowSelfTagCommandBinding);
-                this.CompanyListContentStackPanel.Children.Add(element);
+                //  fill alert into
+                FillCompanyAlretData();
+            }
+            else
+            {
+                // fill true data
+                if (companyNeedRefresh == true)
+                {
+                    companyNeedRefresh = false;
+                    this.CompanyListContentStackPanel.Children.Clear();
+                    for (int i = 0; i < mProvinceVs.Count; i++)
+                    {
+                        Expander expander = new Expander();
+                        expander.Style = FindResource(ResourceName.BaseDataExpenderStyle.ToString()) as Style;
+                        expander.Header = mProvinceVs[i].Province;
+                        expander.HeaderTemplate = FindResource(ResourceName.CompanyBaseDataTemplate.ToString()) as DataTemplate;
+
+                        ListView listView = new ListView();
+                        listView.ItemsSource = mProvinceVs[i].Companys;
+                        listView.Style = FindResource(ResourceName.BaseDataListViewStyle.ToString()) as Style;
+                        listView.ItemContainerStyle = FindResource(ResourceName.ListViewItemCompanyBaseDataStyle.ToString()) as Style;
+                        listView.SelectionChanged += CompanyListView_SelectionChanged; ;
+                        expander.Content = listView;
+                        this.CompanyListContentStackPanel.Children.Add(expander);
+                    }
+                }
+            }
+
+        }
+
+        private void CompanyListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListView lv = sender as ListView;
+            if (lv.SelectedIndex == -1)
+            {
+                return;
+            }
+            if (currentListView != lv)
+            {
+                if (currentListView != null)
+                {
+                    currentListView.SelectedIndex = -1;
+                }
+            }
+            currentListView = lv;
+            currCompany = lv.SelectedItem as Company;
+            this.CompanyDetailGrid.DataContext = currCompany;
+        }
+
+        private void GenerterProvinceVData()
+        {
+            if (mProvinceVs == null)
+            {
+                mProvinceVs = new List<ProvinceV>();
+            }
+            if (companyNeedRefresh == false)
+            {
+                return;
+            }
+            else
+            {
+                mProvinceVs.Clear();
+            }
+            List<Province> provinces = new List<Province>();
+            String pSql = DbBaseHelper.getSelectSql(DataTabeName.province.ToString());
+            DataTable cateDt = DatabaseOPtionHelper.GetInstance().select(pSql);
+            if (cateDt.Rows.Count > 0)
+            {
+                provinces = JsonHelper.DataTableToEntity<Province>(cateDt);
+                if (provinces == null || provinces.Count <= 0)
+                {
+                    FillCompanyAlretData();
+                    return;
+                }
+                Province p = null;
+                String condition = string.Empty;
+                String sql = string.Empty;
+                DataTable mDt = null;
+                for (int i = 0; i < provinces.Count; i++)
+                {
+                    p = provinces[i];
+                    condition = CompanyEnum.affiliated_province_id + "=" + Constract.valueSplit + p.id + Constract.valueSplit;
+                    sql = DbBaseHelper.getSelectSql(DataTabeName.company.ToString(), null, condition);
+                    mDt = DatabaseOPtionHelper.GetInstance().select(sql);
+                    List<Company> mlist = JsonHelper.DataTableToEntity<Company>(mDt);
+                    if(mlist!=null && mlist.Count > 0)
+                    {
+                        ProvinceV v = new ProvinceV()
+                        {
+                            Province = p,
+                            Companys = mlist
+                        };
+                        mProvinceVs.Add(v);
+                    }
+                }
             }
         }
+        private void FillCompanyAlretData()
+        {
+            TextBlock tb = new TextBlock();
+            tb.Text = "没有任何公司信息 右击此处可以刷新  你也可以点击下面的添加按键进行添加！";
+            tb.Margin = new Thickness(10.0, 25.0, 10.0, 0);
+            tb.TextWrapping = TextWrapping.Wrap;
+            tb.Foreground = Brushes.Gray;
+            tb.HorizontalAlignment = HorizontalAlignment.Center;
+            tb.VerticalAlignment = VerticalAlignment.Center;
+            this.MaterialListContentStackPanel.Children.Clear();
+            this.MaterialListContentStackPanel.Children.Add(tb);
+        }
+
         private void FillMaterialData()
         {
             GenerterMaterialVData();
@@ -175,7 +277,7 @@ namespace IntentConnectWeighing
                     mc = cates[i];
                     condition = MaterialEnum.category_id + "=" + Constract.valueSplit + mc.id + Constract.valueSplit;
                     sql = DbBaseHelper.getSelectSql(DataTabeName.material.ToString(), null, condition);
-                    mDt =  DatabaseOPtionHelper.GetInstance().select(sql);
+                    mDt = DatabaseOPtionHelper.GetInstance().select(sql);
                     List<Material> mlist = JsonHelper.DataTableToEntity<Material>(mDt);
                     MaterialV v = new MaterialV()
                     {
@@ -186,7 +288,7 @@ namespace IntentConnectWeighing
                 }
             }
         }
-        
+
         private void FillMaterialAlretData()
         {
             TextBlock tb = new TextBlock();
@@ -211,7 +313,8 @@ namespace IntentConnectWeighing
             else
             {
                 // fill true data
-                if (carNeedRefresh == false) {
+                if (carNeedRefresh == false)
+                {
                     return;
                 }
                 carNeedRefresh = false;
@@ -223,7 +326,7 @@ namespace IntentConnectWeighing
                     expander.Header = mCarHeaderVs[i].head;
                     expander.HeaderTemplate = FindResource(ResourceName.CarBaseDataTemplate.ToString()) as DataTemplate;
 
-                    ListView listView = new ListView() { Name= "CarlistView" };
+                    ListView listView = new ListView() { Name = "CarlistView" };
                     listView.ItemsSource = mCarHeaderVs[i].carInfos;
                     listView.Style = FindResource(ResourceName.BaseDataListViewStyle.ToString()) as Style;
                     listView.ItemContainerStyle = FindResource(ResourceName.ListViewItemCarBaseDataStyle.ToString()) as Style;
@@ -250,11 +353,11 @@ namespace IntentConnectWeighing
             }
             currentListView = lv;
             currCarInfo = lv.SelectedItem as CarInfo;
-             this.CarinfoDetailGrid.DataContext = currCarInfo;
-          //  MessageBox.Show(currCarInfo.carNumber);
+            this.CarinfoDetailGrid.DataContext = currCarInfo;           
         }
 
-        private void FillCarAlretData() {
+        private void FillCarAlretData()
+        {
             TextBlock tb = new TextBlock();
             tb.Text = "没有任何车辆信息, 右击此处可以刷新, 你也可以点击下面的添加按键进行添加！";
             tb.TextWrapping = TextWrapping.Wrap;
@@ -280,7 +383,7 @@ namespace IntentConnectWeighing
                 mCarHeaderVs.Clear();
             }
             List<CarHeader> cates = new List<CarHeader>();
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.car_header.ToString(),null,null,null,null,CarHeaderEnum.content.ToString()+ " asc ");
+            String sql = DbBaseHelper.getSelectSql(DataTabeName.car_header.ToString(), null, null, null, null, CarHeaderEnum.content.ToString() + " asc ");
             DataTable Dt = DatabaseOPtionHelper.GetInstance().select(sql);
             if (Dt.Rows.Count > 0)
             {
@@ -338,10 +441,18 @@ namespace IntentConnectWeighing
 
         private void AddCompany()
         {
-            MessageBox.Show("公司信息不可这样添加，需要对方公司自己注册。");
+            if (App.GetSoftwareVersion() == SoftwareVersion.localLan.ToString() || App.GetSoftwareVersion() == SoftwareVersion.localSingle.ToString())
+            {
+                new CompanyAddW() { ParentRefreshData = new Action<bool, bool, bool>(RefreshData) }.ShowDialog();
+            }
+            else
+            {
+
+            }
         }
-        private void AddCar() {
-            new CarAddW() {ParentRefreshData = new Action<bool, bool, bool>(RefreshData) }.ShowDialog();
+        private void AddCar()
+        {
+            new CarAddW() { ParentRefreshData = new Action<bool, bool, bool>(RefreshData) }.ShowDialog();
         }
 
         private void AddMaterial()
@@ -421,9 +532,10 @@ namespace IntentConnectWeighing
                 if (res > 0)
                 {
                     String cateid = currMaterial.categoryId;
-                    new System.Threading.Thread(new System.Threading.ThreadStart(() => {
+                    new System.Threading.Thread(new System.Threading.ThreadStart(() =>
+                    {
                         String condition = MaterialCategoryEnum.id.ToString() + "=" + Constract.valueSplit + cateid + Constract.valueSplit;
-                        CommonModel.FieldTryDesc(DataTabeName.material_category.ToString(), MaterialCategoryEnum.children_count.ToString(), 1, condition);                        
+                        CommonModel.FieldTryDesc(DataTabeName.material_category.ToString(), MaterialCategoryEnum.children_count.ToString(), 1, condition);
                     })).Start();
 
                     MessageBox.Show("删除成功！");
@@ -457,7 +569,7 @@ namespace IntentConnectWeighing
             {
                 int res = DatabaseOPtionHelper.GetInstance().delete(currCarInfo);
                 if (res > 0)
-                {                                
+                {
                     MessageBox.Show("删除成功！");
                     currMaterial = null;
                     this.CarinfoDetailGrid.DataContext = null;
@@ -473,6 +585,42 @@ namespace IntentConnectWeighing
             {
                 return;
             }
+        }
+        #endregion
+
+        #region Company Info Update and Delete Event
+        private void DeleteCompanyBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show($"你确定要删除 {currCompany.name} 吗？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                int res = DatabaseOPtionHelper.GetInstance().delete(currCompany);
+                if (res > 0)
+                {                   
+                    MessageBox.Show("删除成功！");
+                    //new System.Threading.Thread(new System.Threading.ThreadStart(() => {
+                    //    string condition = ProvinceEnum.id.ToString() + "=" + Constract.valueSplit + currCompany.affiliatedProvinceId + Constract.valueSplit;
+                    //    CommonModel.FieldTryDesc(DataTabeName.province.ToString(), ProvinceEnum.children_count.ToString(), 1, condition);
+                    //})).Start();
+                    currMaterial = null;
+                    this.CompanyDetailGrid.DataContext = null;
+                    companyNeedRefresh = true;
+                    FillCompanyData();
+                }
+                else
+                {
+                    MessageBox.Show("删除失败！");
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private void CompanyDetailUpdteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            new CompanyAddW(currCompany) { ParentRefreshData = new Action<bool, bool, bool>(RefreshData) }.ShowDialog();
         }
         #endregion
     }

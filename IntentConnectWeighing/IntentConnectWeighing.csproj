@@ -135,9 +135,11 @@
     <Compile Include="Control\WindowButton.cs" />
     <Compile Include="Converter\BackgroundToForegroundConverter.cs" />
     <Compile Include="Converter\CheckedToVisibleConverter.cs" />
+    <Compile Include="Converter\CompanyTypeConverter.cs" />
     <Compile Include="Converter\PercentToAngleConverter.cs" />
     <Compile Include="Converter\SexConverter.cs" />
     <Compile Include="Converter\StaticConverter.cs" />
+    <Compile Include="Converter\CompanyCustomerTypeConverter.cs" />
     <Compile Include="Converter\StatusConverter.cs" />
     <Compile Include="Converter\ThicknessToDoubleConverter.cs" />
     <Compile Include="Converter\TreeViewMarginConverter.cs" />
@@ -160,7 +162,9 @@
     <Compile Include="Entity\Material.cs" />
     <Compile Include="Entity\MaterialCategory.cs" />
     <Compile Include="Entity\model\CommonModel.cs" />
+    <Compile Include="Entity\model\ProvinceModel.cs" />
     <Compile Include="Entity\PeopleInfo.cs" />
+    <Compile Include="Entity\Province.cs" />
     <Compile Include="Entity\Scale.cs" />
     <Compile Include="Entity\SyncInfo.cs" />
     <Compile Include="Entity\User.cs" />
@@ -168,6 +172,7 @@
     <Compile Include="Entity\visual\CarHeaderV.cs" />
     <Compile Include="Entity\visual\CarV.cs" />
     <Compile Include="Entity\visual\MaterialV.cs" />
+    <Compile Include="Entity\visual\ProvinceV.cs" />
     <Compile Include="Entity\WeighingBill.cs" />
     <Compile Include="Enum\commonEunm.cs" />
     <Compile Include="Enum\SynchronizationStatus.cs" />
@@ -188,6 +193,9 @@
       <DependentUpon>BaseDataPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window\BaseWindow.cs" />
+    <Compile Include="Window\CompanyAddW.xaml.cs">
+      <DependentUpon>CompanyAddW.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Window\CarAddW.xaml.cs">
       <DependentUpon>CarAddW.xaml</DependentUpon>
     </Compile>
@@ -367,6 +375,10 @@
     <Page Include="Window\BaseDataPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window\CompanyAddW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Window\CarAddW.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -614,6 +626,10 @@ if not exist "$(TargetDir)template" md "$(TargetDir)template";
 @echo start copy dynamic template 
 copy "$(ProjectDir)DynamicTemplate\*.*" "$(TargetDir)template" ;
 @echo start copy dynamic template completed
+
+@echo copy app.config
+copy "$(ProjectDir)App.config" "$(TargetDir)"
+@echo copy app.config finish
 
 @echo start copy HC NET SDK
 copy "$(ProjectDir)bin\HCNetSDKCom\*.*" "$(TargetDir)\HCNetSDKCom" ;

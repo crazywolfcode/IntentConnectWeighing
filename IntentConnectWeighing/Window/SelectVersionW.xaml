@@ -64,7 +64,6 @@
      
         <Border Grid.Row="2" CornerRadius="0,0,4,4"   Background="{StaticResource E4}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-               
                 <local:IconButton 
                     x:Name="nextBtn" 
                     Click="nextBtn_Click"

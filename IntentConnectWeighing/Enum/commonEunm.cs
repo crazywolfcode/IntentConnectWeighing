@@ -131,4 +131,25 @@ namespace IntentConnectWeighing
         Driver,
         CarOwner
     }
+
+    public enum UseSystemType
+    {
+      No,Yes
+    }
+
+    public enum CompanyRegesterTyle
+    {
+        Other, Self
+    }
+
+    public enum CompanyCustomerTyle
+    {
+        Person, Company
+    }
+    //0 其它 1 过磅员工 2 过磅管理员工 3公司管理员工 4老总
+    public enum UserRoleLevel
+    {
+        Other,Weighinger,WeighingManager,CompanyManager,Boss       
+    }
+
 }

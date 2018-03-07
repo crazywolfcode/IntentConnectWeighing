@@ -272,8 +272,7 @@ namespace IntentConnectWeighing
         {
             mDriver.name = mDrivingLicense.name;
             mDriver.loginName = (StringHelper.GetAllSpell(mDriver.name).Replace(" ", "")).ToLower();
-            mDriver.passwprd = MyHelper.EncryptHelper.MD5Encrypt(
-                StringHelper.GetChineseFirstSpell(mDriver.name) + ConfigurationHelper.GetConfig(ConfigItemName.defaultPwd.ToString()));
+            mDriver.passwprd = EncryptHelper.MD5Encrypt( ConfigurationHelper.GetConfig(ConfigItemName.defaultPwd.ToString()));
             mDriver.addUserId = App.currentUser.id;
             mDriver.addUserName = App.currentUser.name;
             mDriver.birthDate = mDrivingLicense.birthday;

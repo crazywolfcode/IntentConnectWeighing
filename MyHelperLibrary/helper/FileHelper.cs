@@ -154,9 +154,7 @@ namespace MyHelper
         public static string GetProjectRootPath()
         {
             string path = AppDomain.CurrentDomain.BaseDirectory;
-            string rootpath = path.Substring(0, path.LastIndexOf("\\"));
-            rootpath = rootpath.Substring(0, rootpath.LastIndexOf("\\"));
-            rootpath = rootpath.Substring(0, rootpath.LastIndexOf("\\"));
+            string rootpath = path.Substring(0, path.LastIndexOf("bin"));
             return rootpath;
         }
         /// <summary>

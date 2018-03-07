@@ -57,7 +57,7 @@ namespace MyHelper
             cf.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection(AppSettingsSectionName);
             // save config value to file
-            svaeConfigValueToFile(configName, value);
+            SvaeConfigValueToFile(configName, value);
         }
         /// <summary>
         /// 依据连接串名字connectionName返回数据连接字符串 
@@ -98,7 +98,7 @@ namespace MyHelper
             cf.ConnectionStrings.ConnectionStrings.Add(css);
             cf.Save();
             ConfigurationManager.RefreshSection(ConnectionStringsSectionName);
-            svaeConfigValueToFile(configName, value, "connectionStrings");
+            SvaeConfigValueToFile(configName, value, "connectionStrings");
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace MyHelper
         /// <param name="configName"></param>
         /// <param name="value"></param>
         /// <param name="groupName">appSettings or connectionSettings </param>
-        public static void svaeConfigValueToFile(string configName, string value, string groupName = "appSettings")
+        public static void SvaeConfigValueToFile(string configName, string value, string groupName = "appSettings")
         {
             string configFileName = "App.config";
             string filePath = FileHelper.GetProjectRootPath() + "/" + configFileName;
@@ -167,9 +167,7 @@ namespace MyHelper
             node.Attributes.Append(val);
             return node;
         }
-
-
-
+        
         //---
     }
 }

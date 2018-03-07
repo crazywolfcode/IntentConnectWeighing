@@ -19,6 +19,7 @@ namespace IntentConnectWeighing
         public static Company currentCompany;
         public static Window currWindow;
         public static Window prevWindow;
+        public static string SoftwareVersion;
         public static System.Windows.Forms.NotifyIcon notifyIcon;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
@@ -27,7 +28,7 @@ namespace IntentConnectWeighing
             CreateClientId();
 
             //devlepment
-            new Login().Show();
+            new MainWindow().Show();
             // new TestExpender().Show();
             //Navigation();
             currentCompany = new Company()
@@ -46,7 +47,7 @@ namespace IntentConnectWeighing
 
         private void Navigation() {
             string registerStep = "";
-            if (string.IsNullOrWhiteSpace(ConfigurationHelper.GetConfig(ConfigItemName.softwareVersion.ToString())))
+            if (string.IsNullOrEmpty(ConfigurationHelper.GetConfig(ConfigItemName.softwareVersion.ToString())))
             {
                 SelectVersionW selectW = new SelectVersionW();
                 registerStep = ConfigurationHelper.GetConfig(ConfigItemName.companyRegisterStep.ToString());
@@ -255,7 +256,6 @@ namespace IntentConnectWeighing
                         }
                         helper.insert(config);
                     }
-
                 }
             }
         }
@@ -279,7 +279,6 @@ namespace IntentConnectWeighing
                 DataTable dt = helper.select(sql);
                 if (dt.Rows.Count > 0)
                 {
-                    
                     List<Config> configs = JsonHelper.DataTableToEntity<Config>(dt);
                     if (configs[0]!= null)
                     {
@@ -367,5 +366,11 @@ namespace IntentConnectWeighing
             }
         }
 
+        public static String GetSoftwareVersion() {
+            if (String.IsNullOrEmpty(SoftwareVersion)) {
+                SoftwareVersion = ConfigurationHelper.GetConfig(ConfigItemName.softwareVersion.ToString());
+            }
+            return SoftwareVersion;
+        }
     }
 }

@@ -69,7 +69,14 @@
             <TextBlock Text="{Binding childrenCount}" Margin="10,0,0,0" FontSize="11" Foreground="#797979" VerticalAlignment="Bottom"/>          
         </StackPanel>      
     </DataTemplate>
-    
+
+    <DataTemplate x:Key="CompanyBaseDataTemplate">
+        <StackPanel Orientation="Horizontal" ToolTip="{Binding name}">
+            <TextBlock Text="{Binding provinceName}" FontSize="14" Foreground="#666666" Margin="6,0,0,0"/>
+            <TextBlock Text="{Binding childrenCount}" Margin="10,0,0,0" FontSize="11" Foreground="#797979" VerticalAlignment="Bottom" Visibility="Collapsed"/>
+        </StackPanel>
+    </DataTemplate>
+
     <DataTemplate x:Key="CarBaseDataTemplate">
         <StackPanel Orientation="Horizontal" >
             <TextBlock Text="{Binding content}" FontSize="14" Foreground="#666666" Margin="6,0,0,0"/>           
