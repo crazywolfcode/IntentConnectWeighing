@@ -7,12 +7,12 @@ using System.Text;
 {
 
 	 /// <summary>
-	 /// 数据条数:2
+	 /// 数据条数:4
 	 /// 数据大小:16KB
 	 /// </summary>
 
 
-	  public  class Scale
+	  public  class Yard
 	 {
 
 	 /// <summary>
@@ -22,63 +22,32 @@ using System.Text;
 	 public String id{ get; set; }
 
 	 /// <summary>
-	 /// 注释:磅秤名称
 	 /// 可空:YES
 	 /// </summary>
 
 	 public String name{ get; set; }
 
 	 /// <summary>
-	 /// 可空:NO
+	 /// 注释:地址
+	 /// 可空:YES
 	 /// </summary>
 
-	 public String com{ get; set; }
-
-	 /// <summary>
-	 /// 可空:NO
-	 /// </summary>
-
-	 public Int32 baudRate{ get; set; }
+	 public String address{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
-	 public Int32 dataByte{ get; set; }
+	 public String affiliatedCompanyId{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
-	 public Int32 endByte{ get; set; }
+	 public String affiliatedCompany{ get; set; }
 
 	 /// <summary>
-	 /// 注释:品牌
-	 /// 可空:YES
-	 /// </summary>
-
-	 public String brand{ get; set; }
-
-	 /// <summary>
-	 /// 注释:系列
-	 /// 可空:YES
-	 /// </summary>
-
-	 public String series{ get; set; }
-
-	 /// <summary>
-	 /// 可空:YES
-	 /// </summary>
-
-	 public String clientId{ get; set; }
-
-	 /// <summary>
-	 /// 可空:YES
-	 /// </summary>
-
-	 public String companyId{ get; set; }
-
-	 /// <summary>
+	 /// 注释:0 未使用 1 正常
 	 /// 可空:NO
 	 ///默认值:1
 	 /// </summary>
@@ -104,12 +73,12 @@ using System.Text;
 	 public String addUserName{ get; set; }
 
 	 /// <summary>
-	 /// 注释:0 示是默认 1 默认为入库 2 默认为出库
+	 /// 注释:0 否 1 默认
 	 /// 可空:NO
 	 ///默认值:0
 	 /// </summary>
 
-	 public Int32 defaultType{ get; set; }
+	 public Int32 isDefault{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
@@ -128,7 +97,7 @@ using System.Text;
 	 /// 可空:YES
 	 /// </summary>
 
-	 public Int32 syncTime{ get; set; }
+	 public Int64 syncTime{ get; set; }
 
 	 }
 }

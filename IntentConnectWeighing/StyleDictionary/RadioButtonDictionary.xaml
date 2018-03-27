@@ -9,7 +9,7 @@
 
     <Style x:Key="RadioButtonDefaultStyle" TargetType="{x:Type RadioButton}">
         <Setter Property="Background" Value="Transparent"></Setter>
-        <Setter Property="Foreground" Value="{DynamicResource TextForeground}"></Setter>
+        <Setter Property="Foreground" Value="#787878"></Setter>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="FontSize" Value="{DynamicResource FontSize}"></Setter>
         <Setter Property="local:ControlAttachProperty.IconMargin" Value="1, 1, 3, 1"></Setter>
@@ -22,7 +22,7 @@
                           VerticalAlignment="Center" >
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock x:Name="icon"                                        
-                                       Text="&#xe63a;"
+                                       Text="&#xe8b5;"
                                        Style="{DynamicResource IFontStyle}"
                                        SnapsToDevicePixels="True"
                                        FontSize="{TemplateBinding local:ControlAttachProperty.IconSize}"
@@ -34,11 +34,11 @@
                     <!--触发器：设置选中状态符号-->
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="true">
-                            <Setter Property="Text" Value="&#xe65c;" TargetName="icon"></Setter>
-                            <Setter Property="Foreground" Value="{StaticResource RadioButtonCheckedForegroundColor}"></Setter>
+                            <Setter Property="Text" Value="&#xe8b6;" TargetName="icon"></Setter>
+                            <Setter Property="Foreground" Value="RoyalBlue"></Setter>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Foreground" Value="{StaticResource RadioButtonMouseOverForegroundColor}"></Setter>
+                            <Setter Property="Foreground" Value="{DynamicResource myBlue}"></Setter>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="{StaticResource DisableOpacity}" TargetName="grid" ></Setter>

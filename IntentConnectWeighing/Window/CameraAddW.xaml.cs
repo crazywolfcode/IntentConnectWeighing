@@ -194,7 +194,7 @@ namespace IntentConnectWeighing
                 {
                    System.Windows.Forms.PictureBox pb = this.previewFormsHost.Child as System.Windows.Forms.PictureBox;
                     int chanlnum = (int)info.byChanNum;
-                    isPreviewSuccess= CameraHelper.preview( ref pb, chanlnum, currCameraId);
+                    isPreviewSuccess= CameraHelper.Preview( ref pb, chanlnum, currCameraId);
                     if (isPreviewSuccess)
                     {
                         MessageBox.Show("预览成功！");
@@ -214,7 +214,7 @@ namespace IntentConnectWeighing
         private void nulookBtn_Click(object sender, RoutedEventArgs e)
         {
            CameraHelper.stopPreview(currCameraId);
-            CameraHelper.loginOutCamera(currCameraId);
+            CameraHelper.LoginOutCamera(currCameraId);
             System.Windows.Forms.PictureBox pb = this.previewFormsHost.Child as System.Windows.Forms.PictureBox;
             pb.Image = null;
             isPreviewSuccess = false;

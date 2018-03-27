@@ -118,6 +118,13 @@
                         </WrapPanel>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,4,0,4">
+                        <Label FontSize="14">办公地址：</Label>
+                        <WrapPanel Orientation="Vertical">
+                            <TextBox x:Name="AddressTb" Width="300" Height="28" VerticalContentAlignment="Center"/>
+                            <Label x:Name="AddressTbLabel"  Visibility="Collapsed"></Label>
+                        </WrapPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,4,0,4">
                         <Label FontSize="14">公司简称：</Label>
                         <WrapPanel Orientation="Vertical">
                             <TextBox x:Name="AbbreviationTB" Width="300" Height="25" VerticalContentAlignment="Center" TextChanged="AbbreviationTB_TextChanged"/>

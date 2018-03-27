@@ -65,7 +65,7 @@
     
     <SolidColorBrush x:Key="E4" Color="#e4e4e4"></SolidColorBrush>
     <SolidColorBrush x:Key="F9" Color="#f9f9f9"></SolidColorBrush>
-
+    <SolidColorBrush x:Key="FA" Color="#FAFAFA"></SolidColorBrush>
     <!--普通无背景按钮-->
     <SolidColorBrush x:Key="CheckedForeground" Color="White"></SolidColorBrush>
     <SolidColorBrush x:Key="MouseOverForeground" Color="#333"></SolidColorBrush>

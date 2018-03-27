@@ -110,6 +110,7 @@ namespace IntentConnectWeighing
                 this.LegalPersonTB.Text = mCompany.legalPerson;
                 this.CompanyProvinceLabel.Visibility = Visibility.Visible;
                 this.CompanyProvinceLabel.Content = $"原来所属性的省份：{ mCompany.affiliatedProvince} ";
+                this.AddressTb.Text = mCompany.address;
             }
             else
             {
@@ -117,6 +118,7 @@ namespace IntentConnectWeighing
                 this.IdNumberTB.Text = mPersonCompany.busineseLincenseNumber;
                 this.PersonProvinceLabel.Visibility = Visibility.Visible;
                 this.PersonProvinceLabel.Content = $"原来所属性的省份：{ mPersonCompany.affiliatedProvince} ";
+                this.AddressTb.Text = mPersonCompany.address;
             }
         }
 
@@ -306,6 +308,10 @@ namespace IntentConnectWeighing
                     MessageBox.Show("法人输入不正确！");
                     this.LegalPersonTB.Focus();
                     return false;
+                }
+                if (!String.IsNullOrEmpty(this.AddressTb.Text))
+                {
+                    mCompany.address = this.AddressTb.Text.Trim();
                 }
             }
             return true;
@@ -555,7 +561,7 @@ namespace IntentConnectWeighing
             {
                 try
                 {
-                    mCompany.abbreviationFirstCase = StringHelper.GetChineseFirstSpell(mCompany.abbreviation);
+                    mCompany.abbreviationFirstCase = StringHelper.GetFirstPinyin(mCompany.abbreviation);
                 }
                 catch { }
             }

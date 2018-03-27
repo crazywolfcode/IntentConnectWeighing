@@ -39,5 +39,29 @@ namespace IntentConnectWeighing
                 return res;
             }
         }
+
+        /// <summary>
+        /// 获取当天当前的出、入库过磅数
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static int GetTodayCount(WeightingBillType type) {
+            int count = 0;
+            String condition = WeighingBillEnum.type.ToString()+"="+((int)type);
+            if (type == WeightingBillType.RK)
+            {
+                condition +=" and "+ WeighingBillEnum.receive_in_time + " like '%" + DateTimeHelper.getCurrentDateTime(DateTimeHelper.DateFormat) + "%'";
+            }
+            else {
+                condition += " and " + WeighingBillEnum.send_in_time + " like '%" + DateTimeHelper.getCurrentDateTime(DateTimeHelper.DateFormat) + "%'";
+            }
+            string sql = DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(),WeighingBillEnum.id.ToString(),condition);
+            System.Data.DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
+           if(dt.Rows.Count > 0)
+            {
+                count = dt.Rows.Count;
+            }
+            return count;
+        }
     }
 }

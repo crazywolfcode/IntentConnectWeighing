@@ -77,6 +77,7 @@ using System.Text;
 	 public String addUserName{ get; set; }
 
 	 /// <summary>
+	 /// 注释:更新时间
 	 /// 可空:YES
 	 /// </summary>
 

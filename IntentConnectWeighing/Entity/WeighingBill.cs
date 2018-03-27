@@ -58,6 +58,18 @@ using System.Text;
 	 /// 可空:YES
 	 /// </summary>
 
+	 public String sendYardId{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String sendYardName{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
 	 public String sendInTime{ get; set; }
 
 	 /// <summary>
@@ -79,21 +91,21 @@ using System.Text;
 	 public String sendUserName{ get; set; }
 
 	 /// <summary>
-	 /// 可空:YES
+	 /// 可空:NO
 	 ///默认值:0
 	 /// </summary>
 
 	 public Double sendGrossWeight{ get; set; }
 
 	 /// <summary>
-	 /// 可空:YES
+	 /// 可空:NO
 	 ///默认值:0
 	 /// </summary>
 
 	 public Double sendTraeWeight{ get; set; }
 
 	 /// <summary>
-	 /// 可空:YES
+	 /// 可空:NO
 	 ///默认值:0
 	 /// </summary>
 
@@ -111,6 +123,14 @@ using System.Text;
 	 /// </summary>
 
 	 public String sendMaterialName{ get; set; }
+
+	 /// <summary>
+	 /// 注释:过磅进度 0 no 1 finished
+	 /// 可空:NO
+	 ///默认值:0
+	 /// </summary>
+
+	 public Int32 sendStatus{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
@@ -140,6 +160,18 @@ using System.Text;
 	 /// 可空:YES
 	 /// </summary>
 
+	 public String receiveYardId{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String receiveYardName{ get; set; }
+
+	 /// <summary>
+	 /// 可空:YES
+	 /// </summary>
+
 	 public String receiveInTime{ get; set; }
 
 	 /// <summary>
@@ -161,16 +193,33 @@ using System.Text;
 	 public String receiveUserName{ get; set; }
 
 	 /// <summary>
-	 /// 可空:YES
+	 /// 可空:NO
+	 ///默认值:0
 	 /// </summary>
 
 	 public Double receiveGrossWeight{ get; set; }
 
 	 /// <summary>
-	 /// 可空:YES
+	 /// 可空:NO
+	 ///默认值:0
 	 /// </summary>
 
 	 public Double receiveTraeWeight{ get; set; }
+
+	 /// <summary>
+	 /// 可空:NO
+	 ///默认值:0
+	 /// </summary>
+
+	 public Double receiveNetWeight{ get; set; }
+
+	 /// <summary>
+	 /// 注释:磅差
+	 /// 可空:NO
+	 ///默认值:0
+	 /// </summary>
+
+	 public Double differenceWeight{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
@@ -191,30 +240,19 @@ using System.Text;
 	 public String receiveRemark{ get; set; }
 
 	 /// <summary>
-	 /// 可空:YES
-	 /// </summary>
-
-	 public Double receiveNetWeight{ get; set; }
-
-	 /// <summary>
-	 /// 可空:YES
-	 /// </summary>
-
-	 public Double differenceWeight{ get; set; }
-
-	 /// <summary>
 	 /// 注释:扣重说明
-	 /// 可空:YES
-	 ///默认值:0
-	 /// </summary>
-
-	 public Double deducationWeiht{ get; set; }
-
-	 /// <summary>
 	 /// 可空:YES
 	 /// </summary>
 
 	 public String deducationDescription{ get; set; }
+
+	 /// <summary>
+	 /// 注释:扣重
+	 /// 可空:NO
+	 ///默认值:0.00
+	 /// </summary>
+
+	 public Double decuationWeight{ get; set; }
 
 	 /// <summary>
 	 /// 可空:YES
@@ -254,14 +292,6 @@ using System.Text;
 	 public String printDateTime{ get; set; }
 
 	 /// <summary>
-	 /// 注释:打印次数
-	 /// 可空:YES
-	 ///默认值:1
-	 /// </summary>
-
-	 public Int32 printTimes{ get; set; }
-
-	 /// <summary>
 	 /// 注释:0未上传 1 上传一次 2上传两次
 	 /// 可空:YES
 	 ///默认值:0
@@ -273,7 +303,15 @@ using System.Text;
 	 /// 可空:YES
 	 /// </summary>
 
-	 public Int32 syncTime{ get; set; }
+	 public Int64 syncTime{ get; set; }
+
+	 /// <summary>
+	 /// 注释:打印次数
+	 /// 可空:YES
+	 ///默认值:1
+	 /// </summary>
+
+	 public Int32 printTimes{ get; set; }
 
 	 /// <summary>
 	 /// 注释:本条数据所属的公司，也就是增加公司 
@@ -295,6 +333,14 @@ using System.Text;
 	 /// </summary>
 
 	 public String deleteTime{ get; set; }
+
+	 /// <summary>
+	 /// 注释:过磅进度 0 no 1 finished
+	 /// 可空:NO
+	 ///默认值:0
+	 /// </summary>
+
+	 public Int32 receiveStatus{ get; set; }
 
 	 }
 }

@@ -198,6 +198,7 @@
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="简称："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="法人："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="所属省份："/>
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="办公地址："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="客户类型："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="添加时间："/>
                                             </StackPanel>
@@ -207,6 +208,7 @@
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding abbreviation}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding legalPerson}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding affiliatedProvince}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding address}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Foreground="Red"  Text="{Binding customerType,Converter={StaticResource CompanyCustomerTypeConverter}}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding addtime}"/>
                                             </StackPanel>

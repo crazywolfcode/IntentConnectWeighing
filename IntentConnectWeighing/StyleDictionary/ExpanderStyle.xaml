@@ -18,7 +18,7 @@
                                   FontStretch="{TemplateBinding FontStretch}"
                                   FontSize="{TemplateBinding FontSize}"
                                   FontFamily="{TemplateBinding FontFamily}"
-                                 IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                  IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                   Padding="{TemplateBinding Padding}">
                     <ToggleButton.Template>
                         <ControlTemplate TargetType="ToggleButton">

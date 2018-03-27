@@ -53,6 +53,10 @@ namespace IntentConnectWeighing
         ListViewItemCarBaseDataStyle,
         ListViewItemBaseDataStyle,
         BaseDataListViewStyle,
+
+
+        //Radio button
+        RadioButtonDefaultStyle,
     }
 
 }

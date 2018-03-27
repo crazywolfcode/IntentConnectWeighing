@@ -57,7 +57,7 @@ namespace IntentConnectWeighing
         }
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
-        {      
+        {
             this.Close();
         }
 
@@ -91,12 +91,7 @@ namespace IntentConnectWeighing
             {
                 refreshCameraSettingData();
                 return;
-            }
-            if (this.HighSetting.IsChecked == true)
-            {
-                refreshHighSettingData();
-                return;
-            }
+            }      
             if (this.OtherSetting.IsChecked == true)
             {
                 refreshOtherSettingData();
@@ -108,18 +103,18 @@ namespace IntentConnectWeighing
         private void refreshScaleSettingData()
         {
             String sql = DbBaseHelper.getSelectSql(DataTabeName.scale.ToString());
-            DataTable dt =  DatabaseOPtionHelper.GetInstance().select(sql);
+            DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
             mScales = JsonHelper.DataTableToEntity<Scale>(dt);
             this.ScaleDataGrid.ItemsSource = mScales;
         }
         private void refreshCameraSettingData()
         {
             String sql = DbBaseHelper.getSelectSql(DataTabeName.camera_info.ToString());
-            DataTable dt =  DatabaseOPtionHelper.GetInstance().select(sql);
+            DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
             mCameraInfos = JsonHelper.DataTableToEntity<CameraInfo>(dt);
             this.CamreaDataGrid.ItemsSource = mCameraInfos;
         }
-        private void refreshHighSettingData() { }
+       
         private void refreshOtherSettingData() { }
         #endregion
 
@@ -142,7 +137,7 @@ namespace IntentConnectWeighing
                     return;
                 }
                 String sql = DbBaseHelper.getDeleteSql(DataTabeName.camera_info.ToString(), CameraInfoEnum.id.ToString() + "=" + Constract.valueSplit + id + Constract.valueSplit);
-                int res =  DatabaseOPtionHelper.GetInstance().delete(sql);
+                int res = DatabaseOPtionHelper.GetInstance().delete(sql);
                 if (res > 0)
                 {
                     MessageBox.Show("删除成功！");
@@ -167,12 +162,7 @@ namespace IntentConnectWeighing
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            string sql = MyHelper.DbBaseHelper.getSelectSql("company", null, null);
-            System.Data.DataTable dt = new MyHelper.MySqlHelper().select(sql);
-            for (int i = 0; i < dt.Columns.Count; i++)
-            {
-                MyHelper.ConsoleHelper.writeLine("name:" + dt.Columns[i].ColumnName + " type:" + dt.Columns[i].DataType.ToString());
-            }
+
         }
 
 
@@ -246,14 +236,101 @@ namespace IntentConnectWeighing
             refreshData();
         }
 
-        private void HighSetting_Checked(object sender, RoutedEventArgs e)
-        {
-            refreshData();
-        }
-
+   
         private void OtherSetting_Checked(object sender, RoutedEventArgs e)
         {
             refreshData();
+        }
+        #endregion
+
+        #region Print Setting 打印
+        private void PrintSetting_Checked(object sender, RoutedEventArgs e)
+        {
+            if ("true" == ConfigurationHelper.GetConfig(ConfigItemName.autoPrint.ToString()))
+            {
+                this.StartAautoPtint.IsChecked = true;
+            }
+            else
+            {
+                this.StartAautoPtint.IsChecked = false;
+            }
+
+            this.PrintTimes.Text = ConfigurationHelper.GetConfig(ConfigItemName.defaultPrintTimes.ToString());
+        }
+
+        private void StartAautoPtint_Checked(object sender, RoutedEventArgs e)
+        {
+            ConfigurationHelper.SetConfig(ConfigItemName.autoPrint.ToString(), "true");
+        }
+
+        private void StartAautoPtint_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ConfigurationHelper.SetConfig(ConfigItemName.autoPrint.ToString(), "false");
+        }
+
+        private void PrintTimes_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (this.IsLoaded)
+            {
+                if (this.PrintTimes.Text.Length > 0 && this.PrintTimes.Text != ConfigurationHelper.GetConfig(ConfigItemName.defaultPrintTimes.ToString()))
+                {
+                    if (RegexHelper.IsNumber(this.PrintTimes.Text))
+                    {
+                        int times = Convert.ToInt32(this.PrintTimes.Text);
+                        ConfigurationHelper.SetConfig(ConfigItemName.defaultPrintTimes.ToString(), times.ToString());
+                    }
+                    else
+                    {
+                        MessageBox.Show("输入的打印次数必须为整数！");
+                    }
+                }
+            }
+        }
+
+
+        #endregion
+
+        #region Height Setting 高级设置
+        private void HighSetting_Checked(object sender, RoutedEventArgs e)
+        {
+            if ("true" == ConfigurationHelper.GetConfig(ConfigItemName.allowDiffrenceMaterialWeighing.ToString()))
+            {
+                this.StartAautoPtint.IsChecked = true;
+            }
+            else
+            {
+                this.StartAautoPtint.IsChecked = false;
+            }
+
+            if ("true" == ConfigurationHelper.GetConfig(ConfigItemName.outFactoryAllowUpdate.ToString()))
+            {
+                this.OutfactoryAllowUpdateCB.IsChecked = true;
+            }
+            else
+            {
+                this.OutfactoryAllowUpdateCB.IsChecked = false;
+            }
+
+        }
+
+        private void AllowDiffrenceMaterialWeighingCB_Checked(object sender, RoutedEventArgs e)
+        {
+            ConfigurationHelper.SetConfig(ConfigItemName.allowDiffrenceMaterialWeighing.ToString(), "true");
+        }
+
+        private void AllowDiffrenceMaterialWeighingCB_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ConfigurationHelper.SetConfig(ConfigItemName.allowDiffrenceMaterialWeighing.ToString(), "false");
+        }
+        
+        private void OutfactoryAllowUpdateCB_Checked(object sender, RoutedEventArgs e)
+        {
+            ConfigurationHelper.SetConfig(ConfigItemName.outFactoryAllowUpdate.ToString(), "true");
+        }
+
+        private void OutfactoryAllowUpdateCB_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ConfigurationHelper.SetConfig(ConfigItemName.outFactoryAllowUpdate.ToString(), "false");
         }
         #endregion
     }

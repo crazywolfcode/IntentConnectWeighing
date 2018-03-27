@@ -31,18 +31,20 @@ namespace IntentConnectWeighing
         public Int32 currCameraId = -1;
         public bool isInitSDK;
         public bool isLogin = false;
-        public bool isPreviewSuccess = false;        
+        public bool isPreviewSuccess = false;
         #endregion
         public ScaleAddW(String scaleId = null)
         {
             InitializeComponent();
             mId = scaleId;
-            mScale = new Scale();
+            mScale = new Scale() { defaultType = (int)ScaleDefaultType.No };
+
             if (String.IsNullOrEmpty(mId))
             {
                 mScale.id = Guid.NewGuid().ToString();
             }
-            else {
+            else
+            {
                 mScale.id = mId;
             }
         }
@@ -52,22 +54,36 @@ namespace IntentConnectWeighing
             ConsoleHelper.writeLine(str);
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {            
-                bindingCurrrScale();             
+        {
+            if (!string.IsNullOrEmpty(mId))
+            {
+                bindingCurrrScale();
+            }
+
+            InitDefaultScaleType();
         }
         private void Window_ContentRendered(object sender, EventArgs e)
         {
             App.SetCurrentWindow(this);
         }
 
-        private void bindingCurrrScale() {
+        private void InitDefaultScaleType()
+        {
+            this.DefaultTypeCB.SelectedIndex = mScale.defaultType;
+        }
+
+        private void bindingCurrrScale()
+        {
             String condition = ScaleEnum.id.ToString() + "=" + Constract.valueSplit + mScale.id + Constract.valueSplit;
             String sql = DbBaseHelper.getSelectSql(DataTabeName.scale.ToString(), null, condition);
-            DataTable dt =  DatabaseOPtionHelper.GetInstance().select(sql);
-            if (dt.Rows.Count > 0) {
-                mScale =( JsonHelper.DataTableToEntity<Scale>(dt))[0];
+            DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
+            if (dt.Rows.Count > 0)
+            {
+                mScale = (JsonHelper.DataTableToEntity<Scale>(dt))[0];
             }
-            if (mScale != null) {
+            if (mScale != null)
+            {
+                this.NameTb.Text = mScale.name;
                 this.ComTb.Text = mScale.com;
                 this.BaudRateTB.Text = mScale.baudRate.ToString();
                 this.DataByteTB.Text = mScale.dataByte.ToString();
@@ -89,26 +105,28 @@ namespace IntentConnectWeighing
                 this.DragMove();
             }
         }
-       
+
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (checkInput()) {
+            if (checkInput())
+            {
                 int res = 0;
-                if (String.IsNullOrEmpty(mId)) {
+                if (String.IsNullOrEmpty(mId))
+                {
                     //insert
                     mScale.status = 1;
                     mScale.addTime = DateTimeHelper.getCurrentDateTime();
-                    mScale.clientId = ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString());
-                    mScale.companyId = ConfigurationHelper.GetConfig(ConfigItemName.companyId.ToString());
+                    mScale.clientId = App.CurrClientId;
+                    mScale.companyId = App.currentCompany.id;
                     mScale.com.Replace("c", "C").Replace("o", "O").Replace("m", "M");
                     if (App.currentUser != null)
                     {
                         mScale.addUserId = App.currentUser.id;
                         mScale.addUserName = App.currentUser.name;
                     }
-                    mScale.isDefault = 0;
+                    mScale.defaultType = (int)ScaleDefaultType.No;
                     mScale.syncTime = 0;
-                    res =  DatabaseOPtionHelper.GetInstance().insert(mScale);
+                    res = DatabaseOPtionHelper.GetInstance().insert(mScale);
                     if (res > 0)
                     {
                         MessageBox.Show("添加成功！");
@@ -118,32 +136,37 @@ namespace IntentConnectWeighing
                     {
                         MessageBox.Show("添加失败！");
                     }
-                } else {
+                }
+                else
+                {
                     //update
                     mScale.com.Replace("c", "C").Replace("o", "O").Replace("m", "M");
-                    res =  DatabaseOPtionHelper.GetInstance().update(mScale);
+                    res = DatabaseOPtionHelper.GetInstance().update(mScale);
                     if (res > 0)
                     {
                         MessageBox.Show("修改成功！");
                         this.Close();
                     }
-                    else {
+                    else
+                    {
                         MessageBox.Show("修改失败！");
                     }
                 }
-            }                 
+            }
         }
-  
+
         private bool checkInput()
         {
             mScale.name = this.NameTb.Text.Trim();
 
             mScale.com = this.ComTb.Text.Trim();
-            if (String.IsNullOrEmpty(mScale.com)) {
+            if (String.IsNullOrEmpty(mScale.com))
+            {
                 MessageBox.Show("Com 串口不能为空！");
                 return false;
-            }           
-            if (!RegexHelper.IsMatch(mScale.com,RegexHelper.ComPattern)) {
+            }
+            if (!RegexHelper.IsMatch(mScale.com, RegexHelper.ComPattern))
+            {
                 MessageBox.Show("串口输入的格式不正确");
                 return false;
             }
@@ -151,7 +174,8 @@ namespace IntentConnectWeighing
             {
                 mScale.baudRate = Convert.ToInt32(this.BaudRateTB.Text.Trim());
             }
-            catch {
+            catch
+            {
                 MessageBox.Show("波特率必须为整数！");
                 return false;
             }
@@ -184,13 +208,20 @@ namespace IntentConnectWeighing
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-          
+
             if (App.currWindow == this)
             {
                 App.SetCurrentWindow();
                 App.ShowCurrentWindow();
             }
         }
-        
+
+        private void DefaultTypeCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.IsLoaded == true)
+            {
+                mScale.defaultType = this.DefaultTypeCB.SelectedIndex;
+            }
+        }
     }
 }

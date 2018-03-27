@@ -7,7 +7,7 @@ using System.Text;
 {
 
 	 /// <summary>
-	 /// 数据条数:34
+	 /// 数据条数:22
 	 /// 数据大小:16KB
 	 /// </summary>
 
@@ -128,7 +128,7 @@ using System.Text;
 	 public Int32 isDelete{ get; set; }
 
 	 /// <summary>
-	 /// 注释:地址
+	 /// 注释:办公地址
 	 /// 可空:YES
 	 /// </summary>
 

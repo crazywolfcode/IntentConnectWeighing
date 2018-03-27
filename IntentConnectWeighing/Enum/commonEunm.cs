@@ -56,13 +56,18 @@ namespace IntentConnectWeighing
         mysqlPort,
         mysqlUserId,
         mysqlPassword,
-
+        defaultPrintTimes,
+        autoPrint,
+        allowDiffrenceMaterialWeighing,
+        outFactoryAllowUpdate,
         //url
         serverBaseUrl, 
         syncUp,
         syncDown,
         baiduUrl,
-
+        //Camera
+        cameraStramType,
+        cameraCaptureFilePath,
         baiduAppId,
         baiduApiKey,
         baiduApiSecretKey,
@@ -151,5 +156,13 @@ namespace IntentConnectWeighing
     {
         Other,Weighinger,WeighingManager,CompanyManager,Boss       
     }
+    //0 不是默认 1 默认为入库 2 默认为出库
+    public enum ScaleDefaultType {
+        No,In,Out
+    }
 
+    public enum WeightingBillType
+    {
+        Otrher, RK, CK
+    }
 }

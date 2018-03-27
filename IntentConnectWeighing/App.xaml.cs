@@ -19,8 +19,16 @@ namespace IntentConnectWeighing
         public static Company currentCompany;
         public static Window currWindow;
         public static Window prevWindow;
+        public static String CurrClientId;
         public static string SoftwareVersion;
         public static System.Windows.Forms.NotifyIcon notifyIcon;
+
+        #region 本机使用的临时基础数据
+        public static Dictionary<String, Company> tempSupplyCompanys = new Dictionary<string, Company>();
+        public static Dictionary<String, Company> tempCustomerCompanys = new Dictionary<string, Company>();
+        public static Dictionary<String, Material> tempMaterials = new Dictionary<string, Material>();
+        public static Dictionary<String, CarInfo> tempCars = new Dictionary<string, CarInfo>();
+        #endregion
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             CreateNotifyIcon();
@@ -33,8 +41,8 @@ namespace IntentConnectWeighing
             //Navigation();
             currentCompany = new Company()
             {
-                id = GetClientId(),
-                name = "富源县天鑫煤业有限公司",
+                id = ConfigurationHelper.GetConfig(ConfigItemName.companyId.ToString()),
+                name = ConfigurationHelper.GetConfig(ConfigItemName.companyName.ToString()),
             };
 
             currentUser = new User() {
@@ -43,6 +51,7 @@ namespace IntentConnectWeighing
                 company = currentCompany.name,
                 affiliatedCompanyId = currentCompany.id
             };
+            
         }
 
         private void Navigation() {
@@ -51,7 +60,8 @@ namespace IntentConnectWeighing
             {
                 SelectVersionW selectW = new SelectVersionW();
                 registerStep = ConfigurationHelper.GetConfig(ConfigItemName.companyRegisterStep.ToString());
-                selectW.Show();
+                selectW.Show(); 
+           
             }
             else if (registerStep != CompanyRegisterStep.RegisterFinishedPage.ToString())
             {
@@ -69,15 +79,20 @@ namespace IntentConnectWeighing
             }
         }
 
+    
         private void CreateClientId()
         {
             if (string.IsNullOrEmpty(ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString())))
             {
-                ConfigurationHelper.SetConfig(ConfigItemName.clientId.ToString(), GetClientId());
+                CurrClientId = GetClientId();
+                ConfigurationHelper.SetConfig(ConfigItemName.clientId.ToString(), CurrClientId);
+            }
+            else {
+                CurrClientId = ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString());
             }
         }
 
-        private string GetClientId()
+        public string GetClientId()
         {
             return Guid.NewGuid().ToString();
         }
@@ -184,6 +199,8 @@ namespace IntentConnectWeighing
             //try
             //{
             InsertOrUpdateAppSettings();
+            SaveTempData();
+            CommonFunction.UpdateUsedBaseData();
             //}
             //catch (Exception exception)
             //{
@@ -372,5 +389,9 @@ namespace IntentConnectWeighing
             }
             return SoftwareVersion;
         }
+        /// <summary>
+        /// 保存本机使用过的基础数据
+        /// </summary>
+        private void SaveTempData() { }
     }
 }

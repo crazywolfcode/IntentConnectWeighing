@@ -15,7 +15,7 @@ namespace MyHelper
         /// <param name="text">中文内容</param>
         /// <param name="isUp">是否为大写，默认True</param>
         /// <returns></returns>
-        public static string GetChineseFirstSpell(string text, Boolean isUp = true)
+        private static string GetChineseFirstSpell(string text, Boolean isUp = true)
         {
             int len = text.Length;
             string str = "";

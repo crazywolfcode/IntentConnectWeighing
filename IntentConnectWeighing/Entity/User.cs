@@ -7,7 +7,7 @@ using System.Text;
 {
 
 	 /// <summary>
-	 /// 数据条数:6
+	 /// 数据条数:9
 	 /// 数据大小:16KB
 	 /// </summary>
 
@@ -30,7 +30,7 @@ using System.Text;
 	 /// <summary>
 	 /// 注释:0 女 1 男 3变态
 	 /// 可空:NO
-	 ///默认值:0
+	 ///默认值:1
 	 /// </summary>
 
 	 public Int32 sex{ get; set; }
@@ -88,7 +88,7 @@ using System.Text;
 
 	 /// <summary>
 	 /// 注释:出生年月日
-	 /// 可空:NO
+	 /// 可空:YES
 	 /// </summary>
 
 	 public String birthDate{ get; set; }
@@ -100,7 +100,7 @@ using System.Text;
 	 public String idNumber{ get; set; }
 
 	 /// <summary>
-	 /// 注释:1 过磅员工 2 过磅管理员工 3公司管理员工 4老总
+	 /// 注释:0 其它 1 过磅员工 2 过磅管理员工 3公司管理员工 4老总
 	 /// 可空:NO
 	 ///默认值:1
 	 /// </summary>

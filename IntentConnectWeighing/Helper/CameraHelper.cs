@@ -37,10 +37,9 @@ namespace IntentConnectWeighing
         /// <returns>currcamera id </returns>
         public static int loginCamera(string ip, string port, string userName, string pwd,ref CHCNetSDK.NET_DVR_DEVICEINFO_V30 deviceInfo)
         {          
-         return   CHCNetSDK.NET_DVR_Login_V30(ip, Convert.ToInt32(port), userName, pwd, ref deviceInfo);
-          
+         return   CHCNetSDK.NET_DVR_Login_V30(ip, Convert.ToInt32(port), userName, pwd, ref deviceInfo);          
         }
-        public static void loginOutCamera(int currCameraId)
+        public static void LoginOutCamera(int currCameraId)
         {
             try
             {
@@ -51,14 +50,14 @@ namespace IntentConnectWeighing
             }
 
         }
-        public static bool preview(ref System.Windows.Forms.PictureBox pb, int lChannel,int currCameraId)
+        public static bool Preview(ref System.Windows.Forms.PictureBox pb, int lChannel,int currCameraId,int streamType = 0)
         {
             try
             {
                 CHCNetSDK.NET_DVR_PREVIEWINFO lpPreviewInfo = new CHCNetSDK.NET_DVR_PREVIEWINFO();
                 lpPreviewInfo.hPlayWnd = pb.Handle;//预览窗口
                 lpPreviewInfo.lChannel = lChannel;//预te览的设备通道
-                lpPreviewInfo.dwStreamType = 0;//码流类型：0-主码流，1-子码流，2-码流3，3-码流4，以此类推
+                lpPreviewInfo.dwStreamType = 1;//码流类型：0-主码流，1-子码流，2-码流3，3-码流4，以此类推
                 lpPreviewInfo.dwLinkMode = 0;//连接方式：0- TCP方式，1- UDP方式，2- 多播方式，3- RTP方式，4-RTP/RTSP，5-RSTP/HTTP 
                 lpPreviewInfo.bBlocked = false; //0- 非阻塞取流，1- 阻塞取流
                 lpPreviewInfo.dwDisplayBufNum = 20; //播放库播放缓冲区最大缓冲帧数
@@ -213,8 +212,9 @@ namespace IntentConnectWeighing
         /// captureJpeg
         /// </summary>
         /// <param name="filePathName">图片保存路径和文件名</param>
+        /// <param name="currCameraId">登陆的摄像头序号</param>
         /// <param name="filePathName">通道号</param>
-        public static bool captureJpeg(string filePathName, int currCameraId , int lChannel)
+        public static bool CaptureJpeg(string filePathName, int currCameraId , int lChannel)
         {
             CHCNetSDK.NET_DVR_JPEGPARA lpJpegPara = new CHCNetSDK.NET_DVR_JPEGPARA();
             lpJpegPara.wPicQuality = 0; //图像质量 Image quality
@@ -230,11 +230,10 @@ namespace IntentConnectWeighing
         /// <param name="filePathName">图片保存路径和文件名</param>
         /// <param name="lChannel">通道号</param>
         /// <returns></returns>
-        public static bool captureBmp(string filePathName, int m_lRealHandle)
+        public static bool captureBmp(int lChannel,string filePathName)
         {
             //BMP抓图 Capture a BMP picture
-            return !CHCNetSDK.NET_DVR_CapturePicture(m_lRealHandle, filePathName);
-
+            return !CHCNetSDK.NET_DVR_CapturePicture(lChannel, filePathName);
         }
 
     }

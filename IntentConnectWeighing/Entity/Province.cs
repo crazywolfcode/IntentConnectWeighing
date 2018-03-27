@@ -40,7 +40,7 @@ using System.Text;
 	 ///默认值:0
 	 /// </summary>
 
-	 public Int32  isDelete{ get; set; }
+	 public Int32 isDelete{ get; set; }
 
 	 /// <summary>
 	 /// 注释:简称

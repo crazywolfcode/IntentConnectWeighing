@@ -12,7 +12,8 @@ namespace MyHelper
    public class DateTimeHelper
     {
         private static readonly string defaultDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
-
+        public static readonly string BillNumberDateTimeFormat = "yyyyMMddHHmmss";
+        public static readonly string DateFormat = "yyyy-MM-dd";
         /// <summary>
         /// 获取时间戳
         /// </summary>
@@ -132,6 +133,20 @@ namespace MyHelper
             }
             return Format(dt, format);
         }
+
+        /// <summary>
+        /// 长整形转化为时间格式
+        /// </summary>
+        /// <param name="d">时间戳</param>
+        /// <returns></returns>
+        public static DateTime ConvertLongToDateTime(double d)
+        {
+            DateTime time = DateTime.MinValue;
+            DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+            time = startTime.AddSeconds(d);
+            return time;
+        }
+
 
         #endregion
 

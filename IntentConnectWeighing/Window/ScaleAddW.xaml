@@ -8,7 +8,7 @@
         mc:Ignorable="d" ResizeMode="NoResize"
         Icon="/IntentConnectWeighing;component/aislogo_48.ico"
         WindowStartupLocation="CenterScreen" WindowStyle="None"   Style="{DynamicResource settingWindowStyle}"  
-        Title="添加摄像头" Height="430" Width="560"
+        Title="添加磅称" Height="430" Width="560"
         Loaded="Window_Loaded" 
         ContentRendered="Window_ContentRendered" 
         Closing="Window_Closing" >
@@ -21,7 +21,7 @@
         <Border Grid.Row="0" CornerRadius="4,4,0,0" x:Name="headerBorder" MouseMove="headerBorder_MouseMove"  Background="{DynamicResource E4}">
             <StackPanel Orientation="Horizontal" Background="Transparent" MouseMove="headerBorder_MouseMove">
                 <Image Source="/IntentConnectWeighing;component/aislogo_48.ico" Width="48" Height="48" HorizontalAlignment="Left" Margin="10"></Image>
-                <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="添加摄像头" VerticalAlignment="Center" FontSize="20" FontWeight="Black" Foreground="#787972"></TextBlock>
+                <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="添加磅称" VerticalAlignment="Center" FontSize="20" FontWeight="Black" Foreground="#787972"></TextBlock>
             </StackPanel>
         </Border>
         <!--关闭按钮-->
@@ -69,6 +69,14 @@
                         <Label>磅秤系列：</Label>
                         <TextBox  Width="160" x:Name="SeriesTB" ToolTip="磅秤的磅秤系列号" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
                     </WrapPanel>
+                    <WrapPanel Margin="0,10,0,0" >
+                        <Label>默  认  为：</Label>
+                        <ComboBox  Width="160" x:Name="DefaultTypeCB"   VerticalContentAlignment="Center" SelectionChanged="DefaultTypeCB_SelectionChanged">
+                            <ComboBoxItem x:Name="NoItem">无</ComboBoxItem>
+                            <ComboBoxItem x:Name="InItem" >入库</ComboBoxItem>
+                            <ComboBoxItem  x:Name="OutItem">出库</ComboBoxItem>
+                        </ComboBox>
+                    </WrapPanel>                    
                 </StackPanel>               
             </StackPanel>
         </Border>

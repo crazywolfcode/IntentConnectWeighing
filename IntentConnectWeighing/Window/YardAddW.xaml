@@ -1,14 +1,13 @@
-﻿<Window x:Class="IntentConnectWeighing.MaterialAddW"
+﻿<Window x:Class="IntentConnectWeighing.YardAddW"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"     
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:form="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:local="clr-namespace:IntentConnectWeighing"
         mc:Ignorable="d" ResizeMode="NoResize"
         Icon="/IntentConnectWeighing;component/aislogo_48.ico"
         WindowStartupLocation="CenterScreen"         ContentRendered="Window_ContentRendered"
-        Title="添加物资" Height="330" Width="460" WindowStyle="None"
+        Title="添加货场" Height="330" Width="460" WindowStyle="None"
         Loaded="Window_Loaded"  Style="{DynamicResource settingWindowStyle}"     
         Background="#FFF9F9F9">
     <Grid>
@@ -20,7 +19,7 @@
         <Border Grid.Row="0" CornerRadius="4,4,0,0" x:Name="headerBorder" MouseMove="headerBorder_MouseMove"  Background="#f9f9f9">
             <StackPanel Orientation="Horizontal" Background="Transparent" MouseMove="headerBorder_MouseMove">
                 <Image Source="/IntentConnectWeighing;component/aislogo_48.ico" Width="48" Height="48" HorizontalAlignment="Left" Margin="10"></Image>
-                <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="添加物资" VerticalAlignment="Center" FontSize="20" FontWeight="Black" Foreground="#787972"></TextBlock>
+                <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="添加货场" VerticalAlignment="Center" FontSize="20" FontWeight="Black" Foreground="#787972"></TextBlock>
             </StackPanel>
         </Border>
         <!--关闭按钮-->
@@ -40,16 +39,20 @@
             <StackPanel>
                 <StackPanel Margin="0,16,0,0">
                     <StackPanel Orientation="Horizontal" Margin="0,2,0,0" HorizontalAlignment="Center">
-                        <Label FontSize="14">分类名称：</Label>
-                        <ComboBox x:Name="CateNameCb" Width="260" ToolTip="物资名称" Padding="4,0,0,0" VerticalContentAlignment="Center" FontSize="14" SelectionChanged="CateNameCb_SelectionChanged" SelectedValuePath="id" DisplayMemberPath="name"></ComboBox>
+                        <Label FontSize="14">所属公司：</Label>
+                        <ComboBox x:Name="CompanyNameCb" Width="260" ToolTip="所属公司名称" Padding="4,0,0,0" VerticalContentAlignment="Center" FontSize="14" SelectionChanged="CateNameCb_SelectionChanged" SelectedValuePath="id" DisplayMemberPath="name"></ComboBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,2,0,0" HorizontalAlignment="Center">
-                        <Label FontSize="14">物资名称：</Label>
-                        <TextBox x:Name="nameTb" Width="260" ToolTip="物资名称" Padding="4,0,0,0" VerticalContentAlignment="Center" TextAlignment="Center" FontSize="14" TextChanged="nameTb_TextChanged"></TextBox>
+                        <Label FontSize="14">货场名称：</Label>
+                        <TextBox x:Name="nameTb" Width="260" ToolTip="货场名称" Padding="4,0,0,0" VerticalContentAlignment="Center" TextAlignment="Left" FontSize="14" LostFocus="nameTb_LostFocus"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,2,0,0" HorizontalAlignment="Center">
+                        <Label FontSize="14">货场地址：</Label>
+                        <TextBox x:Name="AddressTb" Width="260" ToolTip="货场地址" Padding="4,0,0,0" VerticalContentAlignment="Center" FontSize="14" TextChanged="AddressTb_TextChanged"></TextBox>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Margin="0,10,0,0">
-                    <TextBlock x:Name="AlertInfoTb" HorizontalAlignment="Center" VerticalAlignment="Center" Text="物资的名称是唯一的不可以重复添加！" FontSize="14" Foreground="#696969"></TextBlock>
+                    <TextBlock x:Name="AlertInfoTb" HorizontalAlignment="Center" VerticalAlignment="Center" Text="货场的名称在一个公司内是唯一的不可以重复添加！" FontSize="14" Foreground="#696969"></TextBlock>
                 </StackPanel>
             </StackPanel>
 

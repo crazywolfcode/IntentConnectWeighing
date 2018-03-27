@@ -121,6 +121,7 @@
     <Compile Include="CameraSdk\PlayCtrl.cs" />
     <Compile Include="Behavior\Command\ShowSettingWindowsCommand.cs" />
     <Compile Include="Commom\AddCommand.cs" />
+    <Compile Include="Commom\CommonFunction.cs" />
     <Compile Include="Commom\Constract.cs" />
     <Compile Include="Commom\GlobalStatus.cs" />
     <Compile Include="Control\ControlAttachProperty.cs" />
@@ -169,11 +170,13 @@
     <Compile Include="Entity\SyncInfo.cs" />
     <Compile Include="Entity\User.cs" />
     <Compile Include="Entity\VchicleLicense.cs" />
+    <Compile Include="Entity\visual\BaseDataClassV.cs" />
     <Compile Include="Entity\visual\CarHeaderV.cs" />
     <Compile Include="Entity\visual\CarV.cs" />
     <Compile Include="Entity\visual\MaterialV.cs" />
     <Compile Include="Entity\visual\ProvinceV.cs" />
     <Compile Include="Entity\WeighingBill.cs" />
+    <Compile Include="Entity\Yard.cs" />
     <Compile Include="Enum\commonEunm.cs" />
     <Compile Include="Enum\SynchronizationStatus.cs" />
     <Compile Include="Enum\ResourceName.cs" />
@@ -198,6 +201,15 @@
     </Compile>
     <Compile Include="Window\CarAddW.xaml.cs">
       <DependentUpon>CarAddW.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window\InputWindow.xaml.cs">
+      <DependentUpon>InputWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window\CarOutFactoryW.xaml.cs">
+      <DependentUpon>CarOutFactoryW.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window\YardAddW.xaml.cs">
+      <DependentUpon>YardAddW.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window\MaterialAddW.xaml.cs">
       <DependentUpon>MaterialAddW.xaml</DependentUpon>
@@ -381,6 +393,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Window\CarAddW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Window\InputWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window\CarOutFactoryW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Window\YardAddW.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -619,6 +643,10 @@
     <PreBuildEvent>@echo -----start----
 if not exist "$(TargetDir)temp" md "$(TargetDir)temp";
 @echo made dir temp successed
+
+if not exist "$(TargetDir)capture" md "$(TargetDir)capture";
+@echo made dir capture successed
+
 if not exist "$(TargetDir)data" md "$(TargetDir)data";
 @echo made dir data successed
 if not exist "$(TargetDir)template" md "$(TargetDir)template";
