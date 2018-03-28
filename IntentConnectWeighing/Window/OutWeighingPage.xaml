@@ -15,24 +15,24 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <!--Left-->
-        <Border Grid.Column="0" CornerRadius="0,0,0,2">
-            <Expander ExpandDirection="Left" Background="Transparent"  BorderThickness="0">
+        <Border Grid.Column="0" CornerRadius="0,0,0,2" HorizontalAlignment="Left">
+            <Expander Background="Transparent" ExpandDirection="Left" IsExpanded="False" Style="{DynamicResource InDataExpenderStyle}">
                 <Expander.Content>
-                    <Border Background="#fafafa" CornerRadius="0,0,0,4" Width="230">
-                        <Grid>
+                    <Border Background="{StaticResource F9}" CornerRadius="0,0,0,4" Width="230">
+                        <Grid  Width="230">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="34"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <TextBlock 
-                                VerticalAlignment="Center"
-                                TextAlignment="Center"
-                                     FontSize="14" 
-                                     Width="90"     
-                                    x:Name="CustomerSendTB"
-                                    Foreground="RoyalBlue"                                 
-                                    Margin="0,0,4,0"                                        
-                                    Text="派车单" />
+                            VerticalAlignment="Center"
+                            TextAlignment="Center"
+                            FontSize="14" 
+                            Width="90"     
+                            x:Name="CustomerSendTB"
+                            Foreground="RoyalBlue"                                 
+                            Margin="0,0,4,0"                                        
+                            Text="派车单" />
                             <TextBlock x:Name="PaiCheNumberTb" Text="0" FontSize="12" Foreground="#797979"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,2,8,2" ToolTip="派车单数量"/>
                             <StackPanel Height="1" Margin="2,0,0,0" Background="{DynamicResource E4}" VerticalAlignment="Bottom"/>
                             <!--Left Main-->
@@ -48,7 +48,7 @@
             </Expander>
         </Border>
         <!--Center-->
-        <Border Grid.Column="1" Background="White" CornerRadius="0" x:Name="CenterBorder">
+        <Border Grid.Column="1"  CornerRadius="0" x:Name="CenterBorder" Grid.ColumnSpan="2" >
             <StackPanel>
                 <StackPanel Height="34" x:Name="ToolBarPanel" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,10,0" Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
@@ -103,12 +103,12 @@
         </Border>
         <!--Right-->
         <Border Grid.Column="2" CornerRadius="0,0,4,0" >
-            <Expander ExpandDirection="Right" Background="Transparent" HorizontalContentAlignment="Right" BorderThickness="0">
+            <Expander ExpandDirection="Right" Background="Transparent" HorizontalContentAlignment="Right" BorderThickness="0" Style="{DynamicResource InDataExpenderStyle}">
                 <Expander.Content>
                     <Border Background="{StaticResource F9}" CornerRadius="0,0,4,0" Width="230">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="34"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
@@ -117,11 +117,11 @@
                             </Grid.ColumnDefinitions>
                             <local:TabButton     Grid.Row="0" Grid.Column="0"
                                      FontSize="14" IsChecked="True"
-                                     Width="90" Height="30"      
+                                     Width="90" Height="32"      
                                     x:Name="NoFinishedTabBtn"
                                     Foreground="#666"
                                     ActiveForground="RoyalBlue"
-                                    IndicatorHeight="2" 
+                                    IndicatorHeight="3" 
                                     Margin="0,0,4,0"
                                     IconMargin="0,0,3,0"
                                     IconSize="18"         
@@ -129,7 +129,7 @@
                                     ActiveIndicatorColor="RoyalBlue"/>
                             <TextBlock x:Name="NoFinishedNumberTb" Text="0" FontSize="10" Foreground="Red" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,8,2" ToolTip="未经完成的过磅数"/>
                             <local:TabButton   
-                                    Width="90" Height="30"  FontSize="14" Grid.Row="0" Grid.Column="1"
+                                    Width="90" Height="32"  FontSize="14" Grid.Row="0" Grid.Column="1"
                                     x:Name="FinishedTabBtn" HorizontalAlignment="Right"                                      
                                     IsChecked="False"
                                     ActiveForground="RoyalBlue" 
@@ -141,6 +141,7 @@
                                     ActiveIndicatorColor="RoyalBlue"
                                     Content="已完成"/>
                             <TextBlock x:Name="FinishedNumberTb" Text="0" FontSize="10" Foreground="Red" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,8,2" ToolTip="已经完成的过磅数"/>
+                            <StackPanel Height="1" Margin="2,0,0,0" Background="{DynamicResource E4}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="0"/>
                             <!--Right Main-->
                             <ScrollViewer x:Name="RightScrollViewer" Style="{DynamicResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"  >
                                 <StackPanel x:Name="RightMainPanel">

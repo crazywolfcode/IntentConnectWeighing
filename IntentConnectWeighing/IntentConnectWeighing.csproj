@@ -638,6 +638,12 @@
   <ItemGroup>
     <Resource Include="Themes\Img\pay.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Img\png\expand_left_active_10.png" />
+    <Resource Include="Themes\Img\png\expand_left_no_10.png" />
+    <Resource Include="Themes\Img\png\expand_right_active_10.png" />
+    <Resource Include="Themes\Img\png\expand_right_no_10.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>@echo -----start----

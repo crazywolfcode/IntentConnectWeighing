@@ -142,21 +142,21 @@
                     <Border
                         CornerRadius="{TemplateBinding local:ControlAttachProperty.CornerRadius}"
                         BorderThickness="{TemplateBinding Border.BorderThickness}"
-        BorderBrush="{TemplateBinding Border.BorderBrush}"
-        Background="{TemplateBinding Panel.Background}"
-        Name="border"
-        SnapsToDevicePixels="True">
+                        BorderBrush="{TemplateBinding Border.BorderBrush}"
+                        Background="{TemplateBinding Panel.Background}"
+                        Name="border"
+                        SnapsToDevicePixels="True">
                         <ContentPresenter
-            RecognizesAccessKey="True"
-            Content="{TemplateBinding ContentControl.Content}"
-            ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
-            ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}"
-            Name="contentPresenter"
-            Margin="{TemplateBinding Control.Padding}"
-            HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
-            VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
-            SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"
-            Focusable="False" />
+                            RecognizesAccessKey="True"
+                            Content="{TemplateBinding ContentControl.Content}"
+                            ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
+                            ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}"
+                            Name="contentPresenter"
+                            Margin="{TemplateBinding Control.Padding}"
+                            HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
+                            SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"
+                            Focusable="False" />
                     </Border>
                    <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -187,21 +187,21 @@
                     <Border
                         CornerRadius="{TemplateBinding local:ControlAttachProperty.CornerRadius}"
                         BorderThickness="{TemplateBinding Border.BorderThickness}"
-        BorderBrush="{TemplateBinding Border.BorderBrush}"
-        Background="{TemplateBinding Panel.Background}"
-        Name="border"
-        SnapsToDevicePixels="True">
+                        BorderBrush="{TemplateBinding Border.BorderBrush}"
+                        Background="{TemplateBinding Panel.Background}"
+                        Name="border"
+                        SnapsToDevicePixels="True">
                         <ContentPresenter
-            RecognizesAccessKey="True"
-            Content="{TemplateBinding ContentControl.Content}"
-            ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
-            ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}"
-            Name="contentPresenter"
-            Margin="{TemplateBinding Control.Padding}"
-            HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
-            VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
-            SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"
-            Focusable="False" />
+                        RecognizesAccessKey="True"
+                        Content="{TemplateBinding ContentControl.Content}"
+                        ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
+                        ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}"
+                        Name="contentPresenter"
+                        Margin="{TemplateBinding Control.Padding}"
+                        HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
+                        VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
+                        SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"
+                        Focusable="False" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -224,8 +224,7 @@
                                     <ImageBrush ImageSource="/IntentConnectWeighing;component/Themes/Img/Button/add_enter.png"></ImageBrush>
                                 </Setter.Value>
                             </Setter>        
-                        </Trigger>
-                 
+                        </Trigger>                 
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

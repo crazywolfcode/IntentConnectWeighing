@@ -20,6 +20,7 @@ namespace IntentConnectWeighing
     public partial class InWeighingPage : Page
     {
         #region Variable area
+        private bool isNetConnVersion = false;
 
         #endregion
         public InWeighingPage()
@@ -31,22 +32,26 @@ namespace IntentConnectWeighing
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (App.GetSoftwareVersion() == SoftwareVersion.netConnection.ToString())
-            {
-                HideOrShowSendExpandePanel();
-                FillCustomerSendData();
-            }
-            else
-            {
-                HideOrShowSendExpandePanel(false);
-            }
+            //if (App.GetSoftwareVersion() == SoftwareVersion.netConnection.ToString())
+            //{
+            //    isNetConnVersion = true;
+            //    HideOrShowSendExpandePanel(true);
+            //    FillCustomerSendData();
+            //}
+            //else
+            //{
+            //    isNetConnVersion = false;
+            //    HideOrShowSendExpandePanel();
+            //}
+            //
+            RefreshData();
         }
 
         /// <summary>
         /// hide or show the customer send area
         /// </summary>
         /// <param name="show"></param>
-        private void HideOrShowSendExpandePanel(bool show = true)
+        private void HideOrShowSendExpandePanel(bool show = false)
         {
             if (show == true)
             {
@@ -96,9 +101,21 @@ namespace IntentConnectWeighing
                 RefreshRightData();
             }
         }
-        private void RefreshLeftData() { }
+        private void RefreshLeftData() {
+            if (isNetConnVersion == false) {
+                return;
+            }
+        }
         private void RefreshCenterData() { }
-        private void RefreshRightData() { }
+
+        private void RefreshRightData() {
+            //no finished
+
+
+            //finished
+
+
+        }
         #endregion
     }
 }
