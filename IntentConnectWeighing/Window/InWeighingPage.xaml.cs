@@ -155,6 +155,7 @@ namespace IntentConnectWeighing
               WeighingBillEnum.type.ToString() + "=" + ((int)WeightingBillType.CK) + " and " +
               WeighingBillEnum.relative_bill_id.ToString() + " is null and " +
               WeighingBillEnum.receive_company_id.ToString() + "=" + Constract.valueSplit + App.currentCompany.id + Constract.valueSplit;
+            //todo 加上货场ID
             String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, conditon, null, null, WeighingBillEnum.send_out_time + " desc ", 20);
             list = MyHelper.JsonHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
             return list;
@@ -275,7 +276,7 @@ namespace IntentConnectWeighing
         //get data
         private void RefreshNoFinishedData()
         {
-            String condition = WeighingBillEnum.receive_status + "=" + 0;
+            String condition = WeighingBillEnum.receive_status + "=" + 0 +" and "+WeighingBillEnum.type +"="+((int)WeightingBillType.RK);          
             String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
             List<WeighingBill> list = MyHelper.JsonHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
             if (list.Count > 0)
@@ -286,6 +287,7 @@ namespace IntentConnectWeighing
             else
             {
                 this.NoFinishedNumberTb.Text = "0";
+                this.NoFinishListView.ItemsSource = null;
             }
         }
         private void NoFinishListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -311,7 +313,8 @@ namespace IntentConnectWeighing
         }
         private void RefreshFinishedData()
         {
-            String condition = WeighingBillEnum.receive_status + "=" + 1;
+            String condition = WeighingBillEnum.receive_status + "=" + 1+" and "+WeighingBillEnum.type.ToString() +"="+((int)WeightingBillType.RK);
+            //+" and " + WeighingBillEnum.receive_out_time.ToString() + " like '%" + MyHelper.DateTimeHelper.getCurrentDateTime(MyHelper.DateTimeHelper.DateFormat) + "%'";
             String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
             List<WeighingBill> list = MyHelper.JsonHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
             if (list.Count > 0)
@@ -322,6 +325,7 @@ namespace IntentConnectWeighing
             else
             {
                 this.FinishedNumberTb.Text = "0";
+                this.FinishListView.ItemsSource = null;
             }
         }
         private void FinishListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -340,10 +344,6 @@ namespace IntentConnectWeighing
             ShowCurrentPanel();
             this.FinishGrid.DataContext = mWeighingBill;
         }
-
-
-
-
         #endregion
 
         #endregion

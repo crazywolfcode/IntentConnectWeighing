@@ -12,7 +12,7 @@ namespace MyHelper
     public class DateTimeHelper
     {
         private static readonly string defaultDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
-        public static readonly string BillNumberDateTimeFormat = "yyyyMMddHHmmss";
+        public static readonly string BillNumberDateTimeFormat = "yyyyMMdd";
         public static readonly string DateFormat = "yyyy-MM-dd";
         /// <summary>
         /// 获取时间戳

@@ -149,7 +149,9 @@
     <Compile Include="Converter\ThicknessToDoubleConverter.cs" />
     <Compile Include="Converter\TreeViewMarginConverter.cs" />
     <Compile Include="Converter\TrueToFalseConverter.cs" />
+    <Compile Include="Converter\UpdateFinishedBillBtnConverter.cs" />
     <Compile Include="Converter\WeighingStatusConverter.cs" />
+    <Compile Include="Converter\WeihgingStatusBoolConverter.cs" />
     <Compile Include="Entity\Address.cs" />
     <Compile Include="Entity\baidu\baiduBandCardRecognition.cs" />
     <Compile Include="Entity\baidu\BaiduDriverLicenseRecognition.cs" />
@@ -201,6 +203,9 @@
       <DependentUpon>BaseDataPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window\BaseWindow.cs" />
+    <Compile Include="Window\OutputWindow.xaml.cs">
+      <DependentUpon>OutputWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Window\PrintBillW.xaml.cs">
       <DependentUpon>PrintBillW.xaml</DependentUpon>
     </Compile>
@@ -395,6 +400,10 @@
     <Page Include="Window\BaseDataPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window\OutputWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Window\PrintBillW.xaml">
       <Generator>MSBuild:Compile</Generator>

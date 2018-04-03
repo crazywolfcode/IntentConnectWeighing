@@ -55,8 +55,8 @@
                     <DataGrid.Columns >
                         <DataGridTextColumn IsReadOnly="True" Width="120" Header="磅单编号" Binding="{Binding sendNumber}" ElementStyle="{DynamicResource DataGridContentCenter}"></DataGridTextColumn>
                         <DataGridTextColumn IsReadOnly="True" Width="Auto" Header="客户名称" Binding="{Binding receiveCompanyName}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
-                        <DataGridTextColumn IsReadOnly="True" Width="Auto" Header="物资名称" Binding="{Binding sendMatreialNmae}" ElementStyle="{DynamicResource DataGridContentCenter}"></DataGridTextColumn>
-                        <DataGridTextColumn IsReadOnly="True" Width="*" Header="车牌号" Binding="{Binding plateNumber}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                        <DataGridTextColumn IsReadOnly="True" Width="Auto" Header="物资名称" Binding="{Binding sendMaterialName}" ElementStyle="{DynamicResource DataGridContentCenter}"></DataGridTextColumn>
+                        <DataGridTextColumn IsReadOnly="True" Width="Auto" Header="车牌号" Binding="{Binding plateNumber}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
                         <DataGridTextColumn IsReadOnly="True" Width="Auto" Header="驾驶员" Binding="{Binding driver}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
                         <DataGridTextColumn IsReadOnly="True" Width="Auto" Header="驾驶员电话" Binding="{Binding driverMobile}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
                         <DataGridTextColumn IsReadOnly="True" Width="Auto" Header="入场时间" Binding="{Binding sendInTime}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>

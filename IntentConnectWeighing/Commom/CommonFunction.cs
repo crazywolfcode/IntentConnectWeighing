@@ -163,7 +163,7 @@ namespace IntentConnectWeighing
                     sort = (count + 1).ToString();
                     break;
             }
-            return header + dateStr + sort;
+            return header +type.ToString().ToUpper()+ dateStr + sort;
         }
         
         public static void MargeToSend(ref WeighingBill send, WeighingBill receiver)
@@ -213,6 +213,7 @@ namespace IntentConnectWeighing
             receiver.plateNumber = send.plateNumber;
             receiver.driver = send.driver;
             receiver.driverMobile = send.driverMobile;
+            receiver.driverIdNumber = send.driverIdNumber;
         }
 
         internal static void UpdateDecuationList(object des)
