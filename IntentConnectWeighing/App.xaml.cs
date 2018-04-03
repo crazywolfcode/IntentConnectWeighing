@@ -28,6 +28,7 @@ namespace IntentConnectWeighing
         public static Dictionary<String, Company> tempCustomerCompanys = new Dictionary<string, Company>();
         public static Dictionary<String, Material> tempMaterials = new Dictionary<string, Material>();
         public static Dictionary<String, CarInfo> tempCars = new Dictionary<string, CarInfo>();
+        public static List<String> decuationDesList= new List<string>() { "扣水","扣杂物"};
         #endregion
         private void Application_Startup(object sender, StartupEventArgs e)
         {
@@ -42,7 +43,7 @@ namespace IntentConnectWeighing
             currentCompany = new Company()
             {
                 id = ConfigurationHelper.GetConfig(ConfigItemName.companyId.ToString()),
-                name = ConfigurationHelper.GetConfig(ConfigItemName.companyName.ToString()),
+                name = ConfigurationHelper.GetConfig(ConfigItemName.companyName.ToString()),                
             };
 
             currentUser = new User() {

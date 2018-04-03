@@ -11,7 +11,7 @@ namespace MyHelper
     public class MySqlHelper : DbBaseHelper
     {
         private static  string connectionString = ConfigurationHelper.GetConnectionConfig("mysqlConn");
-        private static readonly string connectionStringTemplate = "Database={0};Data Source={1};User Id={2};Password={3};pooling=false;CharSet=utf8;port={4}";
+        private static readonly string connectionStringTemplate = "Database={0};Data Source={1};User Id={2};Password={3};pooling=false;CharSet=utf8;port={4};MultipleActiveResultSets=true";
         //"Data Source=192.168.1.64;Initial Catalog=classzone;Persist Security Info=True;User ID=root;Password=root;Pooling=False;charset=utf8;MAX Pool Size=2000;Min Pool Size=1;Connection Lifetime=30;";
         // "Database=weightsys;Data Source=192.168.88.3;User Id=admin;Password=Txmy0071;pooling=false;CharSet=utf8;port=33069";
       

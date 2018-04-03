@@ -131,11 +131,7 @@
             </Trigger>
             <Trigger Property="IsExpanded" Value="false">
                 <Setter Property="Visibility" TargetName="ExpandSite" Value="Collapsed"/>                        
-            </Trigger>
-            <Trigger Property="ExpandDirection" Value="Up">
-                <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Top"/>
-                <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Bottom"/>
-            </Trigger>
+            </Trigger>         
             <Trigger Property="IsEnabled" Value="True">
                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
             </Trigger>

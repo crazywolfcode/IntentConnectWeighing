@@ -60,6 +60,10 @@ namespace IntentConnectWeighing
         autoPrint,
         allowDiffrenceMaterialWeighing,
         outFactoryAllowUpdate,
+        noDeleteInGross,
+        noUpdateFinishedData,
+        allowDiffrenceCompany,
+        allowDiffrenceReceiveYard,
         //url
         serverBaseUrl, 
         syncUp,

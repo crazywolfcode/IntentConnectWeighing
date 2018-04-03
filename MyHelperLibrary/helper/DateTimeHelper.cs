@@ -9,7 +9,7 @@ namespace MyHelper
     /// <summary>
     /// 日期时间操作辅助类
     /// </summary>
-   public class DateTimeHelper
+    public class DateTimeHelper
     {
         private static readonly string defaultDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
         public static readonly string BillNumberDateTimeFormat = "yyyyMMddHHmmss";
@@ -18,8 +18,8 @@ namespace MyHelper
         /// 获取时间戳
         /// </summary>
         /// <returns></returns>
-        public static long  GetTimeStamp()
-        {            
+        public static long GetTimeStamp()
+        {
             long ts = ConvertDateTimeToInt(DateTime.Now);
             return ts;
         }
@@ -33,7 +33,7 @@ namespace MyHelper
             return ts;
         }
         /// <summary>  
-        /// 将c# DateTime时间格式转换为Unix时间戳格式  
+        /// DateTime时间格式转换为Unix时间戳格式  
         /// </summary>  
         /// <param name="time">时间</param>  
         /// <returns>long</returns>  
@@ -682,6 +682,98 @@ namespace MyHelper
             int month = (quarter - 1) * 3 + 1;
             quarterBeginDate = new DateTime(year, month, 1);
             quarterEndDate = quarterBeginDate.AddMonths(3).AddMilliseconds(-1);
+        }
+
+        #endregion
+
+        #region  时间的友好显示
+
+        public static String FriendFormat(long dateTime)
+        {
+            String fTime = String.Empty;
+            try
+            {
+                DateTime dt = new DateTime(dateTime);
+                return FriendFormat(dt);
+            }
+            catch
+            {
+                return dateTime.ToString();
+            }
+        }
+        
+        public static String FriendFormat(String dateTime)
+        {
+            String fTime = String.Empty;
+            try
+            {
+                DateTime dt = DateTime.Parse(dateTime);
+                return FriendFormat(dt);
+            }
+            catch
+            {
+                return dateTime;
+            }
+        }
+
+        public static String FriendFormat(DateTime dateTime)
+        {
+            if (dateTime == null)
+            {
+                return String.Empty;
+            }
+            int nowYear = DateTime.Now.Year;
+            int year = dateTime.Year;
+            if (nowYear - year == 0)
+            {
+                //本年内
+                int nowMounth = DateTime.Now.Month;
+                int mounth = dateTime.Month;
+                if (nowMounth - mounth == 0)
+                {
+                    //本月内
+                    int nowDay = DateTime.Now.Day;
+                    int day = dateTime.Day;
+                    if (nowDay - day == 0)
+                    {
+                        //当天
+                        int nowHour = DateTime.Now.Hour;
+                        int hour = dateTime.Hour;
+                        if (nowHour - hour == 0)
+                        {
+                            int nowMinute = DateTime.Now.Minute;
+                            int minute = dateTime.Minute;
+                            int diff = nowMinute - minute;
+                            if (diff <2)
+                            {
+                                return "刚刚";
+                            }
+                            else
+                            {
+                                return $"{diff} 分钟前";
+                            }
+                        }
+                        else
+                        {
+                            return dateTime.ToString("HH:mm:ss");
+                        }
+                    }
+                    else
+                    {
+                        return dateTime.ToString("dd HH:mm:ss");
+                    }
+                }
+                else
+                {
+                    //跨月
+                    return dateTime.ToString("MM-dd HH:mm:ss");
+                }
+            }
+            else
+            {
+                //跨年
+                return dateTime.ToString(DateTimeHelper.defaultDateTimeFormat); // "yyyy-MM-dd HH:mm:ss"
+            }            
         }
 
         #endregion

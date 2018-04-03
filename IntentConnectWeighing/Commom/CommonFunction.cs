@@ -165,8 +165,7 @@ namespace IntentConnectWeighing
             }
             return header + dateStr + sort;
         }
-
-
+        
         public static void MargeToSend(ref WeighingBill send, WeighingBill receiver)
         {
             send.relativeBillId = receiver.id;
@@ -183,6 +182,9 @@ namespace IntentConnectWeighing
             send.receiveGrossWeight = receiver.sendGrossWeight;
             send.receiveTraeWeight = receiver.sendTraeWeight;
             send.receiveNetWeight = receiver.sendNetWeight;
+            send.decuationWeight = receiver.decuationWeight;
+            send.decuationDescription = receiver.decuationDescription;
+            send.differenceWeight = receiver.differenceWeight;
         }
 
         public static void MargeToReciver(ref WeighingBill receiver, WeighingBill send)
@@ -198,12 +200,28 @@ namespace IntentConnectWeighing
             receiver.sendRemark = send.sendRemark;
             receiver.sendCompanyId = send.sendCompanyId;
             receiver.sendCompanyName = send.sendCompanyName;
+            receiver.sendYardId = send.sendYardId;
+            receiver.sendYardName = send.sendYardName;
+            receiver.receiveCompanyId = send.receiveCompanyId;
+            receiver.receiveCompanyName = send.receiveCompanyName;
+            receiver.receiveYardId = send.receiveYardId;
+            receiver.receiveYardName = send.receiveYardName;
             receiver.sendGrossWeight = send.sendGrossWeight;
             receiver.sendTraeWeight = send.sendTraeWeight;
+            receiver.carId = send.carId;
             receiver.sendNetWeight = send.sendNetWeight;
+            receiver.plateNumber = send.plateNumber;
+            receiver.driver = send.driver;
+            receiver.driverMobile = send.driverMobile;
         }
 
-
-     
+        internal static void UpdateDecuationList(object des)
+        {
+            if (des != null &&!String.IsNullOrEmpty(des.ToString())) {
+                if (!App.decuationDesList.Contains(des.ToString())) {
+                    App.decuationDesList.Add(des.ToString());
+                }
+            }
+        }
     }
 }

@@ -30,5 +30,5 @@
     <local:StatusConverter x:Key="StatusConverter"/>
     <local:CompanyCustomerTypeConverter x:Key="CompanyCustomerTypeConverter"/>
     <local:CompanyTypeConverter x:Key="CompanyTypeConverter"/>
-    
+ 
 </ResourceDictionary>

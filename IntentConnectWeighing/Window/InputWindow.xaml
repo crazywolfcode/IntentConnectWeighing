@@ -7,7 +7,7 @@
         Icon="/IntentConnectWeighing;component/aislogo_48.ico"    
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded" ContentRendered="Window_ContentRendered" Closing="Window_Closing" SizeChanged="Window_SizeChanged"
-        Title="入库过磅" Height="680" Width="986">
+        Title="入库过磅" Height="680" Width="1000">
     <Window.Resources>
         <Style x:Key="AlertTbStyle" TargetType="TextBlock">
             <Setter Property="TextAlignment" Value="Right"/>
@@ -68,7 +68,7 @@
         </Border>
         <StackPanel Grid.Row="1" Height="1" VerticalAlignment="Top" Background="{DynamicResource E4}"/>
         <!--WeihgingBorder -->
-        <Border x:Name="WeihgingBorder" Grid.Row="2" Height="200">
+        <Border x:Name="WeihgingBorder" Grid.Row="2" Height="230">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="49*"/>
@@ -139,7 +139,7 @@
                             <TextBlock Style="{StaticResource AlertTbStyle}">收货皮重:</TextBlock>
                             <TextBlock Style="{StaticResource AlertTbStyle}">收货净重:</TextBlock>
                         </StackPanel>
-                        <StackPanel>
+                        <StackPanel >
                             <TextBox x:Name="ReceivedGrossWeightTbox" Style="{StaticResource ValueTBoxStyle}" Text="0.0" IsEnabled="False" Width="60" TextChanged="ReceivedGrossWeightTbox_TextChanged"/>
                             <TextBox x:Name="ReceivedTraeWeightTbox" Style="{StaticResource ValueTBoxStyle}" Text="0.0" IsEnabled="False" Width="60" TextChanged="ReceivedTraeWeightTbox_TextChanged"/>
                             <TextBox x:Name="ReceivedNetWeightTbox" Style="{StaticResource ValueTBoxStyle}" Text="0.0" IsEnabled="False" Width="60" TextChanged="ReceivedNetWeightTbox_TextChanged"/>
@@ -152,7 +152,7 @@
                         <TextBlock Style="{StaticResource AlertTbStyle}" Margin="33,0,0,0">扣 重:</TextBlock>
                         <TextBox x:Name="DecuationWeightTbox" Style="{StaticResource ValueTBoxStyle}" Margin="11,0,0,0" ToolTip="请注意单位是'吨'"  Text="0" TextChanged="DecuationWeightTbox_TextChanged"/>
                         <TextBlock Style="{StaticResource AlertTbStyle}" Margin="10,0,0,0">扣重说明:</TextBlock>
-                        <TextBox x:Name="DecuationDescriptionTbox" Style="{StaticResource ValueTBoxStyle}" Margin="10,0,0,0" Width="364" Text="无" TextChanged="DecuationDescriptionTbox_TextChanged"/>
+                        <ComboBox x:Name="DecuationDescriptionCb" Style="{StaticResource ValueCbStyle}" Margin="10,0,0,0" Width="363" Text="无" TextBoxBase.TextChanged="DecuationDescriptionTbox_TextChanged" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
                         <TextBlock Style="{StaticResource AlertTbStyle}" Margin="20,0,0,0">备 注:</TextBlock>

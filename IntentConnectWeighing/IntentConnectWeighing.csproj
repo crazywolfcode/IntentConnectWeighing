@@ -116,10 +116,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\InFactoryComand.cs" />
     <Compile Include="Behavior\WindowBehavior.cs" />
     <Compile Include="CameraSdk\CHCNetSDK.cs" />
     <Compile Include="CameraSdk\PlayCtrl.cs" />
-    <Compile Include="Behavior\Command\ShowSettingWindowsCommand.cs" />
+    <Compile Include="Command\ShowSettingWindowsCommand.cs" />
     <Compile Include="Commom\AddCommand.cs" />
     <Compile Include="Commom\CommonFunction.cs" />
     <Compile Include="Commom\Constract.cs" />
@@ -137,7 +138,10 @@
     <Compile Include="Converter\BackgroundToForegroundConverter.cs" />
     <Compile Include="Converter\CheckedToVisibleConverter.cs" />
     <Compile Include="Converter\CompanyTypeConverter.cs" />
+    <Compile Include="Converter\DateTimeFriendConverter.cs" />
+    <Compile Include="Converter\IndexConverter.cs" />
     <Compile Include="Converter\PercentToAngleConverter.cs" />
+    <Compile Include="Converter\PrientTimesboolConverter.cs" />
     <Compile Include="Converter\SexConverter.cs" />
     <Compile Include="Converter\StaticConverter.cs" />
     <Compile Include="Converter\CompanyCustomerTypeConverter.cs" />
@@ -145,6 +149,7 @@
     <Compile Include="Converter\ThicknessToDoubleConverter.cs" />
     <Compile Include="Converter\TreeViewMarginConverter.cs" />
     <Compile Include="Converter\TrueToFalseConverter.cs" />
+    <Compile Include="Converter\WeighingStatusConverter.cs" />
     <Compile Include="Entity\Address.cs" />
     <Compile Include="Entity\baidu\baiduBandCardRecognition.cs" />
     <Compile Include="Entity\baidu\BaiduDriverLicenseRecognition.cs" />
@@ -196,6 +201,9 @@
       <DependentUpon>BaseDataPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window\BaseWindow.cs" />
+    <Compile Include="Window\PrintBillW.xaml.cs">
+      <DependentUpon>PrintBillW.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Window\CompanyAddW.xaml.cs">
       <DependentUpon>CompanyAddW.xaml</DependentUpon>
     </Compile>
@@ -387,6 +395,10 @@
     <Page Include="Window\BaseDataPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window\PrintBillW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Window\CompanyAddW.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -643,6 +655,9 @@
     <Resource Include="Themes\Img\png\expand_left_no_10.png" />
     <Resource Include="Themes\Img\png\expand_right_active_10.png" />
     <Resource Include="Themes\Img\png\expand_right_no_10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Img\Temp\temp_ad.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

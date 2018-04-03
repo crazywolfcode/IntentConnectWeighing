@@ -244,7 +244,7 @@ using System.Text;
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String deducationDescription{ get; set; }
+	 public String decuationDescription{ get; set; }
 
 	 /// <summary>
 	 /// 注释:扣重

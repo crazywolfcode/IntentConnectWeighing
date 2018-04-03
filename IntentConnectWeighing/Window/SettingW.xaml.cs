@@ -48,6 +48,8 @@ namespace IntentConnectWeighing
         {
             refreshData();
         }
+
+        #region window event
         private void WindowTitle_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -68,6 +70,7 @@ namespace IntentConnectWeighing
                 this.DragMove();
             }
         }
+        #endregion
 
         #region 刷新数据
 
@@ -97,6 +100,11 @@ namespace IntentConnectWeighing
                 refreshOtherSettingData();
                 return;
             }
+            if (this.HighSetting.IsChecked == true)
+            {
+                refreshHeightSettingData();
+                return;
+            }
         }
 
         private void refreshBaseSettingData() { }
@@ -116,6 +124,62 @@ namespace IntentConnectWeighing
         }
        
         private void refreshOtherSettingData() { }
+        private void refreshHeightSettingData() {
+            //入库过磅毛重不可以删除
+            if ("true" == ConfigurationHelper.GetConfig(ConfigItemName.noDeleteInGross.ToString()))
+            {
+                this.NoDeleteInGrossCB.IsChecked = true;
+            }
+            else
+            {
+                this.NoDeleteInGrossCB.IsChecked = false;
+            }
+            //不可以修改已经完成的数据
+            if ("true" == ConfigurationHelper.GetConfig(ConfigItemName.noUpdateFinishedData.ToString()))
+            {
+                this.NoUpdateFinishedData.IsChecked = true;
+            }
+            else
+            {
+                this.NoUpdateFinishedData.IsChecked = false;
+            }
+            //
+            if ("true" == ConfigurationHelper.GetConfig(ConfigItemName.allowDiffrenceMaterialWeighing.ToString()))
+            {
+                this.StartAautoPtint.IsChecked = true;
+            }
+            else
+            {
+                this.StartAautoPtint.IsChecked = false;
+            }
+            //
+            if ("true" == ConfigurationHelper.GetConfig(ConfigItemName.allowDiffrenceCompany.ToString()))
+            {
+                this.AllowDiffrenceCompanyCB.IsChecked = true;
+            }
+            else
+            {
+                this.AllowDiffrenceCompanyCB.IsChecked = false;
+            }
+            //
+            if ("true" == ConfigurationHelper.GetConfig(ConfigItemName.allowDiffrenceReceiveYard.ToString()))
+            {
+                this.AllowDiffrenceReceiveYardCB.IsChecked = true;
+            }
+            else
+            {
+                this.AllowDiffrenceReceiveYardCB.IsChecked = false;
+            }
+            //
+            if ("true" == ConfigurationHelper.GetConfig(ConfigItemName.outFactoryAllowUpdate.ToString()))
+            {
+                this.OutfactoryAllowUpdateCB.IsChecked = true;
+            }
+            else
+            {
+                this.OutfactoryAllowUpdateCB.IsChecked = false;
+            }
+        }
         #endregion
 
         #region Camera info 摄像头
@@ -165,8 +229,6 @@ namespace IntentConnectWeighing
 
         }
 
-
-
         #region 磅秤 Scale
 
         private void AddScaleBtn_Click(object sender, RoutedEventArgs e)
@@ -213,8 +275,7 @@ namespace IntentConnectWeighing
         }
 
         #endregion
-
-
+        
         #region change the tab of setting item 切换设置选项卡 时刷新数据
         private void BaseSetting_Checked(object sender, RoutedEventArgs e)
         {
@@ -291,27 +352,36 @@ namespace IntentConnectWeighing
         #endregion
 
         #region Height Setting 高级设置
+
+ 
         private void HighSetting_Checked(object sender, RoutedEventArgs e)
         {
-            if ("true" == ConfigurationHelper.GetConfig(ConfigItemName.allowDiffrenceMaterialWeighing.ToString()))
-            {
-                this.StartAautoPtint.IsChecked = true;
-            }
-            else
-            {
-                this.StartAautoPtint.IsChecked = false;
-            }
-
-            if ("true" == ConfigurationHelper.GetConfig(ConfigItemName.outFactoryAllowUpdate.ToString()))
-            {
-                this.OutfactoryAllowUpdateCB.IsChecked = true;
-            }
-            else
-            {
-                this.OutfactoryAllowUpdateCB.IsChecked = false;
-            }
-
+            if (this.IsLoaded == false) { return; }
+            refreshHeightSettingData();        
         }
+
+        #region 入库过磅毛重不可戏删除
+        private void NoDeleteInGrossCB_Checked(object sender, RoutedEventArgs e)
+        {
+            ConfigurationHelper.SetConfig(ConfigItemName.noDeleteInGross.ToString(), "true");
+        }
+        private void NoDeleteInGrossCB_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ConfigurationHelper.SetConfig(ConfigItemName.noDeleteInGross.ToString(), "false");
+        }
+        #endregion
+
+        #region 不可以修改已经完成的数据
+        private void NoUpdateFinishedData_Checked(object sender, RoutedEventArgs e)
+        {
+            ConfigurationHelper.SetConfig(ConfigItemName.noUpdateFinishedData.ToString(), "true");
+        }
+
+        private void NoUpdateFinishedData_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ConfigurationHelper.SetConfig(ConfigItemName.noUpdateFinishedData.ToString(), "false");
+        }
+        #endregion
 
         private void AllowDiffrenceMaterialWeighingCB_Checked(object sender, RoutedEventArgs e)
         {
@@ -322,7 +392,27 @@ namespace IntentConnectWeighing
         {
             ConfigurationHelper.SetConfig(ConfigItemName.allowDiffrenceMaterialWeighing.ToString(), "false");
         }
-        
+
+        private void AllowDiffrenceCompanyCB_Checked(object sender, RoutedEventArgs e)
+        {
+            ConfigurationHelper.SetConfig(ConfigItemName.allowDiffrenceCompany.ToString(), "true");
+        }
+
+        private void AllowDiffrenceCompanyCB_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ConfigurationHelper.SetConfig(ConfigItemName.allowDiffrenceCompany.ToString(), "false");
+        }
+
+        private void AllowDiffrenceReceiveYardCB_Checked(object sender, RoutedEventArgs e)
+        {
+            ConfigurationHelper.SetConfig(ConfigItemName.allowDiffrenceReceiveYard.ToString(), "true");
+        }
+
+        private void AllowDiffrenceReceiveYardCB_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ConfigurationHelper.SetConfig(ConfigItemName.allowDiffrenceReceiveYard.ToString(), "false");
+        }
+
         private void OutfactoryAllowUpdateCB_Checked(object sender, RoutedEventArgs e)
         {
             ConfigurationHelper.SetConfig(ConfigItemName.outFactoryAllowUpdate.ToString(), "true");
@@ -332,6 +422,9 @@ namespace IntentConnectWeighing
         {
             ConfigurationHelper.SetConfig(ConfigItemName.outFactoryAllowUpdate.ToString(), "false");
         }
+
         #endregion
+
+    
     }
 }

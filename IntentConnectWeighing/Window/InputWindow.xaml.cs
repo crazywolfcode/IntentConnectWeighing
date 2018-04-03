@@ -34,8 +34,11 @@ namespace IntentConnectWeighing
         #endregion
         #region Variable area
         private bool isConnectionVersion = true; //是否是互联版本
-        private bool isAllowDiffrenceMaterial = true; //是否允许货物名称不一样
-        private bool isAutFactory = false; //是否出场
+        private bool isAllowDiffrenceMaterial = true; //是否允许货物名称不一致
+        private bool isAllowDiffrenceCompany = true; //是否允许收货公司不一致
+        private bool isAllowDiffrenceReceiveYard = true; //是否允许收货货场不一致
+        private bool isOutFactory = false; //是否出场
+        private bool isOptionSuccess = false;//是否过磅成功过
         private List<Scale> mScales;
         private Scale mCurrScale;
         private List<CameraInfo> mCameraInfos;
@@ -56,10 +59,23 @@ namespace IntentConnectWeighing
         private WeighingBill mSendWeighingBill;
         private bool isInsert = true;
         #endregion
-        public InputWindow(WeighingBill send = null)
+        public InputWindow(WeighingBill bill = null, bool isSend = false)
         {
             InitializeComponent();
-            mSendWeighingBill = send;
+            if (isSend == true)
+            {
+                mSendWeighingBill = bill;
+            }
+            else
+            {
+                mWeighingBill = bill;
+                if (mWeighingBill != null)
+                {
+                    isInsert = false;
+                    isOutFactory = true;
+                    this.OutFactoryRb.IsChecked = true;
+                }
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -69,7 +85,7 @@ namespace IntentConnectWeighing
             SetCustomerCompanyDefaultSource();
             SetMaterialDefaultSource();
             SetCarDefaultSource();
-
+            SetCarDecuationDescriptionDefaultSource();
             //
             if (mSendWeighingBill == null)
             {
@@ -88,8 +104,7 @@ namespace IntentConnectWeighing
             if (mWeighingBill == null)
             {
                 // in factoty
-
-                isAutFactory = false;
+                isOutFactory = false;
                 currBillNumber = CommonFunction.GetWeighingNumber(WeightingBillType.RK);
                 this.BillNumberTb.Text = currBillNumber;
 
@@ -124,21 +139,40 @@ namespace IntentConnectWeighing
                 this.CarNumberCb.IsEnabled = true;
                 this.SendYardCb.IsEnabled = true;
                 this.ReceiverYardCb.IsEnabled = true;
+
                 #endregion
                 if (mSendWeighingBill != null)
                 {
                     //有发货单 最后要将收货信息合并到发货的信息上。
                     CommonFunction.MargeToReciver(ref mWeighingBill, mSendWeighingBill);
-
-                    // 货物名称不一样时
+                    #region 将发货信息显示到控件上面
+                    this.SupplyCb.Text = mWeighingBill.sendCompanyName;
+                    this.SendYardCb.Text = mWeighingBill.sendYardName;
+                    this.CarNumberCb.Text = mWeighingBill.plateNumber;
+                    this.DriverTbox.Text = mWeighingBill.driver;
+                    this.PhoneTbox.Text = mWeighingBill.driverMobile;
+                    this.ReceiverCompanyCb.Text = mWeighingBill.receiveCompanyName;
+                    this.ReceiverYardCb.Text = mWeighingBill.receiveYardName;
+                    this.MaterialNameCb.Text = mWeighingBill.sendMaterialName;
+                    mWeighingBill.receiveMaterialName = mSendWeighingBill.sendMaterialName;
+                    mWeighingBill.receiveMaterialId = mSendWeighingBill.receiveMaterialId;
+                    this.SendGrossWeightTbox.Text = mWeighingBill.sendGrossWeight.ToString();
+                    this.SendTraeWeightTbox.Text = mWeighingBill.sendTraeWeight.ToString();
+                    this.SendNetWeightTbox.Text = mWeighingBill.sendNetWeight.ToString();
+                    this.SendNetWeightTbox.IsEnabled = false;
+                    this.CarNumberCb.IsEnabled = false;
+                    this.SupplyCb.IsEnabled = false;
+                    this.SendYardCb.IsEnabled = false;
+                    #endregion
+                    // 货物名称，收货信息 不一样时 
                     if (ConfigurationHelper.GetConfig(ConfigItemName.softwareVersion.ToString()) == SoftwareVersion.netConnection.ToString())
                     {
                         if ("false" == ConfigurationHelper.GetConfig(ConfigItemName.allowDiffrenceMaterialWeighing.ToString()))
                         {
                             isAllowDiffrenceMaterial = false;
-                            mWeighingBill.receiveMaterialId = mSendWeighingBill.sendMaterialId;
-                            mWeighingBill.receiveMaterialName = mSendWeighingBill.sendMaterialName;
-                            this.MaterialNameCb.Text = mSendWeighingBill.sendMaterialName;
+                            //mWeighingBill.receiveMaterialId = mSendWeighingBill.sendMaterialId;
+                            //mWeighingBill.receiveMaterialName = mSendWeighingBill.sendMaterialName;
+                            //this.MaterialNameCb.Text = mSendWeighingBill.sendMaterialName;
                             this.MaterialNameCb.IsEnabled = false;
                         }
                         else
@@ -146,13 +180,33 @@ namespace IntentConnectWeighing
                             isAllowDiffrenceMaterial = true;
                             this.MaterialNameCb.IsEnabled = true;
                         }
+                        if ("false" == MyHelper.ConfigurationHelper.GetConfig(ConfigItemName.allowDiffrenceCompany.ToString()))
+                        {
+                            isAllowDiffrenceCompany = false;
+                            this.ReceiverCompanyCb.IsEnabled = false;
+                        }
+                        else
+                        {
+                            isAllowDiffrenceCompany = true;
+                            this.ReceiverCompanyCb.IsEnabled = true;
+                        }
+                        if ("false" == MyHelper.ConfigurationHelper.GetConfig(ConfigItemName.allowDiffrenceReceiveYard.ToString()))
+                        {
+                            isAllowDiffrenceReceiveYard = false;
+                            this.ReceiverYardCb.IsEnabled = false;
+                        }
+                        else
+                        {
+                            isAllowDiffrenceReceiveYard = true;
+                            this.ReceiverYardCb.IsEnabled = true;
+                        }
                     }
                 }
             }
             else
             {
                 //out factoty
-                isAutFactory = true;
+                isOutFactory = true;
                 mWeighingBill.receiveStatus = 1;
                 #region 设置控件状态
                 this.SupplyCb.Text = mWeighingBill.sendCompanyName;
@@ -167,11 +221,12 @@ namespace IntentConnectWeighing
                 this.SendGrossWeightTbox.Text = mWeighingBill.sendGrossWeight.ToString();
                 this.SendTraeWeightTbox.Text = mWeighingBill.sendTraeWeight.ToString();
                 this.SendNetWeightTbox.Text = mWeighingBill.sendNetWeight.ToString();
+                this.ReceivedRemardTbox.Text = mWeighingBill.receiveRemark;
 
                 //互联版本,出场时是否允许修信息
                 if ("false" == ConfigurationHelper.GetConfig(ConfigItemName.outFactoryAllowUpdate.ToString()))
                 {
-                    this.SendNetWeightTbox.IsEnabled = true;
+                    this.SendNetWeightTbox.IsEnabled = false;
                     this.SupplyCb.IsEnabled = false;
                     this.ReceiverCompanyCb.IsEnabled = false;
                     this.CarNumberCb.IsEnabled = false;
@@ -180,7 +235,6 @@ namespace IntentConnectWeighing
                     this.MaterialNameCb.IsEnabled = false;
                 }
                 #endregion
-                this.ReceivedRemardTbox.Text = mWeighingBill.receiveRemark;
             }
         }
 
@@ -498,7 +552,7 @@ namespace IntentConnectWeighing
                         {
                             App.tempSupplyCompanys.Add(cp.id, cp);
                         }
-                        App.tempSupplyCompanys =  App.tempSupplyCompanys.OrderByDescending(O => O.Value.syncTime).ToDictionary(p =>p.Key,O => O.Value);
+                        App.tempSupplyCompanys = App.tempSupplyCompanys.OrderByDescending(O => O.Value.syncTime).ToDictionary(p => p.Key, O => O.Value);
                     }
                     this.SupplyCb.ItemsSource = App.tempSupplyCompanys.Values.ToList();
                 }
@@ -605,6 +659,11 @@ namespace IntentConnectWeighing
             }
         }
 
+
+        private void SetCarDecuationDescriptionDefaultSource()
+        {
+            this.DecuationDescriptionCb.ItemsSource = App.decuationDesList;
+        }
         #endregion
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -613,10 +672,14 @@ namespace IntentConnectWeighing
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
+        {           
             DisposeSerialPort();
             DisposeTimer();
             try { CHCNetSDK.NET_DVR_Cleanup(); } catch { }
+            if (isOptionSuccess == true)
+            {
+                RefershParentData(true, true, true);
+            }
         }
 
         private void RefershParentData(bool left = false, bool center = false, bool right = false)
@@ -694,11 +757,15 @@ namespace IntentConnectWeighing
             int res = DatabaseOPtionHelper.GetInstance().insert(mWeighingBill);
             if (res > 0)
             {
+                isOptionSuccess = true;
                 //CaptureJpeg
                 new Thread(new ThreadStart(this.CaptureJpeg)) { IsBackground = true }.Start();
                 MessageBoxResult result = MessageBox.Show("保存成功 ! 要继续过磅吗？", "恭喜", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                //Update Send Bill
+                new Thread(new ThreadStart(this.UpdateSendBill)).Start();
                 // success to do TempUpdateUsedBase
-                updateUsedBaseData();
+                UpdateUsedBaseData();
+                UpdateDecuationList();
 
                 if (result == MessageBoxResult.No)
                 {
@@ -706,7 +773,6 @@ namespace IntentConnectWeighing
                 }
                 this.InFactoryRB.IsChecked = false;
                 this.InFactoryRB.IsChecked = true;
-                RefershParentData(true, true, true);
             }
         }
         //update
@@ -717,6 +783,7 @@ namespace IntentConnectWeighing
             int res = DatabaseOPtionHelper.GetInstance().update(mWeighingBill);
             if (res > 0)
             {
+                isOptionSuccess = true;
                 //CaptureJpeg
                 new Thread(new ThreadStart(this.CaptureJpeg)) { IsBackground = true }.Start();
 
@@ -725,7 +792,8 @@ namespace IntentConnectWeighing
 
                 MessageBoxResult result = MessageBox.Show("保存成功 ! 要继续过磅吗？", "恭喜", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 // success to do TempUpdateUsedBase
-                updateUsedBaseData();
+                UpdateUsedBaseData();
+                UpdateDecuationList();
 
                 PrintBill();
 
@@ -734,32 +802,53 @@ namespace IntentConnectWeighing
                     this.Close();
                 }
                 this.InFactoryRB.IsChecked = true;
-                RefershParentData(true, true, true);
             }
         }
 
-        private void updateUsedBaseData()
+        private void UpdateUsedBaseData()
         {
             // success to do TempUpdateUsedBase
             Thread thread = new Thread(new ParameterizedThreadStart(CommonFunction.TempUpdateUsedBase));
             thread.Start(new BaseDataClassV() { send = sendCompany, receive = receiverCompany, material = material, carInfo = car });
         }
-
-        /// <summary>
-        /// 打印
-        /// </summary>
-        private void PrintBill()
+        private void UpdateDecuationList()
         {
+            Thread thread = new Thread(new ParameterizedThreadStart(CommonFunction.UpdateDecuationList));
+            thread.Start(mWeighingBill.decuationDescription);
         }
-
         private void UpdateSendBill()
         {
             if (mSendWeighingBill != null)
             {
                 try
                 {
-                    CommonFunction.MargeToSend(ref mSendWeighingBill, mWeighingBill);
-                    DatabaseOPtionHelper.GetInstance().update(mSendWeighingBill);
+                    String condition = @WeighingBillEnum.id.ToString() + " = " + Constract.valueSplit + mWeighingBill.relativeBillId + Constract.valueSplit+
+                     " and "+ WeighingBillEnum.type.ToString() +"="+ ((int)WeightingBillType.CK);
+                    String set = WeighingBillEnum.relative_bill_id.ToString() + "=" + Constract.valueSplit + mWeighingBill.id + Constract.valueSplit;
+                    string sql = DbBaseHelper.getUpdateSql(DataTabeName.weighing_bill.ToString(), set, condition);
+                    DatabaseOPtionHelper.GetInstance().update(sql);
+                }
+                catch (Exception e)
+                {
+                    ConsoleHelper.writeLine("Update Send Bill failure:" + e.Message);
+                }
+            }
+            else if (mWeighingBill.relativeBillId != null)
+            {
+                String where = WeighingBillEnum.id.ToString() + "=" + Constract.valueSplit + mWeighingBill.relativeBillId + Constract.valueSplit;
+                String sql = DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, where);
+                List<WeighingBill> list = JsonHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+                WeighingBill wb = null;
+                if (list.Count > 0) {
+                    wb = list[0];
+                }
+                else {
+                    return;
+                }              
+                CommonFunction.MargeToSend(ref wb, mWeighingBill);
+                try
+                {
+                    DatabaseOPtionHelper.GetInstance().update(wb);
                 }
                 catch (Exception e)
                 {
@@ -767,6 +856,14 @@ namespace IntentConnectWeighing
                 }
             }
         }
+        /// <summary>
+        /// 打印
+        /// </summary>
+        private void PrintBill()
+        {
+        }
+
+
         private void UICapture()
         {
             string filePath = ConfigurationHelper.GetConfig(ConfigItemName.cameraCaptureFilePath.ToString());
@@ -795,7 +892,7 @@ namespace IntentConnectWeighing
         private bool isSupplySelected = false;
         private void SupplyCb_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (isAutFactory == true)
+            if (isOutFactory == true)
             {
                 return;
             }
@@ -869,7 +966,8 @@ namespace IntentConnectWeighing
         private bool isSelectReceiveCompany = false;
         private void ReceiverCompanyCb_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (isAutFactory == true)
+            if (isAllowDiffrenceCompany == false) { return; }
+            if (isOutFactory == true)
             {
                 return;
             }
@@ -959,7 +1057,7 @@ namespace IntentConnectWeighing
         private void MaterialNameCb_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (isAllowDiffrenceMaterial == false) { return; }
-            if (isAutFactory == true)
+            if (isOutFactory == true)
             {
                 return;
             }
@@ -1236,6 +1334,7 @@ namespace IntentConnectWeighing
         {
             if (this.IsLoaded)
             {
+                mSendWeighingBill = null;
                 mWeighingBill = null;
                 isInsert = true;
                 BuildCurrWeighingBill();
@@ -1247,6 +1346,8 @@ namespace IntentConnectWeighing
             if (IsLoaded)
             {
                 isInsert = false;
+                //如果点击了车辆出场，就要将传过来的发货单置空
+                mSendWeighingBill = null;
                 new CarOutFactoryW(WeightingBillType.RK) { SelectAction = new Action<WeighingBill>(this.SelectCarOutFactory) }.ShowDialog();
             }
         }
@@ -1340,7 +1441,7 @@ namespace IntentConnectWeighing
         private void DecuationDescriptionTbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (this.IsLoaded == false) return;
-            mWeighingBill.deducationDescription = this.DecuationDescriptionTbox.Text;
+            mWeighingBill.decuationDescription = this.DecuationDescriptionCb.Text;
         }
 
         private void differenceWeightTbox_TextChanged(object sender, TextChangedEventArgs e)
@@ -1373,6 +1474,10 @@ namespace IntentConnectWeighing
         /// </summary>
         public void CaptureJpeg()
         {
+            if (mCameraInfos == null || mCameraInfos.Count <= 0)
+            {
+                return;
+            }
             string filePath = ConfigurationHelper.GetConfig(ConfigItemName.cameraCaptureFilePath.ToString());
             if (String.IsNullOrEmpty(filePath))
             {
