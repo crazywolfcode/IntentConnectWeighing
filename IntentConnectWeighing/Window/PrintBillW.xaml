@@ -7,10 +7,26 @@
         mc:Ignorable="d" ResizeMode="NoResize"
         Icon="/IntentConnectWeighing;component/aislogo_48.ico"
         WindowStartupLocation="CenterScreen" WindowStyle="None"   Style="{DynamicResource settingWindowStyle}"  
-        Title="磅单打印" Height="430" Width="660"
+        Title="磅单打印" Height="430" Width="800"
         Loaded="Window_Loaded" KeyUp="Window_KeyUp"
         ContentRendered="Window_ContentRendered" 
         Closing="Window_Closing" >
+    <Window.Resources>
+        <local:PrientTimesStringConverter x:Key="PrientTimesStringConverter"/>
+        <local:PrientTimesNowConverter x:Key="PrientTimesNowConverter"/>
+        <Style x:Key="LabelStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#787878"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="1,2,2,2"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style x:Key="ValueStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#727272"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="1,2,2,2"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="65"/>
@@ -37,86 +53,271 @@
         </local:WindowButton>
 
         <Border  Background="White" Grid.Row="1">
-            <StackPanel VerticalAlignment="Top">
+            <StackPanel VerticalAlignment="Top" >
                 <!--in-->
-                <StackPanel VerticalAlignment="Center">
-                              
-                                <DockPanel LastChildFill="True" x:Name="PrintPanel" Height="160" Margin="10,10,10,10">
-                                    <StackPanel DockPanel.Dock="Top">
-                                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                            <TextBlock Text="富源县十八连山镇四角地煤矿有限公司" FontSize="16" />
-                                            <Label FontSize="12" Content="(" Margin="8,0,0,0" Padding="0,5,0,0"/>
-                                            <Label Content="入库过磅" FontSize="12" Padding="1,6,1,0"/>
-                                            <Label FontSize="12" Content=")" Padding="0,5,0,0"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Label Content="编号:" FontSize="12" Foreground="#797978"/>
-                                            <Label Content="FYXTXMYYXGS201803272202350018" FontSize="12" Foreground="#676767"/>
-                                            <Label Content="单位(吨)" FontSize="12" Foreground="#797978" Margin="20,0,0,0"/>
-                                        </StackPanel>
-                                    </StackPanel>
-                                    <StackPanel DockPanel.Dock="Bottom" Margin="0,-20,0,0">
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <TextBlock Text="入场地：八公里" FontSize="12" Foreground="#787879" Margin="0,0,20,0"/>
-                                            <TextBlock Text="过磅员:" FontSize="12" Foreground="#787879" Width="120"/>
-                                            <TextBlock Text="驾驶员签字:" FontSize="12" Foreground="#787879" Margin="0,0,20,0" Width="120"/>
-                                        </StackPanel>
-                                    </StackPanel>
-                                    <!--center-->
-                                    <StackPanel>
-                                        <Border  BorderBrush="#797979" BorderThickness="1" >
-                                            <StackPanel>
-                                                <StackPanel Orientation="Horizontal">
+                <StackPanel Visibility="Collapsed" x:Name="InPanel" Background="White">
+                    <Grid x:Name="InGrid" Margin="20,20,20,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
 
-                                                    <StackPanel >
-                                                        <TextBlock Text="供 应 商" FontSize="12" Foreground="#787878" HorizontalAlignment="Right" Padding="1,0,2,0"/>
-                                                        <TextBlock Text="车辆信息" FontSize="12" Foreground="#787878" HorizontalAlignment="Right" Padding="1,0,2,0"/>
-                                                        <TextBlock Text="入场毛重" FontSize="12" Foreground="#787878" HorizontalAlignment="Right" Padding="1,0,2,0"/>
-                                                        <TextBlock Text="入场皮重" FontSize="12" Foreground="#787878" HorizontalAlignment="Right" Padding="1,0,2,0"/>
-                                                        <TextBlock Text="入场净重" FontSize="12" Foreground="#787878" HorizontalAlignment="Right" Padding="1,0,2,0"/>
-                                                    </StackPanel>
-                                                    <StackPanel Margin="4,0,4,0" >
-                                                        <TextBlock Text="{StaticResource CompanyName}" FontSize="12" Foreground="#787878" HorizontalAlignment="Left" Padding="1,0,2,0" Width="200"/>
-                                                        <TextBlock Text="云DDD732  陈龙飞  13769834314" FontSize="12" Foreground="#787878" HorizontalAlignment="Left" Padding="1,0,2,0"  Width="200"/>
-                                                        <TextBlock Text="101.21(吨) 2018-10-10 10:10:10" FontSize="12" Foreground="#787878" HorizontalAlignment="Left" Padding="1,0,2,0"  Width="200"/>
-                                                        <TextBlock Text="101.21(吨) 2018-10-10 10:10:10" FontSize="12" Foreground="#787878" HorizontalAlignment="Left" Padding="1,0,2,0"  Width="200"/>
-                                                        <TextBlock Text="101.21(吨) 2018-10-10 10:10:10" FontSize="12" Foreground="#787878" HorizontalAlignment="Left" Padding="1,0,2,0"  Width="200"/>
-                                                    </StackPanel>
-
-
-                                                    <StackPanel >
-                                                        <TextBlock Text="物料名称" FontSize="12" Foreground="#787878" HorizontalAlignment="Right" Padding="1,0,2,0"/>
-                                                        <TextBlock Text="原发净重" FontSize="12" Foreground="#787878" HorizontalAlignment="Right" Padding="1,0,2,0"/>
-                                                        <TextBlock Text="磅差" FontSize="12" Foreground="#787878" HorizontalAlignment="Right" Padding="1,0,2,0"/>
-                                                        <TextBlock Text="扣重" FontSize="12" Foreground="#787878" HorizontalAlignment="Right" Padding="1,0,2,0"/>
-                                                        <TextBlock Text="备注" FontSize="12" Foreground="#787878" HorizontalAlignment="Right" Padding="1,0,2,0"/>
-                                                    </StackPanel>
-                                                    <StackPanel Margin="4,0,4,0" >
-                                                        <TextBlock Text="洚精煤B煤" FontSize="12" Foreground="#787878" HorizontalAlignment="Left" Padding="1,0,2,0" Width="100"/>
-                                                        <TextBlock Text="50.23" FontSize="12" Foreground="#787878" HorizontalAlignment="Left" Padding="1,0,2,0"  Width="100"/>
-                                                        <TextBlock Text="0.32" FontSize="12" Foreground="#787878" HorizontalAlignment="Left" Padding="1,0,2,0"  Width="100"/>
-                                                        <TextBlock Text="0" FontSize="12" Foreground="#787878" HorizontalAlignment="Left" Padding="1,0,2,0"  Width="100"/>
-                                                        <TextBlock Text="正常" FontSize="12" Foreground="#787878" HorizontalAlignment="Left" Padding="1,0,2,0"  Width="100"/>
-                                                    </StackPanel>
-                                                </StackPanel>
-                                                <StackPanel >
-                                                    <StackPanel Height="1" Background="#797979"/>
-                                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Foreground="#878987"  >
-                                                    白联存根，红联财务，黄联运费，绿联随车，其它
-                                                    </TextBlock>
-                                                </StackPanel>
-                                            </StackPanel>
-                                        </Border>
-                                    </StackPanel>
-                                </DockPanel>
+                        <Border Grid.Row="0" Margin="0,22,0,2">
+                            <StackPanel HorizontalAlignment="Center" >
+                                <TextBlock Text="{Binding receiveCompanyName}" FontSize="18"  FontWeight="Bold"/>
+                                <TextBlock Text="(入库过磅)" FontSize="12" Padding="1,6,1,0" HorizontalAlignment="Center"/>
                             </StackPanel>
+                        </Border>
+
+                        <Border Grid.Row="1">
+                            <DockPanel LastChildFill="True" >
+                                <WrapPanel DockPanel.Dock="Left">
+                                    <Label Content="编号:" FontSize="12" Foreground="#797978"/>
+                                    <Label Content="{Binding receiveNumber}" FontSize="12" Foreground="#676767"/>
+                                    <Label Content="单位(吨)" FontSize="12" Foreground="#797978" Margin="20,0,0,0"/>
+                                </WrapPanel>
+
+                                <WrapPanel DockPanel.Dock="Right" >
+                                    <Label Content="{Binding printTimes,Converter={StaticResource PrientTimesStringConverter}}" FontSize="12" Foreground="#797978" />
+                                    <Label Content="当前打印时间" FontSize="12" Foreground="#797978" />
+                                    <Label Content="{Binding printTimes,Converter={StaticResource PrientTimesNowConverter}}" FontSize="12" Foreground="#797978"/>
+                                </WrapPanel>
+                                <WrapPanel/>
+                            </DockPanel>
+                        </Border>
+
+                        <Border  BorderBrush="#878987" BorderThickness="1" Grid.Row="2" Margin="4,0,4,0">
+                            <StackPanel>
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="39*"/>
+                                        <ColumnDefinition Width="23*"/>
+                                        <ColumnDefinition Width="16*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0" Padding="4,2,4,0" BorderThickness="0,0,0,1" BorderBrush="#878987">
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel >
+                                                <TextBlock Text="发货公司:" Style="{StaticResource LabelStyle}" />
+                                                <TextBlock Text="车辆信息:" Style="{StaticResource LabelStyle}"/>
+                                                <TextBlock Text="原发毛重:" Style="{StaticResource LabelStyle}"/>
+                                                <TextBlock Text="原发皮重:" Style="{StaticResource LabelStyle}"/>
+                                                <TextBlock Text="原发净重:" Style="{StaticResource LabelStyle}"/>
+                                            </StackPanel>
+                                            <StackPanel Margin="4,0,4,0" >
+                                                <TextBlock Text="{Binding sendCompanyName}" Style="{StaticResource ValueStyle}" Width="200"/>
+                                                <WrapPanel>
+                                                    <TextBlock Text="{Binding plateNumber}" Style="{StaticResource ValueStyle}" />
+                                                    <TextBlock Text="{Binding driver}" Style="{StaticResource ValueStyle}" />
+                                                    <TextBlock Text="{Binding driverMobile}" Style="{StaticResource ValueStyle}" />
+                                                </WrapPanel>
+                                                <WrapPanel>
+                                                    <TextBlock Text="{Binding sendGrossWeight}" Style="{StaticResource ValueStyle}" Width="50"/>
+                                                    <TextBlock Text="{Binding sendOutTime}"   Style="{StaticResource ValueStyle}"/>
+                                                </WrapPanel>
+                                                <WrapPanel>
+                                                    <TextBlock Text="{Binding sendTraeWeight}"  Style="{StaticResource ValueStyle}"  Width="50"/>
+                                                    <TextBlock Text="{Binding sendInTime}" Style="{StaticResource ValueStyle}" />
+                                                </WrapPanel>
+                                                <TextBlock Text="{Binding sendNetWeight}"  Style="{StaticResource ValueStyle}"  Width="60"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Grid.Column="1" BorderBrush="#878987" BorderThickness="1,0,1,1" Padding="4,2,4,0" Grid.ColumnSpan="2">
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel >
+                                                <TextBlock  Text="物资名称:" Style="{StaticResource LabelStyle}"/>
+                                                <TextBlock Text="收货毛重:"  Style="{StaticResource LabelStyle}"/>
+                                                <TextBlock Text="收货皮重:"  Style="{StaticResource LabelStyle}"/>
+                                                <TextBlock Text="收货净重:"  Style="{StaticResource LabelStyle}"/>
+                                                <TextBlock Text="磅差:" Style="{StaticResource LabelStyle}"/>
+                                                <TextBlock Text="扣重:" Style="{StaticResource LabelStyle}"/>
+                                                <TextBlock Text="备注:" Style="{StaticResource LabelStyle}"/>
+                                            </StackPanel>
+                                            <StackPanel Margin="4,0,4,0" >
+                                                <TextBlock Text="{Binding receiveMaterialName}" Style="{StaticResource ValueStyle}"/>
+                                                <WrapPanel>
+                                                    <TextBlock Text="{Binding receiveGrossWeight}" Style="{StaticResource ValueStyle}"  Width="50"/>
+                                                    <TextBlock Text="{Binding receiveInTime}" Style="{StaticResource ValueStyle}"/>
+                                                </WrapPanel>
+                                                <WrapPanel>
+                                                    <TextBlock Text="{Binding receiveTraeWeight}"  Style="{StaticResource ValueStyle}" Width="50"/>
+                                                    <TextBlock Text="{Binding receiveOutTime}" Style="{StaticResource ValueStyle}" />
+                                                </WrapPanel>
+                                                <TextBlock Text="{Binding receiveNetWeight}" Style="{StaticResource ValueStyle}" Width="50"/>
+                                                <TextBlock Text="{Binding differenceWeight}"  Style="{StaticResource ValueStyle}" />
+                                                <WrapPanel>
+                                                    <TextBlock Text="{Binding decuationWeight}" Style="{StaticResource ValueStyle}"/>
+                                                    <TextBlock Text="{Binding decuationDescription}" Style="{StaticResource ValueStyle}" />
+                                                </WrapPanel>
+                                                <TextBlock Text="{Binding receiveRemark}"  Style="{StaticResource ValueStyle}" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Grid.Column="3" HorizontalAlignment="Right">
+                                        <Border BorderBrush="#878987" BorderThickness="0,0,0,1" Width="100"  HorizontalAlignment="Right" x:Name="INQrCode">
+                                            <Image x:Name="INQrCodeImage" Stretch="Uniform"/>
+                                        </Border>
+                                    </Border>
+                                </Grid>
+                                <StackPanel >                                  
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" Foreground="#878987" Margin="0,2,0,2">
+                                                    白联存根，红联财务，黄联运费，绿联随车，其它
+                                    </TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Row="3" Padding="4,0,4,0" Margin="0,0,0,10">
+                            <DockPanel LastChildFill="True">
+                                <WrapPanel DockPanel.Dock="Right">
+                                    <TextBlock Text="过磅员: "   FontSize="12" Foreground="#787879" />
+                                    <TextBlock Text="{Binding receiveUserName}"   FontSize="12" Foreground="#787879"  Width="100"/>
+                                </WrapPanel>
+                                <TextBlock Text="驾驶员签字: " DockPanel.Dock="Right" FontSize="12" Foreground="#787879" Margin="0,0,20,0" Width="140"/>
+                                <WrapPanel>
+                                    <TextBlock Text="入场地："  Style="{StaticResource LabelStyle}" Margin="10,0,0,0"/>
+                                    <TextBlock Text="{Binding receiveYardName}" Style="{StaticResource ValueStyle}"/>
+                                </WrapPanel>
+                            </DockPanel>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+
                 <!--out-->
+                <StackPanel Visibility="Visible" x:Name="OutPanel" >
+                    <Grid x:Name="OutGrid" Margin="20,20,20,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Margin="0,18,0,6">                      
+                            <StackPanel HorizontalAlignment="Center" >
+                                <TextBlock Text="{Binding sendCompanyName}" FontSize="18"  FontWeight="Bold"/>
+                                <TextBlock Text="(出库过磅)" FontSize="12" Padding="1,6,1,0" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Row="1">
+                            <DockPanel LastChildFill="True" >
+                                <WrapPanel DockPanel.Dock="Left">
+                                    <Label Content="编号:" FontSize="12" Foreground="#797978"/>
+                                    <Label Content="{Binding sendNumber}" FontSize="12" Foreground="#676767"/>
+                                    <Label Content="单位(吨)" FontSize="12" Foreground="#797978" Margin="20,0,0,0"/>
+                                </WrapPanel>
+
+                                <WrapPanel DockPanel.Dock="Right" >
+                                    <Label Content="{Binding printTimes,Converter={StaticResource PrientTimesStringConverter}}" FontSize="12" Foreground="#797978" />
+                                    <Label Content="当前打印时间" FontSize="12" Foreground="#797978" />
+                                    <Label Content="{Binding printTimes,Converter={StaticResource PrientTimesNowConverter}}" FontSize="12" Foreground="#797978"/>
+                                </WrapPanel>
+                                <WrapPanel/>
+                            </DockPanel>
+                        </Border>
+
+                        <Border  BorderBrush="#878987" BorderThickness="1" Grid.Row="2" Margin="4,0,4,0">
+                            <StackPanel>
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="39*"/>
+                                        <ColumnDefinition Width="23*"/>
+                                        <ColumnDefinition Width="16*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0" Padding="4,2,4,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel >
+                                                <TextBlock Text="收货公司:" Style="{StaticResource LabelStyle}"/>
+                                                <TextBlock Text="收货货场:" Style="{StaticResource LabelStyle}"/>
+                                                <TextBlock Text="原发毛重:" Style="{StaticResource LabelStyle}"/>
+                                                <TextBlock Text="原发皮重:" Style="{StaticResource LabelStyle}"/>
+                                                <TextBlock Text="原发净重:" Style="{StaticResource LabelStyle}"/>
+                                            </StackPanel>
+                                            <StackPanel Margin="4,0,4,0" >
+                                                <TextBlock Text="{Binding receiveCompanyName}"  Style="{StaticResource ValueStyle}" Width="200"/>
+                                                <TextBlock Text="{Binding receiveYardName}"  Style="{StaticResource ValueStyle}" Width="200"/>
+                                                <WrapPanel>
+                                                    <TextBlock Text="{Binding sendGrossWeight}" Style="{StaticResource ValueStyle}" Width="60"/>
+                                                    <TextBlock Text="{Binding sendInTime}"    Style="{StaticResource ValueStyle}"/>
+                                                </WrapPanel>
+                                                <WrapPanel>
+                                                    <TextBlock Text="{Binding sendTraeWeight}"  Style="{StaticResource ValueStyle}"  Width="60"/>
+                                                    <TextBlock Text="{Binding sendOutTime}" Style="{StaticResource ValueStyle}" />
+                                                </WrapPanel>
+                                                <TextBlock Text="{Binding sendNetWeight}"   Style="{StaticResource ValueStyle}"  Width="60"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Grid.Column="1" BorderBrush="#878987" BorderThickness="1,0,1,0" Padding="4,2,4,0" Grid.ColumnSpan="2">
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel >
+                                                <TextBlock  Text="物资名称:" Style="{StaticResource LabelStyle}"/>
+                                                <TextBlock Text="车牌号:" Style="{StaticResource LabelStyle}"/>
+                                                <TextBlock Text="驾驶员:" Style="{StaticResource LabelStyle}"/>
+                                                <TextBlock Text="联系电话:" Style="{StaticResource LabelStyle}"/>
+                                                <TextBlock Text="派车单编号:" Style="{StaticResource LabelStyle}"/>
+                                                <TextBlock Text="备注:" Style="{StaticResource LabelStyle}"/>
+                                            </StackPanel>
+                                            <StackPanel Margin="4,0,4,0" >
+                                                <TextBlock Text="{Binding sendMaterialName}"  Style="{StaticResource ValueStyle}"/>
+                                                <TextBlock Text="{Binding plateNumber}" Style="{StaticResource ValueStyle}"/>
+                                                <TextBlock Text="{Binding driver}" Style="{StaticResource ValueStyle}"/>
+                                                <TextBlock Text="{Binding driverMobile}"  Style="{StaticResource ValueStyle}" />
+                                                <TextBlock Text="{Binding sendCarBillNumber}"  Style="{StaticResource ValueStyle}" />
+                                                <TextBlock Text="{Binding sendRemark}"   Style="{StaticResource ValueStyle}"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Grid.Column="3" HorizontalAlignment="Right">
+                                        <Border BorderBrush="#878987" BorderThickness="0,0,0,0" Width="100"  HorizontalAlignment="Right" x:Name="OutQrCode">
+                                            <Image x:Name="OutQrCodeImage" Stretch="Fill"/>
+                                        </Border>
+                                    </Border>
+                                </Grid>
+
+
+                                <StackPanel Orientation="Horizontal">
+
+                                </StackPanel>
+                                <StackPanel >
+                                    <StackPanel Height="1" Background="#797979" />
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#878987" Margin="0,2,0,2">
+                                                    白联存根，红联财务，黄联运费，绿联随车，其它
+                                    </TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Row="3" Padding="4,0,4,0" Margin="0,0,0,10">
+                            <DockPanel LastChildFill="True">
+                                <WrapPanel DockPanel.Dock="Right">
+                                    <TextBlock Text="过磅员: "   FontSize="12" Foreground="#787879" />
+                                    <TextBlock Text="{Binding sendUserName}"   FontSize="12" Foreground="#787879"  Width="100"/>
+                                </WrapPanel>
+                                <WrapPanel DockPanel.Dock="Right">
+                                    <TextBlock Text="派单员: "   FontSize="12" Foreground="#787879" />
+                                    <TextBlock Text="{Binding sendCarBillUser}"   FontSize="12" Foreground="#787879"  Width="80"/>
+                                </WrapPanel>
+                                <TextBlock Text="驾驶员签字: " DockPanel.Dock="Right" FontSize="12" Foreground="#787879" Margin="0,0,20,0" Width="140"/>
+                                <WrapPanel>
+                                    <TextBlock Text="出场地："  Foreground="#787879" Margin="0,0,4,0"/>
+                                    <TextBlock Text="{Binding sendYardName}" FontSize="12" Foreground="#787879" Margin="0,0,20,0"/>
+                                </WrapPanel>
+                            </DockPanel>
+                        </Border>
+                    </Grid>
+                </StackPanel>
             </StackPanel>
         </Border>
 
         <Border Grid.Row="2" Background="White" CornerRadius="0,0,4,4" >
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <local:IconButton x:Name="PrintBtn" Content="打印"
+                <local:IconButton x:Name="PrintBtn" Content="打印" Click="PrintBtn_Click"
                           Style="{DynamicResource  IconButtonStyle}"
                           CornerRadius="4" Cursor="Hand"
                            Background="{StaticResource E4}"

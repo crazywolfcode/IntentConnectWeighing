@@ -61,7 +61,6 @@
                 <StackPanel Grid.Column="1" x:Name="ScalePanel" HorizontalAlignment="Left">
                     <TextBlock Text="磅称列表" Foreground="#777777" FontSize="14" Margin="0,0,30,6" Padding="2"/>
                     <StackPanel x:Name="ScaleListPanel" Margin="20,0,20,0">
-                        <RadioButton Style="{DynamicResource RadioButtonDefaultStyle}" Height="25" x:Name="InScale" Content="出库磅称" />
                     </StackPanel>
                 </StackPanel>
             </Grid>

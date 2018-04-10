@@ -25,7 +25,7 @@ namespace IntentConnectWeighing
         mysql,
         sqlite
     }
-     enum ConfigItemName
+    enum ConfigItemName
     {
         //connectionStrings
         appSettings,
@@ -44,6 +44,8 @@ namespace IntentConnectWeighing
         clientId,
         companyId,
         companyName,
+        yardId,
+        yardName,
         companyRegisterStep,
         usingStatus,
         softwareVersion,
@@ -65,7 +67,7 @@ namespace IntentConnectWeighing
         allowDiffrenceCompany,
         allowDiffrenceReceiveYard,
         //url
-        serverBaseUrl, 
+        serverBaseUrl,
         syncUp,
         syncDown,
         baiduUrl,
@@ -81,11 +83,12 @@ namespace IntentConnectWeighing
 
     public enum CompanyOrganizationType
     {
-       Primary,
+        Primary,
         son,
     }
 
-    public enum CompanyRegisterStep {
+    public enum CompanyRegisterStep
+    {
         RegisterOnePage,
         RegisterPrimaryPage,
         RegisterPrimaryLicencePage,
@@ -97,12 +100,14 @@ namespace IntentConnectWeighing
     /// <summary>
     /// 软件使用状态
     /// </summary>
-    public enum UsingStatus {
+    public enum UsingStatus
+    {
         TryUsing,//试用
         PayUsing //购买使用
     }
 
-    public enum SoftwareVersion {
+    public enum SoftwareVersion
+    {
         localSingle,
         localLan,
         netSingleBusiness,
@@ -129,12 +134,14 @@ namespace IntentConnectWeighing
         GovernmentSector
     }
 
-   public enum BankCardType {
+    public enum BankCardType
+    {
         CreditCard,
         SavingsDepositCard
     }
     //0系统人员1公司人员，2驾驶员 3车主
-    public enum UserType {
+    public enum UserType
+    {
         System,
         Company,
         Driver,
@@ -143,7 +150,7 @@ namespace IntentConnectWeighing
 
     public enum UseSystemType
     {
-      No,Yes
+        No, Yes
     }
 
     public enum CompanyRegesterTyle
@@ -158,15 +165,24 @@ namespace IntentConnectWeighing
     //0 其它 1 过磅员工 2 过磅管理员工 3公司管理员工 4老总
     public enum UserRoleLevel
     {
-        Other,Weighinger,WeighingManager,CompanyManager,Boss       
+        Other, Weighinger, WeighingManager, CompanyManager, Boss
     }
     //0 不是默认 1 默认为入库 2 默认为出库
-    public enum ScaleDefaultType {
-        No,In,Out
+    public enum ScaleDefaultType
+    {
+        No, In, Out
     }
 
     public enum WeightingBillType
     {
         Otrher, RK, CK
+    }
+
+    //0未入场 1 已入场 2 已出场
+    public enum SendCarWeighingStatus
+    {
+        No,
+        In,
+        Out
     }
 }

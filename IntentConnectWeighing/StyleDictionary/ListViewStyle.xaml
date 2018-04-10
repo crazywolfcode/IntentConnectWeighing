@@ -633,7 +633,7 @@
     <Style x:Key="SendCarBillListViewItemStyle" TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemDefaultStyle}">
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Height" Value="60"/>
+        <Setter Property="Height" Value="80"/>
         <Setter Property="Background" Value="{DynamicResource F9}"/>
         <Setter Property="Margin" Value="0,0,0,1"/>
         <Setter Property="Template">
@@ -646,19 +646,20 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <StackPanel >
-                                <TextBlock x:Name="SendCompanyTb"  Padding="1" MaxWidth="200" TextTrimming="CharacterEllipsis" Text="{Binding sendCompanyName}"  TextAlignment="Center" Foreground="#787874" FontSize="14"/>
+                                <TextBlock x:Name="SendCompanyTb"  Padding="1" MaxWidth="200" TextTrimming="CharacterEllipsis" Text="{Binding receiveCompanyName}"  TextAlignment="Right" Foreground="#787874" FontSize="14"/>
                             </StackPanel>
-                            <StackPanel Grid.Row="1" Margin="0">
+                            <StackPanel Grid.Row="1" Margin="0">                               
+                                <TextBlock x:Name="MaterialTB" Text="{Binding materialName}" FontSize="14" Padding="1" Foreground="#333333" Margin="8,0,2,0" />
                                 <WrapPanel >
-                                    <TextBlock x:Name="CarnumberTB" Text="{Binding plateNumber}" FontSize="14" Padding="1" Foreground="#444444" FontWeight="Bold" Margin="4,0,0,0"/>
-                                    <TextBlock x:Name="MaterialTB" Text="{Binding sendMaterialName}" FontSize="14" Padding="1" Foreground="#333333" Margin="8,0,2,0" />
-                                    <TextBlock x:Name="grossTB" Text="{Binding sendNetWeight}" FontSize="14" Padding="1" Foreground="{DynamicResource myBlue}" Margin="8,0,4,0" FontWeight="Bold" ToolTip="原发净重" />
+                                    <TextBlock x:Name="CarnumberTB" Text="{Binding plateNumber}" FontSize="12" Padding="1" Foreground="#444444"  Margin="4,0,0,0"/>
+                                    <TextBlock x:Name="DriverTB" Text="{Binding driver}" FontSize="12" Padding="1" Foreground="#444444"  Margin="4,0,0,0"/>
+                                    <TextBlock x:Name="DriverMobileTB" Text="{Binding driverMobile}" FontSize="12" Padding="1" Foreground="#444444" Margin="4,0,0,0"/>
                                 </WrapPanel>
-                                <TextBlock x:Name="OutTimeTb" Visibility="Hidden" Text="{Binding sendOutTime}" FontSize="12" Padding="1" Foreground="#666666" HorizontalAlignment="Right" Margin="0,0,4,0"/>
+                                <TextBlock x:Name="OutTimeTb" Visibility="Hidden" Text="{Binding effectiveDate}" FontSize="12" Padding="1" Foreground="#666666" HorizontalAlignment="Right" Margin="0,0,4,0"/>
                             </StackPanel>
                             <local:IconButton x:Name="InFactoryBtn" Grid.Row="1" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalAlignment="Center"  Visibility="Collapsed"
                                 Style="{DynamicResource  IconButtonTransparencyStyle}"  MouseOverForeground="{DynamicResource myBlue}" Background="Transparent"     ToolTip="点击入库"                 
-                                IsShowIcon="True" Icon="&#xe61b;" IconSize="18" Command="{x:Static local:InFactoryComand.command}" CommandParameter="{Binding}"
+                                IsShowIcon="True" Icon="&#xe61b;" IconSize="18" Command="{x:Static local:SendCarInFactoryCommand.Command}" CommandParameter="{Binding}"
                                 Width="24" Height="20" IconMargin="0" Margin="0,-16,4,0" CornerRadius="15"/>
                         </Grid>
                     </Border>

@@ -17,6 +17,7 @@ namespace IntentConnectWeighing
     {
         public static User currentUser;
         public static Company currentCompany;
+        public static Yard currentYard;
         public static Window currWindow;
         public static Window prevWindow;
         public static String CurrClientId;
@@ -45,14 +46,13 @@ namespace IntentConnectWeighing
                 id = ConfigurationHelper.GetConfig(ConfigItemName.companyId.ToString()),
                 name = ConfigurationHelper.GetConfig(ConfigItemName.companyName.ToString()),                
             };
-
             currentUser = new User() {
                 id = GetClientId(),
                 name = "陈龙飞",
                 company = currentCompany.name,
                 affiliatedCompanyId = currentCompany.id
             };
-            
+            currentYard = YardModel.GetById(MyHelper.ConfigurationHelper.GetConfig(ConfigItemName.yardId.ToString()));
         }
 
         private void Navigation() {

@@ -7,7 +7,7 @@ using System.Text;
 {
 
 	 /// <summary>
-	 /// 数据条数:4
+	 /// 数据条数:10
 	 /// 数据大小:16KB
 	 /// </summary>
 
@@ -45,6 +45,13 @@ using System.Text;
 	 /// </summary>
 
 	 public String affiliatedCompany{ get; set; }
+
+	 /// <summary>
+	 /// 注释:终端的ID
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String clientId{ get; set; }
 
 	 /// <summary>
 	 /// 注释:0 未使用 1 正常

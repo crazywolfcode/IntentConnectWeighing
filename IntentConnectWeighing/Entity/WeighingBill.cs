@@ -7,7 +7,7 @@ using System.Text;
 {
 
 	 /// <summary>
-	 /// 数据条数:0
+	 /// 数据条数:22
 	 /// 数据大小:16KB
 	 /// </summary>
 
@@ -92,21 +92,21 @@ using System.Text;
 
 	 /// <summary>
 	 /// 可空:NO
-	 ///默认值:0
+	 ///默认值:0.00
 	 /// </summary>
 
 	 public Double sendGrossWeight{ get; set; }
 
 	 /// <summary>
 	 /// 可空:NO
-	 ///默认值:0
+	 ///默认值:0.00
 	 /// </summary>
 
 	 public Double sendTraeWeight{ get; set; }
 
 	 /// <summary>
 	 /// 可空:NO
-	 ///默认值:0
+	 ///默认值:0.00
 	 /// </summary>
 
 	 public Double sendNetWeight{ get; set; }
@@ -123,6 +123,27 @@ using System.Text;
 	 /// </summary>
 
 	 public String sendMaterialName{ get; set; }
+
+	 /// <summary>
+	 /// 注释:派车单Id
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String sendCarBillId{ get; set; }
+
+	 /// <summary>
+	 /// 注释:派车单编号
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String sendCarBillNumber{ get; set; }
+
+	 /// <summary>
+	 /// 注释:派单员
+	 /// 可空:YES
+	 /// </summary>
+
+	 public String sendCarUser{ get; set; }
 
 	 /// <summary>
 	 /// 注释:过磅进度 0 no 1 finished
@@ -194,21 +215,21 @@ using System.Text;
 
 	 /// <summary>
 	 /// 可空:NO
-	 ///默认值:0
+	 ///默认值:0.00
 	 /// </summary>
 
 	 public Double receiveGrossWeight{ get; set; }
 
 	 /// <summary>
 	 /// 可空:NO
-	 ///默认值:0
+	 ///默认值:0.00
 	 /// </summary>
 
 	 public Double receiveTraeWeight{ get; set; }
 
 	 /// <summary>
 	 /// 可空:NO
-	 ///默认值:0
+	 ///默认值:0.00
 	 /// </summary>
 
 	 public Double receiveNetWeight{ get; set; }
@@ -216,7 +237,7 @@ using System.Text;
 	 /// <summary>
 	 /// 注释:磅差
 	 /// 可空:NO
-	 ///默认值:0
+	 ///默认值:0.00
 	 /// </summary>
 
 	 public Double differenceWeight{ get; set; }
@@ -307,8 +328,8 @@ using System.Text;
 
 	 /// <summary>
 	 /// 注释:打印次数
-	 /// 可空:YES
-	 ///默认值:1
+	 /// 可空:NO
+	 ///默认值:0
 	 /// </summary>
 
 	 public Int32 printTimes{ get; set; }

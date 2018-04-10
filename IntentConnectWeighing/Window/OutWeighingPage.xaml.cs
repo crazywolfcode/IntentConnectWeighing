@@ -21,13 +21,15 @@ namespace IntentConnectWeighing
     public partial class OutWeighingPage : Page
     {
         #region Variable area 
-        public bool CurrentWeighingBillIsPCBill = false;
+        public bool IsSendCarBill = false;
         public WeighingBill mWeighingBill;
+        public SendCarBill mSendCarBilll;
         #endregion
 
         public OutWeighingPage()
         {
             InitializeComponent();
+            this.CommandBindings.Add(SendCarInFactoryCommand.CommandBinding);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -35,7 +37,7 @@ namespace IntentConnectWeighing
             if (App.GetSoftwareVersion() == SoftwareVersion.netConnection.ToString() || App.GetSoftwareVersion() == SoftwareVersion.netSingleBusiness.ToString())
             {
                 HideOrShowSendExpandePanel(true);
-                FillCustomerSendData();
+                FillSendCarBillData();
             }
             else
             {
@@ -57,27 +59,24 @@ namespace IntentConnectWeighing
             this.SendBillGrid.Visibility = Visibility.Collapsed;
             this.NoFinishGrid.Visibility = Visibility.Collapsed;
             this.FinishGrid.Visibility = Visibility.Collapsed;
-            if (mWeighingBill == null)
+            if (IsSendCarBill == true)
+            {
+                this.SendBillInFactoryBtn.Visibility = Visibility.Visible;
+                this.SendBillGrid.Visibility = Visibility.Visible;
+            }
+            else if (mWeighingBill == null)
             {
                 this.EmptyPanel.Visibility = Visibility.Visible;
             }
             else
             {
-                if (CurrentWeighingBillIsPCBill == true)
+                if (mWeighingBill.sendStatus == 1)
                 {
-                    this.SendBillInFactoryBtn.Visibility = Visibility.Visible;
-                    this.SendBillGrid.Visibility = Visibility.Visible;
+                    this.FinishGrid.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    if (mWeighingBill.sendStatus == 1)
-                    {
-                        this.FinishGrid.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        this.NoFinishGrid.Visibility = Visibility.Visible;
-                    }
+                    this.NoFinishGrid.Visibility = Visibility.Visible;
                 }
             }
 
@@ -107,9 +106,9 @@ namespace IntentConnectWeighing
         /// <summary>
         /// 获取发货单 obtian the invoice
         /// </summary>
-        private void FillCustomerSendData()
+        private void FillSendCarBillData()
         {
-            List<WeighingBill> sendList = ObtianInvoice();
+            List<SendCarBill> sendList = SendCardBillModel.GetSendCarBill();
             if (sendList != null && sendList.Count > 0)
             {
                 this.SendBillListView.ItemsSource = sendList;
@@ -121,17 +120,7 @@ namespace IntentConnectWeighing
                 this.SendBillCountTb.Text = "0";
             }
         }
-        private List<WeighingBill> ObtianInvoice()
-        {
-            List<WeighingBill> list = new List<WeighingBill>();
-            String conditon = @WeighingBillEnum.send_status + "=" + 1 + " and " +
-              WeighingBillEnum.type.ToString() + "=" + ((int)WeightingBillType.CK) + " and " +
-              WeighingBillEnum.relative_bill_id.ToString() + " is null and " +
-              WeighingBillEnum.receive_company_id.ToString() + "=" + Constract.valueSplit + App.currentCompany.id + Constract.valueSplit;
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, conditon, null, null, WeighingBillEnum.send_out_time + " desc ", 20);
-            list = MyHelper.JsonHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
-            return list;
-        }
+
 
         #endregion
         /// <summary>
@@ -141,10 +130,10 @@ namespace IntentConnectWeighing
         /// <param name="e"></param>
         private void NewOutPutBtn_Click(object sender, RoutedEventArgs e)
         {
-            Infactory(null,false);
+            Infactory(null, false);
         }
 
-        public void Infactory(WeighingBill bill,bool sendCar= false)
+        public void Infactory(Object bill, bool sendCar = false)
         {
             new OutputWindow(bill, sendCar) { RefershParent = new Action<bool, bool, bool>(RefreshData) }.ShowDialog();
         }
@@ -152,13 +141,13 @@ namespace IntentConnectWeighing
         #region send in factory
         private void SendBillInFactoryBtn_Click(object sender, RoutedEventArgs e)
         {
-            Infactory(null,true);
+            Infactory(mSendCarBilll, true);
         }
         #endregion
 
         #region Out Fatory
         private void OutFactoryBtn_Click(object sender, RoutedEventArgs e)
-        {           
+        {
             Infactory(mWeighingBill, false);
         }
         #endregion
@@ -185,21 +174,21 @@ namespace IntentConnectWeighing
         #region Refresh Left Data
         private void RefreshLeftData()
         {
-            FillCustomerSendData();
+            FillSendCarBillData();
         }
         private void SendBollListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            CurrentWeighingBillIsPCBill = true;
-            Infactory(null,true);
+            IsSendCarBill = true;
+            Infactory(mSendCarBilll, true);
         }
 
         private void SendBollListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (this.SendBillListView.SelectedIndex < 0) { return; }
-            CurrentWeighingBillIsPCBill = true;
+            IsSendCarBill = true;
             mWeighingBill = null;
-            mWeighingBill = this.SendBillListView.SelectedItem as WeighingBill;
-            this.SendBillGrid.DataContext = mWeighingBill;
+            mSendCarBilll = this.SendBillListView.SelectedItem as SendCarBill;
+            this.SendBillGrid.DataContext = mSendCarBilll;
             ShowCurrentPanel();
         }
         #endregion
@@ -212,26 +201,14 @@ namespace IntentConnectWeighing
         }
         private void RefreshCurrBillData()
         {
-            //todo
-            if (mWeighingBill == null)
-            {
-                return;
+            if (mSendCarBilll != null)
+            {               
+                this.SendBillInFactoryBtn.Visibility = Visibility.Collapsed;
             }
-            string condition = WeighingBillEnum.id.ToString() + "=" + Constract.valueSplit + mWeighingBill.id + Constract.valueSplit;
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition, null, null, null, 1);
-            List<WeighingBill> list = MyHelper.JsonHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
-            if (list.Count > 0)
+            else if (mWeighingBill != null)
             {
-                mWeighingBill = list[0];
-                if (this.SendBillGrid.Visibility == Visibility.Visible)
-                {
-                    this.SendBillGrid.DataContext = mWeighingBill;
-                    this.SendBillInFactoryBtn.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    this.NoFinishGrid.DataContext = mWeighingBill;                   
-                }
+                mWeighingBill = WeighingBillModel.GetById(mWeighingBill.id);
+                this.NoFinishGrid.DataContext = mWeighingBill;
             }
         }
         private void RefreshStaticData() { }
@@ -266,9 +243,7 @@ namespace IntentConnectWeighing
         //get data
         private void RefreshNoFinishedData()
         {
-            String condition = WeighingBillEnum.send_status + "=" + 0 + " and " + WeighingBillEnum.type.ToString() + " = " + ((int)WeightingBillType.CK);
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
-            List<WeighingBill> list = MyHelper.JsonHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            List<WeighingBill> list = WeighingBillModel.GetOutNOFinished();
             if (list.Count > 0)
             {
                 this.NoFinishListView.ItemsSource = list;
@@ -286,7 +261,7 @@ namespace IntentConnectWeighing
             {
                 return;
             }
-            CurrentWeighingBillIsPCBill = false;
+            IsSendCarBill = false;
             mWeighingBill = this.NoFinishListView.SelectedItem as WeighingBill;
             ShowCurrentPanel();
             this.NoFinishGrid.DataContext = mWeighingBill;
@@ -303,10 +278,7 @@ namespace IntentConnectWeighing
         }
         private void RefreshFinishedData()
         {
-            String condition = WeighingBillEnum.send_status + "=" + 1 + " and " + WeighingBillEnum.type.ToString() + " = " + ((int)WeightingBillType.CK);
-            //    + " and " + WeighingBillEnum.send_out_time.ToString() + " like '%" + MyHelper.DateTimeHelper.getCurrentDateTime(MyHelper.DateTimeHelper.DateFormat) + "%'";
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
-            List<WeighingBill> list = MyHelper.JsonHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            List<WeighingBill> list = WeighingBillModel.GetOutFinished();
             if (list.Count > 0)
             {
                 this.FinishListView.ItemsSource = list;
@@ -329,7 +301,7 @@ namespace IntentConnectWeighing
             {
                 return;
             }
-            CurrentWeighingBillIsPCBill = false;
+            IsSendCarBill = false;
             mWeighingBill = this.FinishListView.SelectedItem as WeighingBill;
             ShowCurrentPanel();
             this.FinishGrid.DataContext = mWeighingBill;
@@ -357,17 +329,28 @@ namespace IntentConnectWeighing
         #region Print
         private void PrintBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            new PrintBillW(WeightingBillType.CK, mWeighingBill) { RefreshData = new Action(this.RefreshCurrBillData) }.ShowDialog();
         }
         #endregion
 
         #region Delete No finished bill
         private void DeleteNofinishedBtn_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
+
         #endregion
 
-    
+        #region left Float Button   左边的浮动按钮
+        private void SendCarRefreshBtn_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshLeftData();
+        }
+
+        private void SendCarListBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Show SendCar List TODO");
+        }
+        #endregion
     }
 }

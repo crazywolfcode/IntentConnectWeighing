@@ -13,9 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MyHelper;
-using IntentConnectWeighing.CameraSdk;
-using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
+using System.Printing;
+using System.Drawing;
 
 namespace IntentConnectWeighing
 {
@@ -25,21 +24,60 @@ namespace IntentConnectWeighing
     /// </summary>
     public partial class PrintBillW : Window
     {
-        #region Variable          
-        private WeightingBillType mType;       
+        #region Variable        
+        public Action RefreshData;
+        private WeightingBillType mType;
         private WeighingBill mWeighingBill;
+        private bool isOPtionSuccess = false;
+        private bool isAutoPrint= false;
         #endregion
-        public PrintBillW()
+        public PrintBillW(WeightingBillType type, WeighingBill bill,bool autoPrint = false)
         {
-            InitializeComponent();           
+            InitializeComponent();
+            mType = type;
+            mWeighingBill = bill;
+            isAutoPrint = autoPrint;
+            if (autoPrint == true) {
+                this.Visibility = Visibility.Hidden;
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-           
+            this.InPanel.Visibility = Visibility.Collapsed;
+            this.OutPanel.Visibility = Visibility.Collapsed;
+            if (mType == WeightingBillType.RK)
+            {
+                this.InPanel.Visibility = Visibility.Visible;
+                this.InGrid.DataContext = mWeighingBill;
+            }
+            else
+            {
+                this.OutPanel.Visibility = Visibility.Visible;
+                this.OutGrid.DataContext = mWeighingBill;
+            }
+            generaterQrCode();
         }
+
         private void Window_ContentRendered(object sender, EventArgs e)
         {
+            if (isAutoPrint == true) {
+                Print();
+            }
+        }
+
+        private void generaterQrCode()
+        {
+            if (mType == WeightingBillType.RK)
+            {
+                var bitmap = MyHelper.QrCode.QrCodeHelper.GenerateQrCode(mWeighingBill.receiveNumber, 100, 100);
+                this.INQrCodeImage.Source = BitmapHelper.BitmapToBitmapImage(bitmap);
+            }
+            else
+            {
+                var bitmap = MyHelper.QrCode.QrCodeHelper.GenerateQrCode(mWeighingBill.sendNumber, 100, 100);
+                this.OutQrCodeImage.Source = BitmapHelper.BitmapToBitmapImage(bitmap);
+            }
 
         }
 
@@ -63,6 +101,13 @@ namespace IntentConnectWeighing
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (isOPtionSuccess == true)
+            {
+                if (this.RefreshData != null)
+                {
+                    this.RefreshData();
+                }
+            }
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
@@ -73,5 +118,56 @@ namespace IntentConnectWeighing
             }
         }
         #endregion
+
+        private bool isClickPrint = false;
+        private void PrintBtn_Click(object sender, RoutedEventArgs e)
+        {
+            isClickPrint = true;
+            Print();
+        }
+
+        public void Print()
+        {
+            if (isAutoPrint == false && isClickPrint == false)
+            {
+                return;
+            }
+            try {
+
+           PrintQueue printQueue=     LocalPrintServer.GetDefaultPrintQueue();
+                if (printQueue.IsNotAvailable == false) {
+                    throw new Exception("打印机不可用！") ;
+                }
+                string description = "磅单打印";
+                PrintDialog printDialog = new PrintDialog();
+                printDialog.CurrentPageEnabled = true;
+                printDialog.PageRange = new PageRange(1);
+
+                //MessageBox.Show(w + " " +H);
+                //MessageBox.Show((w / 96) + " " + (H / 96) );
+                //MessageBox.Show((w/96)*2.54+" "+( H/96 )* 2.54);
+                //this.InPanel.Width = w;
+
+                Visual PrintArea = null;
+                if (mType == WeightingBillType.RK)
+                {
+                    PrintArea = this.InPanel;
+                }
+                else
+                {
+                    PrintArea = this.OutPanel;
+                }
+                printDialog.PrintVisual(PrintArea, description);
+
+                mWeighingBill.printTimes = mWeighingBill.printTimes + 1;
+                isOPtionSuccess = true;
+                DatabaseOPtionHelper.GetInstance().update(mWeighingBill);
+                if (isAutoPrint == true) { }
+            } catch(Exception e) {
+                ConsoleHelper.writeLine($"Pint {mWeighingBill.id} failed:{e.Message}");
+                this.Close();
+            }        
+           
+        }
     }
 }

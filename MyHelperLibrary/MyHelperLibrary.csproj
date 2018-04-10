@@ -87,6 +87,12 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="zxing, Version=0.16.2.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.2\lib\net45\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.2.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.2\lib\net45\zxing.presentation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommomHelpre.cs" />
@@ -111,6 +117,7 @@
     <Compile Include="db\SQLiteHelper.cs" />
     <Compile Include="helper\StringHelper.cs" />
     <Compile Include="helper\XmlHelper.cs" />
+    <Compile Include="QrCode\QrCodeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

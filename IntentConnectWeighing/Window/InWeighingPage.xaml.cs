@@ -137,7 +137,7 @@ namespace IntentConnectWeighing
         /// </summary>
         private void FillCustomerSendData()
         {
-            List<WeighingBill> sendList = ObtianInvoice();
+            List<WeighingBill> sendList = WeighingBillModel.GetInvoice();
             if (sendList != null && sendList.Count > 0)
             {
                 this.SendBillListView.ItemsSource = sendList;
@@ -147,18 +147,6 @@ namespace IntentConnectWeighing
                 this.SendBillListView.ItemsSource = null;
                 this.SendBillCountTb.Text ="0";
             }
-        }
-        private List<WeighingBill> ObtianInvoice()
-        {
-            List<WeighingBill> list = new List<WeighingBill>();
-            String conditon = @WeighingBillEnum.send_status + "=" + 1 + " and " +
-              WeighingBillEnum.type.ToString() + "=" + ((int)WeightingBillType.CK) + " and " +
-              WeighingBillEnum.relative_bill_id.ToString() + " is null and " +
-              WeighingBillEnum.receive_company_id.ToString() + "=" + Constract.valueSplit + App.currentCompany.id + Constract.valueSplit;
-            //todo 加上货场ID
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, conditon, null, null, WeighingBillEnum.send_out_time + " desc ", 20);
-            list = MyHelper.JsonHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
-            return list;
         }
 
         #endregion
@@ -219,7 +207,7 @@ namespace IntentConnectWeighing
             RefreshCurrBillData();
             RefreshStaticData();
         }
-        private void RefreshCurrBillData()
+        public void RefreshCurrBillData()
         {
             //todo
             if (mWeighingBill == null)
@@ -276,9 +264,7 @@ namespace IntentConnectWeighing
         //get data
         private void RefreshNoFinishedData()
         {
-            String condition = WeighingBillEnum.receive_status + "=" + 0 +" and "+WeighingBillEnum.type +"="+((int)WeightingBillType.RK);          
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
-            List<WeighingBill> list = MyHelper.JsonHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            List<WeighingBill> list = WeighingBillModel.GetInNoFinished();
             if (list.Count > 0)
             {
                 this.NoFinishListView.ItemsSource = list;
@@ -313,10 +299,7 @@ namespace IntentConnectWeighing
         }
         private void RefreshFinishedData()
         {
-            String condition = WeighingBillEnum.receive_status + "=" + 1+" and "+WeighingBillEnum.type.ToString() +"="+((int)WeightingBillType.RK);
-            //+" and " + WeighingBillEnum.receive_out_time.ToString() + " like '%" + MyHelper.DateTimeHelper.getCurrentDateTime(MyHelper.DateTimeHelper.DateFormat) + "%'";
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
-            List<WeighingBill> list = MyHelper.JsonHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            List<WeighingBill> list = WeighingBillModel.GetInFinished();
             if (list.Count > 0)
             {
                 this.FinishListView.ItemsSource = list;
@@ -348,10 +331,6 @@ namespace IntentConnectWeighing
 
         #endregion
 
-        private void IconButton_Click(object sender, RoutedEventArgs e)
-        {
-            new PrintBillW().ShowDialog();
-        }
         public void Infactory()
         {
             new InputWindow(mWeighingBill, true) { RefershParent = new Action<bool, bool, bool>(RefreshData) }.ShowDialog();
@@ -393,7 +372,7 @@ namespace IntentConnectWeighing
         #region Print
         private void PrintBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            new PrintBillW(WeightingBillType.RK, mWeighingBill) { RefreshData = new Action(RefreshCurrBillData) }.ShowDialog();
         }
         #endregion
 
@@ -418,6 +397,16 @@ namespace IntentConnectWeighing
         {
             HideOrShowUpdateFinishedBtn();
         }
+        #region left float button 左边的浮动按钮
+        private void SendListRefreshBtn_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshLeftData();
+        }
 
+        private void SendListBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Show Sended List TODO");
+        }
+        #endregion
     }
 }

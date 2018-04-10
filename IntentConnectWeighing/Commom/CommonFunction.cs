@@ -163,7 +163,7 @@ namespace IntentConnectWeighing
                     sort = (count + 1).ToString();
                     break;
             }
-            return header +type.ToString().ToUpper()+ dateStr + sort;
+            return type.ToString().ToUpper()+"-"+header + dateStr + sort;
         }
         
         public static void MargeToSend(ref WeighingBill send, WeighingBill receiver)
@@ -214,6 +214,46 @@ namespace IntentConnectWeighing
             receiver.driver = send.driver;
             receiver.driverMobile = send.driverMobile;
             receiver.driverIdNumber = send.driverIdNumber;
+        }
+
+        /// <summary>
+        /// 将派车单的信息同步到当前的磅单
+        /// </summary>
+        /// <param name="send">派车单</param>
+        /// <param name="weighingBill">磅单</param>
+        public static void SendCardMargeToWeighing(SendCarBill send, ref WeighingBill weighingBill) {
+            weighingBill.sendCarBillId = send.id;
+            weighingBill.sendCarBillNumber = send.number;
+            weighingBill.sendCarUser = send.userName;
+            weighingBill.sendCompanyId = send.sendCompanyId;
+            weighingBill.sendCompanyName = send.sendCompanyName;
+            weighingBill.sendYardId = send.sendYardId;
+            weighingBill.sendYardName = send.sendYardName;
+            weighingBill.receiveCompanyId = send.receiveCompanyId;
+            weighingBill.receiveCompanyName = send.receiveCompanyName;
+            weighingBill.receiveYardId = send.receiveYardId;
+            weighingBill.receiveYardName = send.receiveYardName;
+            weighingBill.sendMaterialId = send.materialId;
+            weighingBill.sendMaterialName = send.materialName;
+            weighingBill.carId = send.carId;
+            weighingBill.plateNumber = send.plateNumber;
+            weighingBill.driver = send.driver;
+            weighingBill.driverMobile = send.driverMobile;
+            weighingBill.receiveRemark = weighingBill.receiveRemark +" "+ send.remark;
+        }
+
+        /// <summary>
+        /// 将当前的磅单的信息同步到派车单
+        /// </summary>
+        /// <param name="weighingBill">磅单</param>
+        /// <param name="sendCarBill">派车单</param>
+        public static void WeighingMargeToSendCarrBill(WeighingBill weighingBill,ref SendCarBill sendCarBill)
+        {
+            sendCarBill.inFactoryTime = weighingBill.sendInTime;
+            sendCarBill.outFactoryTime = weighingBill.sendOutTime;
+            sendCarBill.weighingNumber = weighingBill.sendNumber;
+            sendCarBill.weighingBillId = weighingBill.id;
+            sendCarBill.syncTime = MyHelper.DateTimeHelper.GetTimeStamp();
         }
 
         internal static void UpdateDecuationList(object des)

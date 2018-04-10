@@ -867,6 +867,11 @@ namespace IntentConnectWeighing
         /// </summary>
         private void PrintBill()
         {
+            bool auto = false;
+            if (MyHelper.ConfigurationHelper.GetConfig(ConfigItemName.autoPrint.ToString()) == "true") {
+                auto = true;
+            }
+            new PrintBillW(WeightingBillType.RK, mWeighingBill, auto) { }.Show();
         }
 
 
@@ -1195,9 +1200,7 @@ namespace IntentConnectWeighing
         /// </summary>
         private void ShowSendYard()
         {
-            String condition = YardEnum.affiliated_company_id.ToString() + "=" + Constract.valueSplit + sendCompany.id + Constract.valueSplit;
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.yard.ToString(), null, condition);
-            List<Yard> list = JsonHelper.DataTableToEntity<Yard>(DatabaseOPtionHelper.GetInstance().select(sql));
+            List<Yard> list = YardModel.GetListByCompanyId(sendCompany.id);
             if (list.Count > 0)
             {
                 this.SendYardCb.ItemsSource = list;
@@ -1264,9 +1267,7 @@ namespace IntentConnectWeighing
         #region Received Yard
         private void ShowReceivedYard()
         {
-            String condition = YardEnum.affiliated_company_id.ToString() + "=" + Constract.valueSplit + receiverCompany.id + Constract.valueSplit;
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.yard.ToString(), null, condition);
-            List<Yard> list = JsonHelper.DataTableToEntity<Yard>(DatabaseOPtionHelper.GetInstance().select(sql));
+            List<Yard> list = YardModel.GetListByCompanyId(receiverCompany.id);
             if (list.Count > 0)
             {
                 this.ReceiverYardCb.ItemsSource = list;

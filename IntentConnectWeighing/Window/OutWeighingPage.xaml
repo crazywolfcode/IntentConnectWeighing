@@ -12,7 +12,7 @@
         <local:WeihgingStatusBoolConverter x:Key="WeihgingStatusBoolConverter"/>
         <local:PrientTimesboolConverter x:Key="PrientTimesboolConverter"/>
         <local:UpdateFinishedBillBtnConverter x:Key="UpdateFinishedBillBtnConverter"/>
-
+        
         <Style x:Key="DetailAlertLeableStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Foreground" Value="#444444"/>
@@ -45,15 +45,19 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="34"/>
                                 <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
+                            </Grid.RowDefinitions>                            
                             <TextBlock Text="派车单"  VerticalAlignment="Center"  TextAlignment="Center"  FontSize="14" Width="90" x:Name="CustomerSendTB"  Foreground="RoyalBlue"/>
                             <TextBlock x:Name="SendBillCountTb" Text="0" FontSize="12" Foreground="{StaticResource myBlue}"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,2,8,2" ToolTip="派车单数量"/>
                             <StackPanel Height="1"  Background="{DynamicResource E4}" VerticalAlignment="Bottom"/>
                             <ScrollViewer x:Name="LeftScrollViewer" Style="{DynamicResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" Grid.Row="1" >
-                                <StackPanel x:Name="PaiCheListPanel" >
-                                    <ListView x:Name="SendBillListView" ItemContainerStyle="{DynamicResource SendBillListViewItemStyle}" BorderThickness="0"  MouseDoubleClick="SendBollListView_MouseDoubleClick" SelectionChanged="SendBollListView_SelectionChanged" />
+                                <StackPanel x:Name="PaiCheListPanel" Margin="0,0,0,4" Background="White">
+                                    <ListView x:Name="SendBillListView" ItemContainerStyle="{DynamicResource SendCarBillListViewItemStyle}" BorderThickness="0"  MouseDoubleClick="SendBollListView_MouseDoubleClick" SelectionChanged="SendBollListView_SelectionChanged" />
                                 </StackPanel>
                             </ScrollViewer>
+                                <WrapPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent" Margin="0,0,0,20" >
+                                    <local:IconButton x:Name="SendCarListBtn" Style="{StaticResource IconButtonTransparencyStyle}"  Background="#e4e4e4e4"  Icon="&#xe9ce;" Margin="5,0,0,0" CornerRadius="10,0,0,10" Width="30" IconSize="20"   IconMargin="2,-1,0,0" Height="20" ToolTip="查看所有的派车单" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}" Click="SendCarListBtn_Click"/>
+                                    <local:IconButton x:Name="SendCarRefreshBtn" Style="{StaticResource IconButtonTransparencyStyle}"  Background="#e4e4e4e4"  Icon="&#xe653;" Margin="-1,0,0,0" CornerRadius="0,10,10,0" AllowsAnimation="True" Width="30" IconMargin="2,-1,0,0"  IconSize="20" Height="20" ToolTip="刷新" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}" Click="SendCarRefreshBtn_Click" />
+                                </WrapPanel>
                         </Grid>
                     </Border>
                 </Expander.Content>
@@ -72,7 +76,7 @@
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0"
                          />
-                        <local:IconButton x:Name="NewOutPutBtn" Click="NewOutPutBtn_Click"
+                        <local:IconButton x:Name="NewOutPutBtn" Click="NewOutPutBtn_Click" ToolTip="新增出库"
                           Style="{DynamicResource  IconButtonTransparencyStyle}"
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom" 
@@ -108,7 +112,7 @@
                                 </StackPanel>
 
                                 <!--NoFinish-->
-                                <Grid  x:Name="NoFinishGrid" Margin="20,0,20,0" Visibility="Visible">
+                                <Grid  x:Name="NoFinishGrid" Margin="20,0,20,0" Visibility="Collapsed">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="80" />
                                         <RowDefinition Height="159*"/>
@@ -150,8 +154,8 @@
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="发货货场："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="原发皮重："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="原发毛重："/>
-                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="原发净重："/>                                             
-                                                
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="原发净重："/>
+
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}"  Text="备注："/>
                                             </StackPanel>
                                             <StackPanel >
@@ -294,7 +298,7 @@
                                 </Grid>
 
                                 <!--Send-->
-                                <Grid  x:Name="SendBillGrid" Margin="20,0,20,0" Visibility="Collapsed">
+                                <Grid  x:Name="SendBillGrid" Margin="20,0,20,0" Visibility="Visible">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="80" />
                                         <RowDefinition Height="159*"/>
@@ -306,48 +310,44 @@
                                                 x:Name="SendBillInFactoryBtn" Click="SendBillInFactoryBtn_Click"
                                                    Style="{DynamicResource  IconButtonTransparencyStyle}"
                                                    MouseOverForeground="{DynamicResource myBlue}"
-                                                   VerticalAlignment="Bottom" ToolTip="入场"
+                                                   VerticalAlignment="Bottom" ToolTip="入场" 
                                                    IsShowIcon="True" Icon="&#xe8c7;" IconSize="20"
                                                    Width="30" Height="30" IconMargin="-2,0,0,0"
                                                    Margin="0,0,4,0" />
                                         </StackPanel>
                                     </Border>
                                     <TextBlock Grid.Row="0" Margin="20,27,0,27" TextAlignment="Left" VerticalAlignment="Center" Text="{Binding sendCompanyName}" Foreground="{DynamicResource myBlue}" FontSize="20"/>
+                                    <TextBlock  Text="派车单" Width="70" Margin="10,0,0,0" Height="20" TextAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Left" FontSize="16" Foreground="White" FontWeight="Bold"/>
                                     <Border Grid.Row="1" Background="White" BorderThickness="1" BorderBrush="{DynamicResource E4}" CornerRadius="0,0,4,4" Grid.RowSpan="2">
                                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,30,0,30">
                                             <StackPanel>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="发货公司："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="发货货场："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="物资名称："/>
-                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="备注："/>
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="车辆信息："/>
+                                               
                                             </StackPanel>
                                             <StackPanel >
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendCompanyName}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendYardName}"/>
-                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendMaterialName}"/>
-                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendRemark}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding materialName}"/>
+                                                <WrapPanel>
+                                                    <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding plateNumber}"/>
+                                                    <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding driver}"/>
+                                                    <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding driverMobile}"/>
+                                                </WrapPanel>
                                             </StackPanel>
 
                                             <StackPanel>
-                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="皮重："/>
-                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="毛重："/>
-                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="净重："/>
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="收货公司："/>
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="收货货场："/>
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="失效时间："/>
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="备注："/>
                                             </StackPanel>
                                             <StackPanel>
-                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendTraeWeight}"/>
-                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendGrossWeight}"/>
-                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendNetWeight}"/>
-                                            </StackPanel>
-
-                                            <StackPanel>
-                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="入场时间："/>
-                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="出场时间："/>
-                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="过磅员："/>
-                                            </StackPanel>
-                                            <StackPanel>
-                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendInTime,Converter={StaticResource DateTimeFriendConverter}}"/>
-                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendOutTime,Converter={StaticResource DateTimeFriendConverter}}"/>
-                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendUserName}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding receiveCompanyName}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding receiveYardName}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding expiryDate}"/>
                                             </StackPanel>
                                         </StackPanel>
                                     </Border>
@@ -368,7 +368,7 @@
         </Border>
         <!--Right-->
         <Border Grid.Column="2" CornerRadius="0,0,4,0" Panel.ZIndex="2" >
-            <Expander ExpandDirection="Right" x:Name="RightEapander" IsExpanded="False" Background="Transparent" HorizontalContentAlignment="Right" BorderThickness="0" Style="{DynamicResource InDataExpenderStyle}">
+            <Expander ExpandDirection="Right" x:Name="RightEapander" IsExpanded="True" Background="Transparent" HorizontalContentAlignment="Right" BorderThickness="0" Style="{DynamicResource InDataExpenderStyle}">
                 <Expander.Content>
                     <Border Background="{StaticResource F9}" CornerRadius="0,0,4,0" Width="230">
                         <Grid>
