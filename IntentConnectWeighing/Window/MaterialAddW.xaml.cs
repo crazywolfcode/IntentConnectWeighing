@@ -37,11 +37,7 @@ namespace IntentConnectWeighing
                 mMaterial = material;
             }
         }
-        public delegate void MyDebugInfo(string str);
-        public void DebugInfo(string str)
-        {
-            ConsoleHelper.writeLine(str);
-        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             if (mMaterial !=null && mMaterial.id!=null)
@@ -206,9 +202,19 @@ namespace IntentConnectWeighing
                 }
             }
         }
+
+        private bool isfirstChanged = true;
         private void nameTb_TextChanged(object sender, TextChangedEventArgs e)
         {
             String name = this.nameTb.Text.Trim();
+            if (mMaterial != null && mMaterial.id != null)
+            {
+                if (isfirstChanged == true) {
+                    isfirstChanged = false;
+                    return;
+                }
+            }
+            
             if (String.IsNullOrEmpty(name))
             {
                 this.saveBtn.IsEnabled = false;
@@ -248,7 +254,8 @@ namespace IntentConnectWeighing
             {
                 MaterialCategory mc = (MaterialCategory)this.CateNameCb.Items[i];
                 if (mc.id == mMaterial.categoryId) {
-                    this.CateNameCb.Text = mc.name;
+                    this.CateNameCb.SelectedIndex = i;
+                    break;
                 }
             }
         }

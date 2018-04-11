@@ -179,6 +179,16 @@ namespace IntentConnectWeighing
             {
                 this.OutfactoryAllowUpdateCB.IsChecked = false;
             }
+
+            //出库存过磅是否必须有派车单
+            if ("true" == ConfigurationHelper.GetConfig(ConfigItemName.outWeighingMustHasSendCarbill.ToString()))
+            {
+                this.MustNeedSendcarCB.IsChecked = true;
+            }
+            else
+            {
+                this.MustNeedSendcarCB.IsChecked = false;
+            }
         }
         #endregion
 
@@ -226,7 +236,7 @@ namespace IntentConnectWeighing
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
         #region 磅秤 Scale
@@ -422,9 +432,19 @@ namespace IntentConnectWeighing
         {
             ConfigurationHelper.SetConfig(ConfigItemName.outFactoryAllowUpdate.ToString(), "false");
         }
+        #region 出库存过磅是否必须有派车单
+        private void MustNeedSendcarCB_Checked(object sender, RoutedEventArgs e)
+        {
+            ConfigurationHelper.SetConfig(ConfigItemName.outWeighingMustHasSendCarbill.ToString(), "true");
+        }
 
+        private void MustNeedSendcarCB_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ConfigurationHelper.SetConfig(ConfigItemName.outWeighingMustHasSendCarbill.ToString(), "false");
+        }
+        #endregion
         #endregion
 
-    
+
     }
 }

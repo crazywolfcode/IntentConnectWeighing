@@ -29,15 +29,18 @@ namespace IntentConnectWeighing
         private WeightingBillType mType;
         private WeighingBill mWeighingBill;
         private bool isOPtionSuccess = false;
-        private bool isAutoPrint= false;
+        private bool isAutoPrint = false;
+        private System.Threading.Timer mTime;
+
         #endregion
-        public PrintBillW(WeightingBillType type, WeighingBill bill,bool autoPrint = false)
+        public PrintBillW(WeightingBillType type, WeighingBill bill, bool autoPrint = false)
         {
             InitializeComponent();
             mType = type;
             mWeighingBill = bill;
             isAutoPrint = autoPrint;
-            if (autoPrint == true) {
+            if (autoPrint == true)
+            {
                 this.Visibility = Visibility.Hidden;
             }
         }
@@ -61,7 +64,8 @@ namespace IntentConnectWeighing
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
-            if (isAutoPrint == true) {
+            if (isAutoPrint == true)
+            {
                 Print();
             }
         }
@@ -97,6 +101,10 @@ namespace IntentConnectWeighing
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (mTime != null)
+            {
+                mTime.Dispose();
+            }
             this.Close();
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -122,8 +130,10 @@ namespace IntentConnectWeighing
         private bool isClickPrint = false;
         private void PrintBtn_Click(object sender, RoutedEventArgs e)
         {
+            this.PrintBtn.IsEnabled = false;
             isClickPrint = true;
             Print();
+            this.PrintBtn.IsEnabled = true;
         }
 
         public void Print()
@@ -132,23 +142,19 @@ namespace IntentConnectWeighing
             {
                 return;
             }
-            try {
-
-           PrintQueue printQueue=     LocalPrintServer.GetDefaultPrintQueue();
-                if (printQueue.IsNotAvailable == false) {
-                    throw new Exception("打印机不可用！") ;
+            try
+            {
+                PrintQueue printQueue = LocalPrintServer.GetDefaultPrintQueue();
+                if (printQueue == null || printQueue.IsOffline == true)
+                {
+                    throw new Exception("打印机不可用！");
                 }
                 string description = "磅单打印";
                 PrintDialog printDialog = new PrintDialog();
                 printDialog.CurrentPageEnabled = true;
                 printDialog.PageRange = new PageRange(1);
 
-                //MessageBox.Show(w + " " +H);
-                //MessageBox.Show((w / 96) + " " + (H / 96) );
-                //MessageBox.Show((w/96)*2.54+" "+( H/96 )* 2.54);
-                //this.InPanel.Width = w;
-
-                Visual PrintArea = null;
+                Panel PrintArea = null;
                 if (mType == WeightingBillType.RK)
                 {
                     PrintArea = this.InPanel;
@@ -157,17 +163,34 @@ namespace IntentConnectWeighing
                 {
                     PrintArea = this.OutPanel;
                 }
-                printDialog.PrintVisual(PrintArea, description);
+                // System.Windows.Size size = new System.Windows.Size(printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight);
+                //  PrintArea.Measure(size);
+                // PrintArea.Arrange(new Rect(new System.Windows.Point(0, 0), size));
+                mTime = new System.Threading.Timer(delegate
+                {
+                    this.Dispatcher.BeginInvoke(new Action(delegate
+                    {
+                        printDialog = null;
+                        this.Close();
+                    }), System.Windows.Threading.DispatcherPriority.Send);
+                }, null, 3000, System.Threading.Timeout.Infinite);
 
-                mWeighingBill.printTimes = mWeighingBill.printTimes + 1;
-                isOPtionSuccess = true;
-                DatabaseOPtionHelper.GetInstance().update(mWeighingBill);
-                if (isAutoPrint == true) { }
-            } catch(Exception e) {
+
+                this.Dispatcher.BeginInvoke(new Action(delegate
+                {
+                    printDialog.PrintVisual(PrintArea, description);
+                    mWeighingBill.printTimes = mWeighingBill.printTimes + 1;
+                    mWeighingBill.printDateTime = MyHelper.DateTimeHelper.getCurrentDateTime();
+                    isOPtionSuccess = true;
+                    DatabaseOPtionHelper.GetInstance().update(mWeighingBill);
+                }));
+            }
+            catch (Exception e)
+            {
                 ConsoleHelper.writeLine($"Pint {mWeighingBill.id} failed:{e.Message}");
                 this.Close();
-            }        
-           
+            }
+
         }
     }
 }

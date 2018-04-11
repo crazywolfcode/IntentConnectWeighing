@@ -44,11 +44,26 @@ namespace IntentConnectWeighing
                 HideOrShowSendExpandePanel();
             }
 
+            MustNeedSendcar();
+
             ShowCurrentPanel();
             RefreshData(false, false, true);
             RefreshFinishedData();
         }
-
+        /// <summary>
+        /// 出库存过磅是否必须有派车单 是 hide add button
+        /// </summary>
+        private void MustNeedSendcar()
+        {
+            if (MyHelper.ConfigurationHelper.GetConfig(ConfigItemName.outWeighingMustHasSendCarbill.ToString()) == "true")
+            {
+                this.NewOutPutBtn.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                this.NewOutPutBtn.Visibility = Visibility.Visible;
+            }
+        }
 
         /// <summary>
         /// 显示当前数据区
@@ -130,7 +145,15 @@ namespace IntentConnectWeighing
         /// <param name="e"></param>
         private void NewOutPutBtn_Click(object sender, RoutedEventArgs e)
         {
-            Infactory(null, false);
+            if (MyHelper.ConfigurationHelper.GetConfig(ConfigItemName.outWeighingMustHasSendCarbill.ToString()) == "true")
+            {
+                this.NewOutPutBtn.IsEnabled = false;
+                return;
+            }
+            else
+            {
+                Infactory(null, false);
+            }     
         }
 
         public void Infactory(Object bill, bool sendCar = false)
@@ -202,7 +225,7 @@ namespace IntentConnectWeighing
         private void RefreshCurrBillData()
         {
             if (mSendCarBilll != null)
-            {               
+            {
                 this.SendBillInFactoryBtn.Visibility = Visibility.Collapsed;
             }
             else if (mWeighingBill != null)

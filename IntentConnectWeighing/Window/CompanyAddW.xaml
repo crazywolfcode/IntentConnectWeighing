@@ -114,7 +114,6 @@
                         <Label FontSize="14">所属省份：</Label>
                         <WrapPanel Orientation="Vertical">
                             <ComboBox x:Name="CompanyProvinceCmb" Width="300" Height="28" VerticalContentAlignment="Center" SelectionChanged="CompanyProvinceCmb_SelectionChanged"/>
-                            <Label x:Name="CompanyProvinceLabel"  Visibility="Collapsed"></Label>
                         </WrapPanel>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,4,0,4">
@@ -160,7 +159,6 @@
                         <Label FontSize="14">所属省份：</Label>
                         <WrapPanel Orientation="Vertical">
                             <ComboBox x:Name="ProvinceCmb" Width="300" Height="28" VerticalContentAlignment="Center" SelectionChanged="ProvinceCmb_SelectionChanged"/>
-                            <Label x:Name="PersonProvinceLabel"  Visibility="Collapsed"></Label>
                         </WrapPanel>
                     </StackPanel>
                 </StackPanel>

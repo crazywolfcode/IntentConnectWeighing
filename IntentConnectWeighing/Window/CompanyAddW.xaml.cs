@@ -89,13 +89,13 @@ namespace IntentConnectWeighing
             if (SourceCompany.customerType == (int)CompanyCustomerTyle.Company)
             {
                 this.PensonRB.IsChecked = false;
-                this.PensonRB.Visibility = Visibility.Hidden;
+                this.PensonRB.Visibility = Visibility.Collapsed;
                 this.CompanyRB.IsChecked = true;
             }
             else
             {
                 this.CompanyRB.IsChecked = false;
-                this.CompanyRB.Visibility = Visibility.Hidden;
+                this.CompanyRB.Visibility = Visibility.Collapsed;
                 this.PensonRB.IsChecked = true;
             }
         }
@@ -107,17 +107,13 @@ namespace IntentConnectWeighing
                 this.FullNameTB.Text = mCompany.name;
                 this.LicenceNumberTB.Text = mCompany.busineseLincenseNumber;
                 this.AbbreviationTB.Text = mCompany.abbreviation;
-                this.LegalPersonTB.Text = mCompany.legalPerson;
-                this.CompanyProvinceLabel.Visibility = Visibility.Visible;
-                this.CompanyProvinceLabel.Content = $"原来所属性的省份：{ mCompany.affiliatedProvince} ";
+                this.LegalPersonTB.Text = mCompany.legalPerson;       
                 this.AddressTb.Text = mCompany.address;
             }
             else
             {
                 this.NameTB.Text = mPersonCompany.name;
-                this.IdNumberTB.Text = mPersonCompany.busineseLincenseNumber;
-                this.PersonProvinceLabel.Visibility = Visibility.Visible;
-                this.PersonProvinceLabel.Content = $"原来所属性的省份：{ mPersonCompany.affiliatedProvince} ";
+                this.IdNumberTB.Text = mPersonCompany.busineseLincenseNumber;           
                 this.AddressTb.Text = mPersonCompany.address;
             }
         }
@@ -151,12 +147,27 @@ namespace IntentConnectWeighing
                     this.CompanyProvinceCmb.ItemsSource = mProvinces;
                     this.CompanyProvinceCmb.DisplayMemberPath = "provinceName";
                     this.CompanyProvinceCmb.SelectedValuePath = "id";
+                    for (int i = 0; i < mProvinces.Count; i++)
+                    {
+                        if (mProvinces[i].id == SourceCompany.affiliatedProvinceId) {
+                            this.CompanyProvinceCmb.SelectedIndex = i;
+                            break;
+                        }
+                    }
                 }
                 else
                 {
                     this.ProvinceCmb.ItemsSource = mProvinces;
                     this.ProvinceCmb.DisplayMemberPath = "provinceName";
                     this.ProvinceCmb.SelectedValuePath = "id";
+                    for (int i = 0; i < mProvinces.Count; i++)
+                    {
+                        if (mProvinces[i].id == SourceCompany.affiliatedProvinceId)
+                        {
+                            this.ProvinceCmb.SelectedIndex = i;
+                            break;
+                        }
+                    }
                 }
             }
         }

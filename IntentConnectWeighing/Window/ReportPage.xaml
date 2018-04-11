@@ -4,10 +4,10 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:IntentConnectWeighing"
-      mc:Ignorable="d"  Loaded="Page_Loaded"
-      d:DesignHeight="300" d:DesignWidth="600"
+      mc:Ignorable="d"  Loaded="Page_Loaded" 
+      d:DesignHeight="300" d:DesignWidth="600" 
       Title="ReportPage">
-    <Grid>
+    <Grid Background="White" Margin="0,0,0,5">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition Height="Auto"/>
@@ -93,7 +93,7 @@
             </StackPanel>
         </Border>
         <!--CenderBorder-->
-        <Border x:Name="CenderBorder" Grid.Row="1">
+        <Border x:Name="CenderBorder" Grid.Row="1" >
             <TextBlock Text="查询条件区"/>
         </Border>
         <!--DownBorder-->

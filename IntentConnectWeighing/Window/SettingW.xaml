@@ -66,149 +66,151 @@
                             MouseOverBackground="White" Content="确 定" />
                 </StackPanel>
                 <!--Main content area-->
-                <StackPanel >
-                    <StackPanel HorizontalAlignment="Center" Visibility="{Binding ElementName=BaseSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
-                        <TextBlock  FontSize="25"> Center</TextBlock>
-                    </StackPanel>
-
-                    <StackPanel HorizontalAlignment="Left" Visibility="{Binding ElementName=PrintSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
-                        <WrapPanel Margin="20,10,10,4">
-                            <CheckBox x:Name="StartAautoPtint" Style="{DynamicResource DefaultCheckBox}" Content="开启自动打印" FontSize="14" Checked="StartAautoPtint_Checked" Unchecked="StartAautoPtint_Unchecked"/>
-                            <ToggleButton x:Name="StAautoPtint" Style="{DynamicResource  FIconToggleButton}" FontSize="14" Width="30" Margin="10,0,0,0"/>
-                        </WrapPanel>
-                        <WrapPanel Margin="20,4,4,4">
-                            <Label Content="最大的打印次数" Foreground="#797979"/>
-                            <TextBox x:Name="PrintTimes"  FontSize="14" Width="50" Text="3" TextAlignment="Center" VerticalContentAlignment="Center" TextChanged="PrintTimes_TextChanged"/>
-                        </WrapPanel>
-                    </StackPanel>
-                    <!-- Scale setting-->
-                    <Grid Visibility="{Binding ElementName=ScaleSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="35"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right">
-                            <local:IconButton ToolTip="添加磅秤"
-                                x:Name="AddScaleBtn" 
-                                Click="AddScaleBtn_Click"                                
-                                Padding="2"
-                                Icon="&#xe50d;" FontWeight="Bold"
-                                IsShowIcon="True"
-                                Margin="0,0,10,0"    
-                                Style="{StaticResource IconButtonTransparencyStyle}" 
-                                Foreground="{StaticResource myBlue}"                                
-                                Width="25"
-                                Height="25"                 
-                                CornerRadius="13"   
-                                MouseOverForeground="White"
-                                MouseOverBackground="{StaticResource myBlue}" />
+                <ScrollViewer Style="{DynamicResource DefaultScrollViewer}">
+                    <StackPanel >
+                        <StackPanel HorizontalAlignment="Center" Visibility="{Binding ElementName=BaseSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
+                            <TextBlock  FontSize="25"> Center</TextBlock>
                         </StackPanel>
 
-                        <DataGrid Grid.Row="1" GridLinesVisibility="None" ColumnHeaderHeight="30"  MaxHeight="320"
-                                  Style="{x:Null}" x:Name="ScaleDataGrid" AutoGenerateColumns="False"  BorderThickness="0"
-                                  CanUserAddRows="False"  VerticalScrollBarVisibility="Auto" 
-                                  LoadingRow="ScaleDataGrid_LoadingRow">
-                            <DataGrid.Columns >
-                                <DataGridTextColumn Width="*" Header="名称" Binding="{Binding name}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="*" Header="COM 串口" Binding="{Binding com}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="Auto" Header="波特率" Binding="{Binding baudRate}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="Auto" Header="数据位数" Binding="{Binding dataByte}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="Auto" Header="结束位" Binding="{Binding endByte}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="Auto" Header="品牌" Binding="{Binding brand}" ElementStyle="{DynamicResource DataGridContentCenter}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="Auto" Header="系列" Binding="{Binding series}" ElementStyle="{DynamicResource DataGridContentCenter}"></DataGridTextColumn>
-                                <DataGridTemplateColumn Width="80" Header="操作" >
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <local:IconButton x:Name="updateScaleBtn" ToolTip="修改" Width="25" Tag="{Binding id}" Icon="&#xe6f0;"  Style="{DynamicResource IconButtonTransparencyStyle}" Click="updateScaleBtn_Click"/>
-                                                <local:IconButton x:Name="bundingBtn"  ToolTip="绑定摄像头" Width="25" Tag="{Binding id}" Icon="&#xe657;" MouseOverForeground="{DynamicResource myBlue}" Style="{DynamicResource IconButtonTransparencyStyle}" Click="bundingBtn_Click" />
-                                                <local:IconButton x:Name="deleteScaleBtn"  ToolTip="删除" Width="25" Tag="{Binding id}" Icon="&#xe615;" MouseOverForeground="Red" Style="{DynamicResource IconButtonTransparencyStyle}" Click="deleteScaleBtn_Click" />
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
-                    <!--cameraSetting-->
-                    <Grid Visibility="{Binding ElementName=CameraSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="35"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right">
-                            <local:IconButton ToolTip="添加摄像头"
-                                x:Name="AddCameraBtn" 
-                                Click="AddCameraBtn_Click"                                
-                                Padding="2"
-                                Icon="&#xe50d;" FontWeight="Bold"
-                                IsShowIcon="True"
-                                Margin="0,0,10,0"    
-                                Style="{StaticResource IconButtonTransparencyStyle}" 
-                                Foreground="{StaticResource myBlue}"                                
-                                Width="25"
-                                Height="25"                 
-                                CornerRadius="13"   
-                                MouseOverForeground="White"
-                                MouseOverBackground="{StaticResource myBlue}" />
+                        <StackPanel HorizontalAlignment="Left" Visibility="{Binding ElementName=PrintSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
+                            <WrapPanel Margin="20,10,10,4">
+                                <CheckBox x:Name="StartAautoPtint" Style="{DynamicResource DefaultCheckBox}" Content="开启自动打印" FontSize="14" Checked="StartAautoPtint_Checked" Unchecked="StartAautoPtint_Unchecked"/>
+                                <ToggleButton x:Name="StAautoPtint" Style="{DynamicResource  FIconToggleButton}" FontSize="14" Width="30" Margin="10,0,0,0"/>
+                            </WrapPanel>
+                            <WrapPanel Margin="20,4,4,4">
+                                <Label Content="最大的打印次数" Foreground="#797979"/>
+                                <TextBox x:Name="PrintTimes"  FontSize="14" Width="50" Text="3" TextAlignment="Center" VerticalContentAlignment="Center" TextChanged="PrintTimes_TextChanged"/>
+                            </WrapPanel>
                         </StackPanel>
-                      
-                        <DataGrid Grid.Row="1" GridLinesVisibility="None" ColumnHeaderHeight="30"  MaxHeight="320"
-                                  Style="{x:Null}" x:Name="CamreaDataGrid" AutoGenerateColumns="False"  BorderThickness="0"
-                                  CanUserAddRows="False"  VerticalScrollBarVisibility="Auto" 
-                                  LoadingRow="CamreaDataGrid_LoadingRow">
-                            <DataGrid.Columns >
-                                <DataGridTextColumn Width="*" Header="Ip地址" Binding="{Binding ip}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="Auto" Header="端口" Binding="{Binding port}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="Auto" Header="登陆名称" Binding="{Binding userName}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="Auto" Header="密码" Binding="{Binding password}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="Auto" Header="位置" Binding="{Binding position}" ElementStyle="{DynamicResource DataGridContentCenter}"></DataGridTextColumn>
-                                <DataGridTemplateColumn Width="50" Header="操作" >
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <local:IconButton x:Name="updateBtn" ToolTip="修改" Width="25" Tag="{Binding id}" Icon="&#xe6f0;"  Style="{DynamicResource IconButtonTransparencyStyle}" Click="updateBtn_Click"/>
-                                                <local:IconButton x:Name="deleteBtn"  ToolTip="删除" Width="25" Tag="{Binding id}" Icon="&#xe615;" MouseOverForeground="Red" Style="{DynamicResource IconButtonTransparencyStyle}" Click="deleteBtn_Click" />
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>                        
-                    </Grid>
+                        <!-- Scale setting-->
+                        <Grid Visibility="{Binding ElementName=ScaleSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                <local:IconButton ToolTip="添加磅秤"
+                                    x:Name="AddScaleBtn" 
+                                    Click="AddScaleBtn_Click"                                
+                                    Padding="2"
+                                    Icon="&#xe50d;" FontWeight="Bold"
+                                    IsShowIcon="True"
+                                    Margin="0,0,10,0"    
+                                    Style="{StaticResource IconButtonTransparencyStyle}" 
+                                    Foreground="{StaticResource myBlue}"                                
+                                    Width="25"
+                                    Height="25"                 
+                                    CornerRadius="13"   
+                                    MouseOverForeground="White"
+                                    MouseOverBackground="{StaticResource myBlue}" />
+                            </StackPanel>
 
-                    <StackPanel HorizontalAlignment="Center" Visibility="{Binding ElementName=BalanceSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
-                        <TextBlock  FontSize="25"> BalanceSetting</TextBlock>
-                    </StackPanel>
-                    <!--height setting-->
+                            <DataGrid Grid.Row="1" GridLinesVisibility="None" ColumnHeaderHeight="30"  MaxHeight="320"
+                                      Style="{x:Null}" x:Name="ScaleDataGrid" AutoGenerateColumns="False"  BorderThickness="0"
+                                      CanUserAddRows="False"  VerticalScrollBarVisibility="Auto" 
+                                      LoadingRow="ScaleDataGrid_LoadingRow">
+                                <DataGrid.Columns >
+                                    <DataGridTextColumn Width="*" Header="名称" Binding="{Binding name}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                                    <DataGridTextColumn Width="*" Header="COM 串口" Binding="{Binding com}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                                    <DataGridTextColumn Width="Auto" Header="波特率" Binding="{Binding baudRate}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                                    <DataGridTextColumn Width="Auto" Header="数据位数" Binding="{Binding dataByte}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                                    <DataGridTextColumn Width="Auto" Header="结束位" Binding="{Binding endByte}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                                    <DataGridTextColumn Width="Auto" Header="品牌" Binding="{Binding brand}" ElementStyle="{DynamicResource DataGridContentCenter}"></DataGridTextColumn>
+                                    <DataGridTextColumn Width="Auto" Header="系列" Binding="{Binding series}" ElementStyle="{DynamicResource DataGridContentCenter}"></DataGridTextColumn>
+                                    <DataGridTemplateColumn Width="80" Header="操作" >
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <local:IconButton x:Name="updateScaleBtn" ToolTip="修改" Width="25" Tag="{Binding id}" Icon="&#xe6f0;"  Style="{DynamicResource IconButtonTransparencyStyle}" Click="updateScaleBtn_Click"/>
+                                                    <local:IconButton x:Name="bundingBtn"  ToolTip="绑定摄像头" Width="25" Tag="{Binding id}" Icon="&#xe657;" MouseOverForeground="{DynamicResource myBlue}" Style="{DynamicResource IconButtonTransparencyStyle}" Click="bundingBtn_Click" />
+                                                    <local:IconButton x:Name="deleteScaleBtn"  ToolTip="删除" Width="25" Tag="{Binding id}" Icon="&#xe615;" MouseOverForeground="Red" Style="{DynamicResource IconButtonTransparencyStyle}" Click="deleteScaleBtn_Click" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                        <!--cameraSetting-->
+                        <Grid Visibility="{Binding ElementName=CameraSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                <local:IconButton ToolTip="添加摄像头"
+                                    x:Name="AddCameraBtn" 
+                                    Click="AddCameraBtn_Click"                                
+                                    Padding="2"
+                                    Icon="&#xe50d;" FontWeight="Bold"
+                                    IsShowIcon="True"
+                                    Margin="0,0,10,0"    
+                                    Style="{StaticResource IconButtonTransparencyStyle}" 
+                                    Foreground="{StaticResource myBlue}"                                
+                                    Width="25"
+                                    Height="25"                 
+                                    CornerRadius="13"   
+                                    MouseOverForeground="White"
+                                    MouseOverBackground="{StaticResource myBlue}" />
+                            </StackPanel>
+
+                            <DataGrid Grid.Row="1" GridLinesVisibility="None" ColumnHeaderHeight="30"  MaxHeight="320"
+                                      Style="{x:Null}" x:Name="CamreaDataGrid" AutoGenerateColumns="False"  BorderThickness="0"
+                                      CanUserAddRows="False"  VerticalScrollBarVisibility="Auto" 
+                                      LoadingRow="CamreaDataGrid_LoadingRow">
+                                <DataGrid.Columns >
+                                    <DataGridTextColumn Width="*" Header="Ip地址" Binding="{Binding ip}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                                    <DataGridTextColumn Width="Auto" Header="端口" Binding="{Binding port}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                                    <DataGridTextColumn Width="Auto" Header="登陆名称" Binding="{Binding userName}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                                    <DataGridTextColumn Width="Auto" Header="密码" Binding="{Binding password}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                                    <DataGridTextColumn Width="Auto" Header="位置" Binding="{Binding position}" ElementStyle="{DynamicResource DataGridContentCenter}"></DataGridTextColumn>
+                                    <DataGridTemplateColumn Width="50" Header="操作" >
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <local:IconButton x:Name="updateBtn" ToolTip="修改" Width="25" Tag="{Binding id}" Icon="&#xe6f0;"  Style="{DynamicResource IconButtonTransparencyStyle}" Click="updateBtn_Click"/>
+                                                    <local:IconButton x:Name="deleteBtn"  ToolTip="删除" Width="25" Tag="{Binding id}" Icon="&#xe615;" MouseOverForeground="Red" Style="{DynamicResource IconButtonTransparencyStyle}" Click="deleteBtn_Click" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+
+                        <StackPanel HorizontalAlignment="Center" Visibility="{Binding ElementName=BalanceSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
+                            <TextBlock  FontSize="25"> BalanceSetting</TextBlock>
+                        </StackPanel>
+                        <!--height setting-->
                         <StackPanel HorizontalAlignment="Left" Visibility="{Binding ElementName=HighSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
-                        <WrapPanel Margin="20,10,10,4">
-                            <CheckBox x:Name="NoDeleteInGrossCB" Style="{DynamicResource DefaultCheckBox}" Content="入库过磅毛重不可以删除" FontSize="14" Checked="NoDeleteInGrossCB_Checked" Unchecked="NoDeleteInGrossCB_Unchecked"/>
-                        </WrapPanel>
-                        <WrapPanel Margin="20,10,10,4">
-                            <CheckBox x:Name="NoUpdateFinishedData" Style="{DynamicResource DefaultCheckBox}" Content="不可以修改已经完成的数据" FontSize="14" Checked="NoUpdateFinishedData_Checked" Unchecked="NoUpdateFinishedData_Unchecked"/>
-                        </WrapPanel>
-                        <WrapPanel Margin="20,10,10,4">
-                            <CheckBox x:Name="AllowDiffrenceMaterialWeighingCB" Style="{DynamicResource DefaultCheckBox}" Content="入库过磅时货物名称不一致允许过磅" FontSize="14" Checked="AllowDiffrenceMaterialWeighingCB_Checked" Unchecked="AllowDiffrenceMaterialWeighingCB_Unchecked"/>
-                        </WrapPanel>
-                        <WrapPanel Margin="20,10,10,4">
-                            <CheckBox x:Name="AllowDiffrenceCompanyCB" Style="{DynamicResource DefaultCheckBox}" Content="入库过磅时收货公司不一致允许过磅" FontSize="14" Checked="AllowDiffrenceCompanyCB_Checked" Unchecked="AllowDiffrenceCompanyCB_Unchecked"/>
-                        </WrapPanel>
-                        <WrapPanel Margin="20,10,10,4">
-                            <CheckBox x:Name="AllowDiffrenceReceiveYardCB" Style="{DynamicResource DefaultCheckBox}" Content="入库过磅时收货货场不一致允许过磅" FontSize="14" Checked="AllowDiffrenceReceiveYardCB_Checked" Unchecked="AllowDiffrenceReceiveYardCB_Unchecked"/>
-                        </WrapPanel>
-                        <WrapPanel Margin="20,10,10,4">
-                            <CheckBox x:Name="OutfactoryAllowUpdateCB" Style="{DynamicResource DefaultCheckBox}" Content="车辆出场时允许修改信息" FontSize="14" Checked="OutfactoryAllowUpdateCB_Checked" Unchecked="OutfactoryAllowUpdateCB_Unchecked"/>
-                        </WrapPanel>
-                        <WrapPanel Margin="20,10,10,4">
-                            <CheckBox x:Name="hh" Style="{DynamicResource DefaultCheckBox}" Content="nh" FontSize="14" Checked="OutfactoryAllowUpdateCB_Checked" Unchecked="OutfactoryAllowUpdateCB_Unchecked"/>
-                        </WrapPanel>
+                            <WrapPanel Margin="20,10,10,0">
+                                <CheckBox x:Name="NoDeleteInGrossCB" Style="{DynamicResource DefaultCheckBox}" Content="入库过磅毛重不可以删除" FontSize="14" Checked="NoDeleteInGrossCB_Checked" Unchecked="NoDeleteInGrossCB_Unchecked"/>
+                            </WrapPanel>
+                            <WrapPanel Margin="20,6,10,0">
+                                <CheckBox x:Name="NoUpdateFinishedData" Style="{DynamicResource DefaultCheckBox}" Content="不可以修改已经完成的数据" FontSize="14" Checked="NoUpdateFinishedData_Checked" Unchecked="NoUpdateFinishedData_Unchecked"/>
+                            </WrapPanel>
+                            <WrapPanel Margin="20,6,10,0">
+                                <CheckBox x:Name="AllowDiffrenceMaterialWeighingCB" Style="{DynamicResource DefaultCheckBox}" Content="入库过磅时货物名称不一致允许过磅" FontSize="14" Checked="AllowDiffrenceMaterialWeighingCB_Checked" Unchecked="AllowDiffrenceMaterialWeighingCB_Unchecked"/>
+                            </WrapPanel>
+                            <WrapPanel Margin="20,6,10,0">
+                                <CheckBox x:Name="AllowDiffrenceCompanyCB" Style="{DynamicResource DefaultCheckBox}" Content="入库过磅时收货公司不一致允许过磅" FontSize="14" Checked="AllowDiffrenceCompanyCB_Checked" Unchecked="AllowDiffrenceCompanyCB_Unchecked"/>
+                            </WrapPanel>
+                            <WrapPanel Margin="20,6,10,0">
+                                <CheckBox x:Name="AllowDiffrenceReceiveYardCB" Style="{DynamicResource DefaultCheckBox}" Content="入库过磅时收货货场不一致允许过磅" FontSize="14" Checked="AllowDiffrenceReceiveYardCB_Checked" Unchecked="AllowDiffrenceReceiveYardCB_Unchecked"/>
+                            </WrapPanel>
+                            <WrapPanel Margin="20,6,10,0">
+                                <CheckBox x:Name="OutfactoryAllowUpdateCB" Style="{DynamicResource DefaultCheckBox}" Content="车辆出场时允许修改信息" FontSize="14" Checked="OutfactoryAllowUpdateCB_Checked" Unchecked="OutfactoryAllowUpdateCB_Unchecked"/>
+                            </WrapPanel>
+                            <WrapPanel Margin="20,6,10,0">
+                                <CheckBox x:Name="MustNeedSendcarCB" Style="{DynamicResource DefaultCheckBox}" Content="出库存过磅是否必须有派车单" FontSize="14" Checked="MustNeedSendcarCB_Checked" Unchecked="MustNeedSendcarCB_Unchecked"/>
+                            </WrapPanel>
+                        </StackPanel>
+
+                        <StackPanel HorizontalAlignment="Center" Visibility="{Binding ElementName=OtherSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
+                            <TextBlock  FontSize="25"> OtherSetting</TextBlock>
+                        </StackPanel>
                     </StackPanel>
-                    
-                    <StackPanel HorizontalAlignment="Center" Visibility="{Binding ElementName=OtherSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
-                        <TextBlock  FontSize="25"> OtherSetting</TextBlock>
-                    </StackPanel>
-                </StackPanel>
+                </ScrollViewer>
             </DockPanel>
         </Border>
     </Grid>

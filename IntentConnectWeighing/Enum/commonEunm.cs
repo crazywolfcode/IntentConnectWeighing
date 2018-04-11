@@ -62,6 +62,7 @@ namespace IntentConnectWeighing
         autoPrint,
         allowDiffrenceMaterialWeighing,
         outFactoryAllowUpdate,
+        outWeighingMustHasSendCarbill,
         noDeleteInGross,
         noUpdateFinishedData,
         allowDiffrenceCompany,

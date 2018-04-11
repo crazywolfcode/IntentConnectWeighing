@@ -62,7 +62,7 @@ namespace IntentConnectWeighing
         #endregion
         public OutputWindow(object bill = null, bool isSend = false)
         {
-            InitializeComponent();
+            InitializeComponent();           
             if (isSend == true)
             {
                 mSendCarBill = (SendCarBill)bill;

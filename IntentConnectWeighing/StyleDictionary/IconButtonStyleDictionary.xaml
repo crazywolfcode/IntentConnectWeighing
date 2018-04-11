@@ -99,7 +99,7 @@
                         <Storyboard>
                             <DoubleAnimation Storyboard.TargetName="transIcon"
                                              Storyboard.TargetProperty="Angle"
-                                             To="180"
+                                             To="180" 
                                              Duration="0:0:0.2">
                             </DoubleAnimation>
                         </Storyboard>

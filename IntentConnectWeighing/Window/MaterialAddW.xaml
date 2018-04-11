@@ -52,7 +52,6 @@
                     <TextBlock x:Name="AlertInfoTb" HorizontalAlignment="Center" VerticalAlignment="Center" Text="物资的名称是唯一的不可以重复添加！" FontSize="14" Foreground="#696969"></TextBlock>
                 </StackPanel>
             </StackPanel>
-
         </Border>
 
         <Border Grid.Row="2" CornerRadius="0,0,4,4"   Background="{StaticResource E4}">
