@@ -26,7 +26,26 @@ namespace IntentConnectWeighing
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-           
+            GenerateInChart();
         }
+
+        #region InChart
+        private void GenerateInChart() {
+            List<WeighingBill> list = WeighingBillModel.GetInFinished();            
+            this.InChartDataGrid.ItemsSource = list;
+        }
+
+        private void InChartDataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = e.Row.GetIndex() + 1;        
+        }
+     
+
+        private void InChartDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            WeighingBill bill = this.InChartDataGrid.SelectedItem as WeighingBill;           
+            new WeihgingBillDetailW(bill) { }.ShowDialog();
+        }
+        #endregion
     }
 }

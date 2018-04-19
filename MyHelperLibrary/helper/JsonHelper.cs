@@ -52,34 +52,7 @@ namespace MyHelper
         {
             return JsonConvert.DeserializeObject<DataTable>(jsonString);
         }
-        /// <summary>
-        ///  Table To Entity
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="dt"></param>
-        /// <returns></returns>
-        public static List<T> DataTableToEntity<T>(DataTable dt) where T : class, new()
-        {
-            Type type = typeof(T);
-            List<T> list = new List<T>();
-
-            foreach (DataRow row in dt.Rows)
-            {
-                PropertyInfo[] pArray = type.GetProperties();
-                T entity = new T();
-                foreach (PropertyInfo p in pArray)
-                {
-                    if (row[StringHelper.camelCaseToDBnameing(p.Name)] is DBNull)
-                    {
-                        p.SetValue(entity, null, null);
-                        continue;
-                    }
-                    p.SetValue(entity, row[StringHelper.camelCaseToDBnameing(p.Name)], null);
-                }
-                list.Add(entity);
-            }
-            return list;
-        }
+   
 
     }
 }

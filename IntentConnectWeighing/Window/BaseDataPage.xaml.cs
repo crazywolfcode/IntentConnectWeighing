@@ -148,7 +148,7 @@ namespace IntentConnectWeighing
             DataTable cateDt = DatabaseOPtionHelper.GetInstance().select(pSql);
             if (cateDt.Rows.Count > 0)
             {
-                provinces = JsonHelper.DataTableToEntity<Province>(cateDt);
+                provinces = DbBaseHelper.DataTableToEntity<Province>(cateDt);
                 if (provinces == null || provinces.Count <= 0)
                 {
                     FillCompanyAlretData();
@@ -164,7 +164,7 @@ namespace IntentConnectWeighing
                     condition = CompanyEnum.affiliated_province_id + "=" + Constract.valueSplit + p.id + Constract.valueSplit;
                     sql = DbBaseHelper.getSelectSql(DataTabeName.company.ToString(), null, condition);
                     mDt = DatabaseOPtionHelper.GetInstance().select(sql);
-                    List<Company> mlist = JsonHelper.DataTableToEntity<Company>(mDt);
+                    List<Company> mlist = DbBaseHelper.DataTableToEntity<Company>(mDt);
                     if(mlist!=null && mlist.Count > 0)
                     {
                         ProvinceV v = new ProvinceV()
@@ -262,7 +262,7 @@ namespace IntentConnectWeighing
             DataTable cateDt = DatabaseOPtionHelper.GetInstance().select(CategorySql);
             if (cateDt.Rows.Count > 0)
             {
-                cates = JsonHelper.DataTableToEntity<MaterialCategory>(cateDt);
+                cates = DbBaseHelper.DataTableToEntity<MaterialCategory>(cateDt);
                 if (cates == null || cates.Count <= 0)
                 {
                     FillMaterialAlretData();
@@ -278,7 +278,7 @@ namespace IntentConnectWeighing
                     condition = MaterialEnum.category_id + "=" + Constract.valueSplit + mc.id + Constract.valueSplit;
                     sql = DbBaseHelper.getSelectSql(DataTabeName.material.ToString(), null, condition);
                     mDt = DatabaseOPtionHelper.GetInstance().select(sql);
-                    List<Material> mlist = JsonHelper.DataTableToEntity<Material>(mDt);
+                    List<Material> mlist = DbBaseHelper.DataTableToEntity<Material>(mDt);
                     MaterialV v = new MaterialV()
                     {
                         Category = mc,
@@ -387,7 +387,7 @@ namespace IntentConnectWeighing
             DataTable Dt = DatabaseOPtionHelper.GetInstance().select(sql);
             if (Dt.Rows.Count > 0)
             {
-                cates = JsonHelper.DataTableToEntity<CarHeader>(Dt);
+                cates = DbBaseHelper.DataTableToEntity<CarHeader>(Dt);
                 if (cates == null || cates.Count <= 0)
                 {
                     FillMaterialAlretData();
@@ -403,7 +403,7 @@ namespace IntentConnectWeighing
                     condition = CarInfoEnum.car_number + " like " + Constract.valueSplit + ch.content + "%" + Constract.valueSplit;
                     sql = DbBaseHelper.getSelectSql(DataTabeName.car_info.ToString(), null, condition);
                     mDt = DatabaseOPtionHelper.GetInstance().select(sql);
-                    List<CarInfo> mlist = JsonHelper.DataTableToEntity<CarInfo>(mDt);
+                    List<CarInfo> mlist = DbBaseHelper.DataTableToEntity<CarInfo>(mDt);
                     if (mlist.Count > 0)
                     {
                         CarHeaderV v = new CarHeaderV()

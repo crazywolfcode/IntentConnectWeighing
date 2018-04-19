@@ -63,7 +63,7 @@ namespace IntentConnectWeighing
 
             DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
             if (dt.Rows.Count > 0) {
-                mCameraInfo =( JsonHelper.DataTableToEntity<CameraInfo>(dt))[0];
+                mCameraInfo =(DbBaseHelper.DataTableToEntity<CameraInfo>(dt))[0];
             }
             this.IpTB.Text = mCameraInfo.ip;
             this.portTB.Text = mCameraInfo.port;

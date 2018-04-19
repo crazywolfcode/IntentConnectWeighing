@@ -206,7 +206,7 @@ namespace IntentConnectWeighing
             String @condition = ScaleEnum.client_id.ToString() + "=" + Constract.valueSplit + App.CurrClientId + Constract.valueSplit + " and " +
                 ScaleEnum.company_id.ToString() + "=" + Constract.valueSplit + App.currentCompany.id + Constract.valueSplit;
             String sql = DbBaseHelper.getSelectSql(DataTabeName.scale.ToString(), null, condition, null, null, ScaleEnum.default_type.ToString() + " desc");
-            mScales = JsonHelper.DataTableToEntity<Scale>(DatabaseOPtionHelper.GetInstance().select(sql));
+            mScales = DbBaseHelper.DataTableToEntity<Scale>(DatabaseOPtionHelper.GetInstance().select(sql));
         }
 
         private void SetCurrScaleInfo()
@@ -378,7 +378,7 @@ namespace IntentConnectWeighing
                CameraInfoEnum.company_id.ToString() + "=" + Constract.valueSplit + App.currentCompany.id + Constract.valueSplit + " and " +
                 CameraInfoEnum.scale_id.ToString() + "=" + Constract.valueSplit + mCurrScale.id + Constract.valueSplit;
             String sql = DbBaseHelper.getSelectSql(DataTabeName.camera_info.ToString(), null, condition, null, null);
-            mCameraInfos = JsonHelper.DataTableToEntity<CameraInfo>(DatabaseOPtionHelper.GetInstance().select(sql));
+            mCameraInfos = DbBaseHelper.DataTableToEntity<CameraInfo>(DatabaseOPtionHelper.GetInstance().select(sql));
         }
         private List<Int32> CameraIds;
         private List<CHCNetSDK.NET_DVR_DEVICEINFO_V30> mDeviceInfors;
@@ -830,7 +830,7 @@ namespace IntentConnectWeighing
             {
                 string condition = CompanyEnum.name.ToString() + " like '%" + text.ToUpper() + "%' " + " OR " + CompanyEnum.name_first_case.ToString() + " like '%" + text + "%'";
                 String sql = DbBaseHelper.getSelectSql(DataTabeName.company.ToString(), null, condition);
-                List<Company> list = JsonHelper.DataTableToEntity<Company>(DatabaseOPtionHelper.GetInstance().select(sql));
+                List<Company> list = DbBaseHelper.DataTableToEntity<Company>(DatabaseOPtionHelper.GetInstance().select(sql));
                 if (list.Count > 0)
                 {
                     isSupplySelected = false;
@@ -903,7 +903,7 @@ namespace IntentConnectWeighing
             {
                 string condition = CompanyEnum.name.ToString() + " like '%" + text + "%' " + " OR " + CompanyEnum.name_first_case.ToString() + " like '%" + text + "%'";
                 String sql = DbBaseHelper.getSelectSql(DataTabeName.company.ToString(), null, condition);
-                List<Company> list = JsonHelper.DataTableToEntity<Company>(DatabaseOPtionHelper.GetInstance().select(sql));
+                List<Company> list = DbBaseHelper.DataTableToEntity<Company>(DatabaseOPtionHelper.GetInstance().select(sql));
                 if (list.Count > 0)
                 {
                     isSelectReceiveCompany = true;
@@ -994,7 +994,7 @@ namespace IntentConnectWeighing
             {
                 string condition = MaterialEnum.name.ToString() + " like '%" + text + "%' " + " OR " + MaterialEnum.name_first_case.ToString() + " like '%" + text + "%'";
                 String sql = DbBaseHelper.getSelectSql(DataTabeName.material.ToString(), null, condition);
-                List<Material> list = JsonHelper.DataTableToEntity<Material>(DatabaseOPtionHelper.GetInstance().select(sql));
+                List<Material> list = DbBaseHelper.DataTableToEntity<Material>(DatabaseOPtionHelper.GetInstance().select(sql));
                 if (list.Count > 0)
                 {
                     isSelectMaterial = true;
@@ -1049,9 +1049,7 @@ namespace IntentConnectWeighing
             if (isOutFactory == true) { return; }
             if (text.Length >= 2)
             {
-                string condition = CarInfoEnum.car_number.ToString() + " like '%" + text + "%' ";
-                String sql = DbBaseHelper.getSelectSql(DataTabeName.car_info.ToString(), null, condition);
-                List<CarInfo> list = JsonHelper.DataTableToEntity<CarInfo>(DatabaseOPtionHelper.GetInstance().select(sql));
+                List<CarInfo> list = CarInfoModel.FuzzySearch(text);
                 if (list.Count > 0)
                 {
                     isCarInfoSelectioned = true;

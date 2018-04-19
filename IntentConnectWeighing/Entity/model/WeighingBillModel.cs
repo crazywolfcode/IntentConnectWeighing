@@ -12,7 +12,7 @@ namespace IntentConnectWeighing
         {
             string condition = WeighingBillEnum.id.ToString() + "=" + Constract.valueSplit + id + Constract.valueSplit;
             String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition, null, null, null, 1);
-            List<WeighingBill> list = MyHelper.JsonHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            List<WeighingBill> list = MyHelper.DbBaseHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
             if (list.Count > 0)
             {
                 return list[0];
@@ -34,7 +34,7 @@ namespace IntentConnectWeighing
               WeighingBillEnum.receive_company_id.ToString() + "=" + Constract.valueSplit + App.currentCompany.id + Constract.valueSplit;
 
             String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, conditon, null, null, WeighingBillEnum.send_out_time + " desc ", 20);
-            list = MyHelper.JsonHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            list = MyHelper.DbBaseHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
             return list;
         }
         /// <summary>
@@ -55,7 +55,7 @@ namespace IntentConnectWeighing
                 condition += " and " + WeighingBillEnum.receive_in_time.ToString() + " <=" + Constract.valueSplit + endDate + Constract.valueSplit;
             }
             String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
-            List<WeighingBill> list = MyHelper.JsonHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            List<WeighingBill> list = MyHelper.DbBaseHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
             return list;
         }
 
@@ -84,7 +84,7 @@ namespace IntentConnectWeighing
                 }
             }
             String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
-            List<WeighingBill> list = MyHelper.JsonHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            List<WeighingBill> list = MyHelper.DbBaseHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
             return list;
         }
 
@@ -106,7 +106,7 @@ namespace IntentConnectWeighing
                 condition += " and " + WeighingBillEnum.send_in_time.ToString() + " <=" + Constract.valueSplit + endDate + Constract.valueSplit;
             }
             String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
-            List<WeighingBill> list = MyHelper.JsonHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            List<WeighingBill> list = MyHelper.DbBaseHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
             return list;
         }
         /// <summary>
@@ -134,7 +134,7 @@ namespace IntentConnectWeighing
                 }
             }
             String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
-            List<WeighingBill> list = MyHelper.JsonHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            List<WeighingBill> list = MyHelper.DbBaseHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
             return list;
         }
 

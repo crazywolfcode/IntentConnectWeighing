@@ -79,7 +79,7 @@ namespace IntentConnectWeighing
             DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
             if (dt.Rows.Count > 0)
             {
-                mScale = (JsonHelper.DataTableToEntity<Scale>(dt))[0];
+                mScale = (DbBaseHelper.DataTableToEntity<Scale>(dt))[0];
             }
             if (mScale != null)
             {

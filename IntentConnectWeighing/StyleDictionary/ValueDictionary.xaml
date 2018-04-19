@@ -94,7 +94,7 @@
         <Setter Property="HorizontalAlignment"   Value="Center" />
     </Style>
     <Style TargetType="TextBlock" x:Key="DataGridContentCenter">
-        <Setter Property="VerticalAlignment"   Value="Center" />
+        <Setter Property="VerticalAlignment"   Value="Center" />       
         <Setter Property="HorizontalAlignment"   Value="Center" />
     </Style>
 </ResourceDictionary>

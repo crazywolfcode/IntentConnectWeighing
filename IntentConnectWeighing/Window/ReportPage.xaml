@@ -3,9 +3,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:IntentConnectWeighing"
+      xmlns:local="clr-namespace:IntentConnectWeighing"   
       mc:Ignorable="d"  Loaded="Page_Loaded" 
-      d:DesignHeight="300" d:DesignWidth="600" 
+      d:DesignHeight="500" d:DesignWidth="800" 
       Title="ReportPage">
     <Grid Background="White" Margin="0,0,0,5">
         <Grid.RowDefinitions>
@@ -49,33 +49,47 @@
                             ActiveForground="RoyalBlue" 
                             Foreground="#666"
                             IndicatorHeight="3" 
-                            Margin="0,0,30,0"                  
+                            Margin="0,0,4,0"                  
                             IconMargin="0,0,3,0"
                             IconSize="18"
                             Content="今日汇总"
                             ActiveIndicatorColor="RoyalBlue" />
-
+                        <local:TabButton 
+                            x:Name="DetialReportTabBtn"
+                            Width="70" Height="30"  FontSize="14"
+                            IsChecked="False"
+                            ActiveForground="RoyalBlue" 
+                            Foreground="#666"
+                            IndicatorHeight="3" 
+                            Margin="0,0,30,0"                  
+                            IconMargin="0,0,3,0"
+                            IconSize="18"
+                            Content="明细报表"
+                            ActiveIndicatorColor="RoyalBlue" />
+                        
                         <local:IconButton                
-                            x:Name="AddMaterialCategoryBtn" 
-                          Style="{DynamicResource  IconButtonTransparencyStyle}"
+                           x:Name="ReportPrintBtn" 
+                           Style="{DynamicResource  IconButtonTransparencyStyle}"
                            MouseOverForeground="{DynamicResource myBlue}"
-                           VerticalAlignment="Bottom"
-                           IsShowIcon="True" Icon="&#xe617;" IconSize="28"
+                           VerticalAlignment="Bottom" ToolTip="打印报表"
+                           IsShowIcon="True" Icon="&#xe65b;" IconSize="28"
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0" />
                         <local:IconButton           
+                            x:Name="SaveToImageBtn"
                           Style="{DynamicResource  IconButtonTransparencyStyle}"
                            MouseOverForeground="{DynamicResource myBlue}"
-                           VerticalAlignment="Bottom" 
-                           IsShowIcon="True" Icon="&#xe61f;" IconSize="28"
+                           VerticalAlignment="Bottom" ToolTip="保存为图片"
+                           IsShowIcon="True" Icon="&#xe8d3;" IconSize="28"
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0"
                          />
                         <local:IconButton         
+                            x:Name="ExportExcelBtn"
                           Style="{DynamicResource  IconButtonTransparencyStyle}"
                            MouseOverForeground="{DynamicResource myBlue}"
-                           VerticalAlignment="Bottom" 
-                           IsShowIcon="True" Icon="&#xe64c;" IconSize="28"
+                           VerticalAlignment="Bottom" ToolTip="导出到电子表格"
+                           IsShowIcon="True" Icon="&#xe6df;" IconSize="28"
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0"
                          />
@@ -93,23 +107,71 @@
             </StackPanel>
         </Border>
         <!--CenderBorder-->
-        <Border x:Name="CenderBorder" Grid.Row="1" >
+        <Border x:Name="CenderBorder" Grid.Row="1"  Visibility="{Binding Path=IsChecked,ElementName=DetialReportTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" >
             <TextBlock Text="查询条件区"/>
         </Border>
         <!--DownBorder-->
         <Border x:Name="DownBorder" Grid.Row="2">
             <ScrollViewer x:Name="ContentScrollViewer"
                         Background="Transparent"
-                       VerticalScrollBarVisibility="Auto"
+                        VerticalScrollBarVisibility="Auto"
                         Height="{Binding ElementName=RightContentBorderPanel,Path=ActualHeight}" 
                         Width="{Binding ElementName=RightContentBorderPanel,Path=ActualWidth}" 
                         Style="{StaticResource DefaultScrollViewer}" >
-                <StackPanel VerticalAlignment="Center">
+                <StackPanel VerticalAlignment="Top">
                     <!--today in-->
-                    <StackPanel x:Name="TodayInPanel" Visibility="{Binding Path=IsChecked,ElementName=TodayInTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" HorizontalAlignment="Center">
-                        <TextBlock> 1</TextBlock>
+                    <StackPanel x:Name="TodayInPanel" Visibility="{Binding Path=IsChecked,ElementName=TodayInTabBtn,Converter={StaticResource CheckedToVisibleConverter}}"  Margin="0,10,0,0" >
+                        <Grid Margin="20,0,20,0"  x:Name="InGrid">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="120"/>
+                            </Grid.RowDefinitions>
+                            
+                            <StackPanel Grid.Row="0">                                
+                                <TextBlock Text="富源县天鑫煤业有限公司" FontSize="18"  FontWeight="Bold" HorizontalAlignment="Center" />
+                                <TextBlock Text="入库报表" FontSize="14"  HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                                <DockPanel >
+                                    <TextBlock Text="2018-03-12 "  VerticalAlignment="Center" TextAlignment="Center" Padding="4,0,0,0"/>
+                                    <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" Text="2018-12-12 12:20:10"  VerticalAlignment="Center" Padding="0,0,4,0"/>
+                                    <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" Text="打印时间:"  VerticalAlignment="Center" TextAlignment="Center" Padding="4,0,0,0"/>
+                                </DockPanel>
+                            </StackPanel>
+                            <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1">
+                                <DataGrid x:Name="InChartDataGrid" LoadingRow="InChartDataGrid_LoadingRow" MouseDoubleClick="InChartDataGrid_MouseDoubleClick" IsReadOnly="True" SelectionUnit="FullRow" SelectionMode="Single" CanUserSortColumns="False" AutoGenerateColumns="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="LightGray" BorderThickness="1" BorderBrush="LightGray" CanUserAddRows="False" ColumnHeaderHeight="30" Style="{x:Null}" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="编号" ElementStyle="{DynamicResource DataGridContentCenter}" Binding="{Binding receiveNumber}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="发货公司" ElementStyle="{DynamicResource DataGridContentCenter}" Binding="{Binding sendCompanyName}"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="物资名称" ElementStyle="{DynamicResource DataGridContentCenter}" Binding="{Binding  receiveMaterialName}"></DataGridTextColumn>
+                                        <DataGridTemplateColumn Header="车辆信息" >
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <WrapPanel>
+                                                        <TextBlock Text="{Binding plateNumber}" />
+                                                        <TextBlock Text="{Binding driver}" />
+                                                        <TextBlock Text="{Binding driverMobile}" />
+                                                    </WrapPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTextColumn Header="原发净重" Binding="{Binding sendGrossWeight}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}"/>
+                                        <DataGridTextColumn Header="收货毛重" Binding="{Binding receiveGrossWeight}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}"/>
+                                        <DataGridTextColumn Header="收货皮重" Binding="{Binding receiveTraeWeight}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}"/>
+                                        <DataGridTextColumn Header="收货净重" Binding="{Binding receiveNetWeight}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}"/>
+                                        <DataGridTextColumn Header="入场时间" Binding="{Binding receiveInTime}" ElementStyle="{DynamicResource DataGridContentCenter}"/>
+                                        <DataGridTextColumn Header="出场时间" Binding="{Binding receiveOutTime}" ElementStyle="{DynamicResource DataGridContentCenter}"/>
+                                        <DataGridTextColumn Header="扣吨"  Binding="{Binding decuationWeight}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}"/>
+                                        <DataGridTextColumn Header="磅差" Binding="{Binding differenceWeight }" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}"/>
+                                        <DataGridTextColumn Header="过磅员" Binding="{Binding receiveUserName}" ElementStyle="{DynamicResource DataGridContentCenter}"/>
+                                        <DataGridTextColumn Header="备注" Binding="{Binding receiveRemark}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Border>
+                            <Border Grid.Row="2" BorderBrush="LightGray" BorderThickness="1,0,1,1">
+                                
+                            </Border>
+                        </Grid>
                     </StackPanel>
-
                     <!--Today out-->
                     <StackPanel x:Name="TodayOutStackPanel" Visibility="{Binding Path=IsChecked,ElementName=TodayOutTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" HorizontalAlignment="Center">
                         <TextBlock>2</TextBlock>

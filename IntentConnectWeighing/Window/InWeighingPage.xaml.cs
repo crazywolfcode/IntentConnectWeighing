@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MyHelper;
 
 namespace IntentConnectWeighing
 {
@@ -107,7 +108,7 @@ namespace IntentConnectWeighing
 
         private void HideOrShowDeleteNofinishBtn()
         {
-            if ("true" == MyHelper.ConfigurationHelper.GetConfig(ConfigItemName.noDeleteInGross.ToString()))
+            if ("true" ==ConfigurationHelper.GetConfig(ConfigItemName.noDeleteInGross.ToString()))
             {
                 this.DeleteNofinishedBtn.Visibility = Visibility.Collapsed;
             }
@@ -120,7 +121,7 @@ namespace IntentConnectWeighing
 
         private void HideOrShowUpdateFinishedBtn()
         {
-            if ("true" == MyHelper.ConfigurationHelper.GetConfig(ConfigItemName.noUpdateFinishedData.ToString()))
+            if ("true" ==ConfigurationHelper.GetConfig(ConfigItemName.noUpdateFinishedData.ToString()))
             {
                 this.FinishUpdateBtn.Visibility = Visibility.Collapsed;
             }
@@ -215,8 +216,8 @@ namespace IntentConnectWeighing
                 return;
             }
             string condition = WeighingBillEnum.id.ToString() + "=" + Constract.valueSplit + mWeighingBill.id + Constract.valueSplit;
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition, null, null, null, 1);
-            List<WeighingBill> list = MyHelper.JsonHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            String sql =DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition, null, null, null, 1);
+            List<WeighingBill> list =DbBaseHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
             if (list.Count > 0)
             {
                 mWeighingBill = list[0];
@@ -361,7 +362,7 @@ namespace IntentConnectWeighing
         }
         private void FinishUpdateBtn_Click(object sender, RoutedEventArgs e)
         {
-            if ("true" == MyHelper.ConfigurationHelper.GetConfig(ConfigItemName.noUpdateFinishedData.ToString()))
+            if ("true" ==ConfigurationHelper.GetConfig(ConfigItemName.noUpdateFinishedData.ToString()))
             {
                 MessageBox.Show("不可以修改已经完成的数据！");
                 return;
@@ -379,7 +380,7 @@ namespace IntentConnectWeighing
         #region Delete No finished bill
         private void DeleteNofinishedBtn_Click(object sender, RoutedEventArgs e)
         {
-            if ("true" == MyHelper.ConfigurationHelper.GetConfig(ConfigItemName.noDeleteInGross.ToString()))
+            if ("true" ==ConfigurationHelper.GetConfig(ConfigItemName.noDeleteInGross.ToString()))
             {
                 MessageBox.Show("不可以删除入库的毛重！");
                 return;

@@ -297,7 +297,7 @@ namespace IntentConnectWeighing
                 DataTable dt = helper.select(sql);
                 if (dt.Rows.Count > 0)
                 {
-                    List<Config> configs = JsonHelper.DataTableToEntity<Config>(dt);
+                    List<Config> configs = DbBaseHelper.DataTableToEntity<Config>(dt);
                     if (configs[0]!= null)
                     {
                         config = configs[0];
