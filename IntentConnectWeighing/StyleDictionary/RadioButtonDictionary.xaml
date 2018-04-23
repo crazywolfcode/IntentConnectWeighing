@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:myControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
                     xmlns:local="clr-namespace:IntentConnectWeighing">
 
     <SolidColorBrush Color="RoyalBlue" x:Key="RadioButtonCheckedForegroundColor"/>
@@ -21,9 +22,8 @@
                           Margin="{TemplateBinding Padding}"
                           VerticalAlignment="Center" >
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock x:Name="icon"                                        
+                            <myControl:IconTextBlock x:Name="icon"                                        
                                        Text="&#xe8b5;"
-                                       Style="{DynamicResource IFontStyle}"
                                        SnapsToDevicePixels="True"
                                        FontSize="{TemplateBinding local:ControlAttachProperty.IconSize}"
                                        Margin="{TemplateBinding local:ControlAttachProperty.IconMargin}"

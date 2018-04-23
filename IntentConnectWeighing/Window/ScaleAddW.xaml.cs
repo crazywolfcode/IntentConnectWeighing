@@ -38,7 +38,7 @@ namespace IntentConnectWeighing
             InitializeComponent();
             mId = scaleId;
             mScale = new Scale() { defaultType = (int)ScaleDefaultType.No };
-
+            
             if (String.IsNullOrEmpty(mId))
             {
                 mScale.id = Guid.NewGuid().ToString();

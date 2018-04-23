@@ -72,8 +72,7 @@
     <SolidColorBrush x:Key="PressedForeground" Color="RoyalBlue"></SolidColorBrush>
     <SolidColorBrush x:Key="LinkForeground" Color="#0816BB"></SolidColorBrush>
 
-    <SolidColorBrush x:Key="ScrollBarForeround" Color="#877F7F"></SolidColorBrush>
-    <SolidColorBrush x:Key="ScrollBarBackground" Color="#3E3E42"></SolidColorBrush>
+ 
 
     <!--ItemsControl:DataGrid,Tree-->
     <sys:Double x:Key="HeaderFontSize">14</sys:Double>

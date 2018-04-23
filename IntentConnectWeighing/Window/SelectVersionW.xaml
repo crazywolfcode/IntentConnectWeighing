@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IntentConnectWeighing"
+        xmlns:myControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
         mc:Ignorable="d" 
         Icon="/IntentConnectWeighing;component/aislogo_48.ico"
         WindowStartupLocation="CenterScreen" Style="{StaticResource  settingWindowStyle}"
@@ -52,27 +53,26 @@
             <TextBlock Margin="0,0,10,0" FontSize="14" VerticalAlignment="Center" Padding="10,0,0,0">
                 如果你不知道如何选择版本，请点击
             </TextBlock>
-            <local:IconButton
+            <myControl:IconButton
                 x:Name="helperBT"
                 Click="helperBT_Click"
                 Icon="&#xe8e9;"
                 FontSize="14"
                 Foreground="{StaticResource myBlue}"
                 MouseOverForeground="RoyalBlue"
-                Style="{DynamicResource IconButtonTransparencyStyle}">获取帮助</local:IconButton>
+                IsTransparency="True" Content="获取帮助"/>
         </WrapPanel>
      
         <Border Grid.Row="2" CornerRadius="0,0,4,4"   Background="{StaticResource E4}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                <local:IconButton 
+                <myControl:IconButton 
                     x:Name="nextBtn" 
                     Click="nextBtn_Click"
                     VerticalAlignment="Center"
                     VerticalContentAlignment="Center"
                     Padding="1"
                     Icon="&#xe620;"
-                    IsShowIcon="True"                
-                    Style="{StaticResource IconButtonStyle}"                 
+                    IsShowIcon="True"                           
                     BorderBrush="#e0e0e0" 
                     Foreground="#666"
                     BorderThickness="1" 

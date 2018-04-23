@@ -26,7 +26,8 @@ namespace IntentConnectWeighing
         }
         private void BaseWindow_Activated(object sender, EventArgs e)
         {
-            if (this.IsLoaded && this.WindowState != WindowState.Minimized) {
+            if (this.IsLoaded && this.WindowState != WindowState.Minimized)
+            {
                 //refresh all data TODO
             }
         }
@@ -51,18 +52,19 @@ namespace IntentConnectWeighing
         /// </summary>
         private void InitMainFrame()
         {
-            if (this.BaseData.IsChecked==true)
+            if (this.BaseData.IsChecked == true)
             {
                 BaseDataPage baseDataPage = new BaseDataPage();
-                baseDataPage.paretntWindow= this;
+                baseDataPage.paretntWindow = this;
                 this.MainFrame.Navigate(baseDataPage);
             }
-            if (this.Home.IsChecked ==true) { 
-            HomePage index = new HomePage();
-            index.ParentWindow = this;
-            this.MainFrame.Navigate(index);
+            if (this.Home.IsChecked == true)
+            {
+                HomePage index = new HomePage();
+                index.ParentWindow = this;
+                this.MainFrame.Navigate(index);
                 return;
-        }
+            }
         }
         /// <summary>
         /// 将导航菜单居中
@@ -140,7 +142,7 @@ namespace IntentConnectWeighing
                 this.ShowInTaskbar = true;
             }
         }
-   
+
         private void BaseWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = true;
@@ -148,6 +150,6 @@ namespace IntentConnectWeighing
             App.notifyIcon.BalloonTipTitle = "minimiaced ";
             App.notifyIcon.BalloonTipText = "minimiaced  in there";
         }
-       
+
     }
 }

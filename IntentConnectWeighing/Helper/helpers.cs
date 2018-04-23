@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 namespace IntentConnectWeighing
 {
-    class helpers
+    class Helpers
     {
         private static readonly string template = "IntentConnectWeighing;component/{0}";
-
+        
         /// <summary>
         /// 获取图片资源的路径
         /// 如：Themes/Img/Background/bd.png

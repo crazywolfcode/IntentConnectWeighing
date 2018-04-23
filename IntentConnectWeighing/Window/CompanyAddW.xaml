@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:form="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:local="clr-namespace:IntentConnectWeighing"
+        xmlns:mycontrol="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
         mc:Ignorable="d" ResizeMode="NoResize"
         Icon="/IntentConnectWeighing;component/aislogo_48.ico"
         WindowStartupLocation="CenterScreen"         ContentRendered="Window_ContentRendered"
@@ -65,7 +66,7 @@
         <Border Background="White" Grid.Row="1">
             <StackPanel x:Name="ContentPanel">
                 <StackPanel Grid.Row="0" HorizontalAlignment="Right" Margin=" 0,0,10,0" Orientation="Horizontal">
-                    <local:TabButton   
+                    <mycontrol:TabButton   
                             x:Name="CompanyRB" Content="公司" 
                             Foreground="#666" IsChecked="True"
                             ActiveForground="RoyalBlue" Height="30"
@@ -75,7 +76,7 @@
                             IconSize="18"
                             Icon="&#xe891;" 
                             ActiveIndicatorColor="RoyalBlue"/>
-                    <local:TabButton   
+                    <mycontrol:TabButton   
                         IsChecked="False" x:Name="PensonRB" Content="个人" 
                         Foreground="#666" Height="30"
                         ActiveForground="RoyalBlue"
@@ -166,7 +167,7 @@
         </Border>
         <Border Grid.Row="2" CornerRadius="0,0,4,4"   Background="{StaticResource E4}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                <local:IconButton IsEnabled="True"
+                <mycontrol:IconButton IsEnabled="True"
                     x:Name="saveBtn" 
                     Click="SaveBtn_Click"
                     VerticalAlignment="Bottom"
@@ -174,8 +175,7 @@
                     Padding="1"
                     Icon="&#xe77a;"
                     IsShowIcon="False"
-                    Margin="10,0,15,5"                      
-                    Style="{StaticResource IconButtonStyle}"                 
+                    Margin="10,0,15,5"                                    
                     BorderBrush="#e0e0e0" 
                     Foreground="#666"
                     BorderThickness="1" 

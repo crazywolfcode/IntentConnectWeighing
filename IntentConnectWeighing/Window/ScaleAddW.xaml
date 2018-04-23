@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:form="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:local="clr-namespace:IntentConnectWeighing"
+        xmlns:myControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
         mc:Ignorable="d" ResizeMode="NoResize"
         Icon="/IntentConnectWeighing;component/aislogo_48.ico"
         WindowStartupLocation="CenterScreen" WindowStyle="None"   Style="{DynamicResource settingWindowStyle}"  
@@ -52,6 +53,7 @@
                         <Label>波 特 率 ：</Label>
                         <TextBox  Width="160" x:Name="BaudRateTB" ToolTip="磅秤的波特率" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
                     </WrapPanel>
+                    
                     <WrapPanel Margin="0,10,0,0" >
                         <Label>数据位数：</Label>
                         <TextBox  Width="160"  x:Name="DataByteTB" ToolTip="磅秤的数据位数" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
@@ -83,7 +85,7 @@
 
         <Border Grid.Row="2" CornerRadius="0,0,4,4"   Background="{StaticResource F9}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                <local:IconButton 
+                <myControl:IconButton 
                     x:Name="saveBtn" 
                     Click="saveBtn_Click"
                     VerticalAlignment="Center"
@@ -91,8 +93,7 @@
                     Padding="1"
                     Icon="&#xe77a;"
                     IsShowIcon="False"
-                    Margin="10,0,15,0"                      
-                    Style="{StaticResource IconButtonStyle}"                 
+                    Margin="10,0,15,0"                                
                     BorderBrush="#e0e0e0" 
                     Foreground="#666"
                     BorderThickness="1" 

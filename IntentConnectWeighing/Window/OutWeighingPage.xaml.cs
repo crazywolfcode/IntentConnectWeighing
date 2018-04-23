@@ -50,6 +50,7 @@ namespace IntentConnectWeighing
             RefreshData(false, false, true);
             RefreshFinishedData();
         }
+
         /// <summary>
         /// 出库存过磅是否必须有派车单 是 hide add button
         /// </summary>
@@ -375,5 +376,44 @@ namespace IntentConnectWeighing
             MessageBox.Show("Show SendCar List TODO");
         }
         #endregion
+
+        #region Compute ListView Height
+
+        private void PaiCheListPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ComputeListViewHeight();
+        }
+        private void RightMainPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (this.IsLoaded == false)
+            {
+                return;
+            }
+            if (this.NoFinishListView.ActualHeight > this.RightMainPanel.ActualHeight) {
+                this.NoFinishListView.Height = this.RightMainPanel.Height;
+            }
+            if (this.FinishListView.ActualHeight > this.RightMainPanel.Height)
+            {
+                this.FinishListView.Height = this.RightMainPanel.Height;
+            }
+        
+        }
+        /// <summary>
+        /// Compute ListView Height
+        /// </summary>
+        private void ComputeListViewHeight()
+        {
+            if (this.IsLoaded == false)
+            {
+                return;
+            }
+            if (this.SendBillListView.ActualHeight > this.PaiCheListPanel.Height)
+            {
+                this.SendBillListView.Height = this.PaiCheListPanel.Height;
+            }
+        }
+        #endregion
+
+    
     }
 }

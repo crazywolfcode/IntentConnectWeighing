@@ -31,7 +31,7 @@ namespace IntentConnectWeighing
         {
             base.MyInitializeStyle(this, MyWindowsStyle.dialog);
             base.SetWindowTitle(this, "初始化基本设置");
-            base.setIcon(this, helpers.getImageSourceParth("Themes/Img/Icon/setting-ico.png"));
+            base.setIcon(this, Helpers.getImageSourceParth("Themes/Img/Icon/setting-ico.png"));
             getinitializationConfig();
         }
 

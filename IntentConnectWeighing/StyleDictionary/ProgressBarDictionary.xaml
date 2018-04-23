@@ -43,7 +43,6 @@
         </Setter>
     </Style>
 
-
     <!--注意：该样式的ProgressBar的最大值为1，且DataContext必须设置为IAsynNotify,BorderThickness控制环的大小-->
     <Style x:Key="LoopProcessBarStyle" TargetType="{x:Type ProgressBar}">
         <Setter Property="Background" Value="#C1D1DE"/>
@@ -84,7 +83,6 @@
                                 ArcThickness="{Binding Path=BorderThickness,RelativeSource={RelativeSource TemplatedParent},Mode=OneWay,Converter={x:Static local:StaticConverter.ThicknessToDoubleConverter}}"
                                 EndAngle="{TemplateBinding Value, Converter={x:Static local:StaticConverter.PercentToAngleConverter}}"
                               />
-
                         </Grid>
                     </Viewbox>
                 </ControlTemplate>

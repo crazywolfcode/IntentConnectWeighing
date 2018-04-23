@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace IntentConnectWeighing
+namespace MyCustomControlLibrary
 {
     public partial class IconButton : Button
     {
@@ -128,6 +128,18 @@ namespace IntentConnectWeighing
             get { return (TextDecorationCollection)GetValue(ContentDecorationsProperty); }
             set { SetValue(ContentDecorationsProperty, value); }
         }
+
+        public bool IsTransparency
+        {
+            get { return (bool)GetValue(IsTransparencyProperty); }
+            set { SetValue(IsTransparencyProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsTransparencyProperty =
+            DependencyProperty.Register("IsTransparency", typeof(bool), typeof(IconButton), new PropertyMetadata(false));
+
+
+
 
         static IconButton()
         {

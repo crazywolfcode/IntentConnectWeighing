@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"     
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:form="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:myControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
         xmlns:local="clr-namespace:IntentConnectWeighing"
         mc:Ignorable="d" ResizeMode="NoResize"
         Icon="/IntentConnectWeighing;component/aislogo_48.ico"
@@ -70,7 +71,7 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" x:Name="StepPanel">
                     <WrapPanel   VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,6,0" >
-                        <local:TabButton     
+                        <myControl:TabButton     
                                 IsChecked="True" Content="行驶证"
                                 x:Name="vchicleTabBtn"
                                 Foreground="#666" Height="30" Width="80"
@@ -78,7 +79,7 @@
                                 IndicatorHeight="3" 
                                 Margin="0,0,4,0"
                                 ActiveIndicatorColor="RoyalBlue"/>
-                        <local:TabButton   
+                        <myControl:TabButton       
                                 x:Name="DirvingTabBtn"
                                 IsChecked="False" Height="30" Width="80"
                                 ActiveForground="RoyalBlue" 
@@ -201,7 +202,7 @@
 
         <Border Grid.Row="2" CornerRadius="0,0,4,4"   Background="{StaticResource E4}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                <local:IconButton 
+                <myControl:IconButton  
                     x:Name="saveBtn" 
                     Click="SaveBtn_Click"
                     VerticalAlignment="Bottom"
@@ -209,8 +210,7 @@
                     Padding="1"
                     Icon="&#xe77a;"
                     IsShowIcon="False"
-                    Margin="10,0,15,5"                      
-                    Style="{StaticResource IconButtonStyle}"                 
+                    Margin="10,0,15,5"                             
                     BorderBrush="#e0e0e0" 
                     Foreground="#666"
                     BorderThickness="1" 

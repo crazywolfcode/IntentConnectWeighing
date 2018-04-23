@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"     
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IntentConnectWeighing"
+        xmlns:myControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
         mc:Ignorable="d" ResizeMode="NoResize"
         Icon="/IntentConnectWeighing;component/aislogo_48.ico"
         WindowStartupLocation="CenterScreen"         ContentRendered="Window_ContentRendered"
@@ -60,7 +61,7 @@
 
         <Border Grid.Row="2" CornerRadius="0,0,4,4"   Background="{StaticResource E4}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                <local:IconButton 
+                <myControl:IconButton 
                     x:Name="saveBtn" 
                     Click="saveBtn_Click"
                     VerticalAlignment="Center"
@@ -69,7 +70,6 @@
                     Icon="&#xe77a;"
                     IsShowIcon="False"
                     Margin="10,0,15,0"                      
-                    Style="{StaticResource IconButtonStyle}"                 
                     BorderBrush="#e0e0e0" 
                     Foreground="#666"
                     BorderThickness="1" 

@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:IntentConnectWeighing"   
+      xmlns:myControl ="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
       mc:Ignorable="d"  Loaded="Page_Loaded" 
       d:DesignHeight="500" d:DesignWidth="800" 
       Title="ReportPage">
@@ -18,7 +19,7 @@
             <StackPanel>
                 <StackPanel Height="34" x:Name="ToolBarPanel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,0" Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
-                        <local:TabButton     
+                        <myControl:TabButton     
                             x:Name="TodayInTabBtn"
                              FontSize="14" IsChecked="True"
                              Width="70" Height="30"                    
@@ -30,7 +31,7 @@
                             IconSize="18"         
                             Content="今日入库"
                             ActiveIndicatorColor="RoyalBlue"/>
-                        <local:TabButton   
+                        <myControl:TabButton   
                             x:Name="TodayOutTabBtn"
                             Width="70" Height="30"  FontSize="14"
                             IsChecked="False"
@@ -42,7 +43,7 @@
                             IconSize="18"                   
                             ActiveIndicatorColor="RoyalBlue"
                             Content="今日出库"/>
-                        <local:TabButton 
+                        <myControl:TabButton 
                             x:Name="TodaySummaryTabBtn"
                             Width="70" Height="30"  FontSize="14"
                             IsChecked="False"
@@ -54,7 +55,7 @@
                             IconSize="18"
                             Content="今日汇总"
                             ActiveIndicatorColor="RoyalBlue" />
-                        <local:TabButton 
+                        <myControl:TabButton 
                             x:Name="DetialReportTabBtn"
                             Width="70" Height="30"  FontSize="14"
                             IsChecked="False"
@@ -66,35 +67,35 @@
                             IconSize="18"
                             Content="明细报表"
                             ActiveIndicatorColor="RoyalBlue" />
-                        
-                        <local:IconButton                
+
+                        <myControl:IconButton                
                            x:Name="ReportPrintBtn" 
-                           Style="{DynamicResource  IconButtonTransparencyStyle}"
+                           IsTransparency="True"
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom" ToolTip="打印报表"
                            IsShowIcon="True" Icon="&#xe65b;" IconSize="28"
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0" />
-                        <local:IconButton           
+                        <myControl:IconButton           
                             x:Name="SaveToImageBtn"
-                          Style="{DynamicResource  IconButtonTransparencyStyle}"
+                          IsTransparency="True"
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom" ToolTip="保存为图片"
                            IsShowIcon="True" Icon="&#xe8d3;" IconSize="28"
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0"
                          />
-                        <local:IconButton         
+                        <myControl:IconButton         
                             x:Name="ExportExcelBtn"
-                          Style="{DynamicResource  IconButtonTransparencyStyle}"
+                          IsTransparency="True"
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom" ToolTip="导出到电子表格"
                            IsShowIcon="True" Icon="&#xe6df;" IconSize="28"
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0"
                          />
-                        <local:IconButton       
-                          Style="{DynamicResource  IconButtonTransparencyStyle}"
+                        <myControl:IconButton       
+                          IsTransparency="True"
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom" 
                            IsShowIcon="True" Icon="&#xe8c4;" IconSize="28"

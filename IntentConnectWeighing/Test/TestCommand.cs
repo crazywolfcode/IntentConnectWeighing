@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Media;
+using MyCustomControlLibrary;
 namespace IntentConnectWeighing
 {
     class TestCommand

@@ -35,12 +35,12 @@ namespace IntentConnectWeighing
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             if (App.GetSoftwareVersion() == SoftwareVersion.netConnection.ToString() || App.GetSoftwareVersion() == SoftwareVersion.netSingleBusiness.ToString())
-            {              
+            {
                 HideOrShowSendExpandePanel(true);
                 FillCustomerSendData();
             }
             else
-            {             
+            {
                 HideOrShowSendExpandePanel();
             }
 
@@ -108,7 +108,7 @@ namespace IntentConnectWeighing
 
         private void HideOrShowDeleteNofinishBtn()
         {
-            if ("true" ==ConfigurationHelper.GetConfig(ConfigItemName.noDeleteInGross.ToString()))
+            if ("true" == ConfigurationHelper.GetConfig(ConfigItemName.noDeleteInGross.ToString()))
             {
                 this.DeleteNofinishedBtn.Visibility = Visibility.Collapsed;
             }
@@ -121,7 +121,7 @@ namespace IntentConnectWeighing
 
         private void HideOrShowUpdateFinishedBtn()
         {
-            if ("true" ==ConfigurationHelper.GetConfig(ConfigItemName.noUpdateFinishedData.ToString()))
+            if ("true" == ConfigurationHelper.GetConfig(ConfigItemName.noUpdateFinishedData.ToString()))
             {
                 this.FinishUpdateBtn.Visibility = Visibility.Collapsed;
             }
@@ -144,9 +144,10 @@ namespace IntentConnectWeighing
                 this.SendBillListView.ItemsSource = sendList;
                 this.SendBillCountTb.Text = sendList.Count.ToString();
             }
-            else {
+            else
+            {
                 this.SendBillListView.ItemsSource = null;
-                this.SendBillCountTb.Text ="0";
+                this.SendBillCountTb.Text = "0";
             }
         }
 
@@ -216,8 +217,8 @@ namespace IntentConnectWeighing
                 return;
             }
             string condition = WeighingBillEnum.id.ToString() + "=" + Constract.valueSplit + mWeighingBill.id + Constract.valueSplit;
-            String sql =DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition, null, null, null, 1);
-            List<WeighingBill> list =DbBaseHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            String sql = DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition, null, null, null, 1);
+            List<WeighingBill> list = DbBaseHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
             if (list.Count > 0)
             {
                 mWeighingBill = list[0];
@@ -362,7 +363,7 @@ namespace IntentConnectWeighing
         }
         private void FinishUpdateBtn_Click(object sender, RoutedEventArgs e)
         {
-            if ("true" ==ConfigurationHelper.GetConfig(ConfigItemName.noUpdateFinishedData.ToString()))
+            if ("true" == ConfigurationHelper.GetConfig(ConfigItemName.noUpdateFinishedData.ToString()))
             {
                 MessageBox.Show("不可以修改已经完成的数据！");
                 return;
@@ -380,7 +381,7 @@ namespace IntentConnectWeighing
         #region Delete No finished bill
         private void DeleteNofinishedBtn_Click(object sender, RoutedEventArgs e)
         {
-            if ("true" ==ConfigurationHelper.GetConfig(ConfigItemName.noDeleteInGross.ToString()))
+            if ("true" == ConfigurationHelper.GetConfig(ConfigItemName.noDeleteInGross.ToString()))
             {
                 MessageBox.Show("不可以删除入库的毛重！");
                 return;
@@ -409,5 +410,47 @@ namespace IntentConnectWeighing
             MessageBox.Show("Show Sended List TODO");
         }
         #endregion
+
+
+        #region Compute ListView Height
+
+        /// <summary>
+        /// Compute ListView Height
+        /// </summary>
+        private void ComputeListViewHeight()
+        {
+            if (this.IsLoaded == false)
+            {
+                return;
+            }
+            if (this.FinishListView.ActualHeight > this.RightMainPanel.ActualHeight)
+            {
+                this.FinishListView.Height = this.RightMainPanel.ActualHeight;
+            }
+        }
+        private void PaiCheListPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ComputeListViewHeight();
+        }
+
+        private void RightMainPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (this.IsLoaded == false)
+            {
+                return;
+            }
+            if (this.NoFinishListView.ActualHeight > this.RightMainPanel.ActualHeight)
+            {
+                this.NoFinishListView.Height = this.RightMainPanel.ActualHeight;
+            }
+            if (this.SendBillListView.ActualHeight > this.PaiCheListPanel.ActualHeight)
+            {
+                this.SendBillListView.Height = this.PaiCheListPanel.ActualHeight;
+            }
+            
+        }
+        #endregion
+
+
     }
 }

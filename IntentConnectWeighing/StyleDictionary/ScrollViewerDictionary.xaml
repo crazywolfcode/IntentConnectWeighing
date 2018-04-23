@@ -15,7 +15,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                    <TextBlock x:Name="Icon" FontSize="12" Text="{TemplateBinding local:ControlAttachProperty.Icon}" Margin="1"  Style="{DynamicResource IFontStyle}" />
+                    <TextBlock x:Name="Icon" FontSize="12" Text="{TemplateBinding local:ControlAttachProperty.Icon}" Margin="1"  />
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource MouseOverForeground}" TargetName="Icon"/>
@@ -116,7 +116,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <!--外部背景,好像不用更好看-->
-            <!--<Border x:Name="Bg" Grid.Row="0" Grid.RowSpan="3" CornerRadius="0" Opacity="0" Background="#858585"/>-->
+           
             <!--内部背景-->
             <Border x:Name="BgInner" Grid.Row="1" Margin="0" CornerRadius="6" SnapsToDevicePixels ="True" Opacity="0.3"  Background="{DynamicResource ScrollBarBackground}"/>
             <!--上按钮-->
@@ -182,7 +182,7 @@
                         <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}"
                                                 CanHorizontallyScroll="False" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}"
                                                 Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}" 
-                                                Grid.Row="0" Grid.Column="0" />
+                                                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
                         <!--垂直滚动条 -->
                         <ScrollBar x:Name="PART_VerticalScrollBar" AutomationProperties.AutomationId="VerticalScrollBar" Style="{DynamicResource DefaultScrollBar}"
                                    ViewportSize="{TemplateBinding ViewportHeight}" Orientation="Vertical" 
@@ -192,13 +192,24 @@
                         <!--水平底部滚动条-->
                         <ScrollBar x:Name="PART_HorizontalScrollBar" AutomationProperties.AutomationId="HorizontalScrollBar"
                                    Cursor="Arrow" Grid.Column="0" Maximum="{TemplateBinding ScrollableWidth}"  Style="{DynamicResource DefaultScrollBar}"
-                                   Minimum="0" Orientation="Horizontal" Grid.Row="1" 
+                                   Minimum="0" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2"
                                    Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
                                    Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
                                    ViewportSize="{TemplateBinding ViewportWidth}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <EventTrigger RoutedEvent="ScrollChanged">
+                        <EventTrigger RoutedEvent="ScrollChanged" SourceName="PART_ScrollContentPresenter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation    
+                                       Storyboard.TargetName="PART_VerticalScrollBar"    
+                                       Storyboard.TargetProperty="Opacity"    
+                                       To="1"    
+                                       Duration="0:0:1"/>                                                             
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseEnter"   SourceName="PART_ScrollContentPresenter">
                             <BeginStoryboard>
                                 <Storyboard>
                                     <DoubleAnimation    
@@ -206,16 +217,10 @@
                                        Storyboard.TargetProperty="Opacity"    
                                        To="1"    
                                        Duration="0:0:1"/>
-                                    <DoubleAnimation    
-                                       Storyboard.TargetName="PART_VerticalScrollBar"    
-                                       Storyboard.TargetProperty="Opacity"    
-                                       To="0"    
-                                       Duration="0:0:1"    
-                                       BeginTime="0:0:1"/>                             
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
-                        <EventTrigger RoutedEvent="MouseEnter"   SourceName="PART_VerticalScrollBar">
+                        <EventTrigger RoutedEvent="MouseLeave"   SourceName="PART_ScrollContentPresenter">
                             <BeginStoryboard>
                                 <Storyboard>
                                     <DoubleAnimation    

@@ -6,6 +6,7 @@ using System.Windows.Media.Imaging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MyCustomControlLibrary;
 
 namespace IntentConnectWeighing
 {
@@ -165,7 +166,7 @@ namespace IntentConnectWeighing
         /// <param name="parent">父控件</param>
         public void initThemeBtn(System.Windows.Window window, bool isShow = true)
         {
-            WindowButton btn = GetBaseWindowTemplate().FindName("ThemeBtn", window) as WindowButton;
+            ImageButton btn = GetBaseWindowTemplate().FindName("ThemeBtn", window) as ImageButton;
             if (isShow == true)
             {
                 btn.Visibility = Visibility.Visible;
@@ -202,7 +203,7 @@ namespace IntentConnectWeighing
         /// <param name="isShow"> 是否显示 </param>
         public void initMinBtn(System.Windows.Window window, bool isShow = true)
         {
-            WindowButton minBtn = (WindowButton)GetBaseWindowTemplate().FindName("MinBtn", window);
+            ImageButton minBtn = (ImageButton)GetBaseWindowTemplate().FindName("MinBtn", window);
             if (isShow == true)
             {
                 minBtn.Visibility = Visibility.Visible;
@@ -219,7 +220,7 @@ namespace IntentConnectWeighing
         /// <param name="isShow"> 是否显示 </param>
         public void initMaxBtn(System.Windows.Window window, bool isShow = true)
         {
-            WindowButton maxBtn = (WindowButton)GetBaseWindowTemplate().FindName("MaxBtn", window);
+            ImageButton maxBtn = (ImageButton)GetBaseWindowTemplate().FindName("MaxBtn", window);
             if (isShow == true)
             {
                 maxBtn.Visibility = Visibility.Visible;
@@ -237,7 +238,7 @@ namespace IntentConnectWeighing
         /// <param name="window">控件</param>
         public void initCloseBtn(System.Windows.Window window, bool isShow = true)
         {
-            WindowButton closeBtn = (WindowButton)GetBaseWindowTemplate().FindName("CloseBtn", window);
+            ImageButton closeBtn = (ImageButton)GetBaseWindowTemplate().FindName("CloseBtn", window);
             if (isShow == true)
             {
                 closeBtn.Visibility = Visibility.Visible;
@@ -285,13 +286,16 @@ namespace IntentConnectWeighing
         /// <param name="e"></param>
         protected virtual void MaxBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (this.WindowState == WindowState.Maximized)
+            if (this.WindowState == WindowState.Maximized) {
+                this.WindowState = WindowState.Normal;
+            }
+            else if (this.WindowState == WindowState.Normal)
             {
-                this.WindowState = WindowState.Normal; //设置窗口还原
+                this.WindowState = WindowState.Maximized; 
             }
             else
             {
-                this.WindowState = WindowState.Maximized; //设置窗口最大化
+                this.WindowState = WindowState.Normal; 
             }
         }
 

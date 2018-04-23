@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"     
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IntentConnectWeighing"
+        xmlns:myControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
         mc:Ignorable="d" ResizeMode="NoResize"
         Icon="/IntentConnectWeighing;component/aislogo_48.ico"
         WindowStartupLocation="CenterScreen" WindowStyle="None"   Style="{DynamicResource settingWindowStyle}"  
@@ -70,17 +71,17 @@
                         </Grid.RowDefinitions>
                         <Border Grid.Row="0" Background="{DynamicResource E4}" CornerRadius="4,4,0,0" >
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                                <local:IconButton         
+                                <myControl:IconButton         
                                                    x:Name="PrintBtn" Click="PrintBtn_Click" IsEnabled="{Binding printTimes,Converter={StaticResource PrientTimesboolConverter}}"
-                                                   Style="{DynamicResource  IconButtonTransparencyStyle}"
+                                                   IsTransparency="True"
                                                    MouseOverForeground="{DynamicResource myBlue}"
                                                    VerticalAlignment="Bottom" ToolTip="打印"
                                                    IsShowIcon="True" Icon="&#xe65b;" IconSize="20"
                                                    Width="30" Height="30" IconMargin="2,0,0,0"
                                                    Margin="0,0,4,0" />
-                                <local:IconButton           
+                                <myControl:IconButton           
                                                 x:Name="FinishUpdateBtn" Click="FinishUpdateBtn_Click"
-                                                Style="{DynamicResource  IconButtonTransparencyStyle}"
+                                                IsTransparency="True"
                                                 MouseOverForeground="{DynamicResource myBlue}"
                                                 VerticalAlignment="Bottom" ToolTip="修改"
                                                 IsShowIcon="True" Icon="&#xe74e;" IconSize="20"
@@ -172,17 +173,17 @@
                         </Grid.RowDefinitions>
                         <Border Grid.Row="0" Background="{DynamicResource E4}" CornerRadius="4,4,0,0" >
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                                <local:IconButton         
+                                <myControl:IconButton         
                                                    x:Name="OutPrintBtn" Click="OutPrintBtn_Click" IsEnabled="{Binding printTimes,Converter={StaticResource PrientTimesboolConverter}}"
-                                                   Style="{DynamicResource  IconButtonTransparencyStyle}"
+                                                   IsTransparency="True"
                                                    MouseOverForeground="{DynamicResource myBlue}"
                                                    VerticalAlignment="Bottom" ToolTip="打印"
                                                    IsShowIcon="True" Icon="&#xe65b;" IconSize="20"
                                                    Width="30" Height="30" IconMargin="2,0,0,0"
                                                    Margin="0,0,4,0" />
-                                <local:IconButton           
+                                <myControl:IconButton           
                                                 x:Name="OutFinishUpdateBtn" Click="OutFinishUpdateBtn_Click" IsEnabled="{Binding sendStatus,Converter={StaticResource UpdateFinishedBillBtnConverter}}"
-                                                Style="{DynamicResource  IconButtonTransparencyStyle}"
+                                                IsTransparency="True"
                                                 MouseOverForeground="{DynamicResource myBlue}"
                                                 VerticalAlignment="Bottom" ToolTip="修改"
                                                 IsShowIcon="True" Icon="&#xe74e;" IconSize="20"

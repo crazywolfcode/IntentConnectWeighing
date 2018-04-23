@@ -5,8 +5,9 @@
       xmlns:system="clr-namespace:System;assembly=mscorlib"
       xmlns:collections ="clr-namespace:System.Collections;assembly=mscorlib"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:myControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
       xmlns:local="clr-namespace:IntentConnectWeighing"
-      mc:Ignorable="d"  Loaded="Page_Loaded"
+      mc:Ignorable="d"  Loaded="Page_Loaded" 
       d:DesignHeight="400" d:DesignWidth="700"
       Title="InWeighingPage" >
     <Page.Resources>
@@ -38,10 +39,10 @@
         </Grid.ColumnDefinitions>
         <!--Left-->
         <Border Grid.Column="0" CornerRadius="0,0,0,2" x:Name="LeftBorder" Panel.ZIndex="2">
-            <Expander Background="Transparent" ExpandDirection="Left" IsExpanded="False" Style="{DynamicResource InDataExpenderStyle}">
+            <Expander Background="Transparent" ExpandDirection="Left"  Style="{DynamicResource InDataExpenderStyle}">
                 <Expander.Content>
-                    <Border Background="{StaticResource F9}" CornerRadius="0,0,0,4" Width="230">
-                        <Grid >
+                    <Border  CornerRadius="0,0,0,4" Width="230">
+                        <Grid Background="{StaticResource F9}" Margin="0,0,0,4">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="34"/>
                                 <RowDefinition Height="*"/>
@@ -49,14 +50,18 @@
                             <TextBlock Text="发货单"  VerticalAlignment="Center"  TextAlignment="Center"  FontSize="14" Width="90" x:Name="CustomerSendTB"  Foreground="RoyalBlue"/>
                             <TextBlock x:Name="SendBillCountTb" Text="0" FontSize="12" Foreground="{StaticResource myBlue}"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,2,8,2" ToolTip="派车单数量"/>
                             <StackPanel Height="1"  Background="{DynamicResource E4}" VerticalAlignment="Bottom"/>
-                            <ScrollViewer x:Name="LeftScrollViewer" Style="{DynamicResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" Grid.Row="1" >
-                                <StackPanel x:Name="PaiCheListPanel" >
-                                    <ListView x:Name="SendBillListView" ItemContainerStyle="{DynamicResource SendBillListViewItemStyle}" BorderThickness="0"  MouseDoubleClick="SendBollListView_MouseDoubleClick" SelectionChanged="SendBollListView_SelectionChanged" />
-                                </StackPanel>
-                            </ScrollViewer>
+                            <StackPanel x:Name="PaiCheListPanel" Grid.Row="1" SizeChanged="PaiCheListPanel_SizeChanged">
+                                <ListView                                    
+                                        x:Name="SendBillListView"                                      
+                                        Style='{StaticResource ListViewDefaultStyle}' 
+                                        ItemContainerStyle="{DynamicResource SendBillListViewItemStyle}" 
+                                        BorderThickness="0"  
+                                        MouseDoubleClick="SendBollListView_MouseDoubleClick" 
+                                        SelectionChanged="SendBollListView_SelectionChanged"/>
+                            </StackPanel>
                             <WrapPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent" Margin="0,0,0,20" >
-                                <local:IconButton x:Name="SendListBtn" Style="{StaticResource IconButtonTransparencyStyle}"  Background="#e4e4e4e4"  Icon="&#xe9ce;" Margin="5,0,0,0" CornerRadius="10,0,0,10" Width="30" IconSize="20"   IconMargin="2,-1,0,0" Height="20" ToolTip="查看所有的发货单" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}" Click="SendListBtn_Click"/>
-                                <local:IconButton x:Name="SendListRefreshBtn" Style="{StaticResource IconButtonTransparencyStyle}"  Background="#e4e4e4e4"  Icon="&#xe653;" Margin="-1,0,0,0" CornerRadius="0,10,10,0" AllowsAnimation="True" Width="30" IconMargin="2,-1,0,0"  IconSize="20" Height="20" ToolTip="刷新" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}" Click="SendListRefreshBtn_Click" />
+                                <myControl:IconButton x:Name="SendListBtn"  Background="#e4e4e4e4"  Icon="&#xe9ce;" Margin="5,0,0,0" CornerRadius="10,0,0,10" Width="30" IconSize="20"   IconMargin="2,-1,0,0" Height="20" ToolTip="查看所有的发货单" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}" Click="SendListBtn_Click"/>
+                                <myControl:IconButton x:Name="SendListRefreshBtn" Background="#e4e4e4e4"  Icon="&#xe653;" Margin="-1,0,0,0" CornerRadius="0,10,10,0"  Width="30" IconMargin="2,-1,0,0"  IconSize="20" Height="20" ToolTip="刷新" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}" Click="SendListRefreshBtn_Click" />
                             </WrapPanel>
                         </Grid>
                     </Border>
@@ -68,40 +73,39 @@
             <StackPanel >
                 <StackPanel Height="34" x:Name="ToolBarPanel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,0" Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
-                        <local:IconButton                
-                            x:Name="AddMaterialCategoryBtn" 
-                          Style="{DynamicResource  IconButtonTransparencyStyle}"
+                        <myControl:IconButton                
+                          x:Name="AddMaterialCategoryBtn" 
+                          IsTransparency="True"
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom"
                            IsShowIcon="True" Icon="&#xe617;" IconSize="28"
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0" />
-                        <local:IconButton           
-                          Style="{DynamicResource  IconButtonTransparencyStyle}"
+                        <myControl:IconButton  IsTransparency="True"
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom" 
                            IsShowIcon="True" Icon="&#xe61f;" IconSize="28"
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0"
                          />
-                        <local:IconButton 
-                          Style="{DynamicResource  IconButtonTransparencyStyle}"
+                        <myControl:IconButton 
+                          IsTransparency="True"
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom" 
                            IsShowIcon="True" Icon="&#xe64c;" IconSize="28"
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0"
                          />
-                        <local:IconButton x:Name="NewInPutBtn" Click="NewInPutBtn_Click" ToolTip="新增入库"
-                          Style="{DynamicResource  IconButtonTransparencyStyle}"
+                        <myControl:IconButton x:Name="NewInPutBtn" Click="NewInPutBtn_Click" ToolTip="新增入库"
+                          IsTransparency="True"
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom" 
                            IsShowIcon="True" Icon="&#xe610;" IconSize="24"
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0"
                          />
-                        <local:IconButton       
-                          Style="{DynamicResource  IconButtonTransparencyStyle}"
+                        <myControl:IconButton       
+                          IsTransparency="True"
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom" 
                            IsShowIcon="True" Icon="&#xe8c4;" IconSize="28"
@@ -136,25 +140,25 @@
                                     </Grid.RowDefinitions>
                                     <Border Grid.Row="0" Background="{DynamicResource E4}" CornerRadius="4,4,0,0" >
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                                            <local:IconButton         
+                                            <myControl:IconButton         
                                                 x:Name="OutFactoryBtn" Click="OutFactoryBtn_Click"
-                                                Style="{DynamicResource  IconButtonTransparencyStyle}"
+                                                IsTransparency="True"
                                                 MouseOverForeground="{DynamicResource myBlue}"
                                                 VerticalAlignment="Bottom" ToolTip="出场"
                                                 IsShowIcon="True" Icon="&#xe8c6;" IconSize="20"
                                                 Width="30" Height="30" IconMargin="-2,0,0,0"
                                                 Margin="0,0,4,0" />
-                                            <local:IconButton        
+                                            <myControl:IconButton        
                                                 x:Name="NoFinishUpdateBtn" Click="NoFinishUpdateBtn_Click"
-                                                Style="{DynamicResource  IconButtonTransparencyStyle}"
+                                                IsTransparency="True"
                                                 MouseOverForeground="{DynamicResource myBlue}"
                                                 VerticalAlignment="Bottom" ToolTip="修改"
                                                 IsShowIcon="True" Icon="&#xe74e;" IconSize="20"
                                                 Width="30" Height="30" IconMargin="-2,0,0,0"
                                                 Margin="0,0,4,0" />
-                                            <local:IconButton       
+                                            <myControl:IconButton       
                                                 x:Name="DeleteNofinishedBtn" Click="DeleteNofinishedBtn_Click"
-                                                Style="{DynamicResource  IconButtonTransparencyStyle}"
+                                                IsTransparency="True"
                                                 MouseOverForeground="Red" ToolTip="删除"
                                                 VerticalAlignment="Bottom"
                                                 IsShowIcon="True" Icon="&#xe615;" IconSize="24"
@@ -237,17 +241,17 @@
                                     </Grid.RowDefinitions>
                                     <Border Grid.Row="0" Background="{DynamicResource E4}" CornerRadius="4,4,0,0" >
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                                            <local:IconButton         
+                                            <myControl:IconButton         
                                                    x:Name="PrintBtn" Click="PrintBtn_Click" IsEnabled="{Binding printTimes,Converter={StaticResource PrientTimesboolConverter}}"
-                                                   Style="{DynamicResource  IconButtonTransparencyStyle}"
+                                                   IsTransparency="True"
                                                    MouseOverForeground="{DynamicResource myBlue}"
                                                    VerticalAlignment="Bottom" ToolTip="打印"
                                                    IsShowIcon="True" Icon="&#xe65b;" IconSize="20"
                                                    Width="30" Height="30" IconMargin="2,0,0,0"
                                                    Margin="0,0,4,0" />
-                                            <local:IconButton           
+                                            <myControl:IconButton           
                                                 x:Name="FinishUpdateBtn" Click="FinishUpdateBtn_Click"
-                                                Style="{DynamicResource  IconButtonTransparencyStyle}"
+                                                IsTransparency="True"
                                                 MouseOverForeground="{DynamicResource myBlue}"
                                                 VerticalAlignment="Bottom" ToolTip="修改"
                                                 IsShowIcon="True" Icon="&#xe74e;" IconSize="20"
@@ -335,9 +339,9 @@
                                     </Grid.RowDefinitions>
                                     <Border Grid.Row="0" Background="{DynamicResource E4}" CornerRadius="4,4,0,0" >
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                                            <local:IconButton         
+                                            <myControl:IconButton         
                                                 x:Name="SendBillInFactoryBtn" Click="SendBillInFactoryBtn_Click"
-                                                   Style="{DynamicResource  IconButtonTransparencyStyle}"
+                                                   IsTransparency="True"
                                                    MouseOverForeground="{DynamicResource myBlue}"
                                                    VerticalAlignment="Bottom" ToolTip="入场"
                                                    IsShowIcon="True" Icon="&#xe8c7;" IconSize="20"
@@ -401,10 +405,10 @@
         </Border>
         <!--Right-->
         <Border Grid.Column="2" CornerRadius="0,0,4,0" Panel.ZIndex="2" >
-            <Expander ExpandDirection="Right" x:Name="RightEapander" IsExpanded="True" Background="Transparent" HorizontalContentAlignment="Right" BorderThickness="0" Style="{DynamicResource InDataExpenderStyle}">
+            <Expander ExpandDirection="Right" x:Name="RightEapander" IsExpanded="True"  Background="Transparent" HorizontalContentAlignment="Right" BorderThickness="0" Style="{DynamicResource InDataExpenderStyle}">
                 <Expander.Content>
-                    <Border Background="{StaticResource F9}" CornerRadius="0,0,4,0" Width="230">
-                        <Grid>
+                    <Border  CornerRadius="0,0,4,0" Width="230">
+                        <Grid Background="{StaticResource F9}" Margin="0,0,0,4">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="34"/>
                                 <RowDefinition Height="*"/>
@@ -413,7 +417,7 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <local:TabButton     Grid.Row="0" Grid.Column="0" Checked="NoFinishedTabBtn_Checked"
+                            <myControl:TabButton     Grid.Row="0" Grid.Column="0" Checked="NoFinishedTabBtn_Checked"
                                      FontSize="14" IsChecked="True"
                                      Width="90" Height="32"      
                                     x:Name="NoFinishedTabBtn"
@@ -426,7 +430,7 @@
                                     Content="未完成"
                                     ActiveIndicatorColor="RoyalBlue"/>
                             <TextBlock x:Name="NoFinishedNumberTb" Text="0" FontSize="10" Foreground="Red" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,8,2" ToolTip="未经完成的过磅数"/>
-                            <local:TabButton   Checked="FinishedTabBtn_Checked"
+                            <myControl:TabButton   Checked="FinishedTabBtn_Checked"
                                     Width="90" Height="32"  FontSize="14" Grid.Row="0" Grid.Column="1"
                                     x:Name="FinishedTabBtn" HorizontalAlignment="Right"                                      
                                     IsChecked="False"
@@ -439,20 +443,31 @@
                                     ActiveIndicatorColor="RoyalBlue"
                                     Content="已完成"/>
                             <TextBlock x:Name="FinishedNumberTb" Text="0" FontSize="10" Foreground="Red" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,8,2" ToolTip="已经完成的过磅数"/>
-                            <StackPanel Height="1" Margin="2,0,0,0" Background="{DynamicResource E4}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="0"/>
+                            <StackPanel Height="1" Margin="2,0,0,0" Background="{DynamicResource E4}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="0" />
                             <!--Right Main-->
-                            <ScrollViewer x:Name="RightScrollViewer" Style="{DynamicResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Height="{Binding Path=Height,ElementName=RightEapander}" >
-                                <StackPanel x:Name="RightMainPanel">
+                                <StackPanel x:Name="RightMainPanel" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Height="{Binding Path=Height,ElementName=RightEapander}" SizeChanged="RightMainPanel_SizeChanged">
                                     <!--NoFinishListPanel-->
                                     <StackPanel x:Name="NoFinishListPanel"  Visibility="{Binding Path=IsChecked,ElementName=NoFinishedTabBtn,Converter={StaticResource CheckedToVisibleConverter}}">
-                                    <ListView x:Name="NoFinishListView" ItemContainerStyle="{DynamicResource InNoFinishedListViewItemStyle}" BorderThickness="0" Margin="0,0,0,1" MouseDoubleClick="NoFinishListView_MouseDoubleClick" SelectionChanged="NoFinishListView_SelectionChanged" />
-                                </StackPanel>
+                                        <ListView 
+                                            x:Name="NoFinishListView" 
+                                            Style="{StaticResource ListViewDefaultStyle}" 
+                                            ItemContainerStyle="{DynamicResource InNoFinishedListViewItemStyle}" 
+                                            BorderThickness="0" 
+                                            Margin="0,0,0,1" 
+                                            MouseDoubleClick="NoFinishListView_MouseDoubleClick" 
+                                            SelectionChanged="NoFinishListView_SelectionChanged" />
+                                    </StackPanel>
                                     <!--FinishListPanel-->
                                     <StackPanel x:Name="FinishListPanel" Visibility="{Binding Path=IsChecked,ElementName=FinishedTabBtn,Converter={StaticResource CheckedToVisibleConverter}}">
-                                        <ListView x:Name="FinishListView" ItemContainerStyle="{DynamicResource InFinishedListViewItemStyle}" BorderThickness="0" Margin="0,0,0,1" MouseDoubleClick="FinishListView_MouseDoubleClick" SelectionChanged="FinishListView_SelectionChanged"/>
+                                        <ListView x:Name="FinishListView" 
+                                                  Style="{StaticResource ListViewDefaultStyle}" 
+                                                  ItemContainerStyle="{DynamicResource InFinishedListViewItemStyle}" 
+                                                  BorderThickness="0" 
+                                                  Margin="0,0,0,1" 
+                                                  MouseDoubleClick="FinishListView_MouseDoubleClick" 
+                                                  SelectionChanged="FinishListView_SelectionChanged"/>
                                     </StackPanel>
                                 </StackPanel>
-                            </ScrollViewer>
                         </Grid>
                     </Border>
                 </Expander.Content>

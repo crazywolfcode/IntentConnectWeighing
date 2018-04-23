@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IntentConnectWeighing"
+        xmlns:myCtontrol="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
         Icon="/IntentConnectWeighing;component/aislogo_48.ico"    
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded" ContentRendered="Window_ContentRendered" Closing="Window_Closing" SizeChanged="Window_SizeChanged"
@@ -147,8 +148,8 @@
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Style="{StaticResource AlertTbStyle}" Margin="20,0,0,0">磅 差:</TextBlock>
-                        <TextBox x:Name="differenceWeightTbox" Style="{StaticResource ValueTBoxStyle}" Margin="13,0,0,0" Text="0.0" IsEnabled="False" TextChanged="differenceWeightTbox_TextChanged"/>
+                        <TextBlock Style="{StaticResource AlertTbStyle}" Margin="20,0,0,0"  Visibility="{Binding Path=IsChecked,ElementName=OutFactoryRb,Converter={StaticResource CheckedToVisibleConverter}}">磅 差:</TextBlock>
+                        <TextBox x:Name="differenceWeightTbox" Style="{StaticResource ValueTBoxStyle}" Margin="13,0,0,0" Text="0.0" IsEnabled="False" TextChanged="differenceWeightTbox_TextChanged"  Visibility="{Binding Path=IsChecked,ElementName=OutFactoryRb,Converter={StaticResource CheckedToVisibleConverter}}"/>
                         <TextBlock Style="{StaticResource AlertTbStyle}" Margin="33,0,0,0" Visibility="{Binding Path=IsChecked,ElementName=OutFactoryRb,Converter={StaticResource CheckedToVisibleConverter}}">扣 重:</TextBlock>
                         <TextBox x:Name="DecuationWeightTbox" Style="{StaticResource ValueTBoxStyle}" Visibility="{Binding Path=IsChecked,ElementName=OutFactoryRb,Converter={StaticResource CheckedToVisibleConverter}}" Margin="11,0,0,0" ToolTip="请注意单位是'吨'"  Text="0" TextChanged="DecuationWeightTbox_TextChanged"/>
                         <TextBlock Style="{StaticResource AlertTbStyle}" Margin="10,0,0,0" Visibility="{Binding Path=IsChecked,ElementName=OutFactoryRb,Converter={StaticResource CheckedToVisibleConverter}}">扣重说明:</TextBlock>
@@ -164,7 +165,7 @@
         <!--OptionBorder -->
         <Border x:Name="OptionBorder" Grid.Row="3" Background="{DynamicResource FA}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                <local:IconButton 
+                <myCtontrol:IconButton 
                     x:Name="saveBtn" 
                     Click="SaveBtn_Click"
                     VerticalAlignment="Center"
@@ -172,8 +173,7 @@
                     Padding="1"
                     Icon="&#xe77a;"
                     IsShowIcon="False"
-                    Margin="10,0,15,0"                      
-                    Style="{StaticResource IconButtonStyle}"                 
+                    Margin="10,0,15,0"                                   
                     BorderBrush="#e0e0e0" 
                     Foreground="#666"
                     BorderThickness="1" 

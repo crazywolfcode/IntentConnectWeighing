@@ -317,6 +317,9 @@ namespace IntentConnectWeighing
         #region Print Setting 打印
         private void PrintSetting_Checked(object sender, RoutedEventArgs e)
         {
+            if (this.IsLoaded == false) {
+                return;
+            }
             if ("true" == ConfigurationHelper.GetConfig(ConfigItemName.autoPrint.ToString()))
             {
                 this.StartAautoPtint.IsChecked = true;

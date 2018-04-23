@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:form="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:local="clr-namespace:IntentConnectWeighing"
+        xmlns:myControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
         mc:Ignorable="d" ResizeMode="NoResize"
         Icon="/IntentConnectWeighing;component/aislogo_48.ico"
         WindowStartupLocation="CenterScreen"         
@@ -65,13 +66,12 @@
                         </StackPanel>
                     </StackPanel>
                     <StackPanel  VerticalAlignment="Center" Width="120">
-                        <local:IconButton x:Name="lookBtn" ToolTip="预览" 
-                                Click="lookBtn_Click" CornerRadius="6" BorderThickness="1"
-                                Style="{DynamicResource IconButtonStyle}" 
+                        <myControl:IconButton   x:Name="lookBtn" ToolTip="预览" 
+                                Click="lookBtn_Click" CornerRadius="6" BorderThickness="1"                                 
                                 Icon="&#xe8d6;" Width="50" Height="50" IconSize="40"/>
-                        <local:IconButton x:Name="nulookBtn" ToolTip="关闭预览" 
+                        <myControl:IconButton   x:Name="nulookBtn" ToolTip="关闭预览" 
                                 Click="nulookBtn_Click" CornerRadius="6" BorderThickness="1"
-                                Style="{DynamicResource IconButtonStyle}" Visibility="Collapsed"
+                                Visibility="Collapsed"
                                 Icon="&#xe8d7;" Width="50" Height="50" IconSize="40"/>
                     </StackPanel>
                 </StackPanel>
@@ -80,7 +80,7 @@
 
         <Border Grid.Row="2" CornerRadius="0,0,4,4"   Background="{StaticResource E4}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                <local:IconButton 
+                <myControl:IconButton   
                     x:Name="saveBtn" 
                     Click="saveBtn_Click"
                     VerticalAlignment="Center"
@@ -88,8 +88,7 @@
                     Padding="1"
                     Icon="&#xe77a;"
                     IsShowIcon="False"
-                    Margin="10,0,15,0"                      
-                    Style="{StaticResource IconButtonStyle}"                 
+                    Margin="10,0,15,0"                               
                     BorderBrush="#e0e0e0" 
                     Foreground="#666"
                     BorderThickness="1" 

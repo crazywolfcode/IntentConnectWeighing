@@ -5,14 +5,10 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/IntentConnectWeighing;component/Lang/DefaultLanguage.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/ValueDictionary.xaml"></ResourceDictionary>
-
-    
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/StyleDictionary.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/SeparatorDictionary.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/IconFontDictionary.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/AnimationDictionary.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/IconButtonStyleDictionary.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/NavMenuButtonDictionary.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/NavMenuButtonStyle.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/ScrollViewerDictionary.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/MenuAndTreeViewDictionary.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/WindowStyleDictionary.xaml"></ResourceDictionary>
@@ -22,7 +18,6 @@
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/ProgressBarDictionary.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/RadioButtonDictionary.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/CheckBoxDictionary.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/TabButtonStyle.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/ListViewStyle.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/ExpanderStyle.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
@@ -30,5 +25,5 @@
     <local:StatusConverter x:Key="StatusConverter"/>
     <local:CompanyCustomerTypeConverter x:Key="CompanyCustomerTypeConverter"/>
     <local:CompanyTypeConverter x:Key="CompanyTypeConverter"/>
- 
+
 </ResourceDictionary>

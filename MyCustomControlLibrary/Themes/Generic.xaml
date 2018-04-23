@@ -1,0 +1,16 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:MyCustomControlLibrary">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/storyboard.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/IconTextBlockStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/TabButtonStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/IconButtonStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/SwitchButtonStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/ScrollBarStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/ScrollViewerStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/ImageButtomStyle.xaml"/>
+        
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

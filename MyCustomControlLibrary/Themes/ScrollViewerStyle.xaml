@@ -1,0 +1,82 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:MyCustomControlLibrary">
+
+    <Storyboard x:Key="LeaveStoryboard">
+        <DoubleAnimation    
+            Storyboard.TargetName="PART_VerticalScrollBar"    
+            Storyboard.TargetProperty="Opacity"    
+            To="0"    
+            Duration="0:0:1"/>
+    </Storyboard>
+    <Storyboard x:Key="EnterStoryboard">
+        <DoubleAnimation    
+            Storyboard.TargetName="PART_VerticalScrollBar"    
+            Storyboard.TargetProperty="Opacity"    
+            To="1"    
+            Duration="0:0:1"/>
+    </Storyboard>
+    <!--MyScrollViewer样式-->
+    <Style  TargetType="{x:Type local:MyScrollViewer}">
+        <Setter Property="IsShowRepeatbutton" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:MyScrollViewer}">
+                    <Grid x:Name="Grid" Background="{TemplateBinding Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" x:Name="leftColumn" />
+                            <ColumnDefinition Width="Auto" x:Name="rightColumn" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}"
+                                                CanHorizontallyScroll="False" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}" 
+                                                Grid.Row="0" Grid.Column="0" />
+                        <!--垂直滚动条 -->
+                        <local:MyScrollBar Orientation="Vertical" x:Name="PART_VerticalScrollBar" AutomationProperties.AutomationId="VerticalScrollBar"
+                                   ViewportSize="{TemplateBinding ViewportHeight}"  
+                                   Cursor="Arrow" Grid.Column="1" Maximum="{TemplateBinding ScrollableHeight}" 
+                                   UpIcon="&#xe62c;" BottomIcon="&#xe502;"
+                                   Minimum="0" Grid.Row="0" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                   Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <!--水平底部滚动条-->
+                        <local:MyScrollBar Orientation="Horizontal" x:Name="PART_HorizontalScrollBar" AutomationProperties.AutomationId="HorizontalScrollBar"
+                                   Cursor="Arrow" Grid.Column="0" Maximum="{TemplateBinding ScrollableWidth}"  
+                                   Minimum="0"  Grid.Row="1" 
+                                   Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                   LeftIcon="&#xe619;" RightIcon="&#xe602;"
+                                   Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                   ViewportSize="{TemplateBinding ViewportWidth}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsScrollBarFloatUp" Value="true">
+                            <Setter Property="Grid.ColumnSpan" Value="2" TargetName="PART_ScrollContentPresenter"/>
+                            <Setter Property="Grid.ColumnSpan" Value="2" TargetName="PART_HorizontalScrollBar"/>
+                        </Trigger>
+                        <Trigger Property="IsShowRepeatbutton" Value="false">
+                            <Setter Property="LeftRepeatButtonVisibility" Value="Collapsed" TargetName="PART_HorizontalScrollBar"/>
+                            <Setter Property="RightRepeatButtonVisibility" Value="Collapsed" TargetName="PART_HorizontalScrollBar"/>
+                            <Setter Property="UpRepeatButtonVisibility" Value="Collapsed" TargetName="PART_VerticalScrollBar"/>
+                            <Setter Property="DownRepeatButtonVisibility" Value="Collapsed" TargetName="PART_VerticalScrollBar"/>
+                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter"   SourceName="PART_ScrollContentPresenter">
+                            <BeginStoryboard Storyboard="{StaticResource EnterStoryboard}"/>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave"   SourceName="PART_ScrollContentPresenter">
+                            <BeginStoryboard Storyboard="{StaticResource LeaveStoryboard}"/>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseEnter" SourceName="PART_VerticalScrollBar">
+                            <BeginStoryboard Storyboard="{StaticResource EnterStoryboard}"/>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave"  SourceName="PART_VerticalScrollBar">
+                            <BeginStoryboard Storyboard="{StaticResource LeaveStoryboard}"/>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

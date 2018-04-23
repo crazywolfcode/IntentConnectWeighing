@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IntentConnectWeighing"
+        xmlns:myControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
         mc:Ignorable="d"                  
         WindowStartupLocation="CenterScreen" 
         Title="InitializationSettingW" Height="550" Width="650"
@@ -16,7 +17,7 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" VerticalAlignment="Center" Background="#f9f9f9f9">
             <WrapPanel Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0" >
-                <local:TabButton     
+                <myControl:TabButton     
                     IsChecked="True"
                     x:Name="DbSettintBtn"
                     Foreground="#666"
@@ -28,8 +29,8 @@
                      Icon="&#xe66c;" 
                     ActiveIndicatorColor="RoyalBlue">
                     数据库配制
-                </local:TabButton>
-                <local:TabButton   
+                </myControl:TabButton>
+                <myControl:TabButton   
                     x:Name="AdminSettintBtn"
                     IsChecked="False"
                     ActiveForground="RoyalBlue" 
@@ -42,8 +43,8 @@
                     ActiveIndicatorColor="RoyalBlue"
                    >
                     添加管理员
-                </local:TabButton>
-                <local:TabButton 
+                </myControl:TabButton>
+                <myControl:TabButton 
                     x:Name="SeverSettintBtn"
                     ActiveForground="RoyalBlue" 
                     Foreground="#666"
@@ -54,7 +55,7 @@
                     IconSize="18"
                     ActiveIndicatorColor="RoyalBlue" >
                     服务器设置
-                </local:TabButton>
+                </myControl:TabButton>
             </WrapPanel>
             <WrapPanel Height="1" Background="#cecece" VerticalAlignment="Bottom"></WrapPanel>
         </StackPanel>
@@ -119,7 +120,7 @@
                 <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
                     <TextBlock x:Name="AlertInfoTB" FontSize="16"  Margin="0,0,5,0"  Padding="2,3,2,3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                    <local:IconButton 
+                    <myControl:IconButton 
                          x:Name="SaveMysqlBtn" 
                             Margin="0,5,10,5"
                             Padding="1"                      
@@ -136,7 +137,7 @@
                             HorizontalAlignment="Center"      
                             HorizontalContentAlignment="Center"
                             MouseOverForeground="Black"
-                            MouseOverBackground="White"/> 
+                            MouseOverBackground="White"/>
                 </WrapPanel>
             </StackPanel>
 
@@ -156,7 +157,7 @@
                    1、 使用SQLite数据库。建议使用用系统默认的位置，直接点击启用
                 </TextBlock>
 
-                <local:IconButton 
+                <myControl:IconButton 
                           x:Name="SaveSqliteBtn" 
                            Click="SaveSqliteBtn_Click"
                             Padding="1"                      
@@ -172,7 +173,7 @@
                             HorizontalAlignment="Center"      
                             HorizontalContentAlignment="Center"
                             MouseOverForeground="Black"
-                            MouseOverBackground="White" >启 用</local:IconButton>
+                            MouseOverBackground="White" >启 用</myControl:IconButton>
             </StackPanel>
 
 

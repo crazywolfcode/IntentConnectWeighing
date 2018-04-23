@@ -23,9 +23,7 @@ namespace IntentConnectWeighing
 
         public WindowButton()
         {
-
             base.Content = "";
-            //base.Background = Brushes.Transparent;
         }
 
         public Brush MyMoverBrush

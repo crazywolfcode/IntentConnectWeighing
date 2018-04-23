@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:IntentConnectWeighing"
+      xmlns:myControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
       mc:Ignorable="d"  Loaded="Page_Loaded"
      d:DesignHeight="630" d:DesignWidth="880"   
       Title="BaseDataPage">
@@ -46,7 +47,7 @@
         <Border  Grid.Column="0" MinWidth="200" MaxWidth="250"  CornerRadius="0,0,0,4"  Background="{StaticResource F9}" Padding="4" >
             <StackPanel>
                 <StackPanel Orientation="Horizontal" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                    <local:TabButton     
+                    <myControl:TabButton     
                          Checked="TabBtn_Checked" FontSize="14" IsChecked="True"
                          Width="70" Height="30"                    
                         x:Name="CompanyTabBtn"
@@ -58,7 +59,7 @@
                         IconSize="18"         
                         Content="公司"
                         ActiveIndicatorColor="RoyalBlue"/>
-                    <local:TabButton   
+                    <myControl:TabButton   
                             Width="70" Height="30"  FontSize="14"
                             x:Name="MaterialTabBtn" ContextMenu="{DynamicResource MaterialContextMenu}"
                             Checked="TabBtn_Checked"
@@ -71,18 +72,18 @@
                             IconSize="18"                   
                             ActiveIndicatorColor="RoyalBlue"
                             Content="物资"/>
-                    <local:TabButton 
-                     Width="70" Height="30"  FontSize="14"
-                    x:Name="CarTabBtn" IsChecked="False"
-                    Checked="TabBtn_Checked"
-                    ActiveForground="RoyalBlue" 
-                    Foreground="#666"
-                    IndicatorHeight="3" 
-                    Margin="0,0,4,0"                  
-                    IconMargin="0,0,3,0"
-                    IconSize="18"
-                    Content="车辆"
-                    ActiveIndicatorColor="RoyalBlue" />
+                    <myControl:TabButton 
+                            Width="70" Height="30"  FontSize="14"
+                            x:Name="CarTabBtn" IsChecked="False"
+                            Checked="TabBtn_Checked"
+                            ActiveForground="RoyalBlue" 
+                            Foreground="#666"
+                            IndicatorHeight="3" 
+                            Margin="0,0,4,0"                  
+                            IconMargin="0,0,3,0"
+                            IconSize="18"
+                            Content="车辆"
+                            ActiveIndicatorColor="RoyalBlue" />
                 </StackPanel>
                 <StackPanel Height="1" Background="{DynamicResource E4}"></StackPanel>
                 <ScrollViewer x:Name="scrollViewer"
@@ -92,59 +93,55 @@
                         Style="{StaticResource DefaultScrollViewer}" >
                     <StackPanel>
                         <!--Company-->
-                        <StackPanel x:Name="CompanyListContentStackPanel"  Width="{Binding Source=StackPanel,Path=ActualWidth}" Visibility="{Binding Path=IsChecked,ElementName=CompanyTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" ContextMenu="{DynamicResource CompanyContextMenu}">
+                        <StackPanel x:Name="CompanyListContentStackPanel"  Width="{Binding Source=StackPanel,Path=ActualWidth}" Visibility="{Binding Path=IsChecked,ElementName=CompanyTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" ContextMenu="{DynamicResource CompanyContextMenu}"/>
 
-                        </StackPanel>
                         <!--Material-->
-                        <StackPanel x:Name="MaterialListContentStackPanel" Width="{Binding Source=StackPanel,Path=ActualWidth}" Visibility="{Binding Path=IsChecked,ElementName=MaterialTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" ContextMenu="{DynamicResource MaterialContextMenu}">
+                        <StackPanel x:Name="MaterialListContentStackPanel" Width="{Binding Source=StackPanel,Path=ActualWidth}" Visibility="{Binding Path=IsChecked,ElementName=MaterialTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" ContextMenu="{DynamicResource MaterialContextMenu}"/>
 
-                        </StackPanel>
                         <!--Car-->
-                        <StackPanel x:Name="CarListContentStackPanel" Width="{Binding Source=StackPanel,Path=ActualWidth}" Visibility="{Binding Path=IsChecked,ElementName=CarTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" ContextMenu="{DynamicResource CarContextMenu}">
+                        <StackPanel x:Name="CarListContentStackPanel" Width="{Binding Source=StackPanel,Path=ActualWidth}" Visibility="{Binding Path=IsChecked,ElementName=CarTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" ContextMenu="{DynamicResource CarContextMenu}"/>
 
-                        </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
             </StackPanel>
         </Border>
-        <local:IconButton x:Name="AddBtn"       Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Bottom"      
-            Margin="0,0,18,10" ToolTip="添加"  Click="AddBtn_Click"
-            Width="34" Height="30" 
-            IsShowIcon="True" CornerRadius="17"
-            Icon="&#xe626;" IconSize="30" IconMargin="0,-2,0,2"
-            MouseOverForeground ="{DynamicResource myBlue}" MouseOverBackground="{DynamicResource F9}"
-            BorderBrush="{x:Null}"           
-            Style="{DynamicResource  IconButtonTransparencyStyle}"/>
+        <myControl:IconButton x:Name="AddBtn"
+                Grid.Column="0" 
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"      
+                Margin="0,0,18,10" ToolTip="添加"  Click="AddBtn_Click"
+                Width="34" Height="30" 
+                IsShowIcon="True" CornerRadius="17"
+                Icon="&#xe626;" IconSize="30" IconMargin="0,-2,0,2"
+                MouseOverForeground ="{DynamicResource myBlue}" MouseOverBackground="{DynamicResource F9}"
+                BorderBrush="{x:Null}"           
+         />
         <Border Background="White"  Grid.Column="1" CornerRadius="0,0,4,0" x:Name="RightContentBorderPanel">
             <StackPanel>
                 <StackPanel Height="34" x:Name="ToolBarPanel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,0" Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
-                        <local:IconButton                
+                        <myControl:IconButton                
                             x:Name="AddMaterialCategoryBtn" Click="AddMaterialCategoryBtn_Click"
-                          Style="{DynamicResource  IconButtonTransparencyStyle}"
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom"
                            IsShowIcon="True" Icon="&#xe617;" IconSize="28"
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0" />
-                        <local:IconButton           
-                          Style="{DynamicResource  IconButtonTransparencyStyle}"
+                        <myControl:IconButton         
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom" 
                            IsShowIcon="True" Icon="&#xe61f;" IconSize="28"
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0"
                          />
-                        <local:IconButton         
-                          Style="{DynamicResource  IconButtonTransparencyStyle}"
+                        <myControl:IconButton      
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom" 
                            IsShowIcon="True" Icon="&#xe64c;" IconSize="28"
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0"
                          />
-                        <local:IconButton       
-                          Style="{DynamicResource  IconButtonTransparencyStyle}"
+                        <myControl:IconButton     
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom" 
                            IsShowIcon="True" Icon="&#xe8c4;" IconSize="28"
@@ -171,22 +168,23 @@
                                     </Grid.RowDefinitions>
                                     <Border Grid.Row="0" Background="{DynamicResource E4}" CornerRadius="4,4,0,0" >
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                                            <local:IconButton                
-                                                   x:Name="CompanyDetailUpdteBtn" Click="CompanyDetailUpdteBtn_Click"
-                                                   Style="{DynamicResource  IconButtonTransparencyStyle}"
-                                                   MouseOverForeground="{DynamicResource myBlue}"
-                                                   VerticalAlignment="Bottom" ToolTip="修改"
-                                                   IsShowIcon="True" Icon="&#xe74e;" IconSize="20"
-                                                   Width="30" Height="30" IconMargin="-2,0,0,0"
-                                                   Margin="0,0,4,0" />
-                                            <local:IconButton                
-                                                        x:Name="DeleteCompanyBtn" Click="DeleteCompanyBtn_Click"
-                                                        Style="{DynamicResource  IconButtonTransparencyStyle}"
-                                                        MouseOverForeground="Red" ToolTip="删除"
-                                                        VerticalAlignment="Bottom"
-                                                        IsShowIcon="True" Icon="&#xe615;" IconSize="24"
-                                                        Width="30" Height="30" IconMargin="-2,0,0,0"
-                                                        Margin="0,0,4,0" />
+                                            <myControl:IconButton      
+                                                IsTransparency="True"
+                                                AllowsAnimation="True"
+                                                x:Name="CompanyDetailUpdteBtn" Click="CompanyDetailUpdteBtn_Click"
+                                                MouseOverForeground="{DynamicResource myBlue}"
+                                                VerticalAlignment="Bottom" ToolTip="修改"
+                                                IsShowIcon="True" Icon="&#xe74e;" IconSize="20"
+                                                Width="30" Height="30" IconMargin="2,0,0,0"
+                                                Margin="0,0,4,0" />
+                                            <myControl:IconButton               
+                                                x:Name="DeleteCompanyBtn" Click="DeleteCompanyBtn_Click"
+                                                IsTransparency="True"
+                                                MouseOverForeground="Red" ToolTip="删除"
+                                                VerticalAlignment="Bottom"
+                                                IsShowIcon="True" Icon="&#xe615;" IconSize="24"
+                                                Width="30" Height="30" IconMargin="-2,0,0,0"
+                                                Margin="0,0,4,0" />
                                         </StackPanel>
                                     </Border>
                                     <TextBlock Grid.Row="0" Margin="20,0,0,0" TextAlignment="Left" VerticalAlignment="Center" Text="{Binding name}" Foreground="{DynamicResource myBlue}" FontSize="20"/>
@@ -226,17 +224,18 @@
                                     </Grid.RowDefinitions>
                                     <Border Grid.Row="0" Background="{DynamicResource E4}" CornerRadius="4,4,0,0" >
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                                            <local:IconButton                
+                                            <myControl:IconButton               
                                                    x:Name="MaterialDetailUpdteBtn" Click="MaterialDetailUpdteBtn_Click"
-                                                   Style="{DynamicResource  IconButtonTransparencyStyle}"
+                                                   IsTransparency="True"
+                                                   AllowsAnimation="True"
                                                    MouseOverForeground="{DynamicResource myBlue}"
                                                    VerticalAlignment="Bottom" ToolTip="修改"
                                                    IsShowIcon="True" Icon="&#xe74e;" IconSize="20"
                                                    Width="30" Height="30" IconMargin="-2,0,0,0"
                                                    Margin="0,0,4,0" />
-                                            <local:IconButton                
+                                            <myControl:IconButton             
                                                     x:Name="DeleteMaterialBtn" Click="DeleteMaterialBtn_Click"
-                                                    Style="{DynamicResource  IconButtonTransparencyStyle}"
+                                                    IsTransparency="True"
                                                     MouseOverForeground="Red" ToolTip="删除"
                                                     VerticalAlignment="Bottom"
                                                     IsShowIcon="True" Icon="&#xe615;" IconSize="24"
@@ -273,22 +272,23 @@
                                     </Grid.RowDefinitions>
                                     <Border Grid.Row="0" Background="{DynamicResource E4}" CornerRadius="4,4,0,0" >                                        
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                                            <local:IconButton                
-                                                   x:Name="CarinfoDetailUpdteBtn" Click="CarinfoDetailUpdteBtn_Click"
-                                                   Style="{DynamicResource  IconButtonTransparencyStyle}"
-                                                   MouseOverForeground="{DynamicResource myBlue}"
-                                                   VerticalAlignment="Bottom" ToolTip="修改"
-                                                   IsShowIcon="True" Icon="&#xe74e;" IconSize="20"
-                                                   Width="30" Height="30" IconMargin="-2,0,0,0"
-                                                   Margin="0,0,4,0" />
-                                            <local:IconButton                
-                                                        x:Name="DeleteCarInfoBtn" Click="DeleteCarInfoBtn_Click"
-                                                        Style="{DynamicResource  IconButtonTransparencyStyle}"
-                                                        MouseOverForeground="Red" ToolTip="删除"
-                                                        VerticalAlignment="Bottom"
-                                                        IsShowIcon="True" Icon="&#xe615;" IconSize="24"
-                                                        Width="30" Height="30" IconMargin="-2,0,0,0"
-                                                        Margin="0,0,4,0" />
+                                            <myControl:IconButton  
+                                                IsTransparency="True"            
+                                                AllowsAnimation="true"
+                                                x:Name="CarinfoDetailUpdteBtn" Click="CarinfoDetailUpdteBtn_Click"
+                                                MouseOverForeground="{DynamicResource myBlue}"
+                                                VerticalAlignment="Bottom" ToolTip="修改"
+                                                IsShowIcon="True" Icon="&#xe74e;" IconSize="20"
+                                                Width="30" Height="30" IconMargin="-2,0,0,0"
+                                                Margin="0,0,4,0" />
+                                            <myControl:IconButton
+                                                IsTransparency="True"    
+                                                x:Name="DeleteCarInfoBtn" Click="DeleteCarInfoBtn_Click"
+                                                MouseOverForeground="Red" ToolTip="删除"
+                                                VerticalAlignment="Bottom"
+                                                IsShowIcon="True" Icon="&#xe615;" IconSize="24"
+                                                Width="30" Height="30" IconMargin="2,0,0,0"
+                                                Margin="0,0,4,0" />
                                         </StackPanel>
                                     </Border>
                                     <TextBlock Grid.Row="0" Margin="20,0,0,0" TextAlignment="Left" VerticalAlignment="Center" Text="{Binding carNumber}" Foreground="{DynamicResource myBlue}" FontSize="20"/>

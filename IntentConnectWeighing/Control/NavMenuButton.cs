@@ -19,7 +19,6 @@ namespace IntentConnectWeighing
             set { SetValue(IsShowContentProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for IsShowContent.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsShowContentProperty =
             DependencyProperty.Register("IsShowContent", typeof(bool), typeof(NavMenuButton), new PropertyMetadata(true));
 
@@ -32,7 +31,6 @@ namespace IntentConnectWeighing
             set { SetValue(NomalImageProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for NomalImage.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty NomalImageProperty =
             DependencyProperty.Register("NomalImage", typeof(Image), typeof(NavMenuButton), new PropertyMetadata(null));
 
@@ -46,7 +44,6 @@ namespace IntentConnectWeighing
             set { SetValue(NomalImageUrlProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for NomalImageUrl.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty NomalImageUrlProperty =
             DependencyProperty.Register("NomalImageUrl", typeof(string), typeof(NavMenuButton), new PropertyMetadata(null));
 
@@ -60,7 +57,6 @@ namespace IntentConnectWeighing
             get { return (Image)GetValue(ActivityedImageProperty); }
             set { SetValue(ActivityedImageProperty, value); }
         }
-        // Using a DependencyProperty as the backing store for ActivityedImage.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ActivityedImageProperty =
             DependencyProperty.Register("ActivityedImage", typeof(Image), typeof(NavMenuButton), new PropertyMetadata(null));
 
@@ -74,7 +70,6 @@ namespace IntentConnectWeighing
             set { SetValue(ActivityedImageUrlProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ActivityedImageUrl.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ActivityedImageUrlProperty =
             DependencyProperty.Register("ActivityedImageUrl", typeof(string), typeof(NavMenuButton), new PropertyMetadata(null));
 
@@ -89,7 +84,6 @@ namespace IntentConnectWeighing
             set { SetValue(AlertNumberProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for AlertNumber.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty AlertNumberProperty =
             DependencyProperty.Register("AlertNumber", typeof(int), typeof(NavMenuButton), new PropertyMetadata(0));
         /// <summary>
@@ -101,7 +95,6 @@ namespace IntentConnectWeighing
             set { SetValue(IsShowAlertNumberProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for IsShowAlertNumber.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsShowAlertNumberProperty =
             DependencyProperty.Register("IsShowAlertNumber", typeof(bool), typeof(NavMenuButton), new PropertyMetadata(false));
 

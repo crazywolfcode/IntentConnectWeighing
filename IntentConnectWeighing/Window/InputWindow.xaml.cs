@@ -223,7 +223,7 @@ namespace IntentConnectWeighing
                 this.SendTraeWeightTbox.Text = mWeighingBill.sendTraeWeight.ToString();
                 this.SendNetWeightTbox.Text = mWeighingBill.sendNetWeight.ToString();
                 this.ReceivedRemardTbox.Text = mWeighingBill.receiveRemark;
-
+                this.SendNetWeightTbox.IsEnabled = false;
                 //互联版本,出场时是否允许修信息
                 if ("false" == ConfigurationHelper.GetConfig(ConfigItemName.outFactoryAllowUpdate.ToString()))
                 {

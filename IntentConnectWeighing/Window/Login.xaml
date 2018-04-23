@@ -6,6 +6,7 @@
         xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IntentConnectWeighing" WindowStyle="None"      
+          xmlns:myControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
         Loaded="Window_Loaded" ResizeMode="NoResize" 
         ContentRendered="Window_ContentRendered"
         Background="{StaticResource LoginWindowMainBackground}" 
@@ -46,8 +47,8 @@
             </Ellipse.ToolTip>
         </Ellipse>
         
-        <local:IconButton x:Name="LoginBtn" Grid.Row="1" IconMargin="3" Icon="&#xf031c;" 
-                          IconSize="20" Style="{StaticResource IconButtonStyle}" Height="40"
+        <myControl:IconButton x:Name="LoginBtn" Grid.Row="1" IconMargin="3" Icon="&#xf031c;" 
+                          IconSize="20"  Height="40"
                           Content="{StaticResource OptionLogin}"
                           FontWeight="Bold"
                           Click="LoginBtn_Click"    
@@ -60,9 +61,9 @@
                           HorizontalAlignment="Center"
                           VerticalAlignment="Bottom" 
                           Margin="0,0,0,30">
-        </local:IconButton>
-        <local:IconButton Grid.Row="1" x:Name="initSettintBtn" IconMargin="0" Icon="&#xe688;" IconSize="20" 
-                          Style="{StaticResource IconButtonStyle}" Width="28" Height="28"
+        </myControl:IconButton>
+        <myControl:IconButton Grid.Row="1" x:Name="initSettintBtn" IconMargin="0" Icon="&#xe688;" IconSize="20" 
+                           Width="28" Height="28"
                           FontWeight="Bold"
                          Click="InitSettintBtn_Click"
                           MouseOverForeground="White" 
@@ -72,8 +73,8 @@
                           HorizontalAlignment="Right" 
                           VerticalAlignment="Bottom" 
                           Margin="0,0,8,10">
-        </local:IconButton>
-        <local:IconButton Grid.Row="1" IconMargin="0" Icon="&#xe688;" IconSize="20" Style="{StaticResource IconButtonStyle}" Width="28" Height="24"
+        </myControl:IconButton>
+        <myControl:IconButton Grid.Row="1" IconMargin="0" Icon="&#xe688;" IconSize="20"  Width="28" Height="24"
                           FontWeight="Bold"
                           Click="IconButton_Click"     
                           MouseOverForeground="White" 
@@ -83,7 +84,7 @@
                           HorizontalAlignment="Left" 
                           VerticalAlignment="Bottom" 
                           Margin="8,0,10,10">
-        </local:IconButton>
+        </myControl:IconButton>
 
         <StackPanel  VerticalAlignment="Center" Grid.Row="1"  Orientation="Vertical" Margin="0,0">
             <!--TextBoxBase.TextChanged="UserNameCb_TextChanged"-->

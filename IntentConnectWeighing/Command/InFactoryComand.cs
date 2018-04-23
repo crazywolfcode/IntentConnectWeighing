@@ -16,7 +16,6 @@ namespace IntentConnectWeighing
             CommandBinding = new CommandBinding(command);
             CommandBinding.Executed += CommandBinding_Executed;
         }
-
         private static void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             InWeighingPage page = (InWeighingPage)(sender);

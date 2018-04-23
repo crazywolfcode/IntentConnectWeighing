@@ -7,7 +7,7 @@
         mc:Ignorable="d" ResizeMode="NoResize"
         Icon="/IntentConnectWeighing;component/aislogo_48.ico"
         WindowStartupLocation="CenterScreen" WindowStyle="None"   Style="{DynamicResource settingWindowStyle}"  
-        Title="车辆出场" Height="430" Width="560"
+        Title="车辆出场" Height="430" Width="660"
         Loaded="Window_Loaded" KeyUp="Window_KeyUp"
         ContentRendered="Window_ContentRendered" 
         Closing="Window_Closing" >
@@ -59,7 +59,7 @@
                         <DataGridTextColumn IsReadOnly="True" Width="Auto" Header="车牌号" Binding="{Binding plateNumber}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
                         <DataGridTextColumn IsReadOnly="True" Width="Auto" Header="驾驶员" Binding="{Binding driver}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
                         <DataGridTextColumn IsReadOnly="True" Width="Auto" Header="驾驶员电话" Binding="{Binding driverMobile}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
-                        <DataGridTextColumn IsReadOnly="True" Width="Auto" Header="入场时间" Binding="{Binding sendInTime}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
+                        <DataGridTextColumn IsReadOnly="True" Width="*" Header="入场时间" Binding="{Binding sendInTime}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
                     </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>          

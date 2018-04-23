@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"              
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"   
+                    xmlns:myControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
                     xmlns:local="clr-namespace:IntentConnectWeighing">
 
 
@@ -14,12 +15,12 @@
                     <ColumnDefinition Width="16" x:Name="arrow_col" SharedSizeGroup="MenumItemArrow"/>
                 </Grid.ColumnDefinitions>
                 <!--icon-->
-                <TextBlock x:Name="PART_Icon" 
+                <myControl:IconTextBlock x:Name="PART_Icon" 
                            Text="{TemplateBinding Icon}" 
                            Foreground="{TemplateBinding Foreground}" 
                            Margin="5,1,4,1"
                            FontSize="{TemplateBinding local:ControlAttachProperty.IconSize}"                            
-                           Style="{DynamicResource IFontStyle}"/>
+                           />
 
                 <!--Header-->
                 <ContentPresenter Grid.Column="1" x:Name="txtHeader" 

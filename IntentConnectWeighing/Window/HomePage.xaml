@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:IntentConnectWeighing"
+      xmlns:MyControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
       mc:Ignorable="d"  d:DesignHeight="300" d:DesignWidth="500"
       Title="HomePage">
     <Page.Resources>
@@ -65,7 +66,7 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <local:TabButton     Grid.Row="0" Grid.Column="0"
+                            <MyControl:TabButton   Grid.Row="0" Grid.Column="0"
                                      FontSize="14" IsChecked="True"
                                      Width="90" Height="30"      
                                     x:Name="NoFinishedTabBtn"
@@ -78,7 +79,7 @@
                                     Content="未完成"
                                     ActiveIndicatorColor="RoyalBlue"/>
                             <TextBlock x:Name="NoFinishedNumberTb" Text="0" FontSize="10" Foreground="Red" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,8,2" ToolTip="未经完成的过磅数"/>
-                            <local:TabButton   
+                            <MyControl:TabButton   
                                     Width="90" Height="30"  FontSize="14" Grid.Row="0" Grid.Column="1"
                                     x:Name="FinishedTabBtn" HorizontalAlignment="Right"                                      
                                     IsChecked="False"
@@ -114,11 +115,12 @@
             <TextBlock Text="{Binding Source={StaticResource feman} ,Converter={StaticResource ResourceKey=SexConverter}}"/>
             <TextBlock Text="{Binding Source={StaticResource nan} ,Converter={StaticResource ResourceKey=SexConverter}}"/>
             <TextBlock Text="{Binding Source={StaticResource nv},Converter={StaticResource ResourceKey=SexConverter}}"/>
-            <local:IconButton Style="{StaticResource IconButtonStyle}"  Background="Gray"  Icon="&#xe64f;" Margin="5,0,0,0" CornerRadius="16,0,0,16" AllowsAnimation="True" Width="70" Click="IconButton_Click">Info</local:IconButton>
-            <local:IconButton x:Name="Question" Style="{StaticResource IconButtonStyle}" Background="Gray"  Icon="&#xe901;" CornerRadius="0" AllowsAnimation="True" MouseOverForeground="Green" Command="local:TestCommand.ShowNameCommand" CommandParameter="CCCCC">Question</local:IconButton>
-            <local:IconButton x:Name="Warining" Style="{StaticResource IconButtonStyle}"  Background="LightGray"  Icon="&#xe648;" CornerRadius="0" AllowsAnimation="True" MouseOverForeground="White" FontWeight="Bold" MouseOverBackground="RoyalBlue"  Command="local:TestCommand.ChangeContentCommand" >Warining</local:IconButton>
-            <local:IconButton x:Name="getIp" Style="{StaticResource IconButtonStyle}"  Background="LightGray"  Icon="&#xe617;" CornerRadius="0" AllowsAnimation="True" MouseOverForeground="White" FontWeight="Bold" MouseOverBackground="RoyalBlue" Click="getIp_Click" >Warining</local:IconButton>
-            <local:IconButton Style="{StaticResource IconButtonStyle}" x:Name="ErrorButton" Background="Gray"  Icon="&#xe647;" CornerRadius="0,16,16,0" AllowsAnimation="True" Width="70" Click="ErrorButton_Click" >Error</local:IconButton>
+            <MyControl:IconButton Background="Gray"  Icon="&#xe64f;" Margin="5,0,0,0" CornerRadius="16,0,0,16" AllowsAnimation="True" Width="70" Click="IconButton_Click">Info</MyControl:IconButton>
+            <MyControl:IconButton x:Name="Question" Background="Gray"  Icon="&#xe901;" CornerRadius="0" AllowsAnimation="True" MouseOverForeground="Green" Command="local:TestCommand.ShowNameCommand" CommandParameter="CCCCC">Question</MyControl:IconButton>
+            <MyControl:IconButton x:Name="Warining"  Background="LightGray"  Icon="&#xe648;" CornerRadius="0" AllowsAnimation="True" MouseOverForeground="White" FontWeight="Bold" MouseOverBackground="RoyalBlue"  Command="local:TestCommand.ChangeContentCommand" >Warining</MyControl:IconButton>
+            <MyControl:IconButton x:Name="getIp"  Background="LightGray"  Icon="&#xe617;" CornerRadius="0" AllowsAnimation="True" MouseOverForeground="White" FontWeight="Bold" MouseOverBackground="RoyalBlue" Click="getIp_Click" >Warining</MyControl:IconButton>
+            <MyControl:IconButton x:Name="ErrorButton" Background="Gray"  Icon="&#xe647;" CornerRadius="0,16,16,0" AllowsAnimation="True" Width="70" Click="ErrorButton_Click" >Error</MyControl:IconButton>
+            <MyControl:IconTextBlock Text="&#xe64f;" FontSize="20"/>            
         </WrapPanel>
     </Grid>
 </Page>

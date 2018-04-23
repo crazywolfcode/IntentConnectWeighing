@@ -129,14 +129,8 @@
     <Compile Include="Commom\Constract.cs" />
     <Compile Include="Commom\GlobalStatus.cs" />
     <Compile Include="Control\ControlAttachProperty.cs" />
-    <Compile Include="Control\IconButton.cs" />
-    <Compile Include="Control\ImageButton.cs" />
     <Compile Include="Control\MultiComboBox.cs" />
     <Compile Include="Control\NavMenuButton.cs" />
-    <Compile Include="Control\SwitchCheckBox.xaml.cs">
-      <DependentUpon>SwitchCheckBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Control\TabButton.cs" />
     <Compile Include="Control\WindowButton.cs" />
     <Compile Include="Converter\BackgroundToForegroundConverter.cs" />
     <Compile Include="Converter\CheckedToVisibleConverter.cs" />
@@ -205,7 +199,7 @@
     <Compile Include="Helper\BitmapHelper.cs" />
     <Compile Include="Helper\CameraHelper.cs" />
     <Compile Include="Helper\DatabaseOPtionHelper.cs" />
-    <Compile Include="Helper\helpers.cs" />
+    <Compile Include="Helper\Helpers.cs" />
     <Compile Include="Helper\LoginHelper.cs" />
     <Compile Include="Helper\ResourceHelper.cs" />
     <Compile Include="Helper\TemplateHelper.cs" />
@@ -310,10 +304,6 @@
     <Compile Include="Window\testExpender.xaml.cs">
       <DependentUpon>testExpender.xaml</DependentUpon>
     </Compile>
-    <Page Include="Control\SwitchCheckBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="DynamicTemplate\TestItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -346,14 +336,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StyleDictionary\IconButtonStyleDictionary.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="StyleDictionary\IconFontDictionary.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="StyleDictionary\ListViewStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -366,7 +348,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="StyleDictionary\NavMenuButtonDictionary.xaml">
+    <Page Include="StyleDictionary\NavMenuButtonStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -393,10 +375,6 @@
     <Page Include="StyleDictionary\StyleDictionary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="StyleDictionary\TabButtonStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StyleDictionary\TextBoxDictionary.xaml">
       <SubType>Designer</SubType>
@@ -616,21 +594,6 @@
     <Resource Include="Themes\Img\Icon\transportIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Themes\Img\Menu\activity_down.png" />
-    <Resource Include="Themes\Img\Menu\activity_up.png" />
-    <Resource Include="Themes\Img\Menu\basedata.png" />
-    <Resource Include="Themes\Img\Menu\basedata_white.png" />
-    <Resource Include="Themes\Img\Menu\index.png" />
-    <Resource Include="Themes\Img\Menu\index_white.png" />
-    <Resource Include="Themes\Img\Menu\InWeight.png" />
-    <Resource Include="Themes\Img\Menu\InWeight_white.png" />
-    <Resource Include="Themes\Img\Menu\OutWeight.png" />
-    <Resource Include="Themes\Img\Menu\OutWeight_white.png" />
-    <Resource Include="Themes\Img\Menu\red_dot.png" />
-    <Resource Include="Themes\Img\Menu\report.png" />
-    <Resource Include="Themes\Img\Menu\report_white.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Themes\Img\Icon\icon.png" />
   </ItemGroup>
   <ItemGroup>
@@ -670,6 +633,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyCustomControlLibrary\MyCustomControlLibrary.csproj">
+      <Project>{7b3a77c9-9a77-43fa-8a2e-353bc6198c47}</Project>
+      <Name>MyCustomControlLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyHelperLibrary\MyHelperLibrary.csproj">
       <Project>{73f19083-ff57-4531-b7a8-0fd874639e3b}</Project>
       <Name>MyHelperLibrary</Name>
@@ -692,6 +659,45 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Themes\Img\Temp\temp_ad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Img\Menu\activity_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Img\Menu\activity_up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Img\Menu\basedata.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Img\Menu\basedata_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Img\Menu\index.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Img\Menu\index_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Img\Menu\InWeight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Img\Menu\InWeight_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Img\Menu\OutWeight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Img\Menu\OutWeight_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Img\Menu\red_dot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Img\Menu\report.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Img\Menu\report_white.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

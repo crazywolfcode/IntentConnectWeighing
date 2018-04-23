@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:IntentConnectWeighing">
+                    xmlns:local="clr-namespace:IntentConnectWeighing"
+                    xmlns:myControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/Share.xaml"/>
@@ -175,9 +176,8 @@
         <Setter Property="local:ControlAttachProperty.AttachContent">
             <Setter.Value>
                 <ControlTemplate>
-                    <local:IconButton 
-                        Icon="&#xe648;" 
-                        Style="{DynamicResource  IconButtonTransparencyStyle}"
+                    <myControl:IconButton 
+                        Icon="&#xe648;"                         
                         IsTabStop="False" IconMargin="0"
                         local:ControlAttachProperty.IsClearTextButtonBehaviorEnabled="True" 
                         Command="local:ControlAttachProperty.ClearTextCommand" 
@@ -220,7 +220,7 @@
         <Setter Property="local:ControlAttachProperty.AttachContent">
             <Setter.Value>
                 <ControlTemplate>
-                    <local:IconButton                        
+                    <myControl:IconButton                        
                         Icon="&#xe648;" 
                         Style="{DynamicResource IconButtonTransparencyStyle}" 
                         IsTabStop="False" 

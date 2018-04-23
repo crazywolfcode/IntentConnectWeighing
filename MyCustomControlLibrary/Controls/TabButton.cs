@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 
-namespace IntentConnectWeighing
+namespace MyCustomControlLibrary
 {
     public class TabButton : RadioButton
     {
@@ -21,7 +21,6 @@ namespace IntentConnectWeighing
             set { SetValue(AcitiveForegroundProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ActiveForground.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty AcitiveForegroundProperty =
             DependencyProperty.Register("ActiveForground", typeof(Brush), typeof(TabButton), new PropertyMetadata(Brushes.Black));
 
@@ -31,7 +30,6 @@ namespace IntentConnectWeighing
             set { SetValue(ActiveBackgroundProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ActiveBackground.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ActiveBackgroundProperty =
             DependencyProperty.Register("ActiveBackground", typeof(Brush), typeof(TabButton), new PropertyMetadata(Brushes.LightSlateGray));
 
@@ -41,7 +39,6 @@ namespace IntentConnectWeighing
             set { SetValue(ActiveIndicatorColorProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ActiveIndicatorColor.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ActiveIndicatorColorProperty =
             DependencyProperty.Register("ActiveIndicatorColor", typeof(Brush), typeof(TabButton), new PropertyMetadata(Brushes.RoyalBlue));
 
@@ -54,7 +51,6 @@ namespace IntentConnectWeighing
             set { SetValue(IndicatorHeightProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for IndicatorHeight.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IndicatorHeightProperty =
             DependencyProperty.Register("IndicatorHeight", typeof(int), typeof(TabButton), new PropertyMetadata(1));
 
@@ -64,7 +60,6 @@ namespace IntentConnectWeighing
             set { SetValue(IconMarginProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for IconMargin.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IconMarginProperty =
             DependencyProperty.Register("IconMargin", typeof(Thickness), typeof(TabButton), new PropertyMetadata(new Thickness(0, 0, 2, 0)));
 
@@ -74,7 +69,6 @@ namespace IntentConnectWeighing
             set { SetValue(IconProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Icon.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IconProperty =
             DependencyProperty.Register("Icon", typeof(string), typeof(TabButton), new PropertyMetadata(""));
 
@@ -98,10 +92,8 @@ namespace IntentConnectWeighing
             set { SetValue(ContentOritationProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ContentOritation.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ContentOritationProperty =
             DependencyProperty.Register("ContentOritation", typeof(Orientation), typeof(TabButton), new PropertyMetadata(Orientation.Horizontal));
-
 
 
         static TabButton()

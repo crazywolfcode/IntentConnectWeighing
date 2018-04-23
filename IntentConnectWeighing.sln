@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntentConnectWeighing", "In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyHelperLibrary", "MyHelperLibrary\MyHelperLibrary.csproj", "{73F19083-FF57-4531-B7A8-0FD874639E3B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCustomControlLibrary", "MyCustomControlLibrary\MyCustomControlLibrary.csproj", "{7B3A77C9-9A77-43FA-8A2E-353BC6198C47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,14 @@ Global
 		{73F19083-FF57-4531-B7A8-0FD874639E3B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{73F19083-FF57-4531-B7A8-0FD874639E3B}.Release|x86.ActiveCfg = Release|Any CPU
 		{73F19083-FF57-4531-B7A8-0FD874639E3B}.Release|x86.Build.0 = Release|Any CPU
+		{7B3A77C9-9A77-43FA-8A2E-353BC6198C47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B3A77C9-9A77-43FA-8A2E-353BC6198C47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B3A77C9-9A77-43FA-8A2E-353BC6198C47}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7B3A77C9-9A77-43FA-8A2E-353BC6198C47}.Debug|x86.Build.0 = Debug|Any CPU
+		{7B3A77C9-9A77-43FA-8A2E-353BC6198C47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B3A77C9-9A77-43FA-8A2E-353BC6198C47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B3A77C9-9A77-43FA-8A2E-353BC6198C47}.Release|x86.ActiveCfg = Release|Any CPU
+		{7B3A77C9-9A77-43FA-8A2E-353BC6198C47}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
