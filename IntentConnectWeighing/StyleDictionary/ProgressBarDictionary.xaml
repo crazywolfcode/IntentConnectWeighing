@@ -65,15 +65,15 @@
                                SnapsToDevicePixels="True" 
                                Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" >
                             <!--背景环-->
-                            <dr:Arc x:Name="arcOuter"
+                            <!--<dr:Arc x:Name="arcOuter"
                                          Margin="{TemplateBinding Margin}" 
                                          Opacity="0.6" 
                                          ArcThickness="{Binding Path=BorderThickness,RelativeSource={RelativeSource TemplatedParent},Mode=OneWay,Converter={x:Static local:StaticConverter.ThicknessToDoubleConverter}}"
                                         StartAngle="0" Fill="{TemplateBinding Background}" 
                                          EndAngle="360" 
-                                         Stretch="None"  />
+                                         Stretch="None"  />-->
                             <!--值-环-->
-                            <dr:Arc 
+                            <!--<dr:Arc 
                                 Margin="{TemplateBinding Margin}" 
                                 x:Name="arcValue"                             
                                 StartAngle="0" 
@@ -81,8 +81,8 @@
                                 Stretch="None" 
                                 Panel.ZIndex="2"       
                                 ArcThickness="{Binding Path=BorderThickness,RelativeSource={RelativeSource TemplatedParent},Mode=OneWay,Converter={x:Static local:StaticConverter.ThicknessToDoubleConverter}}"
-                                EndAngle="{TemplateBinding Value, Converter={x:Static local:StaticConverter.PercentToAngleConverter}}"
-                              />
+                                EndAngle="{TemplateBinding Value, Converter={x:Static local:StaticConverter.PercentToAngleConverter}}"-->
+                              <!--/>-->
                         </Grid>
                     </Viewbox>
                 </ControlTemplate>

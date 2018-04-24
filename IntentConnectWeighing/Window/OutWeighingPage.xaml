@@ -13,7 +13,7 @@
         <local:WeihgingStatusBoolConverter x:Key="WeihgingStatusBoolConverter"/>
         <local:PrientTimesboolConverter x:Key="PrientTimesboolConverter"/>
         <local:UpdateFinishedBillBtnConverter x:Key="UpdateFinishedBillBtnConverter"/>
-        
+
         <Style x:Key="DetailAlertLeableStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Foreground" Value="#444444"/>
@@ -46,17 +46,24 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="34"/>
                                 <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>                            
+                            </Grid.RowDefinitions>
                             <TextBlock Text="派车单"  VerticalAlignment="Center"  TextAlignment="Center"  FontSize="14" Width="90" x:Name="CustomerSendTB"  Foreground="RoyalBlue"/>
                             <TextBlock x:Name="SendBillCountTb" Text="0" FontSize="12" Foreground="{StaticResource myBlue}"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,2,8,2" ToolTip="派车单数量"/>
                             <StackPanel Height="1"  Background="{DynamicResource E4}" VerticalAlignment="Bottom"/>
-                                <StackPanel x:Name="PaiCheListPanel"  Background="White" Grid.Row="1" SizeChanged="PaiCheListPanel_SizeChanged">
-                                    <ListView x:Name="SendBillListView" Style="{StaticResource ListViewDefaultStyle}" ItemContainerStyle="{DynamicResource SendCarBillListViewItemStyle}" BorderThickness="0"  MouseDoubleClick="SendBollListView_MouseDoubleClick" SelectionChanged="SendBollListView_SelectionChanged" />
-                                </StackPanel>
-                                <WrapPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent" Margin="0,0,0,20" >
-                                    <myControl:IconButton x:Name="SendCarListBtn"   Background="#e4e4e4e4"  Icon="&#xe9ce;" Margin="5,0,0,0" CornerRadius="10,0,0,10" Width="30" IconSize="20"   IconMargin="2,-1,0,0" Height="20" ToolTip="查看所有的派车单" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}" Click="SendCarListBtn_Click"/>
-                                    <myControl:IconButton x:Name="SendCarRefreshBtn"  Background="#e4e4e4e4"  Icon="&#xe653;" Margin="-1,0,0,0" CornerRadius="0,10,10,0" AllowsAnimation="False" Width="30" IconMargin="2,-1,0,0"  IconSize="20" Height="20" ToolTip="刷新" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}" Click="SendCarRefreshBtn_Click" />
-                                </WrapPanel>
+                            <StackPanel x:Name="PaiCheListPanel"  Background="White" Grid.Row="1" Orientation="Horizontal">
+                                <ListView 
+                                    x:Name="SendBillListView" 
+                                    Style="{StaticResource ListViewDefaultStyle}" 
+                                    Height="{Binding ElementName=PaiCheListPanel,Path=ActualHeight}"
+                                    Width="{Binding ElementName=PaiCheListPanel,Path=ActualWidth}"
+                                    ItemContainerStyle="{DynamicResource SendCarBillListViewItemStyle}" 
+                                    BorderThickness="0"  MouseDoubleClick="SendBollListView_MouseDoubleClick" 
+                                    SelectionChanged="SendBollListView_SelectionChanged" />
+                            </StackPanel>
+                            <WrapPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent" Margin="0,0,0,20" >
+                                <myControl:IconButton x:Name="SendCarListBtn"   Background="#e4e4e4e4"  Icon="&#xe9ce;" Margin="5,0,0,0" CornerRadius="10,0,0,10" Width="30" IconSize="20"   IconMargin="2,-1,0,0" Height="20" ToolTip="查看所有的派车单" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}" Click="SendCarListBtn_Click"/>
+                                <myControl:IconButton x:Name="SendCarRefreshBtn"  Background="#e4e4e4e4"  Icon="&#xe653;" Margin="-1,0,0,0" CornerRadius="0,10,10,0" AllowsAnimation="False" Width="30" IconMargin="2,-1,0,0"  IconSize="20" Height="20" ToolTip="刷新" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}" Click="SendCarRefreshBtn_Click" />
+                            </WrapPanel>
                         </Grid>
                     </Border>
                 </Expander.Content>
@@ -323,7 +330,7 @@
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="发货货场："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="物资名称："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="车辆信息："/>
-                                               
+
                                             </StackPanel>
                                             <StackPanel >
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendCompanyName}"/>
@@ -406,26 +413,28 @@
                             <TextBlock x:Name="FinishedNumberTb" Text="0" FontSize="10" Foreground="Red" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,8,2" ToolTip="已经完成的过磅数"/>
                             <StackPanel Height="1" Margin="2,0,0,0" Background="{DynamicResource E4}" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Row="0"/>
                             <!--Right Main-->
-                            <StackPanel x:Name="RightMainPanel" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" SizeChanged="RightMainPanel_SizeChanged">
-                                <!--NoFinishListPanel-->
-                                <StackPanel x:Name="NoFinishListPanel" VerticalAlignment="Stretch"  Visibility="{Binding Path=IsChecked,ElementName=NoFinishedTabBtn,Converter={StaticResource CheckedToVisibleConverter}}">
-                                    <ListView x:Name="NoFinishListView"                                               
+                            <StackPanel  x:Name="RightMainPanel" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Background="White" Orientation="Horizontal">
+                                <!--NoFinishList-->
+                                <ListView x:Name="NoFinishListView"                                               
+                                                Visibility="{Binding Path=IsChecked,ElementName=NoFinishedTabBtn,Converter={StaticResource CheckedToVisibleConverter}}"
                                                 Style="{StaticResource ListViewDefaultStyle}" 
                                                 ItemContainerStyle="{DynamicResource OutNoFinishedListViewItemStyle}" 
                                                 BorderThickness="0" Margin="0,0,0,1" 
+                                                Height="{Binding ElementName=RightMainPanel,Path=ActualHeight}"
+                                                Width="{Binding ElementName=RightMainPanel,Path=ActualWidth}"
                                                 MouseDoubleClick="NoFinishListView_MouseDoubleClick" 
                                                 SelectionChanged="NoFinishListView_SelectionChanged" />
-                                </StackPanel>
-                                <!--FinishListPanel-->
-                                <StackPanel x:Name="FinishListPanel" Visibility="{Binding Path=IsChecked,ElementName=FinishedTabBtn,Converter={StaticResource CheckedToVisibleConverter}}">
+                                <!--FinishList-->
                                 <ListView x:Name="FinishListView" 
+                                          Visibility="{Binding Path=IsChecked,ElementName=FinishedTabBtn,Converter={StaticResource CheckedToVisibleConverter}}"
                                           Style="{StaticResource ListViewDefaultStyle}"  
                                           ItemContainerStyle="{DynamicResource OutFinishedListViewItemStyle}" 
                                           BorderThickness="0" 
                                           Margin="0,0,0,1" 
+                                          Height="{Binding ElementName=RightMainPanel,Path=ActualHeight}"
+                                          Width="{Binding ElementName=RightMainPanel,Path=ActualWidth}"
                                           MouseDoubleClick="FinishListView_MouseDoubleClick" 
                                           SelectionChanged="FinishListView_SelectionChanged"/>
-                                </StackPanel>
                             </StackPanel>
                         </Grid>
                     </Border>

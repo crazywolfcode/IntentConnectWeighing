@@ -411,46 +411,5 @@ namespace IntentConnectWeighing
         }
         #endregion
 
-
-        #region Compute ListView Height
-
-        /// <summary>
-        /// Compute ListView Height
-        /// </summary>
-        private void ComputeListViewHeight()
-        {
-            if (this.IsLoaded == false)
-            {
-                return;
-            }
-            if (this.FinishListView.ActualHeight > this.RightMainPanel.ActualHeight)
-            {
-                this.FinishListView.Height = this.RightMainPanel.ActualHeight;
-            }
-        }
-        private void PaiCheListPanel_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            ComputeListViewHeight();
-        }
-
-        private void RightMainPanel_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (this.IsLoaded == false)
-            {
-                return;
-            }
-            if (this.NoFinishListView.ActualHeight > this.RightMainPanel.ActualHeight)
-            {
-                this.NoFinishListView.Height = this.RightMainPanel.ActualHeight;
-            }
-            if (this.SendBillListView.ActualHeight > this.PaiCheListPanel.ActualHeight)
-            {
-                this.SendBillListView.Height = this.PaiCheListPanel.ActualHeight;
-            }
-            
-        }
-        #endregion
-
-
     }
 }

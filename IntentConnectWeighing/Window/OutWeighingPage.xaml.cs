@@ -154,7 +154,7 @@ namespace IntentConnectWeighing
             else
             {
                 Infactory(null, false);
-            }     
+            }
         }
 
         public void Infactory(Object bill, bool sendCar = false)
@@ -285,6 +285,7 @@ namespace IntentConnectWeighing
             {
                 return;
             }
+            MessageBox.Show(this.NoFinishListView.Height + " " + this.NoFinishListView.ActualHeight + " " + this.RightMainPanel.Height + " " + this.RightMainPanel.ActualHeight);
             IsSendCarBill = false;
             mWeighingBill = this.NoFinishListView.SelectedItem as WeighingBill;
             ShowCurrentPanel();
@@ -360,7 +361,7 @@ namespace IntentConnectWeighing
         #region Delete No finished bill
         private void DeleteNofinishedBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("TODO");
         }
 
         #endregion
@@ -376,44 +377,6 @@ namespace IntentConnectWeighing
             MessageBox.Show("Show SendCar List TODO");
         }
         #endregion
-
-        #region Compute ListView Height
-
-        private void PaiCheListPanel_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            ComputeListViewHeight();
-        }
-        private void RightMainPanel_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (this.IsLoaded == false)
-            {
-                return;
-            }
-            if (this.NoFinishListView.ActualHeight > this.RightMainPanel.ActualHeight) {
-                this.NoFinishListView.Height = this.RightMainPanel.Height;
-            }
-            if (this.FinishListView.ActualHeight > this.RightMainPanel.Height)
-            {
-                this.FinishListView.Height = this.RightMainPanel.Height;
-            }
         
-        }
-        /// <summary>
-        /// Compute ListView Height
-        /// </summary>
-        private void ComputeListViewHeight()
-        {
-            if (this.IsLoaded == false)
-            {
-                return;
-            }
-            if (this.SendBillListView.ActualHeight > this.PaiCheListPanel.Height)
-            {
-                this.SendBillListView.Height = this.PaiCheListPanel.Height;
-            }
-        }
-        #endregion
-
-    
     }
 }
