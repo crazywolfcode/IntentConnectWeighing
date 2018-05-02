@@ -40,7 +40,7 @@ namespace IntentConnectWeighing
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            this.scrollViewer.Height = this.scrollViewer.ActualHeight - 30;
+            this.LeftScrollViewer.Height = this.RootView.ActualHeight - 40;
 
             FillData();
         }
@@ -149,7 +149,7 @@ namespace IntentConnectWeighing
             DataTable cateDt = DatabaseOPtionHelper.GetInstance().select(pSql);
             if (cateDt.Rows.Count > 0)
             {
-                provinces = DbBaseHelper.DataTableToEntity<Province>(cateDt);
+                provinces = DbBaseHelper.DataTableToEntitys<Province>(cateDt);
                 if (provinces == null || provinces.Count <= 0)
                 {
                     FillCompanyAlretData();
@@ -165,7 +165,7 @@ namespace IntentConnectWeighing
                     condition = CompanyEnum.affiliated_province_id + "=" + Constract.valueSplit + p.id + Constract.valueSplit;
                     sql = DbBaseHelper.getSelectSql(DataTabeName.company.ToString(), null, condition);
                     mDt = DatabaseOPtionHelper.GetInstance().select(sql);
-                    List<Company> mlist = DbBaseHelper.DataTableToEntity<Company>(mDt);
+                    List<Company> mlist = DbBaseHelper.DataTableToEntitys<Company>(mDt);
                     if(mlist!=null && mlist.Count > 0)
                     {
                         ProvinceV v = new ProvinceV()
@@ -263,7 +263,7 @@ namespace IntentConnectWeighing
             DataTable cateDt = DatabaseOPtionHelper.GetInstance().select(CategorySql);
             if (cateDt.Rows.Count > 0)
             {
-                cates = DbBaseHelper.DataTableToEntity<MaterialCategory>(cateDt);
+                cates = DbBaseHelper.DataTableToEntitys<MaterialCategory>(cateDt);
                 if (cates == null || cates.Count <= 0)
                 {
                     FillMaterialAlretData();
@@ -279,7 +279,7 @@ namespace IntentConnectWeighing
                     condition = MaterialEnum.category_id + "=" + Constract.valueSplit + mc.id + Constract.valueSplit;
                     sql = DbBaseHelper.getSelectSql(DataTabeName.material.ToString(), null, condition);
                     mDt = DatabaseOPtionHelper.GetInstance().select(sql);
-                    List<Material> mlist = DbBaseHelper.DataTableToEntity<Material>(mDt);
+                    List<Material> mlist = DbBaseHelper.DataTableToEntitys<Material>(mDt);
                     MaterialV v = new MaterialV()
                     {
                         Category = mc,
@@ -388,7 +388,7 @@ namespace IntentConnectWeighing
             DataTable Dt = DatabaseOPtionHelper.GetInstance().select(sql);
             if (Dt.Rows.Count > 0)
             {
-                cates = DbBaseHelper.DataTableToEntity<CarHeader>(Dt);
+                cates = DbBaseHelper.DataTableToEntitys<CarHeader>(Dt);
                 if (cates == null || cates.Count <= 0)
                 {
                     FillMaterialAlretData();
@@ -404,7 +404,7 @@ namespace IntentConnectWeighing
                     condition = CarInfoEnum.car_number + " like " + Constract.valueSplit + ch.content + "%" + Constract.valueSplit;
                     sql = DbBaseHelper.getSelectSql(DataTabeName.car_info.ToString(), null, condition);
                     mDt = DatabaseOPtionHelper.GetInstance().select(sql);
-                    List<CarInfo> mlist = DbBaseHelper.DataTableToEntity<CarInfo>(mDt);
+                    List<CarInfo> mlist = DbBaseHelper.DataTableToEntitys<CarInfo>(mDt);
                     if (mlist.Count > 0)
                     {
                         CarHeaderV v = new CarHeaderV()
@@ -624,5 +624,15 @@ namespace IntentConnectWeighing
             new CompanyAddW(currCompany) { ParentRefreshData = new Action<bool, bool, bool>(RefreshData) }.ShowDialog();
         }
         #endregion
+
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            try
+            {
+                this.LeftScrollViewer.Height = this.RootView.ActualHeight - 40;
+            }
+            catch { }
+          
+        }
     }
 }

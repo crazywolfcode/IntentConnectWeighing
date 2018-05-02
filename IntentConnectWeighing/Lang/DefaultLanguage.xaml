@@ -14,4 +14,6 @@
     <sys:String x:Key="MenuSetting" >设置</sys:String>
     <sys:String x:Key="OptionLogin" >登录</sys:String>
     <sys:String x:Key="OptionQuit" >退出</sys:String>
+
+    <sys:String x:Key="DataShareAd" >互联稳重系统 多端数据实时共享</sys:String>
 </ResourceDictionary>

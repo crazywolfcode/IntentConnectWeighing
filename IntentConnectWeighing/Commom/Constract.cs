@@ -7,7 +7,9 @@ namespace IntentConnectWeighing
 {
     class Constract
     {
-      
+        public static readonly string defaultDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+        public static readonly string DateFormat = "yyyy-MM-dd";
+
         public static string BasePath = "/IntentConnectWeighing;component/";
 
         public static User currentUser =null;

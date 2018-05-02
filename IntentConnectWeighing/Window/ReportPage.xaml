@@ -4,11 +4,33 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:IntentConnectWeighing"   
+      xmlns:vc="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
       xmlns:myControl ="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
-      mc:Ignorable="d"  Loaded="Page_Loaded" 
-      d:DesignHeight="500" d:DesignWidth="800" 
+      mc:Ignorable="d"  Loaded="Page_Loaded"  Unloaded="Page_Unloaded"
+      d:DesignHeight="500" d:DesignWidth="900" 
       Title="ReportPage">
-    <Grid Background="White" Margin="0,0,0,5">
+    <Page.Resources>
+        <ContextMenu x:Key="ContextMenu" Style="{StaticResource DefaultContextMenu}">
+            <MenuItem x:Name="RefreshContextBtn" Icon="&#xe662;" Style="{StaticResource DefaultMenuItem}" IsEnabled="True" Header=" 刷新 " local:ControlAttachProperty.IconSize="18" Click="RefreshContextBtn_Click"/>
+        </ContextMenu>
+        <Style x:Key="AlertTbStyle" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="4,2,10,2"/>
+            <Setter Property="Foreground" Value="#777777"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="ValueCbStyle" TargetType="ComboBox">
+            <Setter Property="Foreground" Value="#777777"/>
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="IsEditable" Value="True"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value=" 2,2,0,2"/>
+            <Setter Property="Height" Value="24"/>
+        </Style>
+    </Page.Resources>
+    <Grid Background="White" Margin="0,0,0,5" ContextMenu="{StaticResource ContextMenu}">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition Height="Auto"/>
@@ -20,8 +42,8 @@
                 <StackPanel Height="34" x:Name="ToolBarPanel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,0" Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
                         <myControl:TabButton     
-                            x:Name="TodayInTabBtn"
-                             FontSize="14" IsChecked="True"
+                            x:Name="TodayInTabBtn" Checked="TodayInTabBtn_Checked"
+                             FontSize="14" IsChecked="False"
                              Width="70" Height="30"                    
                             Foreground="#666"
                             ActiveForground="RoyalBlue"
@@ -29,10 +51,10 @@
                             Margin="0,0,4,0"
                             IconMargin="0,0,3,0"
                             IconSize="18"         
-                            Content="今日入库"
+                            Content="入库图表"
                             ActiveIndicatorColor="RoyalBlue"/>
                         <myControl:TabButton   
-                            x:Name="TodayOutTabBtn"
+                            x:Name="TodayOutTabBtn" Checked="TodayOutTabBtn_Checked"
                             Width="70" Height="30"  FontSize="14"
                             IsChecked="False"
                             ActiveForground="RoyalBlue" 
@@ -42,9 +64,9 @@
                             IconMargin="0,0,3,0"
                             IconSize="18"                   
                             ActiveIndicatorColor="RoyalBlue"
-                            Content="今日出库"/>
+                            Content="出库图表"/>
                         <myControl:TabButton 
-                            x:Name="TodaySummaryTabBtn"
+                            x:Name="TodaySummaryTabBtn" Checked="TodaySummaryTabBtn_Checked"
                             Width="70" Height="30"  FontSize="14"
                             IsChecked="False"
                             ActiveForground="RoyalBlue" 
@@ -53,11 +75,23 @@
                             Margin="0,0,4,0"                  
                             IconMargin="0,0,3,0"
                             IconSize="18"
-                            Content="今日汇总"
+                            Content="汇总图表"
                             ActiveIndicatorColor="RoyalBlue" />
                         <myControl:TabButton 
-                            x:Name="DetialReportTabBtn"
-                            Width="70" Height="30"  FontSize="14"
+                            x:Name="InDetialReportTabBtn" Checked="InDetialReportTabBtn_Checked"
+                            Width="90" Height="30"  FontSize="14"
+                            IsChecked="True"
+                            ActiveForground="RoyalBlue" 
+                            Foreground="#666"
+                            IndicatorHeight="3" 
+                            Margin="0,0,30,0"                  
+                            IconMargin="0,0,3,0"
+                            IconSize="18"
+                            Content="入库明细报表"
+                            ActiveIndicatorColor="RoyalBlue" />
+                        <myControl:TabButton 
+                            x:Name="OutDetialReportTabBtn" Checked="OutDetialReportTabBtn_Checked"
+                            Width="90" Height="30"  FontSize="14"
                             IsChecked="False"
                             ActiveForground="RoyalBlue" 
                             Foreground="#666"
@@ -65,9 +99,9 @@
                             Margin="0,0,30,0"                  
                             IconMargin="0,0,3,0"
                             IconSize="18"
-                            Content="明细报表"
+                            Content="出库明细报表"
                             ActiveIndicatorColor="RoyalBlue" />
-
+                        
                         <myControl:IconButton                
                            x:Name="ReportPrintBtn" 
                            IsTransparency="True"
@@ -77,16 +111,18 @@
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0" />
                         <myControl:IconButton           
-                            x:Name="SaveToImageBtn"
-                          IsTransparency="True"
+                            x:Name="SearchTabBtn"
+                            Click="SearchTabBtn_Click"
+                           IsTransparency="True"
                            MouseOverForeground="{DynamicResource myBlue}"
-                           VerticalAlignment="Bottom" ToolTip="保存为图片"
-                           IsShowIcon="True" Icon="&#xe8d3;" IconSize="28"
+                           VerticalAlignment="Bottom" ToolTip="按条件查询"
+                           IsShowIcon="True" Icon="&#xe86e;" IconSize="28"
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0"
                          />
                         <myControl:IconButton         
-                            x:Name="ExportExcelBtn"
+                          x:Name="ExportExcelBtn"
+                          Click="ExportExcelBtn_Click"
                           IsTransparency="True"
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom" ToolTip="导出到电子表格"
@@ -107,83 +143,523 @@
                 <StackPanel Height="1" Margin="2,0,0,0" Background="{DynamicResource E4}"></StackPanel>                
             </StackPanel>
         </Border>
-        <!--CenderBorder-->
-        <Border x:Name="CenderBorder" Grid.Row="1"  Visibility="{Binding Path=IsChecked,ElementName=DetialReportTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" >
-            <TextBlock Text="查询条件区"/>
+        <!--search Border-->
+        <Border x:Name="CenderBorder" Grid.Row="1" >
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,4,0,0" x:Name="searchAreaPanel" Height="60">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource AlertTbStyle}" Text="发货公司:"/>
+                    <TextBlock Style="{StaticResource AlertTbStyle}" Text="收货公司:"/>
+                </StackPanel>
+                <StackPanel>
+                    <ComboBox x:Name="sendCompanyCB" DisplayMemberPath="name" Style="{StaticResource ValueCbStyle}" TextBoxBase.TextChanged="sendCompanyCB_TextChanged" SelectionChanged="sendCompanyCB_SelectionChanged"/>
+                    <ComboBox x:Name="receiveCompanyCB" DisplayMemberPath="name" Style="{StaticResource ValueCbStyle}"  TextBoxBase.TextChanged="receiveCompanyCB_TextChanged" SelectionChanged="receiveCompanyCB_SelectionChanged"/>
+                </StackPanel>
+
+
+                <StackPanel>
+                    <TextBlock Style="{StaticResource AlertTbStyle}" Text="发货货场:"/>
+                    <TextBlock Style="{StaticResource AlertTbStyle}" Text="收货货场:"/>
+                </StackPanel>
+                <StackPanel>
+                    <ComboBox x:Name="sendYandCB" DisplayMemberPath="name" Style="{StaticResource ValueCbStyle}" Width="160" IsReadOnly="True" SelectionChanged="sendYandCB_SelectionChanged"/>
+                    <ComboBox x:Name="receiveYandCB" DisplayMemberPath="name" Style="{StaticResource ValueCbStyle}" Width="160" IsReadOnly="True" SelectionChanged="receiveYandCB_SelectionChanged"/>
+                </StackPanel>
+                
+                <StackPanel>
+                    <TextBlock Style="{StaticResource AlertTbStyle}" Text="起始时间:"/>
+                    <TextBlock Style="{StaticResource AlertTbStyle}" Text="物资名称:"/>
+                </StackPanel>
+                <StackPanel>
+                    <DatePicker x:Name="StratDatePicker" SelectedDateFormat="Long"  Margin="0,2,0,2" Height="24" VerticalContentAlignment="Center"/>
+                    <ComboBox x:Name="MaterialNameCB" DisplayMemberPath="name" Style="{StaticResource ValueCbStyle}" Width="120" TextBoxBase.TextChanged="MaterialNameCB_TextChanged" SelectionChanged="MaterialNameCB_SelectionChanged"/>
+                </StackPanel>
+
+                <StackPanel>
+                    <TextBlock Style="{StaticResource AlertTbStyle}" Text="结束时间:"/>
+                    <TextBlock Style="{StaticResource AlertTbStyle}" Text="车 牌 号:"/>
+                </StackPanel>
+                <StackPanel>
+                    <DatePicker x:Name="EndDatePicker" SelectedDateFormat="Long"  Margin="0,2,0,2" Height="24" VerticalContentAlignment="Center" />
+                    <ComboBox x:Name="CarNumberCB"  DisplayMemberPath="carNumber" Style="{StaticResource ValueCbStyle}" Width="110" TextBoxBase.TextChanged="CarNumberCB_TextChanged" SelectionChanged="CarNumberCB_SelectionChanged"/>
+                </StackPanel>
+                <myControl:IconButton 
+                    x:Name="SearchBtn" 
+                    Click="SearchBtn_Click"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Padding="1"
+                    IsShowIcon="False"
+                    Margin="10,0,15,0"                                   
+                    BorderBrush="#e0e0e0" 
+                    Foreground="#666"
+                    BorderThickness="1" 
+                    Width="50"
+                    Height="40"                 
+                    CornerRadius="4"                                      
+                    FontWeight="Bold" 
+                    HorizontalAlignment="Center"      
+                    HorizontalContentAlignment="Center"
+                    MouseOverForeground="White"
+                    MouseOverBackground="{StaticResource myBlue}" Content="查 询" />
+            </StackPanel>
         </Border>
         <!--DownBorder-->
         <Border x:Name="DownBorder" Grid.Row="2">
-            <ScrollViewer x:Name="ContentScrollViewer"
-                        Background="Transparent"
-                        VerticalScrollBarVisibility="Auto"
-                        Height="{Binding ElementName=RightContentBorderPanel,Path=ActualHeight}" 
-                        Width="{Binding ElementName=RightContentBorderPanel,Path=ActualWidth}" 
-                        Style="{StaticResource DefaultScrollViewer}" >
+            <myControl:MyScrollViewer
+                Height="{Binding ElementName=DownBorder,Path=ActualHeight}"
+                x:Name="ContentScrollViewer"
+                Background="Transparent"       
+                VerticalScrollBarVisibility="Visible"
+                Width="{Binding ElementName=RightContentBorderPanel,Path=ActualWidth}" >
+
                 <StackPanel VerticalAlignment="Top">
-                    <!--today in-->
-                    <StackPanel x:Name="TodayInPanel" Visibility="{Binding Path=IsChecked,ElementName=TodayInTabBtn,Converter={StaticResource CheckedToVisibleConverter}}"  Margin="0,10,0,0" >
+                    <!-- in chart-->
+                    <StackPanel x:Name="InChartPanel" Visibility="{Binding Path=IsChecked,ElementName=TodayInTabBtn,Converter={StaticResource CheckedToVisibleConverter}}"  Margin="0,10,0,0" >
                         <Grid Margin="20,0,20,0"  x:Name="InGrid">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="Auto" MinHeight="480"/>                         
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0">
+                                <TextBlock Text="{Binding Title}" FontSize="18"  FontWeight="Bold" HorizontalAlignment="Center" />
+                                <TextBlock Text="入库图表" FontSize="14"  HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                                <DockPanel >
+                                    <TextBlock Text="{Binding YardName}"   VerticalAlignment="Center" TextAlignment="Center" Padding="8,0,0,0"/>
+                                    <TextBlock Text="{Binding DateArea}"   VerticalAlignment="Center" TextAlignment="Center" Padding="14,0,0,0"/>
+                                    <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" Text="{Binding PrintTime}"  VerticalAlignment="Center" Padding="0,0,4,0"/>
+                                    <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" Text="打印时间:"  VerticalAlignment="Center" TextAlignment="Center" Padding="4,0,0,0"/>
+                                </DockPanel>
+                            </StackPanel>
+                            <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1,1,1,1">
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <vc:Chart  View3D="True" Grid.Column="0" Grid.Row="0" BorderThickness="0" x:Name="InMaterialCarChart">
+                                        <vc:Chart.Titles>
+                                            <vc:Title Text="按煤种统计车数"/>
+                                        </vc:Chart.Titles>
+                                   
+                                        <vc:Chart.Series>
+                                            <vc:DataSeries RenderAs="Pie" LegendText="Car(车)">
+                                                <vc:DataSeries.DataPoints>
+                                                    <vc:DataPoint AxisXLabel="aaa" YValue="24"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="bba" YValue="27"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="cca" YValue="20"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="dda" YValue="30"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="eea" YValue="19"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="ffa" YValue="31"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="gga" YValue="26"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="eea" YValue="27"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="wwa" YValue="29"></vc:DataPoint>
+                                                </vc:DataSeries.DataPoints>
+
+                                            </vc:DataSeries>
+                                        </vc:Chart.Series>
+                                    </vc:Chart>
+
+                                    <vc:Chart View3D="True" Grid.Column="1" Grid.Row="0" BorderThickness="0" x:Name="InMaterialTonChart">
+                                        <vc:Chart.Titles>
+                                            <vc:Title Text="按煤种统计吨数(t）"/>
+                                        </vc:Chart.Titles>
+                                        <vc:Chart.AxesX>
+                                            <vc:Axis>
+                                                <vc:Axis.AxisLabels>
+                                                    <vc:AxisLabels Angle="45" Enabled="True"></vc:AxisLabels>
+                                                </vc:Axis.AxisLabels>
+                                            </vc:Axis>
+                                        </vc:Chart.AxesX>
+                                        <vc:Chart.AxesY>
+                                            <vc:Axis>
+                                                <vc:Axis.AxisLabels>
+                                                    <vc:AxisLabels Angle="-45" Enabled="True"/>
+                                                </vc:Axis.AxisLabels>
+                                            </vc:Axis>
+                                        </vc:Chart.AxesY>
+                                        <vc:Chart.Series>
+
+                                            <vc:DataSeries RenderAs="Radar" LegendText="Car(车)">
+                                                <vc:DataSeries.DataPoints>
+                                                    <vc:DataPoint AxisXLabel="aaa" YValue="240"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="bba" YValue="270"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="cca" YValue="200"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="dda" YValue="300"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="eea" YValue="190"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="ffa" YValue="310"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="gga" YValue="260"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="eea" YValue="270"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="wwa" YValue="290"></vc:DataPoint>
+                                                </vc:DataSeries.DataPoints>
+
+                                            </vc:DataSeries>
+                                         
+                                        </vc:Chart.Series>
+                                    </vc:Chart>
+                                    
+                                    <vc:Chart View3D="True" Grid.Column="0" Grid.Row="1" BorderThickness="0" x:Name="InCompanyCarChart">
+                                        <vc:Chart.Titles>
+                                            <vc:Title Text="按发货公司统计车数"/>
+                                        </vc:Chart.Titles>
+                                        <vc:Chart.AxesX>
+                                            <vc:Axis>
+                                                <vc:Axis.AxisLabels>
+                                                    <vc:AxisLabels Angle="45" Enabled="True"></vc:AxisLabels>
+                                                </vc:Axis.AxisLabels>
+                                            </vc:Axis>
+                                        </vc:Chart.AxesX>
+                                        <vc:Chart.AxesY>
+                                            <vc:Axis>
+                                                <vc:Axis.AxisLabels>
+                                                    <vc:AxisLabels Angle="-45" Enabled="True"/>
+                                                </vc:Axis.AxisLabels>
+                                            </vc:Axis>
+                                        </vc:Chart.AxesY>
+                                        <vc:Chart.Series>
+
+                                            <vc:DataSeries RenderAs="Doughnut" LegendText="Car(车)">
+                                                <vc:DataSeries.DataPoints>
+                                                    <vc:DataPoint AxisXLabel="aaa" YValue="240"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="bba" YValue="270"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="cca" YValue="200"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="dda" YValue="300"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="eea" YValue="190"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="ffa" YValue="310"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="gga" YValue="260"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="eea" YValue="270"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="wwa" YValue="290"></vc:DataPoint>
+                                                </vc:DataSeries.DataPoints>
+
+                                            </vc:DataSeries>
+
+                                        </vc:Chart.Series>
+                                    </vc:Chart>
+                                    
+                                    <vc:Chart View3D="True" Grid.Column="1" Grid.Row="1" BorderThickness="0" x:Name="InCompanyTonChart">
+                                        <vc:Chart.Titles>
+                                            <vc:Title Text="按发货公司统计吨数(t）"/>
+                                        </vc:Chart.Titles>
+                                        <vc:Chart.AxesX>
+                                            <vc:Axis>
+                                                <vc:Axis.AxisLabels>
+                                                    <vc:AxisLabels Angle="45" Enabled="True"></vc:AxisLabels>
+                                                </vc:Axis.AxisLabels>
+                                            </vc:Axis>
+                                        </vc:Chart.AxesX>
+                                        <vc:Chart.AxesY>
+                                            <vc:Axis>
+                                                <vc:Axis.AxisLabels>
+                                                    <vc:AxisLabels Angle="-45" Enabled="True"/>
+                                                </vc:Axis.AxisLabels>
+                                            </vc:Axis>
+                                        </vc:Chart.AxesY>
+                                        <vc:Chart.Series>
+
+                                            <vc:DataSeries RenderAs="Radar" LegendText="Car(车)">
+                                                <vc:DataSeries.DataPoints>
+                                                    <vc:DataPoint AxisXLabel="aaa" YValue="240"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="bba" YValue="270"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="cca" YValue="200"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="dda" YValue="300"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="eea" YValue="190"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="ffa" YValue="310"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="gga" YValue="260"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="eea" YValue="270"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="wwa" YValue="290"></vc:DataPoint>
+                                                </vc:DataSeries.DataPoints>
+
+                                            </vc:DataSeries>
+
+                                        </vc:Chart.Series>
+                                    </vc:Chart>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                    <!--out chart-->
+                    <StackPanel x:Name="OutChartStackPanel" Visibility="{Binding Path=IsChecked,ElementName=TodayOutTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" HorizontalAlignment="Stretch">
+                        <Grid Margin="30,10,30,10"  x:Name="OutChartGrid">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="Auto" MinHeight="480"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0">
+                                <TextBlock Text="{Binding Title}" FontSize="18"  FontWeight="Bold" HorizontalAlignment="Center" />
+                                <TextBlock Text="出库图表" FontSize="14"  HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                                <DockPanel >
+                                    <TextBlock Text="{Binding YardName}"   VerticalAlignment="Center" TextAlignment="Center" Padding="8,0,0,0"/>
+                                    <TextBlock Text="{Binding DateArea}"   VerticalAlignment="Center" TextAlignment="Center" Padding="14,0,0,0"/>
+                                    <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" Text="{Binding PrintTime}"  VerticalAlignment="Center" Padding="0,0,4,0"/>
+                                    <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" Text="打印时间:"  VerticalAlignment="Center" TextAlignment="Center" Padding="4,0,0,0"/>
+                                </DockPanel>
+                            </StackPanel>
+
+                            <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1,1,1,1">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>                                   
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <vc:Chart  View3D="True" Grid.Column="0" Grid.Row="0" BorderThickness="0" x:Name="OutMaterialCarChart">
+                                        <vc:Chart.Titles>
+                                            <vc:Title Text="按煤种统计车数"/>
+                                        </vc:Chart.Titles>
+
+                                        <vc:Chart.Series>
+                                            <vc:DataSeries RenderAs="Pie" LegendText="Car(车)">
+                                                <vc:DataSeries.DataPoints>
+                                                    <vc:DataPoint AxisXLabel="aaa" YValue="24"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="bba" YValue="27"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="cca" YValue="20"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="dda" YValue="30"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="eea" YValue="19"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="ffa" YValue="31"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="gga" YValue="26"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="eea" YValue="27"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="wwa" YValue="29"></vc:DataPoint>
+                                                </vc:DataSeries.DataPoints>
+
+                                            </vc:DataSeries>
+                                        </vc:Chart.Series>
+                                    </vc:Chart>
+
+                                    <vc:Chart View3D="True" Grid.Column="1" Grid.Row="0"  BorderThickness="0" x:Name="OutMaterialTonChart">
+                                        <vc:Chart.Titles>
+                                            <vc:Title Text="按煤种统计吨数(t）"/>
+                                        </vc:Chart.Titles>
+                                        <vc:Chart.AxesX>
+                                            <vc:Axis>
+                                                <vc:Axis.AxisLabels>
+                                                    <vc:AxisLabels Angle="45" Enabled="True"></vc:AxisLabels>
+                                                </vc:Axis.AxisLabels>
+                                            </vc:Axis>
+                                        </vc:Chart.AxesX>
+                                        <vc:Chart.AxesY>
+                                            <vc:Axis>
+                                                <vc:Axis.AxisLabels>
+                                                    <vc:AxisLabels Angle="-45" Enabled="True"/>
+                                                </vc:Axis.AxisLabels>
+                                            </vc:Axis>
+                                        </vc:Chart.AxesY>
+                                        <vc:Chart.Series>
+
+                                            <vc:DataSeries RenderAs="Radar" LegendText="Car(车)">
+                                                <vc:DataSeries.DataPoints>
+                                                    <vc:DataPoint AxisXLabel="aaa" YValue="240"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="bba" YValue="270"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="cca" YValue="200"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="dda" YValue="300"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="eea" YValue="190"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="ffa" YValue="310"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="gga" YValue="260"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="eea" YValue="270"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="wwa" YValue="290"></vc:DataPoint>
+                                                </vc:DataSeries.DataPoints>
+
+                                            </vc:DataSeries>
+
+                                        </vc:Chart.Series>
+                                    </vc:Chart>
+
+                                    <vc:Chart View3D="True" Grid.Column="0" Grid.Row="1" BorderThickness="0" x:Name="OutCompanyCarChart">
+                                        <vc:Chart.Titles>
+                                            <vc:Title Text="按收货公司统计车数"/>
+                                        </vc:Chart.Titles>
+                                        <vc:Chart.AxesX>
+                                            <vc:Axis>
+                                                <vc:Axis.AxisLabels>
+                                                    <vc:AxisLabels Angle="45" Enabled="True"></vc:AxisLabels>
+                                                </vc:Axis.AxisLabels>
+                                            </vc:Axis>
+                                        </vc:Chart.AxesX>
+                                        <vc:Chart.AxesY>
+                                            <vc:Axis>
+                                                <vc:Axis.AxisLabels>
+                                                    <vc:AxisLabels Angle="-45" Enabled="True"/>
+                                                </vc:Axis.AxisLabels>
+                                            </vc:Axis>
+                                        </vc:Chart.AxesY>
+                                        <vc:Chart.Series>
+
+                                            <vc:DataSeries RenderAs="Doughnut" LegendText="Car(车)">
+                                                <vc:DataSeries.DataPoints>
+                                                    <vc:DataPoint AxisXLabel="aaa" YValue="240"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="bba" YValue="270"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="cca" YValue="200"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="dda" YValue="300"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="eea" YValue="190"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="ffa" YValue="310"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="gga" YValue="260"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="eea" YValue="270"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="wwa" YValue="290"></vc:DataPoint>
+                                                </vc:DataSeries.DataPoints>
+
+                                            </vc:DataSeries>
+
+                                        </vc:Chart.Series>
+                                    </vc:Chart>
+
+                                    <vc:Chart View3D="True" Grid.Column="1" Grid.Row="1" BorderThickness="0" x:Name="OutCompanyTonChart">
+                                        <vc:Chart.Titles>
+                                            <vc:Title Text="按收货公司统计吨数(t）"/>
+                                        </vc:Chart.Titles>
+                                        <vc:Chart.AxesX>
+                                            <vc:Axis>
+                                                <vc:Axis.AxisLabels>
+                                                    <vc:AxisLabels Angle="45" Enabled="True"></vc:AxisLabels>
+                                                </vc:Axis.AxisLabels>
+                                            </vc:Axis>
+                                        </vc:Chart.AxesX>
+                                        <vc:Chart.AxesY>
+                                            <vc:Axis>
+                                                <vc:Axis.AxisLabels>
+                                                    <vc:AxisLabels Angle="-45" Enabled="True"/>
+                                                </vc:Axis.AxisLabels>
+                                            </vc:Axis>
+                                        </vc:Chart.AxesY>
+                                        <vc:Chart.Series>
+
+                                            <vc:DataSeries RenderAs="Radar" LegendText="Car(车)">
+                                                <vc:DataSeries.DataPoints>
+                                                    <vc:DataPoint AxisXLabel="aaa" YValue="240"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="bba" YValue="270"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="cca" YValue="200"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="dda" YValue="300"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="eea" YValue="190"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="ffa" YValue="310"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="gga" YValue="260"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="eea" YValue="270"></vc:DataPoint>
+                                                    <vc:DataPoint AxisXLabel="wwa" YValue="290"></vc:DataPoint>
+                                                </vc:DataSeries.DataPoints>
+
+                                            </vc:DataSeries>
+
+                                        </vc:Chart.Series>
+                                    </vc:Chart>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                    <!-- in Detail-->
+                    <StackPanel x:Name="InDetailPanel" Visibility="{Binding Path=IsChecked,ElementName=InDetialReportTabBtn,Converter={StaticResource CheckedToVisibleConverter}}"  Margin="0,10,0,0" HorizontalAlignment="Center">
+                        <Grid Margin="20,0,20,0"  x:Name="InDetailGrid">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="0">
+                                <TextBlock Text="{Binding Title}" FontSize="18"  FontWeight="Bold" HorizontalAlignment="Center" />
+                                <TextBlock Text="入库报表" FontSize="14"  HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                                <DockPanel >
+                                    <TextBlock Text="{Binding YardName}" x:Name="YardnameTb"  VerticalAlignment="Center" TextAlignment="Center" Padding="8,0,0,0"/>
+                                    <TextBlock Text="{Binding DateArea}" x:Name="DataRangeTb"  VerticalAlignment="Center" TextAlignment="Center" Padding="14,0,0,0"/>
+                                    <TextBlock x:Name="PrintTimeTb" DockPanel.Dock="Right" HorizontalAlignment="Right" Text="{Binding PrintTime}"  VerticalAlignment="Center" Padding="0,0,4,0"/>
+                                    <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" Text="打印时间:"  VerticalAlignment="Center" TextAlignment="Center" Padding="4,0,0,0"/>
+                                </DockPanel>
+                            </StackPanel>
+                            <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1">
+                                <DataGrid x:Name="InDetailDataGrid"  LoadingRow="InChartDataGrid_LoadingRow" MouseDoubleClick="InChartDataGrid_MouseDoubleClick" IsReadOnly="True" SelectionUnit="FullRow" SelectionMode="Single" CanUserSortColumns="False" AutoGenerateColumns="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="LightGray" BorderThickness="1" BorderBrush="LightGray" CanUserAddRows="False" ColumnHeaderHeight="30" Style="{x:Null}" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" ScrollViewer.IsDeferredScrollingEnabled="False" ColumnHeaderStyle="{StaticResource DataGridContentHeaderStyle}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="编号" ElementStyle="{DynamicResource DataGridContentCenter}" Binding="{Binding receiveNumber}" ></DataGridTextColumn>
+                                        <DataGridTextColumn Header="发货公司" ElementStyle="{DynamicResource DataGridContentCenter}" Binding="{Binding sendCompanyName}" ></DataGridTextColumn>
+                                        <DataGridTextColumn Header="物资名称" ElementStyle="{DynamicResource DataGridContentCenter}" Binding="{Binding  receiveMaterialName}" ></DataGridTextColumn>
+                                        <DataGridTextColumn Header="车牌号" ElementStyle="{DynamicResource DataGridContentCenter}" Binding="{Binding  plateNumber}" ></DataGridTextColumn>
+                                        <DataGridTextColumn Header="驾驶员" ElementStyle="{DynamicResource DataGridContentCenter}" Binding="{Binding  driver}" ></DataGridTextColumn>
+                                        <DataGridTextColumn Header="驾驶员电话" ElementStyle="{DynamicResource DataGridContentCenter}" Binding="{Binding  driverMobile}" ></DataGridTextColumn>
+                                        <DataGridTextColumn Header="原发净重" Binding="{Binding sendGrossWeight}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}" />
+                                        <DataGridTextColumn Header="收货毛重" Binding="{Binding receiveGrossWeight}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}" />
+                                        <DataGridTextColumn Header="收货皮重" Binding="{Binding receiveTraeWeight}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}" />
+                                        <DataGridTextColumn Header="收货净重" Binding="{Binding receiveNetWeight}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}" />
+                                        <DataGridTextColumn Header="入场时间" Binding="{Binding receiveInTime}" ElementStyle="{DynamicResource DataGridContentCenter}"/>
+                                        <DataGridTextColumn Header="出场时间" Binding="{Binding receiveOutTime}" ElementStyle="{DynamicResource DataGridContentCenter}" />
+                                        <DataGridTextColumn Header="扣吨"  Binding="{Binding decuationWeight}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}" />
+                                        <DataGridTextColumn Header="磅差" Binding="{Binding differenceWeight }" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}" />
+                                        <DataGridTextColumn Header="过磅员" Binding="{Binding receiveUserName}" ElementStyle="{DynamicResource DataGridContentCenter}" />
+                                        <DataGridTextColumn Header="备注" Binding="{Binding receiveRemark}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Border>
+                            <Border Grid.Row="2" BorderBrush="LightGray" BorderThickness="1,0,1,1">
+                                <DockPanel VerticalAlignment="Top" Margin="0,4,0,4" LastChildFill="True">
+                                    <WrapPanel DockPanel.Dock="Top" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                        <TextBlock x:Name="InSummaryTextBlock" Text="合计:(4) 家公司供应(20) 种物资，共(12)车，原发净重:(吨) 收货毛重:(吨) 收货皮重: (吨) 收货净重: (吨) 扣吨:  (吨) 磅差: " Foreground="#787878" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </WrapPanel>
+                                    <StackPanel DockPanel.Dock="Top" Height="1" Margin="2,0,0,0" Background="{DynamicResource E4}"></StackPanel>
+                                    <StackPanel Orientation="Horizontal" x:Name="parnel" HorizontalAlignment="Left">
+                                        <ListBox x:Name="InStatisticListBox" BorderThickness="0" Foreground="#787878"/>                                                                             
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+
+                    <!--out Detail-->
+                    <StackPanel x:Name="OutDetailStackPanel" Visibility="{Binding Path=IsChecked,ElementName=OutDetialReportTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" HorizontalAlignment="Center">
+                        <Grid Margin="20,0,20,0"  x:Name="OutDetailGrid">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="60"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="120"/>
                             </Grid.RowDefinitions>
-                            
-                            <StackPanel Grid.Row="0">                                
-                                <TextBlock Text="富源县天鑫煤业有限公司" FontSize="18"  FontWeight="Bold" HorizontalAlignment="Center" />
-                                <TextBlock Text="入库报表" FontSize="14"  HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                            <StackPanel Grid.Row="0">
+                                <TextBlock Text="{Binding Title}" FontSize="18"  FontWeight="Bold" HorizontalAlignment="Center" />
+                                <TextBlock Text="出库报表" FontSize="14"  HorizontalAlignment="Center" Margin="0,4,0,0"/>
                                 <DockPanel >
-                                    <TextBlock Text="2018-03-12 "  VerticalAlignment="Center" TextAlignment="Center" Padding="4,0,0,0"/>
-                                    <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" Text="2018-12-12 12:20:10"  VerticalAlignment="Center" Padding="0,0,4,0"/>
+                                    <TextBlock Text="{Binding YardName}"   VerticalAlignment="Center" TextAlignment="Center" Padding="8,0,0,0"/>
+                                    <TextBlock Text="{Binding DateArea}"   VerticalAlignment="Center" TextAlignment="Center" Padding="14,0,0,0"/>
+                                    <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" Text="{Binding PrintTime}"  VerticalAlignment="Center" Padding="0,0,4,0"/>
                                     <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" Text="打印时间:"  VerticalAlignment="Center" TextAlignment="Center" Padding="4,0,0,0"/>
                                 </DockPanel>
                             </StackPanel>
                             <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1">
-                                <DataGrid x:Name="InChartDataGrid" LoadingRow="InChartDataGrid_LoadingRow" MouseDoubleClick="InChartDataGrid_MouseDoubleClick" IsReadOnly="True" SelectionUnit="FullRow" SelectionMode="Single" CanUserSortColumns="False" AutoGenerateColumns="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="LightGray" BorderThickness="1" BorderBrush="LightGray" CanUserAddRows="False" ColumnHeaderHeight="30" Style="{x:Null}" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
+                                <DataGrid x:Name="OutDetailDataGrid"  LoadingRow="OutChartDataGrid_LoadingRow" MouseDoubleClick="OutChartDataGrid_MouseDoubleClick" IsReadOnly="True" SelectionUnit="FullRow" SelectionMode="Single" CanUserSortColumns="False" AutoGenerateColumns="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="LightGray" BorderThickness="1" BorderBrush="LightGray" CanUserAddRows="False" ColumnHeaderHeight="30" Style="{x:Null}" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" ScrollViewer.IsDeferredScrollingEnabled="False" ColumnHeaderStyle="{StaticResource DataGridContentHeaderStyle}">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="编号" ElementStyle="{DynamicResource DataGridContentCenter}" Binding="{Binding receiveNumber}"></DataGridTextColumn>
-                                        <DataGridTextColumn Header="发货公司" ElementStyle="{DynamicResource DataGridContentCenter}" Binding="{Binding sendCompanyName}"></DataGridTextColumn>
-                                        <DataGridTextColumn Header="物资名称" ElementStyle="{DynamicResource DataGridContentCenter}" Binding="{Binding  receiveMaterialName}"></DataGridTextColumn>
-                                        <DataGridTemplateColumn Header="车辆信息" >
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <WrapPanel>
-                                                        <TextBlock Text="{Binding plateNumber}" />
-                                                        <TextBlock Text="{Binding driver}" />
-                                                        <TextBlock Text="{Binding driverMobile}" />
-                                                    </WrapPanel>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                        <DataGridTextColumn Header="原发净重" Binding="{Binding sendGrossWeight}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}"/>
-                                        <DataGridTextColumn Header="收货毛重" Binding="{Binding receiveGrossWeight}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}"/>
-                                        <DataGridTextColumn Header="收货皮重" Binding="{Binding receiveTraeWeight}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}"/>
-                                        <DataGridTextColumn Header="收货净重" Binding="{Binding receiveNetWeight}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}"/>
-                                        <DataGridTextColumn Header="入场时间" Binding="{Binding receiveInTime}" ElementStyle="{DynamicResource DataGridContentCenter}"/>
-                                        <DataGridTextColumn Header="出场时间" Binding="{Binding receiveOutTime}" ElementStyle="{DynamicResource DataGridContentCenter}"/>
-                                        <DataGridTextColumn Header="扣吨"  Binding="{Binding decuationWeight}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}"/>
-                                        <DataGridTextColumn Header="磅差" Binding="{Binding differenceWeight }" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}"/>
-                                        <DataGridTextColumn Header="过磅员" Binding="{Binding receiveUserName}" ElementStyle="{DynamicResource DataGridContentCenter}"/>
-                                        <DataGridTextColumn Header="备注" Binding="{Binding receiveRemark}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}"/>
+                                        <DataGridTextColumn Header="编号" ElementStyle="{DynamicResource DataGridContentCenter}" Binding="{Binding sendNumber}" ></DataGridTextColumn>
+                                        <DataGridTextColumn Header="收货公司" ElementStyle="{DynamicResource DataGridContentCenter}" Binding="{Binding receiveCompanyName}" ></DataGridTextColumn>
+                                        <DataGridTextColumn Header="物资名称" ElementStyle="{DynamicResource DataGridContentCenter}" Binding="{Binding  sendMaterialName}" ></DataGridTextColumn>
+                                        <DataGridTextColumn Header="车牌号" ElementStyle="{DynamicResource DataGridContentCenter}" Binding="{Binding  plateNumber}" ></DataGridTextColumn>
+                                        <DataGridTextColumn Header="驾驶员" ElementStyle="{DynamicResource DataGridContentCenter}" Binding="{Binding  driver}" ></DataGridTextColumn>
+                                        <DataGridTextColumn Header="驾驶员电话" ElementStyle="{DynamicResource DataGridContentCenter}" Binding="{Binding  driverMobile}" ></DataGridTextColumn>
+                                        <DataGridTextColumn Header="发货毛重" Binding="{Binding sendGrossWeight}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}" />
+                                        <DataGridTextColumn Header="发货皮重" Binding="{Binding sendTraeWeight}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}" />
+                                        <DataGridTextColumn Header="发货净重" Binding="{Binding sendGrossWeight}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}" />
+                                        <DataGridTextColumn Header="入场时间" Binding="{Binding sendInTime}" ElementStyle="{DynamicResource DataGridContentCenter}"/>
+                                        <DataGridTextColumn Header="出场时间" Binding="{Binding sendOutTime}" ElementStyle="{DynamicResource DataGridContentCenter}" />
+                                        <DataGridTextColumn Header="过磅员" Binding="{Binding sendUserName}" ElementStyle="{DynamicResource DataGridContentCenter}" />
+                                        <DataGridTextColumn Header="备注" Binding="{Binding sendRemark}" ElementStyle="{DynamicResource DataGridContentHorizontalCenter}" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </Border>
                             <Border Grid.Row="2" BorderBrush="LightGray" BorderThickness="1,0,1,1">
-                                
+                                <DockPanel VerticalAlignment="Top" Margin="0,4,0,4" LastChildFill="True">
+                                    <WrapPanel DockPanel.Dock="Top" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                        <TextBlock  x:Name="OutSummaryTextBlock" Text="合计:(4) 家公司供应(20) 种物资，共(12)车，原发净重:(吨) 收货毛重:(吨) 收货皮重: (吨) 收货净重: (吨) 扣吨:  (吨) 磅差: " Foreground="#787878" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </WrapPanel>
+                                    <StackPanel DockPanel.Dock="Top" Height="1" Margin="2,0,0,0" Background="{DynamicResource E4}"></StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                        <ListBox x:Name="OutStatisticListBox" BorderThickness="0" Foreground="#787878"/>
+                                    </StackPanel>
+                                </DockPanel>
                             </Border>
                         </Grid>
                     </StackPanel>
-                    <!--Today out-->
-                    <StackPanel x:Name="TodayOutStackPanel" Visibility="{Binding Path=IsChecked,ElementName=TodayOutTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" HorizontalAlignment="Center">
-                        <TextBlock>2</TextBlock>
-                    </StackPanel>
 
-                    <!--TodaySummary-->
+                    <!--Summary chart-->
                     <StackPanel x:Name="TodaySummaryStackPanel" Visibility="{Binding Path=IsChecked,ElementName=TodaySummaryTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" HorizontalAlignment="Center">
                         <TextBlock>3</TextBlock>
                     </StackPanel>
                 </StackPanel>
-            </ScrollViewer>
+            </myControl:MyScrollViewer>
         </Border>
     </Grid>
 </Page>

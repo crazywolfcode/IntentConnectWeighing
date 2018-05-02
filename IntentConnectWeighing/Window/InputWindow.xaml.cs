@@ -251,7 +251,7 @@ namespace IntentConnectWeighing
             String @condition = ScaleEnum.client_id.ToString() + "=" + Constract.valueSplit + App.CurrClientId + Constract.valueSplit + " and " +
                 ScaleEnum.company_id.ToString() + "=" + Constract.valueSplit + App.currentCompany.id + Constract.valueSplit;
             String sql = DbBaseHelper.getSelectSql(DataTabeName.scale.ToString(), null, condition, null, null, ScaleEnum.default_type.ToString() + " desc");
-            mScales = DbBaseHelper.DataTableToEntity<Scale>(DatabaseOPtionHelper.GetInstance().select(sql));
+            mScales = DbBaseHelper.DataTableToEntitys<Scale>(DatabaseOPtionHelper.GetInstance().select(sql));
         }
 
         private void SetCurrScaleInfo()
@@ -423,7 +423,7 @@ namespace IntentConnectWeighing
                CameraInfoEnum.company_id.ToString() + "=" + Constract.valueSplit + App.currentCompany.id + Constract.valueSplit + " and " +
                 CameraInfoEnum.scale_id.ToString() + "=" + Constract.valueSplit + mCurrScale.id + Constract.valueSplit;
             String sql = DbBaseHelper.getSelectSql(DataTabeName.camera_info.ToString(), null, condition, null, null);
-            mCameraInfos = DbBaseHelper.DataTableToEntity<CameraInfo>(DatabaseOPtionHelper.GetInstance().select(sql));
+            mCameraInfos = DbBaseHelper.DataTableToEntitys<CameraInfo>(DatabaseOPtionHelper.GetInstance().select(sql));
         }
         private List<Int32> CameraIds;
         private List<CHCNetSDK.NET_DVR_DEVICEINFO_V30> mDeviceInfors;
@@ -843,7 +843,7 @@ namespace IntentConnectWeighing
             {
                 String where = WeighingBillEnum.id.ToString() + "=" + Constract.valueSplit + mWeighingBill.relativeBillId + Constract.valueSplit;
                 String sql = DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, where);
-                List<WeighingBill> list = DbBaseHelper.DataTableToEntity<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+                List<WeighingBill> list = DbBaseHelper.DataTableToEntitys<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
                 WeighingBill wb = null;
                 if (list.Count > 0) {
                     wb = list[0];
@@ -919,10 +919,8 @@ namespace IntentConnectWeighing
             }
             if (text.Length >= 2)
             {
-                string condition = CompanyEnum.name.ToString() + " like '%" + text.ToUpper() + "%' " + " OR " + CompanyEnum.name_first_case.ToString() + " like '%" + text + "%'";
-                String sql = DbBaseHelper.getSelectSql(DataTabeName.company.ToString(), null, condition);
-                List<Company> list = DbBaseHelper.DataTableToEntity<Company>(DatabaseOPtionHelper.GetInstance().select(sql));
-                if (list.Count > 0)
+                List<Company> list = CompanyModel.IndistinctSearchByNameOrNameFirstCase(text);
+                if (list.Count <= 0)
                 {
                     isSupplySelected = false;
                 }
@@ -991,9 +989,8 @@ namespace IntentConnectWeighing
             if (isSelectReceiveCompany == true) { return; }
             if (text.Length >= 2)
             {
-                string condition = CompanyEnum.name.ToString() + " like '%" + text + "%' " + " OR " + CompanyEnum.name_first_case.ToString() + " like '%" + text + "%'";
-                String sql = DbBaseHelper.getSelectSql(DataTabeName.company.ToString(), null, condition);
-                List<Company> list = DbBaseHelper.DataTableToEntity<Company>(DatabaseOPtionHelper.GetInstance().select(sql));
+
+                List<Company> list = CompanyModel.IndistinctSearchByNameOrNameFirstCase(text);
                 if (list.Count > 0)
                 {
                     isSelectReceiveCompany = true;
@@ -1081,9 +1078,7 @@ namespace IntentConnectWeighing
             if (isSelectMaterial == true) { return; }
             if (text.Length >= 2)
             {
-                string condition = MaterialEnum.name.ToString() + " like '%" + text + "%' " + " OR " + MaterialEnum.name_first_case.ToString() + " like '%" + text + "%'";
-                String sql = DbBaseHelper.getSelectSql(DataTabeName.material.ToString(), null, condition);
-                List<Material> list = DbBaseHelper.DataTableToEntity<Material>(DatabaseOPtionHelper.GetInstance().select(sql));
+                List<Material> list = MaterialModel.IndistictSearchByNameORFirstCase(text);
                 if (list.Count > 0)
                 {
                     isSelectMaterial = true;
@@ -1509,6 +1504,34 @@ namespace IntentConnectWeighing
         }
 
 
+
+
+        #region select send bill radioButton
+        private void SendBillRB_Checked(object sender, RoutedEventArgs e)
+        {
+            if (IsLoaded)
+            {
+                isInsert = true;
+                mWeighingBill = null;
+                new SendBillSelectW() { SelectAction = new Action<WeighingBill>(this.SelectSendBillInFactory) }.ShowDialog();
+            }
+            this.SendBillRB.IsChecked = false;
+        }
+
+        private void SelectSendBillInFactory(WeighingBill bill)
+        {
+            
+            if (bill == null)
+            {
+                this.InFactoryRB.IsChecked = true;
+            }
+            else
+            {
+                mSendWeighingBill = bill;             
+                BuildCurrWeighingBill();
+            }
+        }
+        #endregion
 
         //test
         private void textWeihgtTb_TextChanged(object sender, TextChangedEventArgs e)

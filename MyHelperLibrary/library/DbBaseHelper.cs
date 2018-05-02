@@ -145,7 +145,7 @@ namespace MyHelper
         /// <typeparam name="T"></typeparam>
         /// <param name="dt"></param>
         /// <returns></returns>
-        public static List<T> DataTableToEntity<T>(DataTable dt) where T : class, new()
+        public static List<T> DataTableToEntitys<T>(DataTable dt) where T : class, new()
         {
             Type type = typeof(T);
             List<T> list = new List<T>();
@@ -518,6 +518,50 @@ namespace MyHelper
         /// <param name="obj"></param>
         /// <returns></returns>
         public abstract bool checkExist<T>(T obj);
-      
+
+        /// <summary>
+        /// 将DataTable的首行转换为实体
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="table"></param>
+        /// <returns></returns>
+        public static T DataTableToEntity<T>(System.Data.DataTable table) where T :class, new (){
+            var entity = new T();
+            if (table == null || table.Rows.Count <= 0) {
+                return entity;
+            }
+            // 获得此模型的公共属性 
+            PropertyInfo[] propertys = entity.GetType().GetProperties();
+            //遍历该对象的所有属性  
+            foreach (var p in propertys)
+            {
+                //将属性名称赋值给临时变量
+                string tmpName = StringHelper.camelCaseToDBnameing(p.Name);
+
+                //检查DataTable是否包含此列（列名==对象的属性名）    
+                if (table.Columns.Contains(tmpName))
+                {
+                    // 判断此属性是否有Setter
+                    if (!p.CanWrite)
+                    {
+                        continue; //该属性不可写，直接跳出
+                    }
+
+                    //取值  
+                    var value = table.Rows[0][StringHelper.DBNamingToCamelCase(tmpName)];
+
+                    //如果非空，则赋给对象的属性  
+                    if (value != DBNull.Value)
+                    {
+                        p.SetValue(entity, value, null);
+                    }
+                    else {
+                        p.SetValue(entity, null, null);
+                    }
+                }
+            }
+            return entity;
+        }
+                
     }
 }

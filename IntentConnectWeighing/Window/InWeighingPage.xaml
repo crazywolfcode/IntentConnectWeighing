@@ -6,9 +6,10 @@
       xmlns:collections ="clr-namespace:System.Collections;assembly=mscorlib"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:myControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
+      xmlns:vc="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
       xmlns:local="clr-namespace:IntentConnectWeighing"
       mc:Ignorable="d"  Loaded="Page_Loaded" 
-      d:DesignHeight="400" d:DesignWidth="700"
+      d:DesignHeight="700" d:DesignWidth="700"
       Title="InWeighingPage" >
     <Page.Resources>
         <local:WeighingStatusConverter x:Key="WeighingStatusConverter"/>
@@ -52,8 +53,8 @@
                             <StackPanel Height="1"  Background="{DynamicResource E4}" VerticalAlignment="Bottom"/>
                             <StackPanel x:Name="PaiCheListPanel" Grid.Row="1" Background="White" Orientation="Horizontal">
                                 <ListView                                    
-                                        x:Name="SendBillListView"                                      
-                                        Style='{StaticResource ListViewDefaultStyle}' 
+                                        x:Name="SendBillListView"   
+                                        Style="{StaticResource ListViewDefaultStyle}"
                                         ItemContainerStyle="{DynamicResource SendBillListViewItemStyle}" 
                                         BorderThickness="0"  
                                         Height="{Binding ElementName=PaiCheListPanel,Path=ActualHeight}"
@@ -118,19 +119,19 @@
                 </StackPanel>
                 <StackPanel Height="1" Visibility="Collapsed" Margin="2,0,0,0" Background="{DynamicResource E4}"></StackPanel>
                 <StackPanel >
-                    <ScrollViewer x:Name="ContentScrollViewer"
+                    <myControl:MyScrollViewer x:Name="ContentScrollViewer"
                         Background="Transparent"
-                       VerticalScrollBarVisibility="Auto"
-                        Height="{Binding ElementName=RightContentBorderPanel,Path=ActualHeight}" 
-                        Width="{Binding ElementName=RightContentBorderPanel,Path=ActualWidth}" 
-                        Style="{StaticResource DefaultScrollViewer}" >
+                       VerticalScrollBarVisibility="Hidden"
+                        Height="{Binding ElementName=CenterBorder,Path=ActualHeight}" 
+                        Width="{Binding ElementName=CenterBorder,Path=ActualWidth}" 
+                        >
                         <StackPanel VerticalAlignment="Center" >
                             <!--CurrData-->
                             <StackPanel x:Name="CompanyContentStackPanel" Margin="0,10,0,10" >
                                 <!--Empty-->
                                 <StackPanel x:Name="EmptyPanel" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
                                     <Image Source="/IntentConnectWeighing;component/Themes/Img/Temp/temp_ad.png" Stretch="Fill" Height="200" Width="400"/>
-                                    <TextBlock Text="点击两边的展开按钮查看数据" Foreground="#787878" FontSize="14" HorizontalAlignment="Center" Margin="0,-30,0,0"/>
+                                    <TextBlock Text="{StaticResource DataShareAd}" Foreground="#787878" FontSize="14" HorizontalAlignment="Center" Margin="0,-30,0,0"/>
                                 </StackPanel>
 
                                 <!--NoFinish-->
@@ -222,6 +223,7 @@
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="车牌号："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="驾驶员："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="电话："/>
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="上传次数："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="状态："/>
                                             </StackPanel>
                                             <StackPanel>
@@ -229,6 +231,7 @@
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding plateNumber}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding driver}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding driverMobile}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding upStatus}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Foreground="Red" Text="{Binding receiveStatus,Converter={StaticResource WeighingStatusConverter}}"/>
                                             </StackPanel>
                                         </StackPanel>
@@ -317,6 +320,7 @@
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="车牌号："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="驾驶员："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="电话："/>
+                                                <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="上传次数："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="状态："/>
                                             </StackPanel>
                                             <StackPanel>
@@ -326,6 +330,7 @@
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding plateNumber}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding driver}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding driverMobile}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding upStatus}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Foreground="Green" Text="{Binding receiveStatus,Converter={StaticResource WeighingStatusConverter}}"/>
                                             </StackPanel>
                                         </StackPanel>
@@ -393,15 +398,72 @@
                                 </Grid>
                             </StackPanel>
 
-
                             <StackPanel Height="1" Background="{StaticResource E4}"/>
-                            <!-- statis Data-->
-                            <StackPanel >
-                                <TextBlock>statis data</TextBlock>
-                            </StackPanel>
-
+                            <!-- statis Data-->                         
+                                <vc:Chart BorderThickness="0" Height="200" VerticalAlignment="Bottom">
+                                    <vc:Chart.Titles>
+                                        <vc:Title Text="统计数据 车数 "/>
+                                    </vc:Chart.Titles>  
+                                <vc:Chart.AxesX>
+                                        <vc:Axis>
+                                            <vc:Axis.AxisLabels>
+                                                <vc:AxisLabels Angle="0" IsEnabled="True"/>
+                                            </vc:Axis.AxisLabels>
+                                        </vc:Axis>
+                                    </vc:Chart.AxesX>
+                                <vc:Chart.AxesY>
+                                    <vc:Axis>
+                                        <vc:Axis.AxisLabels>
+                                            <vc:AxisLabels Angle="45" IsEnabled="True"/>
+                                        </vc:Axis.AxisLabels>
+                                    </vc:Axis>
+                                </vc:Chart.AxesY>
+                                <vc:Chart.Series >                            
+                                    <vc:DataSeries RenderAs="Spline" LegendText="车数">
+                                        <vc:DataSeries.DataPoints>
+                                            <vc:DataPoint AxisXLabel="2018-05" YValue="20"/>
+                                            <vc:DataPoint AxisXLabel="2018-05" YValue="50"/>
+                                            <vc:DataPoint AxisXLabel="2018-05" YValue="20"/>
+                                            <vc:DataPoint AxisXLabel="2018-05" YValue="20"/>
+                                            <vc:DataPoint AxisXLabel="2018-05" YValue="10"/>
+                                            <vc:DataPoint AxisXLabel="2018-05" YValue="30"/>
+                                        </vc:DataSeries.DataPoints>
+                                    </vc:DataSeries>
+                                </vc:Chart.Series>
+                            </vc:Chart>
+                            <vc:Chart BorderThickness="0" Height="200" VerticalAlignment="Bottom">
+                                <vc:Chart.Titles>
+                                    <vc:Title Text="统计数据 吨数"/>
+                                </vc:Chart.Titles>
+                                <vc:Chart.AxesX>
+                                    <vc:Axis>
+                                        <vc:Axis.AxisLabels>
+                                            <vc:AxisLabels Angle="0" IsEnabled="True"/>
+                                        </vc:Axis.AxisLabels>
+                                    </vc:Axis>
+                                </vc:Chart.AxesX>
+                                <vc:Chart.AxesY>
+                                    <vc:Axis>
+                                        <vc:Axis.AxisLabels>
+                                            <vc:AxisLabels Angle="45" IsEnabled="True"/>
+                                        </vc:Axis.AxisLabels>
+                                    </vc:Axis>
+                                </vc:Chart.AxesY>
+                                <vc:Chart.Series >                           
+                                    <vc:DataSeries RenderAs="Spline" LegendText="吨数">
+                                        <vc:DataSeries.DataPoints>
+                                            <vc:DataPoint AxisXLabel="2018-05" YValue="210"/>
+                                            <vc:DataPoint AxisXLabel="2018-05" YValue="150"/>
+                                            <vc:DataPoint AxisXLabel="2018-05" YValue="220"/>
+                                            <vc:DataPoint AxisXLabel="2018-05" YValue="220"/>
+                                            <vc:DataPoint AxisXLabel="2018-05" YValue="110"/>
+                                            <vc:DataPoint AxisXLabel="2018-05" YValue="110"/>
+                                        </vc:DataSeries.DataPoints>
+                                    </vc:DataSeries>
+                                </vc:Chart.Series>
+                            </vc:Chart>
                         </StackPanel>
-                    </ScrollViewer>
+                    </myControl:MyScrollViewer>
                 </StackPanel>
             </StackPanel>
         </Border>

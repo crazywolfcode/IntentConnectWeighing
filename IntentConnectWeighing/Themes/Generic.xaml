@@ -9,7 +9,6 @@
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/SeparatorDictionary.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/AnimationDictionary.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/NavMenuButtonStyle.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/ScrollViewerDictionary.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/MenuAndTreeViewDictionary.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/WindowStyleDictionary.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/IntentConnectWeighing;component/StyleDictionary/LoginWindowDictionary.xaml"></ResourceDictionary>

@@ -182,7 +182,7 @@ namespace IntentConnectWeighing
                 + MaterialEnum.category_id.ToString() + "+" + Constract.valueSplit + mMaterial.categoryId + Constract.valueSplit;
             string sql = DbBaseHelper.getSelectSqlNoSoftDeleteCondition(DataTabeName.material.ToString(), null, condition, null, null, null, 1, 0);
             DataTable dt =  DatabaseOPtionHelper.GetInstance().select(sql);
-            List<Material> list = DbBaseHelper.DataTableToEntity<Material>(dt);
+            List<Material> list = DbBaseHelper.DataTableToEntitys<Material>(dt);
             if (list == null || list.Count <= 0)
             {
                 this.AlertInfoTb.Text = "该物资名称可以添加！";
@@ -190,7 +190,7 @@ namespace IntentConnectWeighing
             }
             else
             {
-                mMaterial = DbBaseHelper.DataTableToEntity<Material>(dt)[0];
+                mMaterial = DbBaseHelper.DataTableToEntitys<Material>(dt)[0];
             }
             if (mMaterial != null)
             {
@@ -247,7 +247,7 @@ namespace IntentConnectWeighing
         {
             String sql = DbBaseHelper.getSelectSql(DataTabeName.material_category.ToString());
             DataTable dt =  DatabaseOPtionHelper.GetInstance().select(sql);
-            mMaterialCategorys = DbBaseHelper.DataTableToEntity<MaterialCategory>(dt);
+            mMaterialCategorys = DbBaseHelper.DataTableToEntitys<MaterialCategory>(dt);
             this.CateNameCb.ItemsSource = mMaterialCategorys;
             for (int i = 0; i < this.CateNameCb.Items.Count; i++)
             {

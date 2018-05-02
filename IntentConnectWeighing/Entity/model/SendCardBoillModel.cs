@@ -20,7 +20,7 @@ namespace IntentConnectWeighing
               SendCarBillEnum.send_yard_id.ToString() + "=" + Constract.valueSplit + App.currentYard.id + Constract.valueSplit + " and " +
               SendCarBillEnum.effective_date.ToString() + "<=" + Constract.valueSplit + time + Constract.valueSplit + " and " + SendCarBillEnum.expiry_date.ToString() + ">=" + Constract.valueSplit + time + Constract.valueSplit ;           
             String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.send_car_bill.ToString(), null, conditon, null, null, SendCarBillEnum.effective_date + " desc ");
-            list = MyHelper.DbBaseHelper.DataTableToEntity<SendCarBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            list = MyHelper.DbBaseHelper.DataTableToEntitys<SendCarBill>(DatabaseOPtionHelper.GetInstance().select(sql));
             return list;
         }
 
@@ -29,7 +29,7 @@ namespace IntentConnectWeighing
             List<SendCarBill> list = null;
             String conditon = SendCarBillEnum.id.ToString() + "=" + Constract.valueSplit + sendCarBillId + Constract.valueSplit;
             String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.send_car_bill.ToString(), null, conditon, null, null, null,1);
-            list = MyHelper.DbBaseHelper.DataTableToEntity<SendCarBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            list = MyHelper.DbBaseHelper.DataTableToEntitys<SendCarBill>(DatabaseOPtionHelper.GetInstance().select(sql));
             if (list == null || list.Count <= 0) {
                 return null;
             }

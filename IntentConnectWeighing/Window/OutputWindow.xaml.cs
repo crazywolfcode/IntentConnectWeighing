@@ -206,7 +206,7 @@ namespace IntentConnectWeighing
             String @condition = ScaleEnum.client_id.ToString() + "=" + Constract.valueSplit + App.CurrClientId + Constract.valueSplit + " and " +
                 ScaleEnum.company_id.ToString() + "=" + Constract.valueSplit + App.currentCompany.id + Constract.valueSplit;
             String sql = DbBaseHelper.getSelectSql(DataTabeName.scale.ToString(), null, condition, null, null, ScaleEnum.default_type.ToString() + " desc");
-            mScales = DbBaseHelper.DataTableToEntity<Scale>(DatabaseOPtionHelper.GetInstance().select(sql));
+            mScales = DbBaseHelper.DataTableToEntitys<Scale>(DatabaseOPtionHelper.GetInstance().select(sql));
         }
 
         private void SetCurrScaleInfo()
@@ -378,7 +378,7 @@ namespace IntentConnectWeighing
                CameraInfoEnum.company_id.ToString() + "=" + Constract.valueSplit + App.currentCompany.id + Constract.valueSplit + " and " +
                 CameraInfoEnum.scale_id.ToString() + "=" + Constract.valueSplit + mCurrScale.id + Constract.valueSplit;
             String sql = DbBaseHelper.getSelectSql(DataTabeName.camera_info.ToString(), null, condition, null, null);
-            mCameraInfos = DbBaseHelper.DataTableToEntity<CameraInfo>(DatabaseOPtionHelper.GetInstance().select(sql));
+            mCameraInfos = DbBaseHelper.DataTableToEntitys<CameraInfo>(DatabaseOPtionHelper.GetInstance().select(sql));
         }
         private List<Int32> CameraIds;
         private List<CHCNetSDK.NET_DVR_DEVICEINFO_V30> mDeviceInfors;
@@ -739,17 +739,12 @@ namespace IntentConnectWeighing
                 isOptionSuccess = true;
                 //CaptureJpeg
                 new Thread(new ThreadStart(this.CaptureJpeg)) { IsBackground = true }.Start();
-
-                //Update Send Bill
-                new Thread(new ThreadStart(this.UpdateSendCarBill)).Start();
-
-                MessageBoxResult result = MessageBox.Show("保存成功 ! 要继续过磅吗？", "恭喜", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                // success to do TempUpdateUsedBase
-                UpdateUsedBaseData();
-
                 // update send car bill 
                 new Thread(new ThreadStart(this.UpdateSendCarBill)).Start();
-
+                // success to do TempUpdateUsedBase
+                UpdateUsedBaseData();
+                MessageBoxResult result = MessageBox.Show("保存成功 ! 要继续过磅吗？", "恭喜", MessageBoxButton.YesNo, MessageBoxImage.Question);
+               
                 PrintBill();
 
                 if (result == MessageBoxResult.No)
@@ -769,10 +764,13 @@ namespace IntentConnectWeighing
 
         private void UpdateSendCarBill()
         {
-            SendCarBill bill;
+            SendCarBill bill=null;
             if (mSendCarBill == null)
             {
-                bill = SendCardBillModel.GetById(mWeighingBill.sendCarBillId);
+                if (mWeighingBill.sendCarBillId != null)
+                {
+                    bill = SendCardBillModel.GetById(mWeighingBill.sendCarBillId);
+                }
             }
             else {
                 bill = mSendCarBill;
@@ -828,9 +826,7 @@ namespace IntentConnectWeighing
             }
             if (text.Length >= 2)
             {
-                string condition = CompanyEnum.name.ToString() + " like '%" + text.ToUpper() + "%' " + " OR " + CompanyEnum.name_first_case.ToString() + " like '%" + text + "%'";
-                String sql = DbBaseHelper.getSelectSql(DataTabeName.company.ToString(), null, condition);
-                List<Company> list = DbBaseHelper.DataTableToEntity<Company>(DatabaseOPtionHelper.GetInstance().select(sql));
+                List<Company> list = CompanyModel.IndistinctSearchByNameOrNameFirstCase(text);
                 if (list.Count > 0)
                 {
                     isSupplySelected = false;
@@ -901,9 +897,7 @@ namespace IntentConnectWeighing
             if (isSelectReceiveCompany == true) { return; }
             if (text.Length >= 2)
             {
-                string condition = CompanyEnum.name.ToString() + " like '%" + text + "%' " + " OR " + CompanyEnum.name_first_case.ToString() + " like '%" + text + "%'";
-                String sql = DbBaseHelper.getSelectSql(DataTabeName.company.ToString(), null, condition);
-                List<Company> list = DbBaseHelper.DataTableToEntity<Company>(DatabaseOPtionHelper.GetInstance().select(sql));
+                List<Company> list = CompanyModel.IndistinctSearchByNameOrNameFirstCase(text);
                 if (list.Count > 0)
                 {
                     isSelectReceiveCompany = true;
@@ -992,9 +986,7 @@ namespace IntentConnectWeighing
             if (isSelectMaterial == true) { return; }
             if (text.Length >= 2)
             {
-                string condition = MaterialEnum.name.ToString() + " like '%" + text + "%' " + " OR " + MaterialEnum.name_first_case.ToString() + " like '%" + text + "%'";
-                String sql = DbBaseHelper.getSelectSql(DataTabeName.material.ToString(), null, condition);
-                List<Material> list = DbBaseHelper.DataTableToEntity<Material>(DatabaseOPtionHelper.GetInstance().select(sql));
+                List<Material> list = MaterialModel.IndistictSearchByNameORFirstCase(text);
                 if (list.Count > 0)
                 {
                     isSelectMaterial = true;
@@ -1374,5 +1366,34 @@ namespace IntentConnectWeighing
             }
 
         }
+
+        #region  Select Send Car bill
+        private void SendCarRB_Checked(object sender, RoutedEventArgs e)
+        {
+            if (this.IsLoaded) {
+                isOutFactory = false;
+                IsHasSendCarBill = true;
+                isInsert = true;
+                mWeighingBill = null;        
+                new SendCarBillSelectW() { SelectAction = new Action<SendCarBill>(this.SelectSendCar) }.ShowDialog();
+            }
+            this.SendCarRB.IsChecked = false;
+        }
+
+
+        private void SelectSendCar(SendCarBill bill)
+        {
+            if (bill == null)
+            {
+                this.InFactoryRB.IsChecked = true;
+            }
+            else
+            {
+                mSendCarBill = bill;
+                BuildCurrWeighingBill();
+            }
+        }
+        #endregion
+
     }
 }

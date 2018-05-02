@@ -146,8 +146,9 @@ namespace MyHelper
         /// 数据库命名法转化为驼峰命名法
         /// </summary>
         /// <param name="name"></param>
+        /// <param name="isBigCamelCaes">is Big Camel Caes</param>
         /// <returns></returns>
-        public static string DBNamingToCamelCase(string name)
+        public static string DBNamingToCamelCase(string name,bool isBigCamelCaes = false)
         {
             if (name == null || name.Length == 0) { return ""; }
             if (name.Contains("_"))
@@ -165,6 +166,9 @@ namespace MyHelper
                         result += upperCaseFirstLetter(words[i]);
                     }
                 }
+                if (isBigCamelCaes == true) {
+                    return upperCaseFirstLetter(result); 
+                }
                 return result;
             }
             else
@@ -176,11 +180,15 @@ namespace MyHelper
         /// 驼峰命名法转化为数据库命名法
         /// </summary>
         /// <param name="name"></param>
+        /// <param name="isBigCamelCaes">is Big Camel Caes</param>
         /// <returns></returns>
-        public static string camelCaseToDBnameing(string name)
+        public static string camelCaseToDBnameing(string name,bool isBigCamelCaes = false)
         {
             if (name != null && name.Length > 0)
             {
+                if (isBigCamelCaes == true) {
+                    name = LowerCaseFirstLetter(name);
+                }
                 char[] array = name.ToCharArray();
                 string result = string.Empty;
                 for (int i = 0; i < array.Length; i++)
@@ -258,6 +266,15 @@ namespace MyHelper
             return str.Substring(0, 1).ToUpper() + str.Substring(1);
         }
 
+        /// <summary>
+        /// 将一个单词的第一个字母变为小写
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string LowerCaseFirstLetter(string str)
+        {
+            return str.Substring(0, 1).ToLower() + str.Substring(1);
+        }
         /// <summary>
         /// 判断字符是否为大写字母
         /// </summary>

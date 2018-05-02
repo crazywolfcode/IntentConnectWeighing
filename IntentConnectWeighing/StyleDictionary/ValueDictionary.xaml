@@ -28,8 +28,8 @@
     <!--Menu-->
     <SolidColorBrush x:Key="MenuForeground" Color="#676765"></SolidColorBrush>
     <SolidColorBrush x:Key="MenuBackground" Color="White"></SolidColorBrush>
-    <SolidColorBrush x:Key="MenuBorderBrush" Color="RoyalBlue"></SolidColorBrush>
-    <SolidColorBrush x:Key="MenuMouseOverBackground" Color="#0D3CD2"></SolidColorBrush>
+    <SolidColorBrush x:Key="MenuBorderBrush" Color="#3ca9fe"></SolidColorBrush>
+    <SolidColorBrush x:Key="MenuMouseOverBackground" Color="#3ca9fe"></SolidColorBrush>
     <SolidColorBrush x:Key="MenuMouseOverForeground" Color="White"></SolidColorBrush>
     <SolidColorBrush x:Key="MenuPressedBackground" Color="#082CA0"></SolidColorBrush>
     <SolidColorBrush x:Key="MenuPressedForeground" Color="White"></SolidColorBrush>
@@ -95,5 +95,9 @@
     <Style TargetType="TextBlock" x:Key="DataGridContentCenter">
         <Setter Property="VerticalAlignment"   Value="Center" />       
         <Setter Property="HorizontalAlignment"   Value="Center" />
+    </Style>
+    <Style TargetType="DataGridColumnHeader" x:Key="DataGridContentHeaderStyle">
+        <Setter Property="BorderThickness" Value="0"/>       
+        <Setter Property="HorizontalContentAlignment"   Value="Center" />
     </Style>
 </ResourceDictionary>

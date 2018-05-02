@@ -285,7 +285,6 @@ namespace IntentConnectWeighing
             {
                 return;
             }
-            MessageBox.Show(this.NoFinishListView.Height + " " + this.NoFinishListView.ActualHeight + " " + this.RightMainPanel.Height + " " + this.RightMainPanel.ActualHeight);
             IsSendCarBill = false;
             mWeighingBill = this.NoFinishListView.SelectedItem as WeighingBill;
             ShowCurrentPanel();

@@ -112,6 +112,12 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="WPFVisifire.Charts">
+      <HintPath>dll\WPFVisifire.Charts.dll</HintPath>
+    </Reference>
+    <Reference Include="WPFVisifire.Gauges">
+      <HintPath>dll\WPFVisifire.Gauges.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -170,6 +176,8 @@
     <Compile Include="Entity\MaterialCategory.cs" />
     <Compile Include="Entity\model\CarInfoModel.cs" />
     <Compile Include="Entity\model\CommonModel.cs" />
+    <Compile Include="Entity\model\CompanyModel.cs" />
+    <Compile Include="Entity\model\MaterialModel.cs" />
     <Compile Include="Entity\model\ProvinceModel.cs" />
     <Compile Include="Entity\model\SendCardBoillModel.cs" />
     <Compile Include="Entity\model\WeighingBillModel.cs" />
@@ -186,6 +194,9 @@
     <Compile Include="Entity\visual\CarV.cs" />
     <Compile Include="Entity\visual\MaterialV.cs" />
     <Compile Include="Entity\visual\ProvinceV.cs" />
+    <Compile Include="Entity\visual\ReportHeaderV.cs" />
+    <Compile Include="Entity\visual\ReportWeightSummaryV.cs" />
+    <Compile Include="Entity\visual\ReportWeightListV.cs" />
     <Compile Include="Entity\WeighingBill.cs" />
     <Compile Include="Entity\Yard.cs" />
     <Compile Include="Enum\commonEunm.cs" />
@@ -208,6 +219,12 @@
       <DependentUpon>BaseDataPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window\BaseWindow.cs" />
+    <Compile Include="Window\SendCarBillSelectW.xaml.cs">
+      <DependentUpon>SendCarBillSelectW.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window\SendBillSelectW.xaml.cs">
+      <DependentUpon>SendBillSelectW.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Window\OutputWindow.xaml.cs">
       <DependentUpon>OutputWindow.xaml</DependentUpon>
     </Compile>
@@ -360,10 +377,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StyleDictionary\ScrollViewerDictionary.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="StyleDictionary\SeparatorDictionary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -395,6 +408,14 @@
     <Page Include="Window\BaseDataPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window\SendCarBillSelectW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Window\SendBillSelectW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Window\OutputWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

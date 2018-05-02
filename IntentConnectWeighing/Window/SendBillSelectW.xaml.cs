@@ -23,32 +23,20 @@ namespace IntentConnectWeighing
     /// CameraAddW.xaml 的交互逻辑
     ///  CameraAddW.xaml's interactive logical 
     /// </summary>
-    public partial class CarOutFactoryW : Window
+    public partial class SendBillSelectW : Window
     {
         #region Variable   
         public Action<WeighingBill> SelectAction;
-        private WeightingBillType mType;
         private List<WeighingBill> mWeighingBills = new List<WeighingBill>();
         private WeighingBill mWeighingBill;
         #endregion
-        public CarOutFactoryW(WeightingBillType type)
+        public SendBillSelectW()
         {
             InitializeComponent();
-            mType = type;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (mType == WeightingBillType.RK)
-            {
-                this.OutDataGrid.Visibility = Visibility.Collapsed;
-                this.INDataGrid.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                this.OutDataGrid.Visibility = Visibility.Visible;
-                this.INDataGrid.Visibility = Visibility.Collapsed;
-            }
             GetData();
         }
         private void Window_ContentRendered(object sender, EventArgs e)
@@ -58,26 +46,11 @@ namespace IntentConnectWeighing
 
         private void GetData()
         {
-            String condition = @WeighingBillEnum.type.ToString() + "=" + Constract.valueSplit + ((int)mType).ToString() + Constract.valueSplit + " and ";
-            if (mType == WeightingBillType.RK)
-            {
-                condition += WeighingBillEnum.receive_status.ToString() + "=" + Constract.valueSplit + 0 + Constract.valueSplit;
-            }
-            else
-            {
-                condition += WeighingBillEnum.send_status.ToString() + "=" + Constract.valueSplit + 0 + Constract.valueSplit;
-            }
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
-            mWeighingBills = DbBaseHelper.DataTableToEntitys<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
-            if (mType == WeightingBillType.RK)
-            {
-                this.INDataGrid.ItemsSource = mWeighingBills;
-            }
-            else
-            {
-                this.OutDataGrid.ItemsSource = mWeighingBills;
-            }
+            mWeighingBills = WeighingBillModel.GetInvoice();
+            this.SendBillDataGrid.ItemsSource = mWeighingBills;
         }
+
+        #region windows Event
         /// <summary>
         /// window move event
         /// </summary>
@@ -102,30 +75,31 @@ namespace IntentConnectWeighing
                 this.SelectAction(mWeighingBill);
             }
         }
-
+        #endregion
         private void MainDataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = e.Row.GetIndex() + 1;
         }
- 
+
         //
         private void MainDataGrid_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                Select(sender as DataGrid);              
+                Select(sender as DataGrid);
                 return;
             }
-            
+
         }
 
         private void Select(DataGrid dg)
         {
-            mWeighingBill = (WeighingBill) dg.SelectedItem;
+            mWeighingBill = (WeighingBill)dg.SelectedItem;
             this.Close();
-            if (this.SelectAction != null) {
+            if (this.SelectAction != null)
+            {
                 this.SelectAction(mWeighingBill);
-            }          
+            }
         }
 
         private void OutDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -135,7 +109,8 @@ namespace IntentConnectWeighing
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape) {
+            if (e.Key == Key.Escape)
+            {
                 this.Close();
             }
         }

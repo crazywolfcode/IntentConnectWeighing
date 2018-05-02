@@ -72,13 +72,16 @@
         <Border x:Name="WeihgingBorder" Grid.Row="2" Height="230">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="49*"/>
-                    <ColumnDefinition Width="929*"/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Margin="20,2,0,2" >
+                    <RadioButton Style="{DynamicResource RadioButtonDefaultStyle}" Height="25" x:Name="SendBillRB" Content="发货单" IsChecked="False" Checked="SendBillRB_Checked" />
+                </StackPanel>
                 <StackPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Grid.Column="1" Margin="0,2" >
                     <RadioButton Style="{DynamicResource RadioButtonDefaultStyle}" Height="25" x:Name="InFactoryRB" Content="入场" IsChecked="True" Checked="InFactoryRB_Checked" />
                     <RadioButton Style="{DynamicResource RadioButtonDefaultStyle}" Margin="10,0,10,0" Height="25" x:Name="OutFactoryRb" Content="出场"  Checked="OutFactoryRb_Checked"/>

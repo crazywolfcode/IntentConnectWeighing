@@ -81,7 +81,21 @@
                         Command="ScrollBar.PageLeftCommand"
                         IsTabStop="False" 
                         Interval="50" 
-                        Style="{DynamicResource ScrollBarTrackButton}" />
+                        >
+                        <RepeatButton.Style>
+                            <Style  TargetType="{x:Type RepeatButton}">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                            <Border Background="Transparent"></Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </RepeatButton.Style>
+                    </RepeatButton>
                 </Track.DecreaseRepeatButton>
                 <!--中间滑块 Margin="1" VerticalAlignment="Center" VerticalContentAlignment="Center" -->
                 <Track.Thumb>
@@ -106,8 +120,24 @@
                 </Track.Thumb>
                 <!--右滑块-->
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton x:Name="HorizontalLargeIncrease" Command="ScrollBar.PageRightCommand"
-                                      IsTabStop="False"  Interval="50" Style="{DynamicResource ScrollBarTrackButton}" />
+                    <RepeatButton x:Name="HorizontalLargeIncrease" 
+                                  Command="ScrollBar.PageRightCommand"
+                                  IsTabStop="False"  Interval="50" 
+                                  >
+                        <RepeatButton.Style>
+                            <Style  TargetType="{x:Type RepeatButton}">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                            <Border Background="Transparent"></Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </RepeatButton.Style>
+                    </RepeatButton>
                 </Track.IncreaseRepeatButton>
             </Track>
             <!--右按钮-->
@@ -203,7 +233,21 @@
             <Track x:Name="PART_Track" IsDirectionReversed="true" Grid.Row="1" >
                 <!--上滑块-->
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton x:Name="HorizontalLargeDecrease" Command="ScrollBar.PageUpCommand"  IsTabStop="False" Interval="50" Style="{DynamicResource ScrollBarTrackButton}" />
+                    <RepeatButton x:Name="HorizontalLargeDecrease" Command="ScrollBar.PageUpCommand"  IsTabStop="False" Interval="50" >
+                        <RepeatButton.Style>
+                                <Style  TargetType="{x:Type RepeatButton}">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                                <Border Background="Transparent"></Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>                  
+                        </RepeatButton.Style>
+                    </RepeatButton>
                 </Track.DecreaseRepeatButton>
                 <!--中间滑块-->
                 <Track.Thumb>
@@ -228,7 +272,21 @@
                 </Track.Thumb>
                 <!--下滑块-->
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton x:Name="HorizontalLargeIncrease" Command="ScrollBar.PageDownCommand"  IsTabStop="False" Interval="50" Style="{DynamicResource ScrollBarTrackButton}" />
+                    <RepeatButton x:Name="HorizontalLargeIncrease" Command="ScrollBar.PageDownCommand"  IsTabStop="False" Interval="50" >
+                        <RepeatButton.Style>
+                            <Style  TargetType="{x:Type RepeatButton}">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                            <Border Background="Transparent"></Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </RepeatButton.Style>
+                    </RepeatButton>
                 </Track.IncreaseRepeatButton>
             </Track>
             <!--下按钮-->
@@ -267,7 +325,7 @@
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
-                <Setter TargetName="BgInner" Property="Opacity" Value="0.5"/>               
+                <Setter TargetName="BgInner" Property="Opacity" Value="0.5"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>

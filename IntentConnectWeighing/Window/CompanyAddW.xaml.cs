@@ -122,7 +122,7 @@ namespace IntentConnectWeighing
         {
             String Condition = UserEnum.id_number + "=" + Constract.valueSplit + mPersonCompany.busineseLincenseNumber + Constract.valueSplit;
             String Sql = DbBaseHelper.getSelectSql(DataTabeName.user.ToString(), null, Condition);
-            List<User> list = DbBaseHelper.DataTableToEntity<User>(DatabaseOPtionHelper.GetInstance().select(Sql));
+            List<User> list = DbBaseHelper.DataTableToEntitys<User>(DatabaseOPtionHelper.GetInstance().select(Sql));
             if (list != null && list.Count > 0)
             {
                 PersonBose = list[0];
@@ -542,7 +542,7 @@ namespace IntentConnectWeighing
             String @condition = CompanyEnum.name.ToString() + "+" + Constract.valueSplit + currCompany + Constract.valueSplit +
                 " and " + CompanyEnum.businese_lincense_number.ToString() + " = " + Constract.valueSplit + currLicence + Constract.valueSplit;
             String sql = DbBaseHelper.getSelectSql(DataTabeName.company.ToString(), null, condition);
-            List<Company> list = DbBaseHelper.DataTableToEntity<Company>(DatabaseOPtionHelper.GetInstance().select(sql));
+            List<Company> list = DbBaseHelper.DataTableToEntitys<Company>(DatabaseOPtionHelper.GetInstance().select(sql));
             if (list != null && list.Count > 0)
             {
                 if (list[0].isDelete == 1)
@@ -635,7 +635,7 @@ namespace IntentConnectWeighing
             String @condition = CompanyEnum.name.ToString() + "+" + Constract.valueSplit + currPersonCompanyName + Constract.valueSplit +
               " and " + CompanyEnum.businese_lincense_number.ToString() + " = " + Constract.valueSplit + currPersonCompanyIdNumber + Constract.valueSplit;
             String sql = DbBaseHelper.getSelectSql(DataTabeName.company.ToString(), null, condition);
-            List<Company> list = DbBaseHelper.DataTableToEntity<Company>(DatabaseOPtionHelper.GetInstance().select(sql));
+            List<Company> list = DbBaseHelper.DataTableToEntitys<Company>(DatabaseOPtionHelper.GetInstance().select(sql));
             if (list != null && list.Count > 0)
             {
                 if (list[0].isDelete == 1)

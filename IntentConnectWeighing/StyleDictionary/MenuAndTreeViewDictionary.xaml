@@ -38,11 +38,11 @@
                            Foreground="{TemplateBinding Foreground}" />
 
                 <!--右指针-->
-                <TextBlock x:Name="PART_Arrow" Grid.Column="3" 
+                <myControl:IconTextBlock x:Name="PART_Arrow" Grid.Column="3" 
                            Text="&#xe63d;" 
                            Foreground="{TemplateBinding Foreground}" 
                            FontSize="14" 
-                           Style="{DynamicResource IFontStyle}"/>
+                          />
 
                 <!--淡出子集菜单容器-->
                 <Popup x:Name="SubMenuPopup" 
@@ -66,7 +66,7 @@
             </Grid>
         </Border>
         <!--触发器-->
-        <ControlTemplate.Triggers>
+        <ControlTemplate.Triggers>           
             <!--TopLevelHeader:第一级菜单（有子菜单）-->
             <Trigger Property="Role" Value="TopLevelHeader">
                 <Setter Property="Visibility" Value="Collapsed" TargetName="PART_Arrow"/>
@@ -260,7 +260,7 @@
                                             Grid.IsSharedSizeScope="True" 
                                             Margin="0" 
                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                             KeyboardNavigation.TabNavigation="Cycle" />
+                                            KeyboardNavigation.TabNavigation="Cycle" />
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>

@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
       xmlns:local="clr-namespace:IntentConnectWeighing"
       xmlns:myControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
+      xmlns:vc="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
       mc:Ignorable="d" Loaded="Page_Loaded" 
       d:DesignHeight="660" d:DesignWidth="960"
       Title="OutWeighingPage">
@@ -113,7 +114,7 @@
                                 <!--Empty-->
                                 <StackPanel x:Name="EmptyPanel" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
                                     <Image Source="/IntentConnectWeighing;component/Themes/Img/Temp/temp_ad.png" Stretch="Fill" Height="200" Width="400"/>
-                                    <TextBlock Text="点击两边的展开按钮查看数据" Foreground="#787878" FontSize="14" HorizontalAlignment="Center" Margin="0,-30,0,0"/>
+                                    <TextBlock Text="{StaticResource DataShareAd}" Foreground="#787878" FontSize="14" HorizontalAlignment="Center" Margin="0,-30,0,0"/>
                                 </StackPanel>
 
                                 <!--NoFinish-->
@@ -160,7 +161,6 @@
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="原发皮重："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="原发毛重："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="原发净重："/>
-
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}"  Text="备注："/>
                                             </StackPanel>
                                             <StackPanel >
@@ -362,10 +362,48 @@
 
                             <StackPanel Height="1" Background="{StaticResource E4}"/>
                             <!-- statis Data-->
-                            <StackPanel >
-                                <TextBlock>statis data</TextBlock>
-                            </StackPanel>
-
+                            <!-- statis Data-->
+                            <vc:Chart BorderThickness="0" Height="200" VerticalAlignment="Bottom">
+                                <vc:Chart.Titles>
+                                    <vc:Title Text="统计数据 车数 和 吨数"/>
+                                </vc:Chart.Titles>
+                                <vc:Chart.AxesX>
+                                    <vc:Axis>
+                                        <vc:Axis.AxisLabels>
+                                            <vc:AxisLabels Angle="0" IsEnabled="True"/>
+                                        </vc:Axis.AxisLabels>
+                                    </vc:Axis>
+                                </vc:Chart.AxesX>
+                                <vc:Chart.AxesY>
+                                    <vc:Axis>
+                                        <vc:Axis.AxisLabels>
+                                            <vc:AxisLabels Angle="45" IsEnabled="True"/>
+                                        </vc:Axis.AxisLabels>
+                                    </vc:Axis>
+                                </vc:Chart.AxesY>
+                                <vc:Chart.Series >
+                                    <vc:DataSeries RenderAs="Spline" LegendText="车数">
+                                        <vc:DataSeries.DataPoints>
+                                            <vc:DataPoint YValue="210"/>
+                                            <vc:DataPoint YValue="120"/>
+                                            <vc:DataPoint YValue="210"/>
+                                            <vc:DataPoint YValue="220"/>
+                                            <vc:DataPoint YValue="120"/>
+                                            <vc:DataPoint  YValue="80"/>
+                                        </vc:DataSeries.DataPoints>
+                                    </vc:DataSeries>
+                                    <vc:DataSeries RenderAs="Spline" LegendText="吨数">
+                                        <vc:DataSeries.DataPoints>
+                                            <vc:DataPoint AxisXLabel="2018-05" YValue="210"/>
+                                            <vc:DataPoint AxisXLabel="2018-05" YValue="150"/>
+                                            <vc:DataPoint AxisXLabel="2018-05" YValue="210"/>
+                                            <vc:DataPoint AxisXLabel="2018-05" YValue="220"/>
+                                            <vc:DataPoint AxisXLabel="2018-05" YValue="110"/>
+                                            <vc:DataPoint AxisXLabel="2018-05" YValue="110"/>
+                                        </vc:DataSeries.DataPoints>
+                                    </vc:DataSeries>
+                                </vc:Chart.Series>
+                            </vc:Chart>
                         </StackPanel>
                     </myControl:MyScrollViewer>
                 </StackPanel>

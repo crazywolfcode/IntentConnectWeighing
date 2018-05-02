@@ -112,14 +112,14 @@ namespace IntentConnectWeighing
         {
             String sql = DbBaseHelper.getSelectSql(DataTabeName.scale.ToString());
             DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            mScales = DbBaseHelper.DataTableToEntity<Scale>(dt);
+            mScales = DbBaseHelper.DataTableToEntitys<Scale>(dt);
             this.ScaleDataGrid.ItemsSource = mScales;
         }
         private void refreshCameraSettingData()
         {
             String sql = DbBaseHelper.getSelectSql(DataTabeName.camera_info.ToString());
             DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            mCameraInfos = DbBaseHelper.DataTableToEntity<CameraInfo>(dt);
+            mCameraInfos = DbBaseHelper.DataTableToEntitys<CameraInfo>(dt);
             this.CamreaDataGrid.ItemsSource = mCameraInfos;
         }
        

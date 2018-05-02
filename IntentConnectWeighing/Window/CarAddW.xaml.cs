@@ -58,7 +58,7 @@ namespace IntentConnectWeighing
             String conditon = VchicleLicenseEnum.id.ToString() + "=" + Constract.valueSplit + mCarInfo.vehicleId + Constract.valueSplit;
             String sql = DbBaseHelper.getSelectSql(DataTabeName.vchicle_license.ToString(), null, conditon);
             DataTable dataTable = DatabaseOPtionHelper.GetInstance().select(sql);
-            List<VchicleLicense> list = DbBaseHelper.DataTableToEntity<VchicleLicense>(dataTable);
+            List<VchicleLicense> list = DbBaseHelper.DataTableToEntitys<VchicleLicense>(dataTable);
             if (list != null && list.Count > 0)
             {
                 mVchicleLicense = list[0];
@@ -73,7 +73,7 @@ namespace IntentConnectWeighing
             String conditon = DrivingLicenseEnum.affiliated_user_id.ToString() + "=" + Constract.valueSplit + mDriver.id + Constract.valueSplit;
             String sql = DbBaseHelper.getSelectSql(DataTabeName.driving_license.ToString(), null, conditon);
             DataTable dataTable = DatabaseOPtionHelper.GetInstance().select(sql);
-            List<DrivingLicense> list = DbBaseHelper.DataTableToEntity<DrivingLicense>(dataTable);
+            List<DrivingLicense> list = DbBaseHelper.DataTableToEntitys<DrivingLicense>(dataTable);
             if (list != null && list.Count > 0)
             {
                 mDrivingLicense = list[0];
@@ -88,7 +88,7 @@ namespace IntentConnectWeighing
             String conditon = UserEnum.id_number.ToString() + "=" + Constract.valueSplit + mCarInfo.driverIdnumber + Constract.valueSplit;
             String sql = DbBaseHelper.getSelectSql(DataTabeName.user.ToString(), null, conditon);
             DataTable dataTable = DatabaseOPtionHelper.GetInstance().select(sql);
-            List<User> list = DbBaseHelper.DataTableToEntity<User>(dataTable);
+            List<User> list = DbBaseHelper.DataTableToEntitys<User>(dataTable);
             if (list != null && list.Count > 0)
             {
                 mDriver = list[0];
@@ -701,7 +701,7 @@ namespace IntentConnectWeighing
             {
                 String condition = CarInfoEnum.car_number.ToString() + "=" + Constract.valueSplit + carnumber + Constract.valueSplit;
                 String sql = DbBaseHelper.getSelectSql(DataTabeName.car_info.ToString(), null, condition);
-                List<CarInfo> list = DbBaseHelper.DataTableToEntity<CarInfo>(DatabaseOPtionHelper.GetInstance().select(sql));
+                List<CarInfo> list = DbBaseHelper.DataTableToEntitys<CarInfo>(DatabaseOPtionHelper.GetInstance().select(sql));
                 if (list.Count > 0)
                 {
                     if (list[0].isDelete == 1)

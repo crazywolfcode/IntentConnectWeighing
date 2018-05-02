@@ -308,7 +308,7 @@ namespace IntentConnectWeighing
             {
                 string condition = CompanyEnum.name.ToString() + " like '%" + text.ToUpper() + "%' " + " OR " + CompanyEnum.name_first_case.ToString() + " like '%" + text + "%'";
                 String sql = DbBaseHelper.getSelectSql(DataTabeName.company.ToString(), null, condition);
-                List<Company> list = DbBaseHelper.DataTableToEntity<Company>(DatabaseOPtionHelper.GetInstance().select(sql));
+                List<Company> list = DbBaseHelper.DataTableToEntitys<Company>(DatabaseOPtionHelper.GetInstance().select(sql));
                 if (list.Count > 0)
                 {
                     isSupplySelected = false;
@@ -376,7 +376,7 @@ namespace IntentConnectWeighing
             {
                 string condition = CompanyEnum.name.ToString() + " like '%" + text + "%' " + " OR " + CompanyEnum.name_first_case.ToString() + " like '%" + text + "%'";
                 String sql = DbBaseHelper.getSelectSql(DataTabeName.company.ToString(), null, condition);
-                List<Company> list = DbBaseHelper.DataTableToEntity<Company>(DatabaseOPtionHelper.GetInstance().select(sql));
+                List<Company> list = DbBaseHelper.DataTableToEntitys<Company>(DatabaseOPtionHelper.GetInstance().select(sql));
                 if (list.Count > 0)
                 {
                     isSelectReceiveCompany = true;
@@ -462,7 +462,7 @@ namespace IntentConnectWeighing
             {
                 string condition = MaterialEnum.name.ToString() + " like '%" + text + "%' " + " OR " + MaterialEnum.name_first_case.ToString() + " like '%" + text + "%'";
                 String sql = DbBaseHelper.getSelectSql(DataTabeName.material.ToString(), null, condition);
-                List<Material> list = DbBaseHelper.DataTableToEntity<Material>(DatabaseOPtionHelper.GetInstance().select(sql));
+                List<Material> list = DbBaseHelper.DataTableToEntitys<Material>(DatabaseOPtionHelper.GetInstance().select(sql));
                 if (list.Count > 0)
                 {
                     isSelectMaterial = true;

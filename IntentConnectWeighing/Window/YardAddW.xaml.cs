@@ -153,7 +153,7 @@ namespace IntentConnectWeighing
                 + YardEnum.affiliated_company_id.ToString() + "+" + Constract.valueSplit + mYard.affiliatedCompanyId + Constract.valueSplit;
             string sql = DbBaseHelper.getSelectSqlNoSoftDeleteCondition(DataTabeName.yard.ToString(), null, condition, null, null, null, 1, 0);
             DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            List<Yard> list = DbBaseHelper.DataTableToEntity<Yard>(dt);
+            List<Yard> list = DbBaseHelper.DataTableToEntitys<Yard>(dt);
             if (list == null || list.Count <= 0)
             {
                 this.AlertInfoTb.Text = "该货场名称可以添加！";
@@ -162,7 +162,7 @@ namespace IntentConnectWeighing
             }
             else
             {
-                mYard = DbBaseHelper.DataTableToEntity<Yard>(dt)[0];
+                mYard = DbBaseHelper.DataTableToEntitys<Yard>(dt)[0];
             }
             if (mYard != null)
             {
@@ -220,7 +220,7 @@ namespace IntentConnectWeighing
         {
             String sql = DbBaseHelper.getSelectSql(DataTabeName.company.ToString());
             DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            mCompanys = DbBaseHelper.DataTableToEntity<Company>(dt);
+            mCompanys = DbBaseHelper.DataTableToEntitys<Company>(dt);
             this.CompanyNameCb.ItemsSource = mCompanys;
             if (mYard != null) {
                 for (int i = 0; i < this.CompanyNameCb.Items.Count; i++)

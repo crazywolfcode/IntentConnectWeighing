@@ -37,7 +37,7 @@
                                                 Grid.Row="0" Grid.Column="0" />
                         <!--垂直滚动条 -->
                         <local:MyScrollBar Orientation="Vertical" x:Name="PART_VerticalScrollBar" AutomationProperties.AutomationId="VerticalScrollBar"
-                                   ViewportSize="{TemplateBinding ViewportHeight}"  
+                                   ViewportSize="{TemplateBinding ViewportHeight}"  Background="Gray"
                                    Cursor="Arrow" Grid.Column="1" Maximum="{TemplateBinding ScrollableHeight}" 
                                    UpIcon="&#xe62c;" BottomIcon="&#xe502;"
                                    Minimum="0" Grid.Row="0" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
@@ -45,7 +45,7 @@
                         <!--水平底部滚动条-->
                         <local:MyScrollBar Orientation="Horizontal" x:Name="PART_HorizontalScrollBar" AutomationProperties.AutomationId="HorizontalScrollBar"
                                    Cursor="Arrow" Grid.Column="0" Maximum="{TemplateBinding ScrollableWidth}"  
-                                   Minimum="0"  Grid.Row="1" 
+                                   Minimum="0"  Grid.Row="1" Background="Gray"
                                    Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
                                    LeftIcon="&#xe619;" RightIcon="&#xe602;"
                                    Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"

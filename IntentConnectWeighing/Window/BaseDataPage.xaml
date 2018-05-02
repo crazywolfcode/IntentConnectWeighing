@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:IntentConnectWeighing"
       xmlns:myControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
-      mc:Ignorable="d"  Loaded="Page_Loaded"
+      mc:Ignorable="d"  Loaded="Page_Loaded" SizeChanged="Page_SizeChanged"
      d:DesignHeight="630" d:DesignWidth="880"   
       Title="BaseDataPage">
     <Page.Resources>
@@ -85,24 +85,22 @@
                             Content="车辆"
                             ActiveIndicatorColor="RoyalBlue" />
                 </StackPanel>
-                <StackPanel Height="1" Background="{DynamicResource E4}"></StackPanel>
-                <ScrollViewer x:Name="scrollViewer"
-                        Background="Transparent" Padding="0,0,0,6"
-                        Height="{Binding ElementName=RootView,Path=ActualHeight}" 
-                        Width="{Binding Source=StackPanel,Path=ActualWidth}" 
-                        Style="{StaticResource DefaultScrollViewer}" >
-                    <StackPanel>
-                        <!--Company-->
-                        <StackPanel x:Name="CompanyListContentStackPanel"  Width="{Binding Source=StackPanel,Path=ActualWidth}" Visibility="{Binding Path=IsChecked,ElementName=CompanyTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" ContextMenu="{DynamicResource CompanyContextMenu}"/>
+                <StackPanel Height="1" Background="{DynamicResource E4}"></StackPanel>                
+                    <myControl:MyScrollViewer x:Name="LeftScrollViewer"
+                        Background="Transparent" Padding="0,0,0,6"                     
+                        >
+                        <StackPanel>
+                            <!--Company-->
+                            <StackPanel x:Name="CompanyListContentStackPanel"  Width="{Binding Source=StackPanel,Path=ActualWidth}" Visibility="{Binding Path=IsChecked,ElementName=CompanyTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" ContextMenu="{DynamicResource CompanyContextMenu}"/>
 
-                        <!--Material-->
-                        <StackPanel x:Name="MaterialListContentStackPanel" Width="{Binding Source=StackPanel,Path=ActualWidth}" Visibility="{Binding Path=IsChecked,ElementName=MaterialTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" ContextMenu="{DynamicResource MaterialContextMenu}"/>
+                            <!--Material-->
+                            <StackPanel x:Name="MaterialListContentStackPanel" Width="{Binding Source=StackPanel,Path=ActualWidth}" Visibility="{Binding Path=IsChecked,ElementName=MaterialTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" ContextMenu="{DynamicResource MaterialContextMenu}"/>
 
-                        <!--Car-->
-                        <StackPanel x:Name="CarListContentStackPanel" Width="{Binding Source=StackPanel,Path=ActualWidth}" Visibility="{Binding Path=IsChecked,ElementName=CarTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" ContextMenu="{DynamicResource CarContextMenu}"/>
+                            <!--Car-->
+                            <StackPanel x:Name="CarListContentStackPanel" Width="{Binding Source=StackPanel,Path=ActualWidth}" Visibility="{Binding Path=IsChecked,ElementName=CarTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" ContextMenu="{DynamicResource CarContextMenu}"/>
 
-                    </StackPanel>
-                </ScrollViewer>
+                        </StackPanel>
+                    </myControl:MyScrollViewer>                
             </StackPanel>
         </Border>
         <myControl:IconButton x:Name="AddBtn"
@@ -110,7 +108,7 @@
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"      
                 Margin="0,0,18,10" ToolTip="添加"  Click="AddBtn_Click"
-                Width="34" Height="30" 
+                Width="34" Height="30"  IsTransparency="True"
                 IsShowIcon="True" CornerRadius="17"
                 Icon="&#xe626;" IconSize="30" IconMargin="0,-2,0,2"
                 MouseOverForeground ="{DynamicResource myBlue}" MouseOverBackground="{DynamicResource F9}"
@@ -124,12 +122,14 @@
                             x:Name="AddMaterialCategoryBtn" Click="AddMaterialCategoryBtn_Click"
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom"
+                            IsTransparency="True"
                            IsShowIcon="True" Icon="&#xe617;" IconSize="28"
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0" />
                         <myControl:IconButton         
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom" 
+                            IsTransparency="True"
                            IsShowIcon="True" Icon="&#xe61f;" IconSize="28"
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0"
@@ -137,6 +137,7 @@
                         <myControl:IconButton      
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom" 
+                            IsTransparency="True"
                            IsShowIcon="True" Icon="&#xe64c;" IconSize="28"
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0"
@@ -144,6 +145,7 @@
                         <myControl:IconButton     
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom" 
+                            IsTransparency="True"
                            IsShowIcon="True" Icon="&#xe8c4;" IconSize="28"
                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0"
@@ -152,13 +154,13 @@
                 </StackPanel>
                 <StackPanel Height="1" Margin="2,0,0,0" Background="{DynamicResource E4}"></StackPanel>
                 <StackPanel >
-                    <ScrollViewer x:Name="ContentScrollViewer"
+                    <myControl:MyScrollViewer x:Name="ContentScrollViewer"
                         Background="Transparent"
                        VerticalScrollBarVisibility="Auto"
                         Height="{Binding ElementName=RightContentBorderPanel,Path=ActualHeight}" 
                         Width="{Binding ElementName=RightContentBorderPanel,Path=ActualWidth}" 
-                        Style="{StaticResource DefaultScrollViewer}" >
-                        <StackPanel VerticalAlignment="Center">
+                         >
+                        <StackPanel VerticalAlignment="Center" >
                             <!--Company-->
                             <StackPanel x:Name="CompanyContentStackPanel" Visibility="{Binding Path=IsChecked,ElementName=CompanyTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" >
                                 <Grid Width="450" Margin="0,0,0,0" x:Name="CompanyDetailGrid">
@@ -315,7 +317,7 @@
                                 </Grid>
                             </StackPanel>
                         </StackPanel>
-                    </ScrollViewer>
+                    </myControl:MyScrollViewer>
                 </StackPanel>
             </StackPanel>
         </Border>
