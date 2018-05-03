@@ -1,4 +1,4 @@
-﻿<Window x:Class="IntentConnectWeighing.OutputUpdateW"
+﻿<Window x:Class="IntentConnectWeighing.OutputBuLuW"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"     
@@ -125,8 +125,8 @@
                             <TextBlock Style="{StaticResource SendSendAlertTbStyle}">出场时间:</TextBlock>
                         </StackPanel>
                         <StackPanel Margin="2,0,0,0">
-                            <myControl:DateTimePicker x:Name="InDTP" Icon="&#xe632;" IconColor="{StaticResource myBlue}" ValueChanged="InDTP_ValueChanged"/>
-                            <myControl:DateTimePicker x:Name="OutDTP" Icon="&#xe632;" IconColor="{StaticResource myBlue}" ValueChanged="OutDTP_ValueChanged"/>
+                            <myControl:DateTimePicker x:Name="InDTP" Icon="&#xe632;" IconColor="{StaticResource myBlue}"/>
+                            <myControl:DateTimePicker x:Name="OutDTP" Icon="&#xe632;" IconColor="{StaticResource myBlue}"/>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,2,0,10">

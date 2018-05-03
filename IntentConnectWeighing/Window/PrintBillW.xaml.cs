@@ -163,9 +163,7 @@ namespace IntentConnectWeighing
                 {
                     PrintArea = this.OutPanel;
                 }
-                // System.Windows.Size size = new System.Windows.Size(printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight);
-                //  PrintArea.Measure(size);
-                // PrintArea.Arrange(new Rect(new System.Windows.Point(0, 0), size));
+            
                 mTime = new System.Threading.Timer(delegate
                 {
                     this.Dispatcher.BeginInvoke(new Action(delegate

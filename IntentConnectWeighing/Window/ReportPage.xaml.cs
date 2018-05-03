@@ -227,12 +227,11 @@ namespace IntentConnectWeighing
         private void InChartDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             WeighingBill bill = this.InDetailDataGrid.SelectedItem as WeighingBill;
-            new WeihgingBillDetailW(bill) { }.ShowDialog();
+            new WeihgingBillDetailW(bill) { RefreshParend = new Action<bool>(AfterChildClosed) }.ShowDialog();
         }
 
         #endregion
-
-
+        
         #region Today Out
         private void RefreshOutChart()
         {
@@ -277,7 +276,15 @@ namespace IntentConnectWeighing
         private void OutChartDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             WeighingBill bill = this.OutDetailDataGrid.SelectedItem as WeighingBill;
-            new WeihgingBillDetailW(bill) { }.ShowDialog();
+            new WeihgingBillDetailW(bill)
+            {
+                RefreshParend = new Action<bool>(AfterChildClosed)
+            }.ShowDialog();
+        }
+
+        private void AfterChildClosed(bool b)
+        {
+            RefershData();
         }
         private void GenerateOutChart()
         {
@@ -421,7 +428,7 @@ namespace IntentConnectWeighing
                 TextBlock tb = (TextBlock)listBox.Items[i];
                 if (tb != null)
                 {
-                    list.Add( tb.Text);
+                    list.Add(tb.Text);
                 }
                 else
                 {

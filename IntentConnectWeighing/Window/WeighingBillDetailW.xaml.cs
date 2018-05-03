@@ -27,6 +27,8 @@ namespace IntentConnectWeighing
         #region Variable              
         private WeightingBillType mType;
         private WeighingBill mWeighingBill;
+
+        public  Action<bool> RefreshParend;
         #endregion
         public WeihgingBillDetailW(WeighingBill bill)
         {
@@ -87,11 +89,15 @@ namespace IntentConnectWeighing
         }
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
-        {
+        {          
             this.Close();
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (this.RefreshParend != null)
+            {
+                this.RefreshParend(true);
+            }
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
@@ -160,8 +166,37 @@ namespace IntentConnectWeighing
         }
 
         private void UpdateBill()
-        {            
-            new OutputUpdateW(mType, mWeighingBill) { }.ShowDialog();
+        {
+            if (mType == WeightingBillType.CK)
+            {
+                new OutputUpdateW(mWeighingBill) { RefershParent = new Action<WeighingBill>(AfterUpdate) }.ShowDialog();
+            }
+            else
+            {
+                new InputUpdateW(mWeighingBill) { RefershParent = new Action<WeighingBill>(AfterUpdate) }.ShowDialog();
+            }
+        }
+
+        private void AfterUpdate(WeighingBill bill)
+        {
+            if (bill == null)
+            {
+                this.Close();
+            }
+            else
+            {
+                mWeighingBill = bill;
+                if (InPanel.Visibility == Visibility.Visible)
+                {
+                    this.InGrid.DataContext = null;
+                    this.InGrid.DataContext = mWeighingBill;
+                }
+                else
+                {
+                    this.OutGrid.DataContext = null;
+                    this.OutGrid.DataContext = this.InGrid.DataContext = mWeighingBill;
+                }
+            }
         }
     }
 }

@@ -66,7 +66,7 @@
                             MouseOverBackground="White" Content="确 定" />
                 </StackPanel>
                 <!--Main content area-->
-                <ScrollViewer Style="{DynamicResource DefaultScrollViewer}">
+                <myControl:MyScrollViewer >
                     <StackPanel >
                         <StackPanel HorizontalAlignment="Center" Visibility="{Binding ElementName=BaseSetting,Path=IsChecked ,Converter={StaticResource CheckedToVisibleConverter}}">
                             <TextBlock  FontSize="25"> Center</TextBlock>
@@ -210,7 +210,7 @@
                             <TextBlock  FontSize="25"> OtherSetting</TextBlock>
                         </StackPanel>
                     </StackPanel>
-                </ScrollViewer>
+                </myControl:MyScrollViewer>
             </DockPanel>
         </Border>
     </Grid>

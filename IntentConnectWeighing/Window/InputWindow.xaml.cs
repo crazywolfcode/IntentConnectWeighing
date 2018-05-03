@@ -659,8 +659,6 @@ namespace IntentConnectWeighing
                 }
             }
         }
-
-
         private void SetCarDecuationDescriptionDefaultSource()
         {
             this.DecuationDescriptionCb.ItemsSource = App.decuationDesList;

@@ -1,0 +1,285 @@
+﻿<UserControl x:Class="MyCustomControlLibrary.DateTimePicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MyCustomControlLibrary"
+             x:Name="mDateTimePicker"
+             Loaded="UserControl_Loaded"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <WrapPanel Background="White">
+            <TextBox x:Name="MainContentTb"  BorderThickness="0" Width="130" Padding="2,6,2,0" TextAlignment="Left" Text="{Binding ElementName=mDateTimePicker,Path=StringValue}" TextChanged="MainContent_TextChanged" GotFocus="MainContent_GotFocus"/>
+            <local:IconTextBlock Text="{Binding ElementName=mDateTimePicker,Path=Icon}"  Margin="2" MouseLeftButtonDown="IconTextBlock_MouseLeftButtonDown" Visibility="{Binding ElementName=mDateTimePicker,Path=IconVisibility}" Foreground="{Binding ElementName=mDateTimePicker,Path=IconColor}"/>
+        </WrapPanel>
+        <Popup x:Name="SelectP" PopupAnimation="Fade" IsOpen="False" >
+
+            <Grid Background="White" >
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" CornerRadius="4,4,0,0" BorderBrush="#787878" BorderThickness="1,1,1,0">
+                    <Calendar x:Name="DateCalendar" SelectedDatesChanged="DateCalendar_SelectedDatesChanged"  Margin="4,4,4,0" BorderThickness="0" Padding="0"/>
+                </Border>
+                <Border Grid.Row="1" BorderBrush="#787878" BorderThickness="1,0,1,0">
+                    <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" >
+                        <TextBox x:Name="HourTb" Width="25" Height="30" Padding="1,4,1,4" FontSize="14" Text="{Binding ElementName=mDateTimePicker,Path=Hour}" GotFocus="HourTb_MouseLeftButtonDown" TextChanged="HourTb_TextChanged"/>
+                        <Label Content=":" Padding="1,4,1,4"/>
+                        <TextBox x:Name="MinuteTb" Width="25" Height="30" Padding="1,4,1,4" FontSize="14" Text="{Binding ElementName=mDateTimePicker,Path=Minute}" GotFocus="MinuteTb_MouseLeftButtonDown" TextChanged="MinuteTb_TextChanged"/>
+                        <Label Content=":" Padding="1,4,1,4"/>
+                        <TextBox x:Name="SecondTb" Width="25" Height="30" Padding="1,4,1,4" FontSize="14" Text="{Binding ElementName=mDateTimePicker,Path=Second}" GotFocus="SecondTb_MouseLeftButtonDown" TextChanged="SecondTb_TextChanged"/>
+                    </WrapPanel>
+                </Border>
+                <Border Grid.Row="2"  CornerRadius="0,0,4,4" BorderBrush="#787878" BorderThickness="1,0,1,1">
+                    <WrapPanel  HorizontalAlignment="Center">
+                        <local:IconButton x:Name="clearBtn" Icon="&#xe651;" Width="28" IsTransparency="True" MouseOverForeground="Red"  CornerRadius="6" Click="clearBtn_Click"/>
+                    </WrapPanel>
+                </Border>
+            </Grid>
+
+        </Popup>
+        <Popup x:Name="HourP" Margin="0,20,0,0" IsOpen="False">
+            <Grid Background="White" >
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" CornerRadius="4,4,0,0" BorderBrush="#787878" BorderThickness="1,1,1,0">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <WrapPanel >
+                            <TextBlock Text="1" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="2" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="3" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="4" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="5" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="6" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                        </WrapPanel>
+                        <WrapPanel >
+                            <TextBlock Text="7" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="8" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="9" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="10" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="11" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="12" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                        </WrapPanel>
+                        <WrapPanel >
+                            <TextBlock Text="13" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="14" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="15" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="16" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="17" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="18" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                        </WrapPanel>
+                        <WrapPanel >
+                            <TextBlock Text="19" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="20" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="21" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="22" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="23" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="00" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="Hour_TextBlock_MouseLeftButtonDown"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2"  CornerRadius="0,0,4,4" BorderBrush="#787878" BorderThickness="1,0,1,1">
+                    <WrapPanel  HorizontalAlignment="Center">
+                        <local:IconButton x:Name="clearHourBtn" Icon="&#xe651;" Width="28" IsTransparency="True" MouseOverForeground="Red"  CornerRadius="6" Click="clearHourBtn_Click"/>
+                    </WrapPanel>
+                </Border>
+            </Grid>
+        </Popup>
+
+        <Popup x:Name="MinuteP" IsOpen="False" >
+            <Grid Background="White" >
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" CornerRadius="4,4,0,0" BorderBrush="#787878" BorderThickness="1,1,1,0">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <WrapPanel >
+                            <TextBlock Text="0" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="1" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="2" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="3" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="4" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="5" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="6" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="7" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                           
+                        </WrapPanel>
+                        <WrapPanel >
+                            <TextBlock Text="8" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="9" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="10" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="11" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="12" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="13" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="14" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="15" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                        </WrapPanel>
+                        <WrapPanel >
+                            <TextBlock Text="16" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="17" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="18" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="19" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="20" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="21" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="22" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="23" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                        </WrapPanel>
+                        <WrapPanel >
+                            <TextBlock Text="24" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="25" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="26" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="27" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="26" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="29" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="30" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="31" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                        </WrapPanel>
+                        <WrapPanel >
+                            <TextBlock Text="32" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="33" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="34" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="35" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="36" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="37" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="38" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="39" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                        </WrapPanel>                                                                                                                                                         
+                        <WrapPanel >                                                                                                                                                        
+                            <TextBlock Text="40" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="41" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="43" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="43" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="44" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="45" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="46" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="47" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                        </WrapPanel>                                                                                                                                                         
+                        <WrapPanel >                                                                                                                                                       
+                            <TextBlock Text="48" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="49" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="50" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="51" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="52" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="53" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="54" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="55" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                        </WrapPanel>                                                                                                                                                          
+                        <WrapPanel >                                                                                                                                                        
+                            <TextBlock Text="55" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="56" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="57" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="58" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="59" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="minute_TextBlock_MouseLeftButtonDown"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2"  CornerRadius="0,0,4,4" BorderBrush="#787878" BorderThickness="1,0,1,1">
+                    <WrapPanel  HorizontalAlignment="Center">
+                        <local:IconButton x:Name="clearMinuteBtn" Icon="&#xe651;" Width="28" IsTransparency="True" MouseOverForeground="Red"  CornerRadius="6" Click="clearMinuteBtn_Click"/>
+                    </WrapPanel>
+                </Border>
+            </Grid>
+        </Popup>
+        <Popup x:Name="SecondP" IsOpen="False">
+            <Grid Background="White" >
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" CornerRadius="4,4,0,0" BorderBrush="#787878" BorderThickness="1,1,1,0">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <WrapPanel >
+                            <TextBlock Text="0" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="1" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="2" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="3" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="4" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="5" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="6" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="7" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+
+                        </WrapPanel>
+                        <WrapPanel >
+                            <TextBlock Text="8" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="9" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="10" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="11" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="12" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="13" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="14" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="15" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                        </WrapPanel>
+                        <WrapPanel >
+                            <TextBlock Text="16" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="17" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="18" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="19" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="20" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="21" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="22" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="23" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                        </WrapPanel>
+                        <WrapPanel >
+                            <TextBlock Text="24" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="25" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="26" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="27" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="26" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="29" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="30" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="31" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                        </WrapPanel>
+                        <WrapPanel >
+                            <TextBlock Text="32" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="33" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="34" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="35" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="36" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="37" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="38" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="39" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                        </WrapPanel>
+                        <WrapPanel >
+                            <TextBlock Text="40" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="41" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="43" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="43" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="44" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="45" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="46" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="47" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                        </WrapPanel>
+                        <WrapPanel >
+                            <TextBlock Text="48" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="49" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="50" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="51" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="52" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="53" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="54" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="55" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                        </WrapPanel>
+                        <WrapPanel >
+                            <TextBlock Text="55" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="56" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="57" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="58" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                            <TextBlock Text="59" Width="25" Height="25" TextAlignment="Center" Padding="5" MouseLeftButtonDown="second_TextBlock_MouseLeftButtonDown"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2"  CornerRadius="0,0,4,4" BorderBrush="#787878" BorderThickness="1,0,1,1">
+                    <WrapPanel  HorizontalAlignment="Center">
+                        <local:IconButton x:Name="clearSecondBtn" Icon="&#xe651;" Width="28" IsTransparency="True" MouseOverForeground="Red"  CornerRadius="6" Click="clearSecondBtn_Click"/>
+                    </WrapPanel>
+                </Border>
+            </Grid>
+        </Popup>
+    </Grid>
+</UserControl>

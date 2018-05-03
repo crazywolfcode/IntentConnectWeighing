@@ -49,6 +49,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\DateTimePiker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -87,6 +91,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\DateTimePiker.xaml.cs">
+      <DependentUpon>DateTimePiker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\IconButton.cs" />
     <Compile Include="Controls\IconTextBlock.cs" />
     <Compile Include="Controls\ImageButton.cs" />

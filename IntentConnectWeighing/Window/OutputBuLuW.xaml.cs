@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MyHelper;
 using System.Printing;
-using System.Drawing;
+using System.Threading;
 
 namespace IntentConnectWeighing
 {
@@ -22,7 +22,7 @@ namespace IntentConnectWeighing
     /// WeihgingBillDetailW.xaml 的交互逻辑
     ///  WeihgingBillDetailW.xaml's interactive logical 
     /// </summary>
-    public partial class OutputUpdateW : Window
+    public partial class OutputBuLuW : Window
     {
         public Action<WeighingBill> RefershParent;
         #region 本机使用的临时基础数据
@@ -33,23 +33,17 @@ namespace IntentConnectWeighing
         #endregion
         #region Variable              
         private WeighingBill mWeighingBill;
-        private bool isInsert = false;
+        private bool isInsert = true;
         private bool isOptionSuccess = false;
         private Company sendCompany;
         private Company receiverCompany;
         private Material material;
         private CarInfo car;
-        private bool isBindingdata =false;
+
         #endregion
-        public OutputUpdateW(WeighingBill bill)
+        public OutputBuLuW()
         {
             InitializeComponent();
-
-            mWeighingBill = bill;
-            if (mWeighingBill == null)
-            {
-                isInsert = true;
-            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -59,26 +53,7 @@ namespace IntentConnectWeighing
             SetCustomerCompanyDefaultSource();
             SetMaterialDefaultSource();
             SetCarDefaultSource();
-            bindingData();
-        }
 
-        private void bindingData() {
-            isBindingdata = true;
-            this.SupplyCb.Text = mWeighingBill.sendCompanyName;
-            this.SendYardCb.Text = mWeighingBill.sendYardName;
-            this.ReceiverCompanyCb.Text = mWeighingBill.receiveCompanyName;
-            this.ReceiverYardCb.Text = mWeighingBill.receiveYardName;
-            this.MaterialNameCb.Text = mWeighingBill.sendMaterialName;
-            this.CarNumberCb.Text = mWeighingBill.plateNumber;
-            this.DriverTbox.Text = mWeighingBill.driver;
-            this.PhoneTbox.Text = mWeighingBill.driverMobile;
-            this.RemarkTbox.Text = mWeighingBill.sendRemark;
-            this.SendGrossWeightTbox.Text = mWeighingBill.sendGrossWeight.ToString();
-            this.SendTraeWeightTbox.Text = mWeighingBill.sendTraeWeight.ToString();
-            this.SendNetWeightTbox.Text = mWeighingBill.sendNetWeight.ToString();
-            this.InDTP.StringValue = mWeighingBill.sendInTime;
-            this.OutDTP.StringValue = mWeighingBill.sendOutTime;
-            isBindingdata = false;
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
@@ -100,19 +75,15 @@ namespace IntentConnectWeighing
         /// </summary>
         private void BuildCurrWeighingBill()
         {
-            if (mWeighingBill != null)
+
+            mWeighingBill = new WeighingBill()
             {
-                // update
-                this.BillNumberTb.Text = mWeighingBill.sendNumber;
-                #region 控制控件状态
-                bindingData();
-                #endregion
-            }
-            else
-            {
-                isOptionSuccess = false;
-                this.Close();
-            }
+                id = Guid.NewGuid().ToString(),
+                type = (int)WeightingBillType.CK,
+                sendNumber = CommonFunction.GetWeighingNumber(WeightingBillType.CK, true, "BL"),
+                affiliatedCompanyId = App.currentCompany.id,
+            };
+            this.BillNumberTb.Text = mWeighingBill.sendNumber;
         }
 
         #region Window Default Event
@@ -301,7 +272,7 @@ namespace IntentConnectWeighing
                 return;
             }
             if (text.Length >= 2)
-            {                
+            {
                 List<Company> list = CompanyModel.IndistinctSearchByNameOrNameFirstCase(text);
                 if (list.Count > 0)
                 {
@@ -502,7 +473,6 @@ namespace IntentConnectWeighing
                 SetCarInfo();
                 return;
             }
-            if (isBindingdata == true) { return; }
             if (isCarInfoSelectioned == true) { return; }
 
             if (text.Length >= 2)
@@ -696,7 +666,6 @@ namespace IntentConnectWeighing
         private void CalcReceiptWeightValue()
         {
             if (this.IsLoaded == false) return;
-            if (this.isBindingdata == true) return;
             double gross = 0;
             double trae = 0;
             double net = 0;
@@ -722,8 +691,39 @@ namespace IntentConnectWeighing
         {
             if (CheckInput() == true)
             {
-                Update();
+                Insert();
             }
+        }
+        //insert
+        private void Insert()
+        {
+            mWeighingBill.sendInTime = DateTimeHelper.getCurrentDateTime();
+            mWeighingBill.syncTime = DateTimeHelper.GetTimeStamp();
+            int res = DatabaseOPtionHelper.GetInstance().insert(mWeighingBill);
+            if (res > 0)
+            {
+                isOptionSuccess = true;
+                //CaptureJpeg
+                // new Thread(new ThreadStart(this.CaptureJpeg)) { IsBackground = true }.Start();
+                MessageBoxResult result = MessageBox.Show("保存成功", "恭喜", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                //Update Send Bill
+                //new Thread(new ThreadStart(this.UpdateSendCarBill)).Start();
+
+                // success to do TempUpdateUsedBase
+                UpdateUsedBaseData();
+
+                if (result == MessageBoxResult.No)
+                {
+                    this.Close();
+                }
+            }
+        }
+        private void UpdateUsedBaseData()
+        {
+            // success to do TempUpdateUsedBase
+            Thread thread = new Thread(new ParameterizedThreadStart(CommonFunction.TempUpdateUsedBase));
+            thread.Start(new BaseDataClassV() { send = sendCompany, receive = receiverCompany, material = material, carInfo = car });
         }
 
         private bool CheckInput()
@@ -772,7 +772,7 @@ namespace IntentConnectWeighing
 
         //update
         private void Update()
-        {         
+        {
             mWeighingBill.syncTime = DateTimeHelper.GetTimeStamp();
             int res = DatabaseOPtionHelper.GetInstance().update(mWeighingBill);
             if (res > 0)

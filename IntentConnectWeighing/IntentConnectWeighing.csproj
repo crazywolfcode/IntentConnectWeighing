@@ -84,6 +84,9 @@
       <HintPath>..\packages\Baidu.AI.3.3.0.29135\lib\net35\AipSdk.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Loya.Dameer">
+      <HintPath>dll\Loya.Dameer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Expression.Drawing">
       <HintPath>C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.0\Libraries\Microsoft.Expression.Drawing.dll</HintPath>
     </Reference>
@@ -108,6 +111,9 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="UIAutomationProvider" />
+    <Reference Include="Util.Controls">
+      <HintPath>dll\Util.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -219,6 +225,12 @@
       <DependentUpon>BaseDataPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window\BaseWindow.cs" />
+    <Compile Include="Window\InputUpdateW.xaml.cs">
+      <DependentUpon>InputUpdateW.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window\OutputBuLuW.xaml.cs">
+      <DependentUpon>OutputBuLuW.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Window\SendCarBillSelectW.xaml.cs">
       <DependentUpon>SendCarBillSelectW.xaml</DependentUpon>
     </Compile>
@@ -408,6 +420,14 @@
     <Page Include="Window\BaseDataPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window\InputUpdateW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Window\OutputBuLuW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Window\SendCarBillSelectW.xaml">
       <Generator>MSBuild:Compile</Generator>

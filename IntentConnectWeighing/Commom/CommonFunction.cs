@@ -98,9 +98,10 @@ namespace IntentConnectWeighing
         /// Get Weighing Number 获取磅单
         /// </summary>
         /// <param name="WeightingBillType"> CK OR RK</param>
+        /// <param name="ExtStr"> BL OR WL</param>
         /// <param name="noaml">true 正常过磅 false WeightingBillType + CurrentDateTime</param>
         /// <returns></returns>
-        public static String GetWeighingNumber(WeightingBillType type, bool noaml = true)
+        public static String GetWeighingNumber(WeightingBillType type, bool noaml = true,String ExtStr = null)
         {
             if (noaml == false)
             {
@@ -163,7 +164,14 @@ namespace IntentConnectWeighing
                     sort = (count + 1).ToString();
                     break;
             }
-            return type.ToString().ToUpper()+"-"+header + dateStr + sort;
+            if (String.IsNullOrEmpty(ExtStr))
+            {
+                return type.ToString().ToUpper() + "-" + header + dateStr + sort;
+            }
+            else {
+                return type.ToString().ToUpper() + "-" + ExtStr.ToUpper() +"-" + header + dateStr + sort;
+            }
+           
         }
         
         public static void MargeToSend(ref WeighingBill send, WeighingBill receiver)
