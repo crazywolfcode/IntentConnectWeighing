@@ -31,7 +31,7 @@ namespace MyHelper
         public static readonly string havingTemplate = " HAVING  {0} ";
         public static readonly string LimitTemplate = " LIMIT  {0} ";
         public static readonly string offsetTemplate = " OFFSET  {0} ";
-        
+
 
         public static readonly string insertSqlTemplqte = "INSERT INTO {0} ({1}) VALUES ({2});";
 
@@ -40,7 +40,7 @@ namespace MyHelper
         public static readonly string deleteSqlTemplqte = "DELETE FROM {0} WHERE {1};";
 
         public static readonly string buildSqlErrorMessage = "无法获取id或Id的属性名或值，无法对生成SQL的Where条件！";
-        
+
         /// <summary>
         /// 按主键删除数据
         /// </summary>
@@ -93,7 +93,7 @@ namespace MyHelper
                     }
                     catch (Exception)
                     {
-                       
+
                     }
                 }
                 list.Add(entity);
@@ -241,7 +241,7 @@ namespace MyHelper
         /// <param name="limit"></param>
         /// <param name="offset"></param>
         /// <returns></returns>
-        public static string getSelectSql(string tableName, string fields=null, string conditon=null,string groupBy =null,string having = null,string orderBy = null,int limit =0,int offset=-1)
+        public static string getSelectSql(string tableName, string fields = null, string conditon = null, string groupBy = null, string having = null, string orderBy = null, int limit = 0, int offset = -1)
         {
             string sql = string.Empty;
             if (string.IsNullOrEmpty(fields))
@@ -252,16 +252,19 @@ namespace MyHelper
             {
                 conditon = notSoftDeleteWhere;
             }
-            else {
+            else
+            {
                 conditon = "(" + conditon + ")" + " and " + notSoftDeleteWhere;
             }
-            sql= string.Format(selectSqlTemplqte, fields, tableName, conditon);
+            sql = string.Format(selectSqlTemplqte, fields, tableName, conditon);
 
-            if (!string.IsNullOrEmpty(groupBy)) {
+            if (!string.IsNullOrEmpty(groupBy))
+            {
                 sql = sql.Replace(";", string.Format(groupByTemplate, groupBy) + " ;");
             }
 
-            if (!string.IsNullOrEmpty(having)) {
+            if (!string.IsNullOrEmpty(having))
+            {
                 sql = sql.Replace(";", string.Format(havingTemplate, having) + " ;");
             }
 
@@ -269,12 +272,12 @@ namespace MyHelper
             {
                 sql = sql.Replace(";", string.Format(orderByTemplate, orderBy) + " ;");
             }
-            if (limit>0)
+            if (limit > 0)
             {
                 sql = sql.Replace(";", string.Format(LimitTemplate, limit) + " ;");
             }
 
-            if (offset >-1)
+            if (offset > -1)
             {
                 sql = sql.Replace(";", string.Format(offsetTemplate, offset) + " ;");
             }
@@ -380,12 +383,13 @@ namespace MyHelper
         /// <param name="set"></param>
         /// <param name="condition"></param>
         /// <returns>修改SQL语句 或 null </returns>
-        public static string getUpdateSql(string tableName,string set ,string condition)
+        public static string getUpdateSql(string tableName, string set, string condition)
         {
-            if (string.IsNullOrEmpty(tableName) || string.IsNullOrEmpty(set) || string.IsNullOrEmpty(condition)) {
+            if (string.IsNullOrEmpty(tableName) || string.IsNullOrEmpty(set) || string.IsNullOrEmpty(condition))
+            {
                 return null;
-            }         
-            return string.Format(updateSqlTemplqte,tableName, set, condition);
+            }
+            return string.Format(updateSqlTemplqte, tableName, set, condition);
         }
 
         /// <summary>
@@ -416,7 +420,7 @@ namespace MyHelper
                 {
                     if (tempObj != null && tempObj.ToString().Length > 0)
                     {
-                        condition = splitChar + "id" + splitChar + " = " +valueSplitChar+ tempObj.ToString()+valueSplitChar;
+                        condition = splitChar + "id" + splitChar + " = " + valueSplitChar + tempObj.ToString() + valueSplitChar;
                     }
                 }
                 else
@@ -446,28 +450,29 @@ namespace MyHelper
         /// <param name="obj">类型的对像</param>
         ///   /// <param name="isTrueDelete">是否真的删除 默认软删除</param>
         /// <returns>删除SQL语句</returns>
-        public static string getDeleteSql<T>(T obj,bool isTrueDelete = false)
+        public static string getDeleteSql<T>(T obj, bool isTrueDelete = false)
         {
             string condition = string.Empty;
             string id = string.Empty;
             Type type = typeof(T);
             try
-            {               
-                PropertyInfo propertyinfo  = type.GetProperty("id"); 
+            {
+                PropertyInfo propertyinfo = type.GetProperty("id");
                 if (propertyinfo == null)
                 {
                     propertyinfo = type.GetProperty("Id");
                     if (propertyinfo == null)
                     {
                         throw new Exception(buildSqlErrorMessage);
-                    }                   
+                    }
                 }
                 object tempObj = propertyinfo.GetValue(obj, null);
                 if (tempObj == null || tempObj.ToString().Length <= 0)
                 {
                     throw new Exception(buildSqlErrorMessage);
                 }
-                if (isTrueDelete == false) {
+                if (isTrueDelete == false)
+                {
                     try
                     {
                         PropertyInfo deletePropertyinfo = type.GetProperty(softDeletePropertyName);
@@ -481,7 +486,7 @@ namespace MyHelper
                     {
                         //nothing to do 不做什么处理，因为数据库的表不包含“is_delete”字段， 不支持软删除
                     }
-                }               
+                }
                 condition = splitChar + "id" + splitChar + "=" + valueSplitChar + tempObj.ToString() + valueSplitChar;
             }
             catch (AmbiguousMatchException e)
@@ -502,7 +507,7 @@ namespace MyHelper
         /// <param name="condition">条件：不能为null</param>
         /// <returns>SQL语句 或者 null</returns>
         public static string getDeleteSql(string tableName, string condition)
-        {       
+        {
             if (string.IsNullOrEmpty(tableName) || string.IsNullOrEmpty(condition))
             {
                 return null;
@@ -525,9 +530,11 @@ namespace MyHelper
         /// <typeparam name="T"></typeparam>
         /// <param name="table"></param>
         /// <returns></returns>
-        public static T DataTableToEntity<T>(System.Data.DataTable table) where T :class, new (){
+        public static T DataTableToEntity<T>(System.Data.DataTable table) where T : class, new()
+        {
             var entity = new T();
-            if (table == null || table.Rows.Count <= 0) {
+            if (table == null || table.Rows.Count <= 0)
+            {
                 return entity;
             }
             // 获得此模型的公共属性 
@@ -555,13 +562,14 @@ namespace MyHelper
                     {
                         p.SetValue(entity, value, null);
                     }
-                    else {
+                    else
+                    {
                         p.SetValue(entity, null, null);
                     }
                 }
             }
             return entity;
         }
-                
+
     }
 }

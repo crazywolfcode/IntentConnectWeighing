@@ -25,6 +25,7 @@ namespace IntentConnectWeighing
     public partial class InputUpdateW : Window
     {
         public Action<WeighingBill> RefershParent;
+        public Action<bool,bool,bool> RefershParentPage;        
         #region 本机使用的临时基础数据
         private Dictionary<String, Company> tempSupplyCompanys = new Dictionary<string, Company>();
         private Dictionary<String, Company> tempCustomerCompanys = new Dictionary<string, Company>();
@@ -33,7 +34,6 @@ namespace IntentConnectWeighing
         #endregion
         #region Variable              
         private WeighingBill mWeighingBill;
-        private bool isInsert = false;
         private bool isOptionSuccess = false;
         private Company sendCompany;
         private Company receiverCompany;
@@ -45,12 +45,7 @@ namespace IntentConnectWeighing
         {
             InitializeComponent();
        
-            mWeighingBill = bill;
-            if (mWeighingBill == null)
-            {
-                isInsert = true;
-            }
-           
+            mWeighingBill = bill;           
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -87,8 +82,16 @@ namespace IntentConnectWeighing
             this.DecuationDescriptionCb.Text = mWeighingBill.decuationDescription;
             this.DecuationWeightTbox.Text = mWeighingBill.decuationWeight.ToString();
             this.differenceWeightTbox.Text = mWeighingBill.differenceWeight.ToString();
+            if(mWeighingBill.receiveStatus == 1) {
+                this.OutDTP.StringValue = mWeighingBill.receiveOutTime;
+            }
+            else
+            {
+                mWeighingBill.receiveOutTime = null;
+                this.OutDTP.Visibility = Visibility.Collapsed;
+            }
             this.InDTP.StringValue = mWeighingBill.receiveInTime;
-            this.OutDTP.StringValue = mWeighingBill.receiveOutTime;
+            
             isBindindData = false;
             #endregion
         }
@@ -97,8 +100,8 @@ namespace IntentConnectWeighing
         private void SetWeihinger()
         {
             this.WeihingerTbox.Text = App.currentUser.name;
-            mWeighingBill.sendUserName = App.currentUser.name;
-            mWeighingBill.sendUserId = App.currentUser.id;
+            mWeighingBill.receiveUserName = App.currentUser.name;
+            mWeighingBill.receiveUserId = App.currentUser.id;
         }
         #endregion
         /// <summary>
@@ -109,7 +112,7 @@ namespace IntentConnectWeighing
             if (mWeighingBill != null)
             {
                 // update
-                this.BillNumberTb.Text = mWeighingBill.sendNumber;
+                this.BillNumberTb.Text = mWeighingBill.receiveNumber;
                 #region 控制控件状态
                 this.BingValue();
                 #endregion
@@ -144,6 +147,10 @@ namespace IntentConnectWeighing
             if (isOptionSuccess == true) {
                 if (this.RefershParent != null) {
                     RefershParent(mWeighingBill);
+                }
+                if (this.RefershParentPage != null)
+                {
+                    RefershParentPage(true, true, true);
                 }
             }
         }
@@ -447,7 +454,7 @@ namespace IntentConnectWeighing
         private bool isSelectMaterial = false;
         private void MaterialNameCb_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            if (isBindindData == true) { return; }
             String text = this.MaterialNameCb.Text.Trim();
             if (text.Length < 2)
             {
@@ -488,8 +495,8 @@ namespace IntentConnectWeighing
             if (MaterialNameCb.SelectedIndex != -1)
             {
                 material = (Material)MaterialNameCb.SelectedItem;
-                mWeighingBill.sendMaterialId = material.id;
-                mWeighingBill.sendMaterialName = material.name;
+                mWeighingBill.receiveMaterialId = material.id;
+                mWeighingBill.receiveMaterialName = material.name;
             }
         }
         #endregion
@@ -811,7 +818,9 @@ namespace IntentConnectWeighing
             if (res > 0)
             {
                 isOptionSuccess = true;
-                PrintBill();
+                if (mWeighingBill.sendStatus == 1) {
+                    PrintBill();
+                }                
                 this.Close();
             }
         }

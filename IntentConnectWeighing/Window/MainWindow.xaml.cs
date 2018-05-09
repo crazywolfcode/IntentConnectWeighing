@@ -121,7 +121,10 @@ namespace IntentConnectWeighing
             {
                 this.userMenuPopup.IsOpen = true;
             }
-            else { this.userMenuPopup.IsOpen = false; }
+            else
+            {
+                this.userMenuPopup.IsOpen = false;
+            }
         }
 
         private void quitBtn_Click(object sender, RoutedEventArgs e)

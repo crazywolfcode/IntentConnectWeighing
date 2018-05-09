@@ -61,8 +61,13 @@ namespace MyCustomControlLibrary
             DependencyProperty.Register("StringValue", typeof(String), typeof(DateTimePicker), new PropertyMetadata("",new PropertyChangedCallback(OnStringValueChanged)));
 
         public static void OnStringValueChanged(DependencyObject sedner, DependencyPropertyChangedEventArgs args) {
-
+        
             DateTimePicker picker = sedner as DateTimePicker;
+            if (args.NewValue == null)
+            {
+                picker.MainContentTb.Text = null;
+                return;
+            }
             DateTime dt;
             DateTime.TryParse(args.NewValue.ToString(), out dt);
             if (dt != null)

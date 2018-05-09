@@ -25,6 +25,7 @@ namespace IntentConnectWeighing
     public partial class OutputUpdateW : Window
     {
         public Action<WeighingBill> RefershParent;
+        public Action<bool,bool,bool> RefershParentPage;
         #region 本机使用的临时基础数据
         private Dictionary<String, Company> tempSupplyCompanys = new Dictionary<string, Company>();
         private Dictionary<String, Company> tempCustomerCompanys = new Dictionary<string, Company>();
@@ -77,7 +78,15 @@ namespace IntentConnectWeighing
             this.SendTraeWeightTbox.Text = mWeighingBill.sendTraeWeight.ToString();
             this.SendNetWeightTbox.Text = mWeighingBill.sendNetWeight.ToString();
             this.InDTP.StringValue = mWeighingBill.sendInTime;
-            this.OutDTP.StringValue = mWeighingBill.sendOutTime;
+            if (mWeighingBill.sendStatus == 1)
+            {
+                this.OutDTP.StringValue = mWeighingBill.sendOutTime;
+            }
+            else
+            {
+                mWeighingBill.sendOutTime = null;
+                this.OutDTP.Visibility = Visibility.Collapsed;
+            }
             isBindingdata = false;
         }
 
@@ -86,15 +95,6 @@ namespace IntentConnectWeighing
             BuildCurrWeighingBill();
             SetWeihinger();
         }
-
-        #region Weihinger
-        private void SetWeihinger()
-        {
-            this.WeihingerTbox.Text = App.currentUser.name;
-            mWeighingBill.sendUserName = App.currentUser.name;
-            mWeighingBill.sendUserId = App.currentUser.id;
-        }
-        #endregion
         /// <summary>
         /// 构建当前的磅单
         /// </summary>
@@ -114,6 +114,16 @@ namespace IntentConnectWeighing
                 this.Close();
             }
         }
+
+        #region Weihinger
+        private void SetWeihinger()
+        {
+            this.WeihingerTbox.Text = App.currentUser.name;
+            mWeighingBill.sendUserName = App.currentUser.name;
+            mWeighingBill.sendUserId = App.currentUser.id;
+        }
+        #endregion
+     
 
         #region Window Default Event
         /// <summary>
@@ -141,6 +151,10 @@ namespace IntentConnectWeighing
                 {
                     RefershParent(mWeighingBill);
                 }
+                if (this.RefershParentPage != null)
+                {
+                    RefershParentPage(true,true,true);
+                }                
             }
         }
 
@@ -442,7 +456,7 @@ namespace IntentConnectWeighing
         private bool isSelectMaterial = false;
         private void MaterialNameCb_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            if (isBindingdata == true) { return; }
             String text = this.MaterialNameCb.Text.Trim();
             if (text.Length < 2)
             {
@@ -717,6 +731,7 @@ namespace IntentConnectWeighing
             if (IsLoaded == false) { return; }
             mWeighingBill.sendRemark = this.RemarkTbox.Text;
         }
+
         #region save
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -778,7 +793,10 @@ namespace IntentConnectWeighing
             if (res > 0)
             {
                 isOptionSuccess = true;
-                PrintBill();
+                if(mWeighingBill.sendStatus == 1)
+                {
+                    PrintBill();
+                }                
                 this.Close();
             }
         }

@@ -14,7 +14,6 @@
             <local:IconTextBlock Text="{Binding ElementName=mDateTimePicker,Path=Icon}"  Margin="2" MouseLeftButtonDown="IconTextBlock_MouseLeftButtonDown" Visibility="{Binding ElementName=mDateTimePicker,Path=IconVisibility}" Foreground="{Binding ElementName=mDateTimePicker,Path=IconColor}"/>
         </WrapPanel>
         <Popup x:Name="SelectP" PopupAnimation="Fade" IsOpen="False" >
-
             <Grid Background="White" >
                 <Grid.RowDefinitions>
                     <RowDefinition/>

@@ -7,13 +7,15 @@ using System.Linq;
 using System.Windows;
 using MyHelper;
 using Baidu.Aip;
+using System.Text;
+using System.Windows.Input;
 
 namespace IntentConnectWeighing
 {
     /// <summary>
     /// App.xaml 的交互逻辑
     /// </summary>
-    public partial class App : Application
+    public partial class App : Application,ScannerGunInterface
     {
         public static User currentUser;
         public static Company currentCompany;
@@ -23,13 +25,13 @@ namespace IntentConnectWeighing
         public static String CurrClientId;
         public static string SoftwareVersion;
         public static System.Windows.Forms.NotifyIcon notifyIcon;
-
+ 
         #region 本机使用的临时基础数据
         public static Dictionary<String, Company> tempSupplyCompanys = new Dictionary<string, Company>();
         public static Dictionary<String, Company> tempCustomerCompanys = new Dictionary<string, Company>();
         public static Dictionary<String, Material> tempMaterials = new Dictionary<string, Material>();
         public static Dictionary<String, CarInfo> tempCars = new Dictionary<string, CarInfo>();
-        public static List<String> decuationDesList= new List<string>() { "扣水","扣杂物"};
+        public static List<String> decuationDesList = new List<string>() { "扣水", "扣杂物" };
         #endregion
         private void Application_Startup(object sender, StartupEventArgs e)
         {
@@ -44,25 +46,33 @@ namespace IntentConnectWeighing
             currentCompany = new Company()
             {
                 id = ConfigurationHelper.GetConfig(ConfigItemName.companyId.ToString()),
-                name = ConfigurationHelper.GetConfig(ConfigItemName.companyName.ToString()),                
+                name = ConfigurationHelper.GetConfig(ConfigItemName.companyName.ToString()),
             };
-            currentUser = new User() {
+            currentUser = new User()
+            {
                 id = GetClientId(),
                 name = "陈龙飞",
                 company = currentCompany.name,
                 affiliatedCompanyId = currentCompany.id
             };
             currentYard = YardModel.GetById(MyHelper.ConfigurationHelper.GetConfig(ConfigItemName.yardId.ToString()));
+            //Scanner Gun
+            StartKeyBoardHook();
         }
 
-        private void Navigation() {
+        private void StartKeyBoardHook() {
+            ScannerGunHelper.GetInstance(this).Start();
+        }
+
+        private void Navigation()
+        {
             string registerStep = "";
             if (string.IsNullOrEmpty(ConfigurationHelper.GetConfig(ConfigItemName.softwareVersion.ToString())))
             {
                 SelectVersionW selectW = new SelectVersionW();
                 registerStep = ConfigurationHelper.GetConfig(ConfigItemName.companyRegisterStep.ToString());
-                selectW.Show(); 
-           
+                selectW.Show();
+
             }
             else if (registerStep != CompanyRegisterStep.RegisterFinishedPage.ToString())
             {
@@ -80,7 +90,7 @@ namespace IntentConnectWeighing
             }
         }
 
-    
+
         private void CreateClientId()
         {
             if (string.IsNullOrEmpty(ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString())))
@@ -88,7 +98,8 @@ namespace IntentConnectWeighing
                 CurrClientId = GetClientId();
                 ConfigurationHelper.SetConfig(ConfigItemName.clientId.ToString(), CurrClientId);
             }
-            else {
+            else
+            {
                 CurrClientId = ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString());
             }
         }
@@ -188,6 +199,8 @@ namespace IntentConnectWeighing
         /// <param name="e"></param>
         private void Application_Exit(object sender, ExitEventArgs e)
         {
+            ScannerGunHelper.Close();
+          
             //DateTime start = DateTime.Now;
             //    try
             //    {
@@ -291,14 +304,14 @@ namespace IntentConnectWeighing
                 Config config = null;
                 if (helper == null)
                 {
-                    helper =  DatabaseOPtionHelper.GetInstance();
+                    helper = DatabaseOPtionHelper.GetInstance();
                 }
                 sql = DbBaseHelper.getSelectSql("config", null, "client_id ='" + ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString()) + "' and config_name = '" + key + "'", null, null, null, 1);
                 DataTable dt = helper.select(sql);
                 if (dt.Rows.Count > 0)
                 {
                     List<Config> configs = DbBaseHelper.DataTableToEntitys<Config>(dt);
-                    if (configs[0]!= null)
+                    if (configs[0] != null)
                     {
                         config = configs[0];
                         if (config.configValue != collection[key].ToString())
@@ -349,9 +362,10 @@ namespace IntentConnectWeighing
         /// </summary>
         public static void ShowCurrentWindow()
         {
-            if (currWindow == null) {
+            if (currWindow == null)
+            {
                 return;
-            }            
+            }
             if (currWindow.WindowState == WindowState.Minimized)
             {
                 currWindow.WindowState = WindowState.Normal;
@@ -384,8 +398,10 @@ namespace IntentConnectWeighing
             }
         }
 
-        public static String GetSoftwareVersion() {
-            if (String.IsNullOrEmpty(SoftwareVersion)) {
+        public static String GetSoftwareVersion()
+        {
+            if (String.IsNullOrEmpty(SoftwareVersion))
+            {
                 SoftwareVersion = ConfigurationHelper.GetConfig(ConfigItemName.softwareVersion.ToString());
             }
             return SoftwareVersion;
@@ -394,5 +410,14 @@ namespace IntentConnectWeighing
         /// 保存本机使用过的基础数据
         /// </summary>
         private void SaveTempData() { }
+
+        #region ScannerGunInterface
+
+        public void ScanedFinished(string result)
+        {
+            MyHelper.ConsoleHelper.writeLine(" result:" + result);
+        }
+        #endregion
+
     }
 }

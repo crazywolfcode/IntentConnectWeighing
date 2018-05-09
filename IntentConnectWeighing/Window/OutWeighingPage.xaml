@@ -76,28 +76,30 @@
                 <StackPanel Height="34" x:Name="ToolBarPanel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,0" Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
                         <myControl:IconButton           
-                         IsTransparency="True"
-                           MouseOverForeground="{DynamicResource myBlue}"
-                           VerticalAlignment="Bottom" 
-                           IsShowIcon="True" Icon="&#xe61f;" IconSize="28"
-                           Width="30" Height="30" IconMargin="-2,0,0,0"
+                            IsTransparency="True"
+                            MouseOverForeground="{DynamicResource myBlue}"
+                            VerticalAlignment="Bottom" 
+                            IsShowIcon="True" Icon="&#xe61f;" IconSize="28"
+                            Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0"
                          />
                         <myControl:IconButton x:Name="NewOutPutBtn" Click="NewOutPutBtn_Click" ToolTip="新增出库"
-                          IsTransparency="True"
-                           MouseOverForeground="{DynamicResource myBlue}"
-                           VerticalAlignment="Bottom" 
-                           IsShowIcon="True" Icon="&#xe610;" IconSize="24"
-                           Width="30" Height="30" IconMargin="-2,0,0,0"
-                            Margin="0,0,4,0"
+                                IsTransparency="True"
+                                MouseOverForeground="{DynamicResource myBlue}"
+                                VerticalAlignment="Bottom" 
+                                IsShowIcon="True" Icon="&#xe610;" IconSize="24"
+                                Width="30" Height="30" IconMargin="-2,0,0,0"
+                                Margin="0,0,4,0"
                          />
                         <myControl:IconButton       
-                          IsTransparency="True"
-                           MouseOverForeground="{DynamicResource myBlue}"
-                           VerticalAlignment="Bottom" 
-                           IsShowIcon="True" Icon="&#xe8c4;" IconSize="28"
-                           Width="30" Height="30" IconMargin="-2,0,0,0"
-                            Margin="0,0,4,0"
+                                x:Name="MoreMenuBtm" 
+                                Click="MoreMenuBtm_Click"
+                                IsTransparency="True"                        
+                                MouseOverForeground="{DynamicResource myBlue}"
+                                VerticalAlignment="Bottom" 
+                                IsShowIcon="True" Icon="&#xe8c4;" IconSize="28"
+                                Width="30" Height="30" IconMargin="-2,0,0,0"
+                                Margin="0,0,4,0"
                          />
                     </StackPanel>
                 </StackPanel>
@@ -362,7 +364,6 @@
 
                             <StackPanel Height="1" Background="{StaticResource E4}"/>
                             <!-- statis Data-->
-                            <!-- statis Data-->
                             <vc:Chart BorderThickness="0" Height="200" VerticalAlignment="Bottom">
                                 <vc:Chart.Titles>
                                     <vc:Title Text="统计数据 车数 和 吨数"/>
@@ -479,5 +480,22 @@
                 </Expander.Content>
             </Expander>
         </Border>
+
+        <!-- menu popup-->
+        <Popup x:Name="MenuPopup" Grid.Column="1"   HorizontalAlignment="Right" VerticalAlignment="Top"
+               AllowsTransparency="True" StaysOpen="False" 
+               PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
+               VerticalOffset="0" HorizontalOffset="0"
+               IsOpen="False"  Placement="MousePoint" PlacementTarget="{Binding ElementName=MoreMenuBtn}"> 
+            <Border BorderBrush="{StaticResource MenuBorderBrush}" BorderThickness="1" CornerRadius="4" Background="White"  >
+                <Border.Effect>
+                    <DropShadowEffect Opacity="0.4" Color="RoyalBlue" ShadowDepth="1" BlurRadius="2"></DropShadowEffect>
+                </Border.Effect>
+                <StackPanel Background="White" Margin="4">
+                    <MenuItem Icon="&#xe610;" Header="磅单补录"  x:Name="BuLuBtn" Style="{DynamicResource IconMenuItem}" Click="BuLuBtn_Click"/>
+                    <MenuItem Icon="&#xf0001;" Header="外来过磅" x:Name="WLBtn" ToolTip="数据不保存" Style="{DynamicResource IconMenuItem}" Click="WLBtn_Click"/>
+                </StackPanel>
+            </Border>
+        </Popup>
     </Grid>
 </Page>

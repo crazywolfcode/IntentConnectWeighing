@@ -359,7 +359,7 @@ namespace IntentConnectWeighing
         #region Update
         private void NoFinishUpdateBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            new InputUpdateW(mWeighingBill) { RefershParentPage = new Action<bool, bool, bool>(RefreshData) }.ShowDialog();
         }
         private void FinishUpdateBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -368,6 +368,7 @@ namespace IntentConnectWeighing
                 MessageBox.Show("不可以修改已经完成的数据！");
                 return;
             }
+            new InputUpdateW(mWeighingBill) { RefershParentPage = new Action<bool, bool, bool>(RefreshData) }.ShowDialog();
         }
         #endregion
 
@@ -411,5 +412,26 @@ namespace IntentConnectWeighing
         }
         #endregion
 
+
+        #region More按钮
+        private void MoreMenuBtm_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.MenuPopup.IsOpen != true)
+            {
+                this.MenuPopup.IsOpen = true;
+            }
+            else
+            {
+                this.MenuPopup.IsOpen = false;
+            }
+        }
+        #endregion
+        #region 补录 外来 过磅
+        private void BuLuBtn_Click(object sender, RoutedEventArgs e)
+        {
+            new InputBuluW() { RefershParent = new Action<bool, bool, bool>(RefreshData) }.ShowDialog();
+        }
+
+        #endregion
     }
 }

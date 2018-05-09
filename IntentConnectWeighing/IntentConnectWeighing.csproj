@@ -220,11 +220,19 @@
     <Compile Include="Helper\LoginHelper.cs" />
     <Compile Include="Helper\ResourceHelper.cs" />
     <Compile Include="Helper\TemplateHelper.cs" />
+    <Compile Include="mScannerGunInterface.cs" />
+    <Compile Include="ScannerGun\ScannerGunHelper.cs" />
+    <Compile Include="ScannerGun\ScannerGunHook.cs" />
+    <Compile Include="ScannerGun\ScannerGunInterface.cs" />
+    <Compile Include="ScannerGun\ScannerResultHandle.cs" />
     <Compile Include="Test\TestCommand.cs" />
     <Compile Include="Window\BaseDataPage.xaml.cs">
       <DependentUpon>BaseDataPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window\BaseWindow.cs" />
+    <Compile Include="Window\InputBuluW.xaml.cs">
+      <DependentUpon>InputBuluW.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Window\InputUpdateW.xaml.cs">
       <DependentUpon>InputUpdateW.xaml</DependentUpon>
     </Compile>
@@ -420,6 +428,10 @@
     <Page Include="Window\BaseDataPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window\InputBuluW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Window\InputUpdateW.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -672,5 +672,28 @@ namespace IntentConnectWeighing
             }
             return reportWeightSummaryV;
         }
+        /// <summary>
+        /// 删除 
+        /// </summary>
+        /// <param name="weighing"></param>
+        /// <param name="istrue">是否真的删除</param>
+        /// <returns></returns>
+        public static int Delete(WeighingBill weighing,bool istrue =false) {
+            int res = 0;
+            if (weighing == null) {
+                return 0;
+            }
+            if (istrue == true)
+            {
+                res = DatabaseOPtionHelper.GetInstance().delete(weighing, true);
+            }
+            else {
+                weighing.isDelete = 1;
+                weighing.deleteTime = MyHelper.DateTimeHelper.getCurrentDateTime();
+                res = DatabaseOPtionHelper.GetInstance().update(weighing);
+            }            
+            return res;
+        }
+
     }
 }
