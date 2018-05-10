@@ -1,0 +1,85 @@
+﻿<Window x:Class="AutoUpdater.AlertWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutoUpdater"
+        Loaded="Window_Loaded"
+        xmlns:myControl ="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
+        Icon="/AutoUpdater;component/icon.png" Background="Transparent"
+        mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True"
+        Title="提示" Height="240" Width="380" >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition Height="45"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" CornerRadius="4,4,0,0" x:Name="headerBorder" MouseMove="headerBorder_MouseMove"  Background="#f9f9f9">
+            <StackPanel Orientation="Horizontal" Background="Transparent" MouseMove="headerBorder_MouseMove">
+                <TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" Text="软件更新" VerticalAlignment="Center" FontSize="20" FontWeight="Black" Foreground="#787972"></TextBlock>
+            </StackPanel>
+        </Border>
+        <!--关闭按钮-->
+        <myControl:IconButton 
+                Grid.Row="0" 
+                Foreground="#636363" 
+                Background="Transparent"
+                Width="22" Height="20"  
+                MouseOverForeground="White"
+                MouseOverBackground="Red"
+                IconMargin="1,-3,-1,0"
+                IconSize="18"
+                Margin="0,4,4,0" 
+                Icon="&#xe648;"
+                x:Name="CloseBtn"  
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Top"   
+                Click="CloseBtn_Click"/>
+
+        <Border Grid.Row="1"  Background="#f9f9f9">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <WrapPanel>                   
+                        <myControl:IconTextBlock x:Name="LoadingIcon" Text="&#xe64b;" FontSize="28" Foreground="#3ca9fe" Padding="4" RenderTransformOrigin="0.5,0.5">
+                             <myControl:IconTextBlock.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" AutoReverse="True" Duration="00:00:0.2">
+                                        <DoubleAnimation From="0" To="1"  Storyboard.TargetProperty="Angle" Storyboard.TargetName="LoadingIcon"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </myControl:IconTextBlock.Triggers>
+                        </myControl:IconTextBlock>                                   
+                    <TextBlock Foreground="#787978" FontSize="14" Text="正在检测新版本..."  Margin="10,15,0,0"/>
+                </WrapPanel>
+               
+            </StackPanel>           
+        </Border>
+
+        <Border Grid.Row="2" CornerRadius="0,0,4,4"   Background="#e4e4e4">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >         
+                <myControl:IconButton 
+                    x:Name="finishedBtn"                
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Padding="1"
+                    Icon="&#xe77a;"
+                    IsShowIcon="False"
+                    Margin="10,0,15,0"                      
+                    BorderBrush="#e0e0e0" 
+                    Foreground="#666"
+                    BorderThickness="1" 
+                    Width="70"
+                    Height="30"                 
+                    CornerRadius="4"                                      
+                    FontWeight="Bold" 
+                    HorizontalAlignment="Center"      
+                    HorizontalContentAlignment="Center"
+                    MouseOverForeground="Black"
+                    MouseOverBackground="White" Content="更 新" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

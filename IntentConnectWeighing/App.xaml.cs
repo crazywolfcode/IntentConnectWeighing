@@ -38,7 +38,7 @@ namespace IntentConnectWeighing
             CreateNotifyIcon();
 
             CreateClientId();
-
+            
             //devlepment
             new MainWindow().Show();
             // new TestExpender().Show();
@@ -137,6 +137,7 @@ namespace IntentConnectWeighing
                 Visible = true,
                 BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info
             };
+           
             notifyIcon.ShowBalloonTip(1000);
             notifyIcon.Text = ResourceHelper.getStringFromDictionaryResource(ResourceName.AppTitle);
             notifyIcon.MouseDoubleClick += NotifyIcon_MouseDoubleClick;

@@ -40,7 +40,8 @@ namespace IntentConnectWeighing
 
         private void ErrorButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(FileHelper.GetRunTimeRootPath());
+            //MessageBox.Show(FileHelper.GetRunTimeRootPath());
+            App.notifyIcon.ShowBalloonTip(30,"tipTitle","tipText",System.Windows.Forms.ToolTipIcon.Info);
             //if (this.ParentWindow != null)
             //{
             //    ParentWindow.changeAlertNumber(ResourceName.MenuIndexNumber, 1, 0);
