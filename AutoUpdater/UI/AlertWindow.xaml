@@ -4,11 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoUpdater"
-        Loaded="Window_Loaded"
+        Loaded="Window_Loaded" WindowStartupLocation="CenterScreen"
         xmlns:myControl ="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
+        xmlns:myLib="clr-namespace:MyLoadingLib;assembly=MyLoadingLib"
         Icon="/AutoUpdater;component/icon.png" Background="Transparent"
         mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True"
-        Title="提示" Height="240" Width="380" >
+        Title="提示" Height="500" Width="380" >
 
     <Grid>
         <Grid.RowDefinitions>
@@ -19,6 +20,7 @@
         <Border Grid.Row="0" CornerRadius="4,4,0,0" x:Name="headerBorder" MouseMove="headerBorder_MouseMove"  Background="#f9f9f9">
             <StackPanel Orientation="Horizontal" Background="Transparent" MouseMove="headerBorder_MouseMove">
                 <TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" Text="软件更新" VerticalAlignment="Center" FontSize="20" FontWeight="Black" Foreground="#787972"></TextBlock>
+               
             </StackPanel>
         </Border>
         <!--关闭按钮-->
@@ -37,24 +39,44 @@
                 HorizontalAlignment="Right" 
                 VerticalAlignment="Top"   
                 Click="CloseBtn_Click"/>
-
-        <Border Grid.Row="1"  Background="#f9f9f9">
+        <Border Grid.Row="1"  Background="#f9f9f9" x:Name="Mborder">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <WrapPanel>                   
-                        <myControl:IconTextBlock x:Name="LoadingIcon" Text="&#xe64b;" FontSize="28" Foreground="#3ca9fe" Padding="4" RenderTransformOrigin="0.5,0.5">
-                             <myControl:IconTextBlock.Triggers>
-                            <EventTrigger RoutedEvent="Loaded">
-                                <BeginStoryboard>
-                                    <Storyboard RepeatBehavior="Forever" AutoReverse="True" Duration="00:00:0.2">
-                                        <DoubleAnimation From="0" To="1"  Storyboard.TargetProperty="Angle" Storyboard.TargetName="LoadingIcon"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                        </myControl:IconTextBlock.Triggers>
-                        </myControl:IconTextBlock>                                   
-                    <TextBlock Foreground="#787978" FontSize="14" Text="正在检测新版本..."  Margin="10,15,0,0"/>
+                <TextBlock Text="提示效果" Foreground="Black" FontSize="16" FontWeight="DemiBold" HorizontalAlignment="Center"/>
+                <WrapPanel>
+                    <myControl:IconButton Content="提示1" x:Name="AlertOne" Margin="5" Padding="2" IsShowIcon="False" Width="50" HorizontalAlignment="Center" Click="AlertOne_Click"/>
+                    <myControl:IconButton Content="提示2" x:Name="AlertTwo" Margin="5" Padding="2" IsShowIcon="False" Width="50" HorizontalAlignment="Center" Click="AlertTwo_Click"/>
+                    <myControl:IconButton Content="提示3" x:Name="AlertThree" Margin="5" Padding="2" IsShowIcon="False" Width="50" HorizontalAlignment="Center" Click="AlertThree_Click"/>
                 </WrapPanel>
-               
+
+                <TextBlock Text="加载效果" Foreground="Black" FontSize="16" FontWeight="DemiBold" HorizontalAlignment="Center"/>
+                <WrapPanel>
+                    <myControl:IconButton Content="加载1" x:Name="loadOne" Margin="5" Padding="2" IsShowIcon="False" Width="50" HorizontalAlignment="Center" Click="loadOne_Click"/>
+                    <myControl:IconButton Content="加载2" x:Name="loadTwo" Margin="5" Padding="2" IsShowIcon="False" Width="50" HorizontalAlignment="Center" Click="loadTwo_Click"/>
+                    <myControl:IconButton Content="加载3" x:Name="loadThree" Margin="5" Padding="2" IsShowIcon="False" Width="50" HorizontalAlignment="Center" Click="loadThree_Click"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <myControl:IconButton Content="加载4" x:Name="loadFour" Margin="5" Padding="2" IsShowIcon="False" Width="50" HorizontalAlignment="Center" Click="loadFour_Click"/>
+                    <myControl:IconButton Content="加载5" x:Name="loadfive" Margin="5" Padding="2" IsShowIcon="False" Width="50" HorizontalAlignment="Center" Click="loadfive_Click"/>
+                    <myControl:IconButton Content="加载6" x:Name="loadSix" Margin="5" Padding="2" IsShowIcon="False" Width="50" HorizontalAlignment="Center" Click="loadSix_Click"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <myControl:IconButton Content="加载7" x:Name="loadSever" Margin="5" Padding="2" IsShowIcon="False" Width="50" HorizontalAlignment="Center" Click="loadSever_Click"/>
+                    <myControl:IconButton Content="加载8" x:Name="loadeight" Margin="5" Padding="2" IsShowIcon="False" Width="50" HorizontalAlignment="Center" Click="loadeight_Click"/>
+                    <myControl:IconButton Content="加载9" x:Name="loadnine" Margin="5" Padding="2" IsShowIcon="False" Width="50" HorizontalAlignment="Center" Click="loadnine_Click"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <TextBlock Foreground="#787978" FontSize="14" Text="加载动画很多，可以自由组织 。"  Padding="10,15,0,0"  MouseLeftButtonUp="OnePointLoading_MouseLeftButtonUp"/>
+                </WrapPanel>
+
+                <TextBlock Text="自定义MessageBox效果" Foreground="Black" FontSize="16" FontWeight="DemiBold" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                <WrapPanel>
+                    <myControl:IconButton Content="效果1" x:Name="MessageboxOne" Margin="5" Padding="2" IsShowIcon="False" Width="50" HorizontalAlignment="Center" Click="MessageboxOne_Click"/>
+                    <myControl:IconButton Content="效果2" x:Name="MessageboxTwo" Margin="5" Padding="2" IsShowIcon="False" Width="50" HorizontalAlignment="Center" Click="MessageboxTwo_Click"/>
+                    <myControl:IconButton Content="效果3" x:Name="MessageboxThree" Margin="5" Padding="2" IsShowIcon="False" Width="50" HorizontalAlignment="Center" Click="MessageboxThree_Click"/>
+                </WrapPanel>
+                <!--<StackPanel>
+                    --><!--<TextBlock Foreground="#787978" FontSize="14" Text="正在检测新版本..."  Padding="10,15,0,0"  MouseLeftButtonUp="OnePointLoading_MouseLeftButtonUp"/>--><!--          
+                </StackPanel>-->
             </StackPanel>           
         </Border>
 

@@ -3,14 +3,23 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:MyCustomControlLibrary">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/storyboard.xaml"/>
-        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/IconTextBlockStyle.xaml"/>
-        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/TabButtonStyle.xaml"/>
-        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/IconButtonStyle.xaml"/>
-        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/SwitchButtonStyle.xaml"/>
-        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/ScrollBarStyle.xaml"/>
-        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/ScrollViewerStyle.xaml"/>
-        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/ImageButtomStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/storyboard.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/IconTextBlockStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/TabButtonStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/IconButtonStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/SwitchButtonStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/ScrollBarStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/ScrollViewerStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/ImageButtomStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/CirclePointRingLoadingStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/OnePointLoadingStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/TwoPointLoadingStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/ThreePoingLoadingStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/HorizontalPointLoadingStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/RadnerLoadingStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/GridLoadingStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/FiveColumnLoadingStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/IconLoadingStyle.xaml"/>
         
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

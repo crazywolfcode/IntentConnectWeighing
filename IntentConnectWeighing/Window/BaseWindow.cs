@@ -21,7 +21,7 @@ namespace IntentConnectWeighing
 
         private void InitializeStyle()
         {
-            this.Style = (Style)App.Current.Resources["BaseWindowStyle"];
+            this.Style = (Style)App.Current.Resources["BaseWindowStyle"];            
         }
 
         public void MyInitializeStyle(System.Windows.Window window, MyWindowsStyle style)

@@ -8,7 +8,7 @@ using System.Text;
 
 	 /// <summary>
 	 /// 配置表
-	 /// 数据条数:31
+	 /// 数据条数:43
 	 /// 数据大小:16KB
 	 /// </summary>
 

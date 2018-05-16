@@ -53,54 +53,102 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MMessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Style\CirclePointRingLoadingStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Themes\IconButtonStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\IconTextBlockStyle.xaml">
+    <Page Include="Themes\Style\FiveColumnLoadingStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\ImageButtomStyle.xaml">
+    <Page Include="Themes\Style\GridLoadingStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\ScrollBarStyle.xaml">
+    <Page Include="Themes\Style\HorizontalPointLoadingStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\ScrollViewerStyle.xaml">
+    <Page Include="Themes\Style\IconButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Style\IconTextBlockStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\storyboard.xaml">
+    <Page Include="Themes\Style\ImageButtomStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\SwitchButtonStyle.xaml">
+    <Page Include="Themes\Style\OnePointLoadingStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\TabButtonStyle.xaml">
+    <Page Include="Themes\Style\RadnerLoadingStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Style\ScrollBarStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Style\ScrollViewerStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Style\storyboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Style\SwitchButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Style\TabButtonStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Style\ThreePoingLoadingStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Style\TwoPointLoadingStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\CirclePointRingLoading.cs" />
     <Compile Include="Controls\DateTimePiker.xaml.cs">
       <DependentUpon>DateTimePiker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FiveColumnLoading.cs" />
+    <Compile Include="Controls\GridLoading.cs" />
+    <Compile Include="Controls\HorizontalPoingLoading.cs" />
     <Compile Include="Controls\IconButton.cs" />
+    <Compile Include="Controls\IconLoading.cs" />
     <Compile Include="Controls\IconTextBlock.cs" />
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\MyScrollBar.cs" />
     <Compile Include="Controls\MyScrollViewer.cs" />
+    <Compile Include="Controls\OnePointLoading.cs" />
+    <Compile Include="Controls\RadnerLoading.cs" />
     <Compile Include="Controls\SwitchButton.cs" />
     <Compile Include="Controls\TabButton.cs" />
+    <Compile Include="Controls\ThreePoingLoading.cs" />
+    <Compile Include="Controls\TwoPointLoading.cs" />
+    <Compile Include="MMessageBox.xaml.cs">
+      <DependentUpon>MMessageBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -122,6 +170,10 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Page Include="Themes\Style\IconLoadingStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Resource Include="Themes\Font\iconfont.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
