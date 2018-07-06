@@ -10,7 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using MyLoadingLib;
 namespace IntentConnectWeighing
 {
     /// <summary>
@@ -18,7 +18,7 @@ namespace IntentConnectWeighing
     /// </summary>
     public partial class MainWindow : BaseWindow
     {
-
+     
         public MainWindow()
         {
             InitializeComponent();
@@ -37,7 +37,7 @@ namespace IntentConnectWeighing
         {
             base.MyInitializeStyle(this, MyWindowsStyle.main);
             centerNavMenu();
-            InitMainFrame();
+            InitMainFrame();        
         }
 
         private void BaseWindow_ContentRendered(object sender, EventArgs e)
@@ -153,6 +153,5 @@ namespace IntentConnectWeighing
             App.notifyIcon.BalloonTipTitle = "minimiaced ";
             App.notifyIcon.BalloonTipText = "minimiaced  in there";
         }
-
     }
 }
