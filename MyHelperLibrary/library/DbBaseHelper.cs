@@ -21,11 +21,8 @@ namespace MyHelper
         //软删除的条件
         public static readonly string softDeleteWhere = splitChar + softDeletedbName + splitChar + "=" + valueSplitChar + deleteStatusTag + valueSplitChar;
         public static readonly string softDeleteSet = splitChar + softDeletedbName + splitChar + "=" + valueSplitChar + deleteStatusTag + valueSplitChar;
-
         public static readonly string notSoftDeleteWhere = splitChar + softDeletedbName + splitChar + "=" + valueSplitChar + nomalStatusTag + valueSplitChar;
-
         public static readonly string selectSqlTemplqte = "SELECT {0} FROM {1} WHERE {2} ;";
-
         public static readonly string groupByTemplate = " GROUP BY {0} ";
         public static readonly string orderByTemplate = " ORDER BY {0} ";
         public static readonly string havingTemplate = " HAVING  {0} ";
@@ -34,11 +31,8 @@ namespace MyHelper
 
 
         public static readonly string insertSqlTemplqte = "INSERT INTO {0} ({1}) VALUES ({2});";
-
         public static readonly string updateSqlTemplqte = "UPDATE {0} SET {1} WHERE {2};";
-
         public static readonly string deleteSqlTemplqte = "DELETE FROM {0} WHERE {1};";
-
         public static readonly string buildSqlErrorMessage = "无法获取id或Id的属性名或值，无法对生成SQL的Where条件！";
 
         /// <summary>
