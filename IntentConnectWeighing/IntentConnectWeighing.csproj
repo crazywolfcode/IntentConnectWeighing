@@ -768,28 +768,30 @@
   <PropertyGroup>
     <PreBuildEvent>@echo -----start----
 if not exist "$(TargetDir)temp" md "$(TargetDir)temp";
-@echo made dir temp successed
+@echo 1. made dir temp successed
 
 if not exist "$(TargetDir)capture" md "$(TargetDir)capture";
-@echo made dir capture successed
+@echo 2. made dir capture successed
 
 if not exist "$(TargetDir)data" md "$(TargetDir)data";
-@echo made dir data successed
+@echo 3. made dir data successed
 if not exist "$(TargetDir)template" md "$(TargetDir)template";
-@echo made dir template successed
+@echo 4. made dir template successed
 @echo start copy dynamic template 
 copy "$(ProjectDir)DynamicTemplate\*.*" "$(TargetDir)template" ;
-@echo start copy dynamic template completed
+@echo 5. copy dynamic template completed
 
 @echo copy app.config
 copy "$(ProjectDir)App.config" "$(TargetDir)"
-@echo copy app.config finish
+@echo 6. copy app.config finish
 
 @echo start copy HC NET SDK
+if not exist "$(TargetDir)HCNetSDKCom" md "$(TargetDir)HCNetSDKCom";
+@echo 7. made dir HCNetSDKCom successed
 copy "$(ProjectDir)bin\HCNetSDKCom\*.*" "$(TargetDir)\HCNetSDKCom" ;
-@echo start copy HC NET SDK dll
+@echo 8. copy HC NET SDK dll
 copy "$(ProjectDir)bin\*.dll" "$(TargetDir)"
-@echo start copy HC NET SDK completed</PreBuildEvent>
+@echo 9. copy HC NET SDK completed</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>
