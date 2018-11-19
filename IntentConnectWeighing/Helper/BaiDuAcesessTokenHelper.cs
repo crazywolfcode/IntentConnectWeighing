@@ -70,11 +70,11 @@ namespace IntentConnectWeighing
 
         private static string getFromBaidu()
         {           
-            string resultJson = HttpWebRequestHelper.getBaiduAcesessToken(
+            string resultJson = HttpWebRequestHelper.GetBaiduAcesessToken(
                             BaiduAipHelper.BaiduTokenUrl,
                              ConfigurationHelper.GetConfig(ConfigItemName.baiduApiKey.ToString()),
                              ConfigurationHelper.GetConfig(ConfigItemName.baiduApiSecretKey.ToString())
-                             ).Result;
+                             );
            string replaceJson= StringHelper.jsonCamelCaseToDBnameing(resultJson);
             mToken =JsonHelper.JsonToObject(replaceJson, typeof(BDAccessToken)) as BDAccessToken;
             mToken.getDate = DateTimeHelper.getCurrentDateTime();
