@@ -12,6 +12,9 @@ using System.Windows.Controls;
 
 namespace IntentConnectWeighing
 {
+     /// <summary>
+    /// 称重的公供代码 
+    /// </summary>
     public  class WeighingWindow : Window
     {
         // left center right
