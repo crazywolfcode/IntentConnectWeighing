@@ -59,7 +59,7 @@
                 <Label Grid.Column="0" x:Name="ComAlertTb" Content="数据读取出错" FontSize="14" Foreground="Red" HorizontalContentAlignment="Left" VerticalAlignment="Bottom"  Padding="10,2,10,2" />
                 <TextBox Grid.Column="0" x:Name="ShowValueTb" Text="123" FontSize="46" BorderThickness="0" Foreground="Green" TextChanged="ShowValueTb_TextChanged" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10,2,10,2" />
                 <TextBox x:Name="textWeihgtTb" TextChanged="textWeihgtTb_TextChanged" FontSize="14" Foreground="Red" HorizontalAlignment="Left" VerticalAlignment="Top" Text="0" Margin="20"></TextBox>
-                <StackPanel Grid.Column="1" x:Name="ScalePanel" HorizontalAlignment="Left">
+                <StackPanel Grid.Column="1" x:Name="ScalePanel" HorizontalAlignment="Left" Visibility="Collapsed">
                     <TextBlock Text="磅称列表" Foreground="#777777" FontSize="14" Margin="0,0,30,6" Padding="2"/>
                     <StackPanel x:Name="ScaleListPanel" Margin="20,0,20,0">
                     </StackPanel>

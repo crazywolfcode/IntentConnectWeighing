@@ -1,22 +1,14 @@
-﻿using System;
+﻿using IntentConnectWeighing.CameraSdk;
+using MyHelper;
+using System;
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.IO.Ports;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using MyHelper;
-using static System.Windows.Forms.Timer;
-using System.Threading;
 using System.Text.RegularExpressions;
-using IntentConnectWeighing.CameraSdk;
+using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
 namespace IntentConnectWeighing
 {
     /// <summary>
@@ -257,8 +249,21 @@ namespace IntentConnectWeighing
 
         private void SetCurrScaleInfo()
         {
-            if (mScales != null && mScales.Count > 0)
+            if (mScales == null || mScales.Count <= 0)
             {
+                ComAlertTb.Content = "未设置磅称";
+                mCurrScale = null;               
+                return;
+            }
+            if (mScales != null && mScales.Count > 0)
+            {              
+                if (mScales.Count <= 1) {                   
+                    mCurrScale = mScales[0];
+                    //读取磅称数据，并显示
+                    setScale();                  
+                    return;
+                }
+                this.ScalePanel.Visibility = Visibility.Visible;
                 this.ScaleListPanel.Children.Clear();
                 for (int i = 0; i < mScales.Count; i++)
                 {
@@ -295,14 +300,19 @@ namespace IntentConnectWeighing
             RadioButton rb = sender as RadioButton;
             mCurrScale = mScales[Convert.ToInt32(rb.Tag.ToString())];
             //读取磅称数据，并显示
+            setScale();
+        }
+
+        /// <summary>
+        /// 读取磅称数据，并显示,切换摄像头
+        /// </summary>
+        private void setScale() {
             ReadScaleData();
             ShowScaleData();
             // 切换摄像头
             GetCameraInfo();
             ShowCamera();
         }
-
-
         #region  读取磅称数据，并显示
         private void ReadScaleData()
         {
@@ -322,7 +332,7 @@ namespace IntentConnectWeighing
             catch (Exception e)
             {
                 this.ComAlertTb.Visibility = Visibility.Visible;
-                this.ComAlertTb.Content = "数据读取出错：" + e.Message;
+                this.ComAlertTb.Content = "串口打开失败：" + e.Message;
             }
         }
 
@@ -338,7 +348,7 @@ namespace IntentConnectWeighing
                 catch (Exception e)
                 {
                     this.ComAlertTb.Visibility = Visibility.Visible;
-                    this.ComAlertTb.Content = "显示磅称数据出错：" + e.Message;
+                    this.ComAlertTb.Content = "串口打开失败：" + e.Message;
                 }
             }
             if (mSerialPort.IsOpen == true)
@@ -389,7 +399,9 @@ namespace IntentConnectWeighing
             }
             catch (Exception ex)
             {
-                ConsoleHelper.writeLine("回调显示出错数据：" + value + " msg " + ex.Message);
+                this.ComAlertTb.Visibility = Visibility.Visible;
+                this.ComAlertTb.Content = "数据解释出错";
+                ConsoleHelper.writeLine("数据解释出错：" + value + " msg " + ex.Message);
             }
         }
 
