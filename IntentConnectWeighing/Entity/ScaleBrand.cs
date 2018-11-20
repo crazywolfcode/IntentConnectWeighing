@@ -7,13 +7,12 @@ using System.Text;
 {
 
 	 /// <summary>
-	 /// 省份表
-	 /// 数据条数:34
+	 /// 数据条数:4
 	 /// 数据大小:16KB
 	 /// </summary>
 
 
-	  public  class Province
+	  public  class ScaleBrand
 	 {
 
 	 /// <summary>
@@ -26,36 +25,27 @@ using System.Text;
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String provinceName{ get; set; }
+	 public String brandName{ get; set; }
 
 	 /// <summary>
-	 /// 注释:公司个数
-	 /// 可空:NO
-	 ///默认值:0
+	 /// 可空:YES
 	 /// </summary>
 
-	 public Int32 childrenCount{ get; set; }
+	 public DateTime addDate{ get; set; }
 
 	 /// <summary>
-	 /// 可空:NO
-	 ///默认值:0
+	 /// 可空:YES
 	 /// </summary>
 
 	 public Int32 isDelete{ get; set; }
 
 	 /// <summary>
-	 /// 注释:简称
+	 /// 注释:类型是 1耀华系 2宁波柯力 3   托利多 4赛多利斯 0其它
 	 /// 可空:YES
+	 ///默认值:0
 	 /// </summary>
 
-	 public String abbreviation{ get; set; }
-
-	 /// <summary>
-	 /// 注释:省会
-	 /// 可空:YES
-	 /// </summary>
-
-	 public String capital{ get; set; }
+	 public Int32 type{ get; set; }
 
 	 }
 }

@@ -7,6 +7,7 @@ using System.Text;
 {
 
 	 /// <summary>
+	 /// 用户
 	 /// 数据条数:9
 	 /// 数据大小:16KB
 	 /// </summary>

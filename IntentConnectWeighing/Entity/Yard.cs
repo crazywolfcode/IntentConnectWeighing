@@ -7,6 +7,7 @@ using System.Text;
 {
 
 	 /// <summary>
+	 /// 货场
 	 /// 数据条数:10
 	 /// 数据大小:16KB
 	 /// </summary>

@@ -26,6 +26,8 @@ namespace IntentConnectWeighing
 	 	 people_info,
 	 	 province,
 	 	 scale,
+	 	 scale_brand,
+	 	 scale_series,
 	 	 send_car_bill,
 	 	 sync_info,
 	 	 user,
@@ -256,6 +258,7 @@ namespace IntentConnectWeighing
 	 	 id,
 	 	 name,
 	 	 com,
+	 	 brand_type,
 	 	 baud_rate,
 	 	 data_byte,
 	 	 end_byte,
@@ -271,6 +274,24 @@ namespace IntentConnectWeighing
 	 	 is_delete,
 	 	 delete_time,
 	 	 sync_time,
+	 }
+
+
+	 public enum ScaleBrandEnum{
+	 	 id,
+	 	 brand_name,
+	 	 add_date,
+	 	 is_delete,
+	 	 type,
+	 }
+
+
+	 public enum ScaleSeriesEnum{
+	 	 id,
+	 	 name,
+	 	 add_date,
+	 	 is_delete,
+	 	 brand_id,
 	 }
 
 

@@ -7,6 +7,7 @@ using System.Text;
 {
 
 	 /// <summary>
+	 /// 公司信息
 	 /// 数据条数:22
 	 /// 数据大小:16KB
 	 /// </summary>

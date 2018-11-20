@@ -2,10 +2,7 @@
 using MyHelper;
 using System;
 using System.Collections.Generic;
-using System.IO.Ports;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,43 +11,9 @@ namespace IntentConnectWeighing
     /// <summary>
     /// InputWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class InputWindow : Window
+    public partial class InputWindow : WeighingWindow
     {
-        // left center right
-        public Action<bool, bool, bool> RefershParent;
-        #region 本机使用的临时基础数据
-        private Dictionary<String, Company> tempSupplyCompanys = new Dictionary<string, Company>();
-        private Dictionary<String, Company> tempCustomerCompanys = new Dictionary<string, Company>();
-        private Dictionary<String, Material> tempMaterials = new Dictionary<string, Material>();
-        private Dictionary<String, CarInfo> tempCars = new Dictionary<string, CarInfo>();
-        #endregion
-        #region Variable area
-        private bool isConnectionVersion = true; //是否是互联版本
-        private bool isAllowDiffrenceMaterial = true; //是否允许货物名称不一致
-        private bool isAllowDiffrenceCompany = true; //是否允许收货公司不一致
-        private bool isAllowDiffrenceReceiveYard = true; //是否允许收货货场不一致
-        private bool isOutFactory = false; //是否出场
-        private bool isOptionSuccess = false;//是否过磅成功过
-        private List<Scale> mScales;
-        private Scale mCurrScale;
-        private List<CameraInfo> mCameraInfos;
-        private Timer mTimer;
-        private SerialPort mSerialPort = null;
-        private string oldstring;
-        private double CameraPanelWidth;
-        private double CameraWidth;
-        private double CameraHeight;
-        private int CameraCount;
-        private int CarmeraMarging = 0;
-        private String currBillNumber;//当前的磅单编号
-        private Company sendCompany;
-        private Company receiverCompany;
-        private Material material;
-        private CarInfo car;
-        private WeighingBill mWeighingBill;
-        private WeighingBill mSendWeighingBill;
-        private bool isInsert = true;
-        #endregion
+        private WeighingBill mSendWeighingBill;       
         public InputWindow(WeighingBill bill = null, bool isSend = false)
         {
             InitializeComponent();
@@ -73,19 +36,18 @@ namespace IntentConnectWeighing
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //将本机使用的基础数据设置默认数据源 下5个方法
-            SetSupplyCompanyDefaultSource();
-            SetCustomerCompanyDefaultSource();
-            SetMaterialDefaultSource();
-            SetCarDefaultSource();
-            SetCarDecuationDescriptionDefaultSource();
-            SetInRemarkDefaultSource();
-            //
+            SetSupplyCompanyDefaultSource(this.SupplyCb);
+            SetCustomerCompanyDefaultSource(this.ReceiverCompanyCb);
+            SetMaterialDefaultSource(this.MaterialNameCb);
+            SetCarDefaultSource(this.CarNumberCb);
+            SetCarDecuationDescriptionDefaultSource(this.DecuationDescriptionCb);
+            SetRemarkDefaultSource(ReceivedRemardCombox);
+            
             if (mSendWeighingBill == null)
             {
                 this.SendNetWeightTbox.IsEnabled = true;
             }
-
-            //
+                        
             BuildCurrWeighingBill();
         }
 
@@ -239,13 +201,7 @@ namespace IntentConnectWeighing
             SetWeihinger();
         }
         #region scale
-        private void GetScaleInfo()
-        {
-            String @condition = ScaleEnum.client_id.ToString() + "=" + Constract.valueSplit + App.CurrClientId + Constract.valueSplit + " and " +
-                ScaleEnum.company_id.ToString() + "=" + Constract.valueSplit + App.currentCompany.id + Constract.valueSplit;
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.scale.ToString(), null, condition, null, null, ScaleEnum.default_type.ToString() + " desc");
-            mScales = DbBaseHelper.DataTableToEntitys<Scale>(DatabaseOPtionHelper.GetInstance().select(sql));
-        }
+
 
         private void SetCurrScaleInfo()
         {
@@ -310,32 +266,11 @@ namespace IntentConnectWeighing
             ReadScaleData();
             ShowScaleData();
             // 切换摄像头
-            GetCameraInfo();
-            ShowCamera();
+          GetCameraInfo();
+         ShowCamera(this.CameraBorder,this.CameraStackPanel,this.settingVideoBtn);
         }
         #region  读取磅称数据，并显示
-        private void ReadScaleData()
-        {
-            DisposeSerialPort();
-            mSerialPort = new SerialPort
-            {
-                BaudRate = mCurrScale.baudRate,
-                PortName = mCurrScale.com
-            };
-            mSerialPort.DataBits = mCurrScale.dataByte;
-            mSerialPort.StopBits = StopBits.One;
-            mSerialPort.Parity = Parity.None;
-            try
-            {
-                mSerialPort.Open();
-            }
-            catch (Exception e)
-            {
-                this.ComAlertTb.Visibility = Visibility.Visible;
-                this.ComAlertTb.Content = "串口打开失败：" + e.Message;
-            }
-        }
-
+        
         private void ShowScaleData()
         {
             DisposeTimer();
@@ -362,349 +297,30 @@ namespace IntentConnectWeighing
         /// <param name="stae"></param>
         private void SerialPortCallBack(Object stae)
         {
-            int value = 123;
-            try
+            ScaleDataResult result = mScaleDataFormarter.ReadValue(mSerialPort);
+            if (result.ErrCode == 0)
             {
-                int bytes = mSerialPort.BytesToRead;
-                byte[] buffer = new byte[bytes];
-                mSerialPort.Read(buffer, 0, bytes);
-                string readbuffer = Encoding.ASCII.GetString(buffer);
-
-                if (readbuffer.Length >= 10)
-                {
-                    string[] weightstrs = readbuffer.Split('+');
-                    foreach (string weightstr in weightstrs)
+                this.ComAlertTb.Visibility = Visibility.Collapsed;
+                this.ComAlertTb.Content = "";
+                this.Dispatcher.Invoke(
+                    new Action(delegate
                     {
-                        if (weightstr.Length >= 10)
-                        {
-                            string weightst = weightstr.Substring(0, 6);
-                            if (weightst != oldstring)
-                            {
-                                oldstring = weightst;
-                                string temp = Regex.Replace(weightst, "[0]*([1-9][0-9]*)", "$1");
-                                value = Convert.ToInt32(temp);
-                                Double dou = Convert.ToDouble(value);
-                                String number = Convert.ToString(Math.Round((dou / 1000), 2, MidpointRounding.AwayFromZero));
-                                this.ComAlertTb.Visibility = Visibility.Collapsed;
-                                this.ComAlertTb.Content = "";
-                                this.Dispatcher.Invoke(
-                                    new Action(delegate
-                                    {
-                                        this.ShowValueTb.Text = number;
-                                    }));
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                this.ComAlertTb.Visibility = Visibility.Visible;
-                this.ComAlertTb.Content = "数据解释出错";
-                ConsoleHelper.writeLine("数据解释出错：" + value + " msg " + ex.Message);
-            }
-        }
-
-        private void DisposeSerialPort()
-        {
-            if (mSerialPort != null)
-            {
-                if (mSerialPort.IsOpen == true)
-                {
-                    mSerialPort.Close();
-                }
-                mSerialPort.Dispose();
-            }
-        }
-
-        private void DisposeTimer()
-        {
-            if (mTimer != null)
-            {
-                mTimer.Dispose();
-                mTimer = null;
-            }
-        }
-        #endregion
-
-        #endregion
-
-        #region Camera Info
-        private void GetCameraInfo()
-        {
-            String @condition = CameraInfoEnum.client_id.ToString() + "=" + Constract.valueSplit + App.CurrClientId + Constract.valueSplit + " and " +
-               CameraInfoEnum.company_id.ToString() + "=" + Constract.valueSplit + App.currentCompany.id + Constract.valueSplit + " and " +
-                CameraInfoEnum.scale_id.ToString() + "=" + Constract.valueSplit + mCurrScale.id + Constract.valueSplit;
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.camera_info.ToString(), null, condition, null, null);
-            mCameraInfos = DbBaseHelper.DataTableToEntitys<CameraInfo>(DatabaseOPtionHelper.GetInstance().select(sql));
-        }
-        private List<Int32> CameraIds;
-        private List<CHCNetSDK.NET_DVR_DEVICEINFO_V30> mDeviceInfors;
-        private List<System.Windows.Forms.PictureBox> mPictureBoxs;
-        /// <summary>
-        /// 显示摄像头
-        /// </summary>        
-        private void ShowCamera()
-        {            
-            if (mCameraInfos.Count <= 0)
-            {
-                this.settingVideoBtn.Visibility = Visibility.Visible;                
-                return;
-            }           
-            CameraPanelWidth = this.CameraBorder.ActualWidth;
-            CameraWidth = Math.Floor(CameraPanelWidth / mCameraInfos.Count);
-            CameraHeight = this.CameraBorder.ActualHeight - 2;
-            this.CameraStackPanel.Children.Clear();
-            if (CameraHelper.InitSDK() == false)
-            {
-                MessageBox.Show("摄像头SDK初始化失败！");
-                return;
-            }
-            if (CameraIds == null)
-            {
-                CameraIds = new List<int>();
+                        this.ShowValueTb.Text = result.Value + "";
+                    }));
             }
             else
             {
-                StorpPreviewCamera();
-                LogoutCamera();
-                CameraIds.Clear();
-            }
-            if (mPictureBoxs == null)
-            {
-                mPictureBoxs = new List<System.Windows.Forms.PictureBox>();
-            }
-            else
-            {
-                mPictureBoxs.Clear();
-            }
-            if (mDeviceInfors == null)
-            {
-                mDeviceInfors = new List<CHCNetSDK.NET_DVR_DEVICEINFO_V30>();
-            }
-            else
-            {
-                mDeviceInfors.Clear();
-            }
-            for (int i = 0; i < mCameraInfos.Count; i++)
-            {
-                try {
-                    CameraInfo camera = mCameraInfos[i];
-                    System.Windows.Forms.Integration.WindowsFormsHost windowsFormsHost = new System.Windows.Forms.Integration.WindowsFormsHost() { Name = $"WFH{i}" };
-                    System.Windows.Forms.PictureBox pictureBox = new System.Windows.Forms.PictureBox() { Name = $"pictureBox{i}", Width = (int)CameraWidth, Height = (int)CameraHeight };
-                    mPictureBoxs.Add(pictureBox);
-                    CHCNetSDK.NET_DVR_DEVICEINFO_V30 deviceinfo = new CHCNetSDK.NET_DVR_DEVICEINFO_V30();
-                    //login
-                    int cameraid = CameraHelper.loginCamera(camera.ip, camera.port, camera.userName, camera.password, ref deviceinfo);
-                    if (cameraid <= -1) {
-                        throw new Exception("登陆失败");
-                    }
-                    CameraIds.Add(cameraid);
-                    mDeviceInfors.Add(deviceinfo);
-                    //preview
-                    int ChanNum = deviceinfo.byChanNum;
-                    int streamType = Convert.ToInt32(ConfigurationHelper.GetConfig(ConfigItemName.cameraStramType.ToString()));
-                    bool res = CameraHelper.Preview(ref pictureBox, ChanNum, cameraid, streamType);
-                    windowsFormsHost.Child = pictureBox;
-                    this.CameraStackPanel.Children.Add(windowsFormsHost);
-                } catch {
-                    TextBlock textBlock = new TextBlock();
-                    textBlock.Width = CameraWidth;
-                   //textBlock.Height = CameraHeight;
-                    textBlock.TextAlignment = TextAlignment.Center;
-                    textBlock.HorizontalAlignment = HorizontalAlignment.Center;
-                    textBlock.VerticalAlignment = VerticalAlignment.Bottom;
-                    textBlock.Text = "视频加载失败";
-                    textBlock.FontSize = 16;
-                    textBlock.Foreground = System.Windows.Media.Brushes.Red;
-                    this.CameraStackPanel.Children.Add(textBlock);
-                }             
-            }
+                this.Dispatcher.Invoke(
+               new Action(delegate
+               {
+                   this.ComAlertTb.Visibility = Visibility.Visible;
+                   this.ComAlertTb.Content = result.Msg;
+               }));
+            }       
         }
-
-        private void LogoutCamera()
-        {
-            if (CameraIds != null && CameraIds.Count > 0)
-            {
-                for (int i = 0; i < CameraIds.Count; i++)
-                {
-                    try
-                    {
-                        CameraHelper.LoginOutCamera(CameraIds[i]);
-                    }
-                    catch
-                    {
-                        MessageBox.Show("退出摄像头失败！" + i);
-                    }
-                }
-            }
-        }
-
-        private void StorpPreviewCamera()
-        {
-            if (CameraIds != null && CameraIds.Count > 0)
-            {
-                for (int i = 0; i < CameraIds.Count; i++)
-                {
-                    try
-                    {
-                        CameraHelper.stopPreview(CameraIds[i]);
-                    }
-                    catch
-                    {
-                        MessageBox.Show("停止预览失败！" + i);
-                    }
-                }
-            }
-        }
-
-        private void settingVideoBtn_Click(object sender, RoutedEventArgs e)
-        {
-            ///TODO
-            MessageBox.Show("TODO　go set camera");
-        }
+    
         #endregion
 
-        #region 将本机使用的基础数据设置默认数据源 最新使用的排在最前面
-
-        private void SetSupplyCompanyDefaultSource()
-        {
-            if (App.tempSupplyCompanys.Count <= 0)
-            {
-                String path = System.IO.Path.Combine(Constract.tempPath, Constract.tempSupplyFileName);
-                String xml = String.Empty;
-                if (FileHelper.Exists(path))
-                {
-                    xml = FileHelper.Reader(path, Encoding.UTF8);
-                    if (String.IsNullOrEmpty(xml))
-                    {
-                        this.SupplyCb.ItemsSource = null;
-                        return;
-                    }
-
-                    if (App.tempSupplyCompanys.Count <= 0)
-                    {
-                        List<Company> list = (List<Company>)XmlHelper.Deserialize(typeof(List<Company>), xml);
-                        foreach (Company cp in list)
-                        {
-                            App.tempSupplyCompanys.Add(cp.id, cp);
-                        }
-                        App.tempSupplyCompanys = App.tempSupplyCompanys.OrderByDescending(O => O.Value.syncTime).ToDictionary(p => p.Key, O => O.Value);
-                    }
-                    this.SupplyCb.ItemsSource = App.tempSupplyCompanys.Values.ToList();
-                }
-                else
-                {
-                    FileHelper.CreateFile(path);
-                }
-            }
-        }
-        private void SetCustomerCompanyDefaultSource()
-        {
-            if (App.tempCustomerCompanys.Count <= 0)
-            {
-                String path = System.IO.Path.Combine(Constract.tempPath, Constract.tempCustomerFileName);
-                String xml = String.Empty;
-                if (FileHelper.Exists(path))
-                {
-                    xml = FileHelper.Reader(path, Encoding.UTF8);
-                    if (String.IsNullOrEmpty(xml))
-                    {
-                        this.ReceiverCompanyCb.ItemsSource = null;
-                        return;
-                    }
-                    if (App.tempCustomerCompanys.Count <= 0)
-                    {
-                        List<Company> list = (List<Company>)XmlHelper.Deserialize(typeof(List<Company>), xml);
-                        foreach (Company cp in list)
-                        {
-                            App.tempCustomerCompanys.Add(cp.id, cp);
-                        }
-                        App.tempCustomerCompanys = App.tempCustomerCompanys.OrderByDescending(O => O.Value.syncTime).ToDictionary(p => p.Key, O => O.Value);
-                    }
-                    this.ReceiverCompanyCb.ItemsSource = App.tempCustomerCompanys.Values.ToList();
-                }
-                else
-                {
-                    FileHelper.CreateFile(path);
-                }
-            }
-        }
-        private void SetMaterialDefaultSource()
-        {
-            if (App.tempMaterials.Count <= 0)
-            {
-                String path = System.IO.Path.Combine(Constract.tempPath, Constract.tempMatreialFileName);
-                String xml = String.Empty;
-                if (FileHelper.Exists(path))
-                {
-                    xml = FileHelper.Reader(path, Encoding.UTF8);
-                    if (String.IsNullOrEmpty(xml))
-                    {
-                        this.MaterialNameCb.ItemsSource = null;
-                        return;
-                    }
-
-                    if (App.tempMaterials.Count <= 0)
-                    {
-                        List<Material> list = (List<Material>)XmlHelper.Deserialize(typeof(List<Material>), xml);
-                        foreach (Material material in list)
-                        {
-                            App.tempMaterials.Add(material.id, material);
-                        }
-                        App.tempMaterials = App.tempMaterials.OrderByDescending(O => O.Value.syncTime).ToDictionary(p => p.Key, O => O.Value);
-                    }
-                    this.MaterialNameCb.ItemsSource = App.tempMaterials.Values.ToList();
-                }
-                else
-                {
-                    FileHelper.CreateFile(path);
-                }
-            }
-        }
-        private void SetCarDefaultSource()
-        {
-
-            if (App.tempCars.Count <= 0)
-            {
-                String path = System.IO.Path.Combine(Constract.tempPath, Constract.tempCarFileName);
-                String xml = String.Empty;
-                if (FileHelper.Exists(path))
-                {
-                    xml = FileHelper.Reader(path, Encoding.UTF8);
-                    if (String.IsNullOrEmpty(xml))
-                    {
-                        this.CarNumberCb.ItemsSource = null;
-                        return;
-                    }
-
-                    if (App.tempCars.Count <= 0)
-                    {
-                        List<CarInfo> list = (List<CarInfo>)XmlHelper.Deserialize(typeof(List<CarInfo>), xml);
-                        foreach (CarInfo car in list)
-                        {
-                            App.tempCars.Add(car.id, car);
-                        }
-                        App.tempCars = App.tempCars.OrderByDescending(O => O.Value.syncTime).ToDictionary(p => p.Key, O => O.Value);
-                    }
-                    this.CarNumberCb.ItemsSource = App.tempCars.Values.ToList();
-                }
-                else
-                {
-                    FileHelper.CreateFile(path);
-                }
-            }
-        }
-        private void SetCarDecuationDescriptionDefaultSource()
-        {
-         this.DecuationDescriptionCb.ItemsSource = null;
-         this.DecuationDescriptionCb.ItemsSource = App.decuationDesList;
-        }
-        private void SetInRemarkDefaultSource()
-        {
-            this.ReceivedRemardCombox.ItemsSource = null;
-            this.ReceivedRemardCombox.ItemsSource = App.inputRemarkList;
-        }
         #endregion
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -726,13 +342,7 @@ namespace IntentConnectWeighing
             }
         }
 
-        private void RefershParentData(bool left = false, bool center = false, bool right = false)
-        {
-            if (this.RefershParent != null)
-            {
-                RefershParent(left, center, right);
-            }
-        }
+     
 
         #region save
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
@@ -764,7 +374,7 @@ namespace IntentConnectWeighing
         private void UpdateRemark() {
             Thread thread = new Thread(new ParameterizedThreadStart(CommonFunction.UpdateInputReamak));
             thread.Start(mWeighingBill.receiveRemark);
-            SetInRemarkDefaultSource();
+            SetRemarkDefaultSource(this.ReceivedRemardCombox);
         }
 
         private bool CheckInput()
@@ -808,7 +418,6 @@ namespace IntentConnectWeighing
             }
             return true;
         }
-
         //insert
         private void Insert()
         {
@@ -859,7 +468,7 @@ namespace IntentConnectWeighing
                 // success to do TempUpdateUsedBase
                 UpdateUsedBaseData();
                 // print 
-                PrintBill();
+                PrintBill(WeightingBillType.RK);
 
                 if (result == MessageBoxResult.No)
                 {
@@ -869,17 +478,12 @@ namespace IntentConnectWeighing
             }
         }
 
-        private void UpdateUsedBaseData()
-        {
-            // success to do TempUpdateUsedBase
-            Thread thread = new Thread(new ParameterizedThreadStart(CommonFunction.TempUpdateUsedBase));
-            thread.Start(new BaseDataClassV() { send = sendCompany, receive = receiverCompany, material = material, carInfo = car });
-        }
+     
         private void UpdateDecuationList()
         {
             Thread thread = new Thread(new ParameterizedThreadStart(CommonFunction.UpdateDecuationList));
             thread.Start(mWeighingBill.decuationDescription);
-            SetCarDecuationDescriptionDefaultSource();
+            SetCarDecuationDescriptionDefaultSource(this.DecuationDescriptionCb);
         }
         private void UpdateSendBill()
         {
@@ -921,19 +525,7 @@ namespace IntentConnectWeighing
                 }
             }
         }
-        /// <summary>
-        /// 打印
-        /// </summary>
-        private void PrintBill()
-        {
-            bool auto = false;
-            if (MyHelper.ConfigurationHelper.GetConfig(ConfigItemName.autoPrint.ToString()) == "true") {
-                auto = true;
-            }
-            new PrintBillW(WeightingBillType.RK, mWeighingBill, auto) { }.ShowDialog();
-        }
-
-
+  
         private void UICapture()
         {
             string filePath = ConfigurationHelper.GetConfig(ConfigItemName.cameraCaptureFilePath.ToString());
@@ -1000,7 +592,6 @@ namespace IntentConnectWeighing
                 this.SendYardCb.ItemsSource = null;
             }
         }
-
         private void SupplyCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Company company = null;
@@ -1533,33 +1124,6 @@ namespace IntentConnectWeighing
         //        Console.WriteLine(ex.Message);
         //    }
         //}
-
-        /// <summary>
-        /// 通道截图
-        /// </summary>
-        public void CaptureJpeg()
-        { 
-            string filePath = ConfigurationHelper.GetConfig(ConfigItemName.cameraCaptureFilePath.ToString());
-            if (String.IsNullOrEmpty(filePath))
-            {
-                filePath = System.IO.Path.Combine(FileHelper.GetRunTimeRootPath(), "capture");
-            }
-            String fileName = String.Empty;
-            //根据登陆成功的通过截图
-            for (int i = 0; i < CameraIds.Count; i++)
-            {
-                if (string.IsNullOrEmpty(currBillNumber))
-                {
-                    fileName = Guid.NewGuid() + Constract.CaputureSuffix;
-                }
-                else
-                {
-                    fileName = currBillNumber + "_" + i + "_" + Constract.CaputureSuffix;
-                }
-                String fileNamePath = System.IO.Path.Combine(filePath, fileName);
-                CameraHelper.CaptureJpeg(fileNamePath, CameraIds[i], mDeviceInfors[i].byChanNum);
-            }
-        }
 
         #region select send bill radioButton
         private void SendBillRB_Checked(object sender, RoutedEventArgs e)

@@ -7,6 +7,7 @@ using System.Text;
 {
 
 	 /// <summary>
+	 /// 车辆信息
 	 /// 数据条数:6
 	 /// 数据大小:16KB
 	 /// </summary>

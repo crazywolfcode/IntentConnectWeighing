@@ -35,6 +35,14 @@ using System.Text;
 	 public String com{ get; set; }
 
 	 /// <summary>
+	 /// 注释:类型是 1耀华系 2宁波柯力 3   托利多 4赛多利斯 0其它
+	 /// 可空:YES
+	 ///默认值:0
+	 /// </summary>
+
+	 public Int32 brandType{ get; set; }
+
+	 /// <summary>
 	 /// 可空:NO
 	 /// </summary>
 

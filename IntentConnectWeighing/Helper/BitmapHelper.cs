@@ -11,6 +11,9 @@ namespace IntentConnectWeighing
     {
         public static BitmapImage BitmapToBitmapImage(System.Drawing.Bitmap bitmap)
         {
+            if (bitmap == null) {
+                return null;
+            }
             MemoryStream stream = new MemoryStream();
             bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
             BitmapImage image = new BitmapImage();

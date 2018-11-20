@@ -7,13 +7,12 @@ using System.Text;
 {
 
 	 /// <summary>
-	 /// 省份表
-	 /// 数据条数:34
+	 /// 数据条数:7
 	 /// 数据大小:16KB
 	 /// </summary>
 
 
-	  public  class Province
+	  public  class ScaleSeries
 	 {
 
 	 /// <summary>
@@ -26,36 +25,25 @@ using System.Text;
 	 /// 可空:YES
 	 /// </summary>
 
-	 public String provinceName{ get; set; }
+	 public String name{ get; set; }
 
 	 /// <summary>
-	 /// 注释:公司个数
-	 /// 可空:NO
-	 ///默认值:0
+	 /// 可空:YES
 	 /// </summary>
 
-	 public Int32 childrenCount{ get; set; }
+	 public DateTime addDate{ get; set; }
 
 	 /// <summary>
-	 /// 可空:NO
-	 ///默认值:0
+	 /// 可空:YES
 	 /// </summary>
 
 	 public Int32 isDelete{ get; set; }
 
 	 /// <summary>
-	 /// 注释:简称
-	 /// 可空:YES
+	 /// 可空:NO
 	 /// </summary>
 
-	 public String abbreviation{ get; set; }
-
-	 /// <summary>
-	 /// 注释:省会
-	 /// 可空:YES
-	 /// </summary>
-
-	 public String capital{ get; set; }
+	 public Int32 brandId{ get; set; }
 
 	 }
 }

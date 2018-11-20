@@ -7,6 +7,7 @@ using System.Text;
 {
 
 	 /// <summary>
+	 /// 同步信息
 	 /// 数据条数:0
 	 /// 数据大小:16KB
 	 /// </summary>

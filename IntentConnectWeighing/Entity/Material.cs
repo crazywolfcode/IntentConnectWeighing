@@ -7,6 +7,7 @@ using System.Text;
 {
 
 	 /// <summary>
+	 /// 物质信息
 	 /// 数据条数:11
 	 /// 数据大小:16KB
 	 /// </summary>

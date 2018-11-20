@@ -1,4 +1,4 @@
-﻿<Window x:Class="IntentConnectWeighing.OutputWindow"
+﻿<local:WeighingWindow x:Class="IntentConnectWeighing.OutputWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,7 +9,7 @@
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded" ContentRendered="Window_ContentRendered" Closing="Window_Closing" SizeChanged="Window_SizeChanged"
         Title="出库过磅" Height="680" Width="1000">
-    <Window.Resources>
+    <local:WeighingWindow.Resources>
         <Style x:Key="SendSendAlertTbStyle" TargetType="TextBlock">
             <Setter Property="TextAlignment" Value="Right"/>
             <Setter Property="Margin" Value="0,2,10,2"/>
@@ -35,7 +35,7 @@
             <Setter Property="Padding" Value="2,2,0,0"/>
             <Setter Property="Height" Value="26"/>
         </Style>
-    </Window.Resources>
+    </local:WeighingWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -186,4 +186,4 @@
             </StackPanel>
         </Border>
     </Grid>
-</Window>
+</local:WeighingWindow>
