@@ -96,6 +96,10 @@
         <Setter Property="VerticalAlignment"   Value="Center" />       
         <Setter Property="HorizontalAlignment"   Value="Center" />
     </Style>
+    <Style TargetType="TextBlock" x:Key="DataGridContentRight">
+        <Setter Property="VerticalAlignment"   Value="Center" />
+        <Setter Property="HorizontalAlignment"   Value="Right" />
+    </Style>
     <Style TargetType="DataGridColumnHeader" x:Key="DataGridContentHeaderStyle">
         <Setter Property="BorderThickness" Value="0"/>       
         <Setter Property="HorizontalContentAlignment"   Value="Center" />
