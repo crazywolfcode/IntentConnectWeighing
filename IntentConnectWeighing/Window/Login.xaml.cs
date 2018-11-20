@@ -21,7 +21,7 @@ namespace IntentConnectWeighing
     /// <summary>
     /// Login.xaml 的交互逻辑
     /// </summary>
-    public partial class Login : Window
+    public partial class Login :Window
     {
         private User currentUser;
         private List<User> HistoryUsers;
@@ -29,8 +29,8 @@ namespace IntentConnectWeighing
         {
             this.Style = (Style)App.Current.Resources[ResourceName.LoginWindowStyle.ToString()];
             InitializeComponent();
-            WindowBehavior behavior = new WindowBehavior(this);
-            behavior.RepairWindowDefaultBehavior();
+            //缩放，最大化 等默认事件的修复
+            WindowBehavior.newInstance(this).RepairWindowDefaultBehavior();
         }
 
 

@@ -1,10 +1,10 @@
-﻿<Window x:Class="IntentConnectWeighing.CarOutFactoryW"
+﻿<local:BaseWindow x:Class="IntentConnectWeighing.CarOutFactoryW"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"     
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IntentConnectWeighing"
-        mc:Ignorable="d" ResizeMode="NoResize"
+        mc:Ignorable="d"
         Icon="/IntentConnectWeighing;component/aislogo_48.ico"
         WindowStartupLocation="CenterScreen" WindowStyle="None"   Style="{DynamicResource settingWindowStyle}"  
         Title="车辆出场" Height="430" Width="660"
@@ -36,10 +36,11 @@
             </local:WindowButton.Background>
         </local:WindowButton>
 
-        <Border  Background="{StaticResource F9}" Grid.Row="1" Margin="0,0,0,0" x:Name="border">          
+        <Border  Background="{StaticResource F9}" Grid.Row="1" Margin="0,0,0,0" x:Name="border" Padding="0,0,4,0">          
                 <StackPanel Orientation="Horizontal" x:Name="penmal">
                 <!--in-->
-                <DataGrid  Margin="2" Visibility="Visible" Width="{Binding ElementName=border,Path=ActualWidth}" GridLinesVisibility="Horizontal" HorizontalAlignment="Stretch" ColumnHeaderHeight="30"   CanUserAddRows="False"    x:Name="INDataGrid" AutoGenerateColumns="False"  BorderThickness="0" SelectionMode="Extended" LoadingRow="MainDataGrid_LoadingRow" SelectionUnit="FullRow" MouseDoubleClick="OutDataGrid_MouseDoubleClick" KeyUp="MainDataGrid_KeyUp" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                <DataGrid  Visibility="Visible" Width="{Binding ElementName=border,Path=ActualWidth}" GridLinesVisibility="Horizontal" HorizontalAlignment="Stretch" ColumnHeaderHeight="30"   CanUserAddRows="False"    x:Name="INDataGrid" AutoGenerateColumns="False"  BorderThickness="0" SelectionMode="Extended" LoadingRow="MainDataGrid_LoadingRow" SelectionUnit="FullRow" MouseDoubleClick="OutDataGrid_MouseDoubleClick" KeyUp="MainDataGrid_KeyUp" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                
                     <DataGrid.Columns >
                         <DataGridTextColumn IsReadOnly="True" Width="*" Header="磅单编号" Binding="{Binding receiveNumber}" ElementStyle="{DynamicResource DataGridContentCenter}"></DataGridTextColumn>
                         <DataGridTextColumn IsReadOnly="True" Width="Auto" Header="公司名称" Binding="{Binding sendCompanyName}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
@@ -51,8 +52,9 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <!--out-->
-                <DataGrid Visibility="Collapsed" Width="{Binding ElementName=border,Path=ActualWidth}"  GridLinesVisibility="Horizontal" ColumnHeaderHeight="30"   CanUserAddRows="False"  x:Name="OutDataGrid" AutoGenerateColumns="False"  BorderThickness="0" SelectionMode="Single" LoadingRow="MainDataGrid_LoadingRow" SelectionUnit="FullRow" MouseDoubleClick="OutDataGrid_MouseDoubleClick" KeyUp="MainDataGrid_KeyUp" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">                      
-                      <DataGrid.Columns >
+                <DataGrid Visibility="Collapsed" Width="{Binding ElementName=border,Path=ActualWidth}"  GridLinesVisibility="Horizontal" ColumnHeaderHeight="30"   CanUserAddRows="False"  x:Name="OutDataGrid" AutoGenerateColumns="False"  BorderThickness="0" SelectionMode="Single" LoadingRow="MainDataGrid_LoadingRow" SelectionUnit="FullRow" MouseDoubleClick="OutDataGrid_MouseDoubleClick" KeyUp="MainDataGrid_KeyUp" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                    
+                    <DataGrid.Columns >
                         <DataGridTextColumn IsReadOnly="True" Width="120" Header="磅单编号" Binding="{Binding sendNumber}" ElementStyle="{DynamicResource DataGridContentCenter}"></DataGridTextColumn>
                         <DataGridTextColumn IsReadOnly="True" Width="Auto" Header="客户名称" Binding="{Binding receiveCompanyName}" ElementStyle="{DynamicResource DataGridContentVerticalCenter}"></DataGridTextColumn>
                         <DataGridTextColumn IsReadOnly="True" Width="Auto" Header="物资名称" Binding="{Binding sendMaterialName}" ElementStyle="{DynamicResource DataGridContentCenter}"></DataGridTextColumn>
@@ -68,4 +70,4 @@
         <Border Grid.Row="2" CornerRadius="0,0,4,4"   Background="{StaticResource F9}"/>
 
     </Grid>
-</Window>
+</local:BaseWindow>

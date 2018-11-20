@@ -8,7 +8,7 @@
         Icon="/IntentConnectWeighing;component/aislogo_48.ico"    
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded" ContentRendered="Window_ContentRendered" Closing="Window_Closing" SizeChanged="Window_SizeChanged"
-        Title="入库过磅" Height="680" Width="1000">
+        Title="入库过磅" Height="680" Width="1000" Activated="Window_Activated">
     <Window.Resources>
         <Style x:Key="AlertTbStyle" TargetType="TextBlock">
             <Setter Property="TextAlignment" Value="Right"/>
@@ -160,7 +160,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
                         <TextBlock Style="{StaticResource AlertTbStyle}" Margin="20,0,0,0">备 注:</TextBlock>
-                        <TextBox x:Name="ReceivedRemardTbox" Style="{StaticResource ValueTBoxStyle}" Margin="13,0,0,0" Width="882" TextChanged="ReceivedRemardTbox_TextChanged"/>
+                        <ComboBox x:Name="ReceivedRemardCombox" Style="{StaticResource ValueCbStyle}" Margin="13,0,0,0" Width="882" TextBoxBase.TextChanged="ReceivedRemardTbox_TextChanged"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
@@ -171,17 +171,17 @@
                 <myCtontrol:IconButton 
                     x:Name="saveBtn" 
                     Click="SaveBtn_Click"
-                    VerticalAlignment="Center"
+                    VerticalAlignment="Top"
                     VerticalContentAlignment="Center"
                     Padding="1"
                     Icon="&#xe77a;"
                     IsShowIcon="False"
-                    Margin="10,0,15,0"                                   
+                    Margin="10,2,15,0"                                   
                     BorderBrush="#e0e0e0" 
                     Foreground="#666"
                     BorderThickness="1" 
                     Width="100"
-                    Height="35"                 
+                    Height="36"                 
                     CornerRadius="4"                                      
                     FontWeight="Bold" 
                     HorizontalAlignment="Center"      

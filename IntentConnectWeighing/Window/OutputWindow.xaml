@@ -139,7 +139,7 @@
 
                     <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
                         <TextBlock Style="{StaticResource SendSendAlertTbStyle}" >备 注:</TextBlock>
-                        <TextBox x:Name="ReceivedRemardTbox" Style="{StaticResource SendValueTbStyle}" Margin="23,0,0,0" Width="725" TextChanged="ReceivedRemardTbox_TextChanged"/>
+                        <ComboBox x:Name="SendRemardCombox" Style="{StaticResource SendValueCbStyle}" Margin="23,0,0,0" Width="725" TextBoxBase.TextChanged="SendRemardCombox_TextChanged"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>

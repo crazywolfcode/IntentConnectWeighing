@@ -23,7 +23,7 @@ namespace IntentConnectWeighing
     /// CameraAddW.xaml 的交互逻辑
     ///  CameraAddW.xaml's interactive logical 
     /// </summary>
-    public partial class CarOutFactoryW : Window
+    public partial class CarOutFactoryW : BaseWindow
     {
         #region Variable   
         public Action<WeighingBill> SelectAction;
@@ -39,6 +39,7 @@ namespace IntentConnectWeighing
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            
             if (mType == WeightingBillType.RK)
             {
                 this.OutDataGrid.Visibility = Visibility.Collapsed;
@@ -51,6 +52,7 @@ namespace IntentConnectWeighing
             }
             GetData();
         }
+
         private void Window_ContentRendered(object sender, EventArgs e)
         {
 
@@ -91,10 +93,10 @@ namespace IntentConnectWeighing
             }
         }
 
-        private void CloseBtn_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+        //private  void CloseBtn_Click(object sender, RoutedEventArgs e)
+        //{
+        //    this.Close();
+        //}
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (this.SelectAction != null)

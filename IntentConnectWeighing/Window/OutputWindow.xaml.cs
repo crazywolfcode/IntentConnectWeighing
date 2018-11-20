@@ -82,12 +82,12 @@ namespace IntentConnectWeighing
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //将本机使用的基础数据设置默认数据源 下四个方法
+            //将本机使用的基础数据设置默认数据源 下5个方法
             SetSupplyCompanyDefaultSource();
             SetCustomerCompanyDefaultSource();
             SetMaterialDefaultSource();
             SetCarDefaultSource();
-
+            SetRemarkDefultSource();
             //
             BuildCurrWeighingBill();
         }
@@ -150,7 +150,7 @@ namespace IntentConnectWeighing
                     this.ReceiverCompanyCb.Text = mWeighingBill.receiveCompanyName;
                     this.ReceiverYardCb.Text = mWeighingBill.receiveYardName;
                     this.MaterialNameCb.Text = mWeighingBill.sendMaterialName;
-                    this.ReceivedRemardTbox.Text = mWeighingBill.receiveRemark;
+                    this.SendRemardCombox.Text = mWeighingBill.receiveRemark;
 
                     this.MaterialNameCb.IsEnabled = false;
                     this.CarNumberCb.IsEnabled = false;
@@ -178,7 +178,7 @@ namespace IntentConnectWeighing
                 this.SendGrossWeightTbox.Text = mWeighingBill.sendGrossWeight.ToString();
                 this.SendTraeWeightTbox.Text = mWeighingBill.sendTraeWeight.ToString();
                 this.SendNetWeightTbox.Text = mWeighingBill.sendNetWeight.ToString();
-                this.ReceivedRemardTbox.Text = mWeighingBill.sendRemark;
+                this.SendRemardCombox.Text = mWeighingBill.sendRemark;
 
                 //出场时是否允许修信息
                 if ("false" == ConfigurationHelper.GetConfig(ConfigItemName.outFactoryAllowUpdate.ToString()))
@@ -614,7 +614,10 @@ namespace IntentConnectWeighing
                 }
             }
         }
-
+        private void SetRemarkDefultSource() {
+            this.SendRemardCombox.ItemsSource = null;
+           this.SendRemardCombox.ItemsSource = App.outputRemarkList;
+        }
         #endregion
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -632,7 +635,12 @@ namespace IntentConnectWeighing
                 RefershParentData(true, true, true);
             }
         }
-
+        /// <summary>
+        /// 刷新父窗口的数据
+        /// </summary>
+        /// <param name="left">左</param>
+        /// <param name="center">中</param>
+        /// <param name="right">右</param>
         private void RefershParentData(bool left = false, bool center = false, bool right = false)
         {
             if (this.RefershParent != null)
@@ -641,9 +649,12 @@ namespace IntentConnectWeighing
             }
         }
 
-        #region save
+        #region save 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
+            //使用线程更新 备注
+            UpdateRemark();
+
             if (CheckInput() == true)
             {
                 if (isInsert == true)
@@ -656,7 +667,11 @@ namespace IntentConnectWeighing
                 }
             }
         }
-
+       
+        /// <summary>
+        /// 检查输入和数据
+        /// </summary>
+        /// <returns></returns>
         private bool CheckInput()
         {
             if (string.IsNullOrEmpty(mWeighingBill.sendCompanyId) || string.IsNullOrEmpty(mWeighingBill.sendCompanyId))
@@ -744,7 +759,7 @@ namespace IntentConnectWeighing
                 // success to do TempUpdateUsedBase
                 UpdateUsedBaseData();
                 MessageBoxResult result = MessageBox.Show("保存成功 ! 要继续过磅吗？", "恭喜", MessageBoxButton.YesNo, MessageBoxImage.Question);
-               
+               //print
                 PrintBill();
 
                 if (result == MessageBoxResult.No)
@@ -754,14 +769,18 @@ namespace IntentConnectWeighing
                 this.InFactoryRB.IsChecked = true;
             }
         }
-
+        /// <summary>
+        /// 更新用户基本数据
+        /// </summary>
         private void UpdateUsedBaseData()
         {
             // success to do TempUpdateUsedBase
             Thread thread = new Thread(new ParameterizedThreadStart(CommonFunction.TempUpdateUsedBase));
             thread.Start(new BaseDataClassV() { send = sendCompany, receive = receiverCompany, material = material, carInfo = car });
         }
-
+        /// <summary>
+        /// 更新派车单
+        /// </summary>
         private void UpdateSendCarBill()
         {
             SendCarBill bill=null;
@@ -790,6 +809,16 @@ namespace IntentConnectWeighing
             }
             DatabaseOPtionHelper.GetInstance().update(bill);
         }
+        /// <summary>
+        /// 更新备注
+        /// </summary>
+        private void UpdateRemark()
+        {
+            Thread thread = new Thread(new ParameterizedThreadStart(CommonFunction.UpdateOutputReamak));
+            thread.Start(mWeighingBill.sendRemark);
+            SetRemarkDefultSource();
+        }
+
         /// <summary>
         /// 打印
         /// </summary>
@@ -1277,10 +1306,10 @@ namespace IntentConnectWeighing
             }
         }
 
-        private void ReceivedRemardTbox_TextChanged(object sender, TextChangedEventArgs e)
+        private void SendRemardCombox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (IsLoaded == false) { return; }
-            mWeighingBill.sendRemark = this.ReceivedRemardTbox.Text;
+            if (IsLoaded == false) { return; }       
+            mWeighingBill.sendRemark = this.SendRemardCombox.Text.Trim();
         }
         #endregion
 
@@ -1394,6 +1423,7 @@ namespace IntentConnectWeighing
             }
         }
         #endregion
+
 
     }
 }

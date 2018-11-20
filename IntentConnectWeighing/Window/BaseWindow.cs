@@ -13,9 +13,12 @@ namespace IntentConnectWeighing
     public class BaseWindow :Window
     {
         private ControlTemplate baseWindowTemplate;
+       
         public BaseWindow()
         {
             InitializeStyle();
+
+            //缩放，最大化 等默认事件的修复
             RepairWindowDefaultEvent();
         }
 
@@ -64,8 +67,7 @@ namespace IntentConnectWeighing
         /// </summary>
         public void RepairWindowDefaultEvent()
         {
-            WindowBehavior helper = new WindowBehavior(this);
-            helper.RepairWindowDefaultBehavior();
+            WindowBehavior.newInstance(this).RepairWindowDefaultBehavior();           
         }
         public ControlTemplate GetBaseWindowTemplate()
         {

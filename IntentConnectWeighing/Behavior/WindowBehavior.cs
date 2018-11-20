@@ -29,8 +29,18 @@ namespace IntentConnectWeighing
         static Storyboard blinkStoryboard;
        // static DropShadowEffect dropShadowEffect;
         Effect originalEffect;
+        private static WindowBehavior instance;
+        public static WindowBehavior newInstance(Window window) {
 
-
+            if (instance == null)
+            {
+                instance = new WindowBehavior(window);
+            }
+            else {
+                instance.targetWindow = window;
+            }
+            return instance;
+        }
 
         public enum HitTest : int
         {
@@ -70,11 +80,13 @@ namespace IntentConnectWeighing
             #endregion
         }
 
-        public WindowBehavior(Window window)
+        private WindowBehavior(Window window)
         {
             this.targetWindow = window;
         }
-
+        /// <summary>
+        /// 缩放，最大化 等默认事件的修复
+        /// </summary>
         public void RepairWindowDefaultBehavior()
         {
             if (targetWindow == null) return;

@@ -40,7 +40,36 @@ namespace IntentConnectWeighing
             }
         }
 
+        internal static void UpdateDecuationList(object des)
+        {
+            if (des != null && !String.IsNullOrEmpty(des.ToString()))
+            {
+                if (!App.decuationDesList.Contains(des.ToString()))
+                {
+                    App.decuationDesList.Add(des.ToString());
+                }
+            }
+        }
 
+        internal static void UpdateInputReamak(object remark) {
+            if (remark != null && !String.IsNullOrEmpty(remark.ToString())) {
+                if (!App.inputRemarkList.Contains(remark.ToString()))
+                {
+                    App.inputRemarkList.Add(remark.ToString());
+                }
+            }
+        }
+
+        internal static void UpdateOutputReamak(object remark)
+        {
+            if (remark != null && !String.IsNullOrEmpty(remark.ToString()))
+            {
+                if (!App.outputRemarkList.Contains(remark.ToString()))
+                {
+                    App.outputRemarkList.Add(remark.ToString());
+                }
+            }
+        }
 
         /// <summary>
         /// Update Used Base Data run in the save success
@@ -264,13 +293,6 @@ namespace IntentConnectWeighing
             sendCarBill.syncTime = MyHelper.DateTimeHelper.GetTimeStamp();
         }
 
-        internal static void UpdateDecuationList(object des)
-        {
-            if (des != null &&!String.IsNullOrEmpty(des.ToString())) {
-                if (!App.decuationDesList.Contains(des.ToString())) {
-                    App.decuationDesList.Add(des.ToString());
-                }
-            }
-        }
+       
     }
 }

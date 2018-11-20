@@ -19,7 +19,7 @@ namespace IntentConnectWeighing
     /// <summary>
     /// SettingW.xaml 的交互逻辑
     /// </summary>
-    public partial class SettingW : Window
+    public partial class SettingW : BaseWindow
     {
         private List<CameraInfo> mCameraInfos;
         private List<Scale> mScales;
@@ -42,7 +42,7 @@ namespace IntentConnectWeighing
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            new WindowBehavior(this).RepairWindowDefaultBehavior();
+            //new WindowBehavior(this).RepairWindowDefaultBehavior();
         }
         private void Window_ContentRendered(object sender, EventArgs e)
         {

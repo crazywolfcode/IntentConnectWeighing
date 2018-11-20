@@ -80,12 +80,13 @@ namespace IntentConnectWeighing
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //将本机使用的基础数据设置默认数据源 下四个方法
+            //将本机使用的基础数据设置默认数据源 下5个方法
             SetSupplyCompanyDefaultSource();
             SetCustomerCompanyDefaultSource();
             SetMaterialDefaultSource();
             SetCarDefaultSource();
             SetCarDecuationDescriptionDefaultSource();
+            SetInRemarkDefaultSource();
             //
             if (mSendWeighingBill == null)
             {
@@ -222,7 +223,7 @@ namespace IntentConnectWeighing
                 this.SendGrossWeightTbox.Text = mWeighingBill.sendGrossWeight.ToString();
                 this.SendTraeWeightTbox.Text = mWeighingBill.sendTraeWeight.ToString();
                 this.SendNetWeightTbox.Text = mWeighingBill.sendNetWeight.ToString();
-                this.ReceivedRemardTbox.Text = mWeighingBill.receiveRemark;
+                this.ReceivedRemardCombox.Text = mWeighingBill.receiveRemark;
                 this.SendNetWeightTbox.IsEnabled = false;
                 //互联版本,出场时是否允许修信息
                 if ("false" == ConfigurationHelper.GetConfig(ConfigItemName.outFactoryAllowUpdate.ToString()))
@@ -661,7 +662,13 @@ namespace IntentConnectWeighing
         }
         private void SetCarDecuationDescriptionDefaultSource()
         {
-            this.DecuationDescriptionCb.ItemsSource = App.decuationDesList;
+         this.DecuationDescriptionCb.ItemsSource = null;
+         this.DecuationDescriptionCb.ItemsSource = App.decuationDesList;
+        }
+        private void SetInRemarkDefaultSource()
+        {
+            this.ReceivedRemardCombox.ItemsSource = null;
+            this.ReceivedRemardCombox.ItemsSource = App.inputRemarkList;
         }
         #endregion
 
@@ -669,7 +676,10 @@ namespace IntentConnectWeighing
         {
 
         }
+        private void Window_Activated(object sender, EventArgs e)
+        {
 
+        }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {           
             DisposeSerialPort();
@@ -692,6 +702,9 @@ namespace IntentConnectWeighing
         #region save
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
+            //使用线程更新 备注 和 扣重说明
+            UpdateRemark();
+            UpdateDecuationList();
             if (CheckInput() == true)
             {
                 if (isInsert == true)
@@ -701,7 +714,7 @@ namespace IntentConnectWeighing
                 else
                 {
                     Update();
-                }
+                }            
             }
 
             //Double d = DateTimeHelper.GetTimeStamp();
@@ -709,6 +722,14 @@ namespace IntentConnectWeighing
             //ConsoleHelper.writeLine("Capture Jpeg cpmplated.." + (DateTimeHelper.GetTimeStamp() - d).ToString());
 
             //this.UICapture();
+        }
+        /// <summary>
+        /// update decuation description and remark list
+        /// </summary>
+        private void UpdateRemark() {
+            Thread thread = new Thread(new ParameterizedThreadStart(CommonFunction.UpdateInputReamak));
+            thread.Start(mWeighingBill.receiveRemark);
+            SetInRemarkDefaultSource();
         }
 
         private bool CheckInput()
@@ -769,8 +790,7 @@ namespace IntentConnectWeighing
                 new Thread(new ThreadStart(this.UpdateSendBill)).Start();
                 // success to do TempUpdateUsedBase
                 UpdateUsedBaseData();
-                UpdateDecuationList();
-
+                
                 if (result == MessageBoxResult.No)
                 {
                     this.Close();
@@ -797,8 +817,7 @@ namespace IntentConnectWeighing
                 MessageBoxResult result = MessageBox.Show("保存成功 ! 要继续过磅吗？", "恭喜", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 // success to do TempUpdateUsedBase
                 UpdateUsedBaseData();
-                UpdateDecuationList();
-
+                // print 
                 PrintBill();
 
                 if (result == MessageBoxResult.No)
@@ -819,6 +838,7 @@ namespace IntentConnectWeighing
         {
             Thread thread = new Thread(new ParameterizedThreadStart(CommonFunction.UpdateDecuationList));
             thread.Start(mWeighingBill.decuationDescription);
+            SetCarDecuationDescriptionDefaultSource();
         }
         private void UpdateSendBill()
         {
@@ -1366,7 +1386,8 @@ namespace IntentConnectWeighing
         private void ReceivedRemardTbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (IsLoaded == false) { return; }
-            mWeighingBill.receiveRemark = this.ReceivedRemardTbox.Text;
+            string value = this.ReceivedRemardCombox.Text.Trim();      
+            mWeighingBill.receiveRemark = value;
         }
         #endregion
 
@@ -1443,7 +1464,8 @@ namespace IntentConnectWeighing
         private void DecuationDescriptionTbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (this.IsLoaded == false) return;
-            mWeighingBill.decuationDescription = this.DecuationDescriptionCb.Text;
+            string value = this.DecuationDescriptionCb.Text;
+            mWeighingBill.decuationDescription = this.DecuationDescriptionCb.Text.Trim();
         }
 
         private void differenceWeightTbox_TextChanged(object sender, TextChangedEventArgs e)
