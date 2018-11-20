@@ -23,9 +23,12 @@ namespace IntentConnectWeighing
     {
         private List<CameraInfo> mCameraInfos;
         private List<Scale> mScales;
-        public SettingW()
+        private SettingSelectType mSettingSelectType;
+
+        public SettingW(SettingSelectType type)
         {
             InitializeComponent();
+            mSettingSelectType = type;
         }
 
         public void InitializingEvent()
@@ -42,11 +45,47 @@ namespace IntentConnectWeighing
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //new WindowBehavior(this).RepairWindowDefaultBehavior();
+            WindowBehavior.newInstance(this).RepairWindowDefaultBehavior();
         }
         private void Window_ContentRendered(object sender, EventArgs e)
         {
+            SwitchSelectSettingItem();
             refreshData();
+        }
+
+
+        private void SwitchSelectSettingItem() {
+            this.BaseSetting.IsChecked = false;
+            this.PrintSetting.IsChecked = false;
+            this.ScaleSetting.IsChecked = false;
+            this.CameraSetting.IsChecked = false;
+            this.BalanceSetting.IsChecked = false;
+            this.HighSetting.IsChecked = false;
+            this.OtherSetting.IsChecked = false;
+            switch (mSettingSelectType) {
+                case SettingSelectType.BaseSetting:
+                    this.BaseSetting.IsChecked = true;
+                    break;
+                case SettingSelectType.PrintSetting:
+                    this.PrintSetting.IsChecked = true;
+                    break;
+                case SettingSelectType.ScaleSetting:
+                    this.ScaleSetting.IsChecked = true;
+                    break;
+                case SettingSelectType.CameraSetting:
+                    this.CameraSetting.IsChecked = true;
+                    break;
+                case SettingSelectType.BalanceSetting:
+                    this.BalanceSetting.IsChecked = true;
+                    break;
+                case SettingSelectType.HighSetting:
+                    this.HighSetting.IsChecked = true;
+                    break;
+                case SettingSelectType.OtherSetting:
+                    this.OtherSetting.IsChecked = true;
+                    break;
+            }
+
         }
 
         #region window event
@@ -58,7 +97,7 @@ namespace IntentConnectWeighing
             }
         }
 
-        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        protected override void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }

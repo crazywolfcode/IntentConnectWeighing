@@ -13,14 +13,17 @@ namespace IntentConnectWeighing
 
         ScaleDataResult ScaleDataInterpreter.ReadValue(SerialPort port)
         {
-            try
-            {
-                port.Open();
-            }
-            catch (Exception e)
-            {
-                return new ScaleDataResult(-1, "串口打开失败："+e.Message, 0);              
-            }
+
+            if (port.IsOpen == false) {
+                try
+                {
+                    port.Open();
+                }
+                catch (Exception e)
+                {
+                    return new ScaleDataResult(-1, "串口打开失败：" + e.Message, 0);
+                }
+            }         
             Int32 value = -1;
             ScaleDataResult result=   new ScaleDataResult(value, "数据解释出错", 0);
             try

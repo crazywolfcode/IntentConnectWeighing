@@ -186,4 +186,14 @@ namespace IntentConnectWeighing
         In,
         Out
     }
+
+    public enum SettingSelectType {
+        BaseSetting,
+        PrintSetting,
+        ScaleSetting,
+        CameraSetting,
+        BalanceSetting,
+        HighSetting,
+        OtherSetting
+    }
 }

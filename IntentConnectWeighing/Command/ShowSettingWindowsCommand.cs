@@ -23,7 +23,7 @@ namespace IntentConnectWeighing
 
         private static void ShowSettingWindowExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            SettingW w = new SettingW();      
+            SettingW w = new SettingW(SettingSelectType.BaseSetting);      
             w.ShowDialog();
         }
     }

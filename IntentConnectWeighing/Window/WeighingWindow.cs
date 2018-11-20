@@ -57,8 +57,7 @@ namespace IntentConnectWeighing
 
         public void settingVideoBtn_Click(object sender, RoutedEventArgs e)
         {
-            ///TODO
-            MessageBox.Show("TODO　go set camera");
+            new SettingW(SettingSelectType.CameraSetting).ShowDialog();
         }
 
         #region 将本机使用的基础数据设置默认数据源 最新使用的排在最前面
