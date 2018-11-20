@@ -7,7 +7,8 @@ using System.Text;
 {
 
 	 /// <summary>
-	 /// 数据条数:95
+	 /// 过磅单
+	 /// 数据条数:97
 	 /// 数据大小:112KB
 	 /// </summary>
 

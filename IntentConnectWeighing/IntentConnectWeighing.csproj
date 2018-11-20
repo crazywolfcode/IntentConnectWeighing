@@ -188,12 +188,17 @@
     <Compile Include="Entity\model\CompanyModel.cs" />
     <Compile Include="Entity\model\MaterialModel.cs" />
     <Compile Include="Entity\model\ProvinceModel.cs" />
+    <Compile Include="Entity\model\ScaleBrandModel.cs" />
+    <Compile Include="Entity\model\ScaleBrandSeriesModel.cs" />
+    <Compile Include="Entity\model\ScaleModel.cs" />
     <Compile Include="Entity\model\SendCardBoillModel.cs" />
     <Compile Include="Entity\model\WeighingBillModel.cs" />
     <Compile Include="Entity\model\YardModel.cs" />
     <Compile Include="Entity\PeopleInfo.cs" />
     <Compile Include="Entity\Province.cs" />
     <Compile Include="Entity\Scale.cs" />
+    <Compile Include="Entity\ScaleBrand.cs" />
+    <Compile Include="Entity\ScaleSeries.cs" />
     <Compile Include="Entity\SendCarBill.cs" />
     <Compile Include="Entity\SyncInfo.cs" />
     <Compile Include="Entity\User.cs" />

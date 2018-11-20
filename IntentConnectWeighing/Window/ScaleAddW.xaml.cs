@@ -27,6 +27,9 @@ namespace IntentConnectWeighing
     {
         private string mId;
         private Scale mScale;
+        private ScaleBrand mScaleBrand;
+        private List<ScaleBrand> mScaleBrands;
+        private List<ScaleSeries> mScaleSeries;
         #region Camera   
         public Int32 currCameraId = -1;
         public bool isInitSDK;
@@ -55,21 +58,46 @@ namespace IntentConnectWeighing
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+         
+            FindCom();
+            InitDefaultScaleType();
+            InitBrandItemSource();
             if (!string.IsNullOrEmpty(mId))
             {
                 bindingCurrrScale();
             }
-
-            InitDefaultScaleType();
         }
         private void Window_ContentRendered(object sender, EventArgs e)
         {
             App.SetCurrentWindow(this);
         }
 
+        private void FindCom() {
+            int count = System.IO.Ports.SerialPort.GetPortNames().Count();
+            this.ComCb.ItemsSource = System.IO.Ports.SerialPort.GetPortNames();
+            if (count > 0)
+            {
+                ComAlertLabel.Content = count + " 个串口可用";
+                if (String.IsNullOrEmpty(mId))
+                {
+                    this.ComCb.SelectedIndex = 0;
+                }
+            }
+            else
+            {
+                ComAlertLabel.Content = "没有可以的串口";
+            }
+            
+        }
         private void InitDefaultScaleType()
         {
             this.DefaultTypeCB.SelectedIndex = mScale.defaultType;
+        }
+
+        private void InitBrandItemSource() {
+            mScaleBrands = new ScaleBrandModel().getAll();
+            this.BrandCB.ItemsSource =mScaleBrands;
+            this.BrandCB.DisplayMemberPath = "brandName";
         }
 
         private void bindingCurrrScale()
@@ -84,12 +112,26 @@ namespace IntentConnectWeighing
             if (mScale != null)
             {
                 this.NameTb.Text = mScale.name;
-                this.ComTb.Text = mScale.com;
-                this.BaudRateTB.Text = mScale.baudRate.ToString();
-                this.DataByteTB.Text = mScale.dataByte.ToString();
-                this.EndByteTB.Text = mScale.endByte.ToString();
-                this.BrandTB.Text = mScale.brand;
-                this.SeriesTB.Text = mScale.series;
+                this.ComCb.Text = mScale.com;
+                this.BaudRateCB.Text = mScale.baudRate.ToString();
+                this.DataByteCB.Text = mScale.dataByte.ToString();
+                this.EndByteCB.Text = mScale.endByte.ToString();
+             
+                for(int i=0; i < mScaleBrands.Count;i++) {
+                    if (mScaleBrands[i].brandName == mScale.brand) {
+                        this.BrandCB.SelectedIndex = i;
+                        continue;
+                    }
+                }
+
+                for (int i = 0; i < mScaleSeries.Count; i++)
+                {
+                    if (mScaleSeries[i].name == mScale.series)
+                    {
+                        this.SeriesCB.SelectedIndex = i;
+                        continue;
+                    }
+                }
             }
         }
 
@@ -111,6 +153,7 @@ namespace IntentConnectWeighing
             if (checkInput())
             {
                 int res = 0;
+                ScaleModel scaleModel = new ScaleModel();
                 if (String.IsNullOrEmpty(mId))
                 {
                     //insert
@@ -125,7 +168,11 @@ namespace IntentConnectWeighing
                         mScale.addUserName = App.currentUser.name;
                     }
                     mScale.defaultType = (int)ScaleDefaultType.No;
-                    mScale.syncTime = 0;
+                    mScale.syncTime = 0;                 
+                    if (scaleModel.isExist(mScale)) {
+                        MessageBox.Show("已经存在，不能重复添加！");
+                        return;
+                    }
                     res = DatabaseOPtionHelper.GetInstance().insert(mScale);
                     if (res > 0)
                     {
@@ -139,8 +186,12 @@ namespace IntentConnectWeighing
                 }
                 else
                 {
-                    //update
-                    mScale.com.Replace("c", "C").Replace("o", "O").Replace("m", "M");
+                    //update             
+                    if (scaleModel.isExist(mScale))
+                    {
+                        MessageBox.Show("已经存在，不能修改！");
+                        return;
+                    }
                     res = DatabaseOPtionHelper.GetInstance().update(mScale);
                     if (res > 0)
                     {
@@ -155,11 +206,13 @@ namespace IntentConnectWeighing
             }
         }
 
+        
+
         private bool checkInput()
         {
             mScale.name = this.NameTb.Text.Trim();
 
-            mScale.com = this.ComTb.Text.Trim();
+            mScale.com = this.ComCb.Text.Trim();
             if (String.IsNullOrEmpty(mScale.com))
             {
                 MessageBox.Show("Com 串口不能为空！");
@@ -172,7 +225,7 @@ namespace IntentConnectWeighing
             }
             try
             {
-                mScale.baudRate = Convert.ToInt32(this.BaudRateTB.Text.Trim());
+                mScale.baudRate = Convert.ToInt32(this.BaudRateCB.Text);
             }
             catch
             {
@@ -181,7 +234,7 @@ namespace IntentConnectWeighing
             }
             try
             {
-                mScale.dataByte = Convert.ToInt32(this.DataByteTB.Text.Trim());
+                mScale.dataByte = Convert.ToInt32(this.DataByteCB.Text);
             }
             catch
             {
@@ -190,15 +243,21 @@ namespace IntentConnectWeighing
             }
             try
             {
-                mScale.endByte = Convert.ToInt32(this.EndByteTB.Text.Trim());
+                mScale.endByte = Convert.ToInt32(this.EndByteCB.Text);
             }
             catch
             {
                 MessageBox.Show("结束位必须是整数！");
                 return false;
             }
-            mScale.brand = this.BrandTB.Text.Trim();
-            mScale.series = this.SeriesTB.Text.Trim();
+            mScale.brand = mScaleBrand.brandName;
+            if (String.IsNullOrEmpty(mScale.brand)) {
+                MessageBox.Show("品牌名称为必选 ！");
+                return false;
+            }
+            String series = ((ScaleSeries)this.SeriesCB.SelectedItem).name;
+            mScale.series = series;
+            mScale.brandType =mScaleBrand.type;
             return true;
         }
 
@@ -222,6 +281,18 @@ namespace IntentConnectWeighing
             {
                 mScale.defaultType = this.DefaultTypeCB.SelectedIndex;
             }
+        }
+
+        private void BrandCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            mScaleBrand = (ScaleBrand)BrandCB.SelectedItem;
+            InitSeries();
+        }
+
+        private void InitSeries() {
+            mScaleSeries = new ScaleBrandSeriesModel().GetByBrandID(mScaleBrand.id);
+            this.SeriesCB.ItemsSource =mScaleSeries ;
+            this.SeriesCB.DisplayMemberPath = "name";
         }
     }
 }

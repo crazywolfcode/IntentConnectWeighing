@@ -22,7 +22,7 @@
         <Border Grid.Row="0" CornerRadius="4,4,0,0" x:Name="headerBorder" MouseMove="headerBorder_MouseMove"  Background="{DynamicResource E4}">
             <StackPanel Orientation="Horizontal" Background="Transparent" MouseMove="headerBorder_MouseMove">
                 <Image Source="/IntentConnectWeighing;component/aislogo_48.ico" Width="48" Height="48" HorizontalAlignment="Left" Margin="10"></Image>
-                <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="添加磅称" VerticalAlignment="Center" FontSize="20" FontWeight="Black" Foreground="#787972"></TextBlock>
+                <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="添加磅称显示控制器" VerticalAlignment="Center" FontSize="20" FontWeight="Black" Foreground="#787972"></TextBlock>
             </StackPanel>
         </Border>
         <!--关闭按钮-->
@@ -42,42 +42,67 @@
             <StackPanel>         
                 <StackPanel  HorizontalAlignment="Center">
                     <WrapPanel Margin="0,10,0,0" >
-                        <Label>磅秤名称：</Label>
-                        <TextBox  Width="160" x:Name="NameTb" ToolTip="磅秤名称" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
+                        <Label>显示名称：</Label>
+                        <TextBox  Width="160" x:Name="NameTb" ToolTip="控制器名称" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
+                        <Label  Margin="10,0,0,0" Foreground="#363636" Content="例如：入库磅称"/>
                     </WrapPanel>
                     <WrapPanel Margin="0,10,0,0" >
-                        <Label>串 口 码 ：</Label>
-                        <TextBox  Width="160" x:Name="ComTb" ToolTip="磅秤的接连电脑的COM串口" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>                        
+                        <Label>可用串口：</Label>
+                        <ComboBox  Width="160" x:Name="ComCb" ToolTip="磅秤的接连电脑的COM串口" Padding="4,0,0,0" VerticalContentAlignment="Center"/>
+                        <Label  Margin="10,0,0,0" Foreground="#363636" Content="例如：COM3"/>
                     </WrapPanel>
                     <WrapPanel Margin="0,10,0,0" >
                         <Label>波 特 率 ：</Label>
-                        <TextBox  Width="160" x:Name="BaudRateTB" ToolTip="磅秤的波特率" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
+                        <ComboBox  Width="160" x:Name="BaudRateCB" ToolTip="磅秤的波特率" Padding="4,0,0,0" VerticalContentAlignment="Center">
+                            <ComboBoxItem>1200</ComboBoxItem>
+                            <ComboBoxItem>2400</ComboBoxItem>
+                            <ComboBoxItem>4800</ComboBoxItem>
+                            <ComboBoxItem IsSelected="True">9600</ComboBoxItem>
+                            <ComboBoxItem >19200</ComboBoxItem>
+                            <ComboBoxItem >38400</ComboBoxItem>
+                            <ComboBoxItem >115200</ComboBoxItem>                            
+                        </ComboBox>
+                        <Label x:Name="ComAlertLabel"  Margin="10,0,0,0" Foreground="#363636" Content="例如：9600"/>
                     </WrapPanel>
                     
                     <WrapPanel Margin="0,10,0,0" >
                         <Label>数据位数：</Label>
-                        <TextBox  Width="160"  x:Name="DataByteTB" ToolTip="磅秤的数据位数" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
+                        <ComboBox  Width="160"  x:Name="DataByteCB" ToolTip="磅秤的数据位数" Padding="4,0,0,0" VerticalContentAlignment="Center">
+                            <ComboBoxItem>5</ComboBoxItem>
+                            <ComboBoxItem>6</ComboBoxItem>
+                            <ComboBoxItem>7</ComboBoxItem>
+                            <ComboBoxItem IsSelected="True">8</ComboBoxItem>
+                        </ComboBox>
+                        <Label  Margin="10,0,0,0" Foreground="#363636" Content="一般是 8 位"/>
                     </WrapPanel>
                     <WrapPanel Margin="0,10,0,0" >
                         <Label>结束位数：</Label>
-                        <TextBox  Width="160" x:Name="EndByteTB" ToolTip="磅秤的结束位数" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
+                        <ComboBox  Width="160" x:Name="EndByteCB" ToolTip="磅秤的结束位数" Padding="4,0,0,0" VerticalContentAlignment="Center">
+                            <ComboBoxItem IsSelected="True">1</ComboBoxItem>
+                            <ComboBoxItem>1.5</ComboBoxItem>
+                            <ComboBoxItem>2</ComboBoxItem>
+                        </ComboBox>
+                        <Label  Margin="10,0,0,0" Foreground="#363636" Content="一般为 1 位"/>
                     </WrapPanel>
                     <WrapPanel Margin="0,10,0,0" >
                         <Label>品牌名称：</Label>
-                        <TextBox  Width="160" x:Name="BrandTB" ToolTip="磅秤的品牌名称" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
+                        <ComboBox  Width="160" x:Name="BrandCB" ToolTip="磅秤的品牌名称" Padding="4,0,0,0" IsEditable="False" VerticalContentAlignment="Center" SelectionChanged="BrandCB_SelectionChanged"/>
+                        <Label  Margin="10,0,0,0" Foreground="Red" Content="必选"/>
                     </WrapPanel>
 
                     <WrapPanel Margin="0,10,0,0" >
                         <Label>磅秤系列：</Label>
-                        <TextBox  Width="160" x:Name="SeriesTB" ToolTip="磅秤的磅秤系列号" Padding="4,0,0,0" VerticalContentAlignment="Center"></TextBox>
+                        <ComboBox  Width="160" x:Name="SeriesCB" ToolTip="磅秤的磅秤系列号" IsEditable="False" Padding="4,0,0,0" VerticalContentAlignment="Center"/>
+                        <Label  Margin="10,0,0,0" Foreground="#363636" Content="可选"/>
                     </WrapPanel>
                     <WrapPanel Margin="0,10,0,0" >
-                        <Label>默  认  为：</Label>
-                        <ComboBox  Width="160" x:Name="DefaultTypeCB"   VerticalContentAlignment="Center" SelectionChanged="DefaultTypeCB_SelectionChanged">
-                            <ComboBoxItem x:Name="NoItem">无</ComboBoxItem>
-                            <ComboBoxItem x:Name="InItem" >入库</ComboBoxItem>
-                            <ComboBoxItem  x:Name="OutItem">出库</ComboBoxItem>
+                        <Label>默   认   为 ：</Label>
+                        <ComboBox  Width="165" x:Name="DefaultTypeCB"   VerticalContentAlignment="Center" SelectionChanged="DefaultTypeCB_SelectionChanged">
+                            <ComboBoxItem x:Name="NoItem" Content="无"/>
+                            <ComboBoxItem x:Name="InItem" Content="入库" />
+                            <ComboBoxItem  x:Name="OutItem" Content="出库"/>
                         </ComboBox>
+                        <Label  Margin="10,0,0,0" Foreground="#363636" Content="可选"/>
                     </WrapPanel>                    
                 </StackPanel>               
             </StackPanel>
