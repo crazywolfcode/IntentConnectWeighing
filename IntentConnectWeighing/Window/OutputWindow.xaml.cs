@@ -403,6 +403,7 @@ namespace IntentConnectWeighing
         {
             if (mCameraInfos.Count <= 0)
             {
+                this.settingVideoBtn.Visibility = Visibility.Visible;
                 return;
             }
             CameraPanelWidth = this.CameraBorder.ActualWidth;
@@ -442,21 +443,42 @@ namespace IntentConnectWeighing
             }
             for (int i = 0; i < mCameraInfos.Count; i++)
             {
-                CameraInfo camera = mCameraInfos[i];
-                System.Windows.Forms.Integration.WindowsFormsHost windowsFormsHost = new System.Windows.Forms.Integration.WindowsFormsHost() { Name = $"WFH{i}" };
-                System.Windows.Forms.PictureBox pictureBox = new System.Windows.Forms.PictureBox() { Name = $"pictureBox{i}", Width = (int)CameraWidth, Height = (int)CameraHeight };
-                mPictureBoxs.Add(pictureBox);
-                CHCNetSDK.NET_DVR_DEVICEINFO_V30 deviceinfo = new CHCNetSDK.NET_DVR_DEVICEINFO_V30();
-                //login
-                int cameraid = CameraHelper.loginCamera(camera.ip, camera.port, camera.userName, camera.password, ref deviceinfo);
-                CameraIds.Add(cameraid);
-                mDeviceInfors.Add(deviceinfo);
-                //preview
-                int ChanNum = deviceinfo.byChanNum;
-                int streamType = Convert.ToInt32(ConfigurationHelper.GetConfig(ConfigItemName.cameraStramType.ToString()));
-                bool res = CameraHelper.Preview(ref pictureBox, ChanNum, cameraid, streamType);
-                windowsFormsHost.Child = pictureBox;
-                this.CameraStackPanel.Children.Add(windowsFormsHost);
+                
+                try
+                {
+                    CameraInfo camera = mCameraInfos[i];
+                    System.Windows.Forms.Integration.WindowsFormsHost windowsFormsHost = new System.Windows.Forms.Integration.WindowsFormsHost() { Name = $"WFH{i}" };
+                    System.Windows.Forms.PictureBox pictureBox = new System.Windows.Forms.PictureBox() { Name = $"pictureBox{i}", Width = (int)CameraWidth, Height = (int)CameraHeight };
+                    mPictureBoxs.Add(pictureBox);
+                    CHCNetSDK.NET_DVR_DEVICEINFO_V30 deviceinfo = new CHCNetSDK.NET_DVR_DEVICEINFO_V30();
+                    //login
+                    int cameraid = CameraHelper.loginCamera(camera.ip, camera.port, camera.userName, camera.password, ref deviceinfo);
+                    if (cameraid <= -1)
+                    {
+                        throw new Exception("登陆失败");
+                    }
+                    CameraIds.Add(cameraid);
+                    mDeviceInfors.Add(deviceinfo);
+                    //preview
+                    int ChanNum = deviceinfo.byChanNum;
+                    int streamType = Convert.ToInt32(ConfigurationHelper.GetConfig(ConfigItemName.cameraStramType.ToString()));
+                    bool res = CameraHelper.Preview(ref pictureBox, ChanNum, cameraid, streamType);
+                    windowsFormsHost.Child = pictureBox;
+                    this.CameraStackPanel.Children.Add(windowsFormsHost);
+                }
+                catch
+                {
+                    TextBlock textBlock = new TextBlock();
+                    textBlock.Width = CameraWidth;
+                    //textBlock.Height = CameraHeight;
+                    textBlock.TextAlignment = TextAlignment.Center;
+                    textBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                    textBlock.VerticalAlignment = VerticalAlignment.Bottom;
+                    textBlock.Text = "视频加载失败";
+                    textBlock.FontSize = 16;
+                    textBlock.Foreground = System.Windows.Media.Brushes.Red;
+                    this.CameraStackPanel.Children.Add(textBlock);
+                }
             }
         }
 
@@ -494,6 +516,12 @@ namespace IntentConnectWeighing
                     }
                 }
             }
+        }
+
+        private void settingVideoBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ///TODO
+            MessageBox.Show("TODO　go set camera");
         }
         #endregion
 
@@ -739,7 +767,10 @@ namespace IntentConnectWeighing
             {
                 isOptionSuccess = true;
                 //CaptureJpeg
-                new Thread(new ThreadStart(this.CaptureJpeg)) { IsBackground = true }.Start();
+                if(mCameraInfos !=null || mCameraInfos.Count > 0)
+                {
+                    new Thread(new ThreadStart(this.CaptureJpeg)) { IsBackground = true }.Start();
+                }               
                 MessageBoxResult result = MessageBox.Show("保存成功 ! 要继续过磅吗？", "恭喜", MessageBoxButton.YesNo, MessageBoxImage.Question);
             
                 //Update Send Bill
@@ -766,7 +797,10 @@ namespace IntentConnectWeighing
             {
                 isOptionSuccess = true;
                 //CaptureJpeg
-                new Thread(new ThreadStart(this.CaptureJpeg)) { IsBackground = true }.Start();
+                if (CameraIds != null || CameraIds.Count > 0)
+                {
+                    new Thread(new ThreadStart(this.CaptureJpeg)) { IsBackground = true }.Start();
+                }
                 // update send car bill 
                 new Thread(new ThreadStart(this.UpdateSendCarBill)).Start();
                 // success to do TempUpdateUsedBase
@@ -842,7 +876,7 @@ namespace IntentConnectWeighing
             {
                 auto = true;
             }
-            new PrintBillW(WeightingBillType.CK, mWeighingBill, auto) { }.Show();
+            new PrintBillW(WeightingBillType.CK, mWeighingBill, auto) { }.ShowDialog();
         }
 
         #endregion
@@ -1363,18 +1397,15 @@ namespace IntentConnectWeighing
         /// 通道截图
         /// </summary>
         public void CaptureJpeg()
-        {
-            if (mCameraInfos == null || mCameraInfos.Count <= 0)
-            {
-                return;
-            }
+        {      
             string filePath = ConfigurationHelper.GetConfig(ConfigItemName.cameraCaptureFilePath.ToString());
             if (String.IsNullOrEmpty(filePath))
             {
                 filePath = System.IO.Path.Combine(FileHelper.GetRunTimeRootPath(), "capture");
             }
             String fileName = String.Empty;
-            for (int i = 0; i < mCameraInfos.Count; i++)
+            //根据登陆成功的通过截图
+            for (int i = 0; i < CameraIds.Count; i++)
             {
                 if (string.IsNullOrEmpty(currBillNumber))
                 {

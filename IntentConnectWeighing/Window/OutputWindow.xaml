@@ -46,7 +46,23 @@
         <!--CameraBorder -->
         <Border x:Name="CameraBorder" Grid.Row="0" Background="{StaticResource FA}">
             <StackPanel x:Name="CameraStackPanel" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-
+                <myControl:IconButton
+                   x:Name="settingVideoBtn"
+                    Click="settingVideoBtn_Click"
+                    Icon="&#xe74c;" 
+                    Width="200" Height="60"
+                    VerticalContentAlignment="Center" 
+                    Foreground="{DynamicResource myBlue}"
+                    IconSize="45"
+                    Content="未设置视频！"
+                    ToolTip="点击去设置"
+                    FontSize="25"
+                    MouseOverBackground="{DynamicResource myBlue}"
+                    MouseOverForeground="White"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Visibility="Collapsed"
+                    />
             </StackPanel>
         </Border>
         <!--ScaleBorder -->

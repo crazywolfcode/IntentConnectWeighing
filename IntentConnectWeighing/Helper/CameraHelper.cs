@@ -50,6 +50,15 @@ namespace IntentConnectWeighing
             }
 
         }
+
+        /// <summary>
+        /// 预览
+        /// </summary>
+        /// <param name="pb"></param>
+        /// <param name="lChannel"></param>
+        /// <param name="currCameraId"></param>
+        /// <param name="streamType"></param>
+        /// <returns></returns>
         public static bool Preview(ref System.Windows.Forms.PictureBox pb, int lChannel, int currCameraId, int streamType = 0)
         {
             try
