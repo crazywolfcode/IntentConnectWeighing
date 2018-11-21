@@ -125,8 +125,7 @@ namespace IntentConnectWeighing
                     else
                     {
                         this.mainFrame.Content = new RegisterSonPage(this);
-                    }
-                
+                    }                
                 }
             }
             else
@@ -185,9 +184,7 @@ namespace IntentConnectWeighing
 
             initializationBtn();
         }
-
-
-
+        
         /// <summary>
         /// show or hiden option button
         /// </summary>
@@ -212,7 +209,6 @@ namespace IntentConnectWeighing
                 finishedBtn.Visibility = Visibility.Collapsed;
             }
         }
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (App.currWindow == this) {

@@ -333,18 +333,13 @@
     <!--<Setter Property="OverridesDefaultStyle" Value="true" />-->
     <Style  TargetType="{x:Type local:MyScrollBar}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
-
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="Template" Value="{StaticResource HorizontalScrollBarTemplate}"/>
-
-
                 <Setter Property="Height" Value="{StaticResource ScrollBarSize}"/>
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="Template" Value="{StaticResource VerticalScrollBarTemplate}"/>
-
-
                 <Setter Property="Width" Value="{StaticResource ScrollBarSize}"/>
             </Trigger>
         </Style.Triggers>

@@ -42,6 +42,7 @@
       
         <Border Grid.Row="2" CornerRadius="0,0,4,4"   Background="{StaticResource E4}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                <!--up-->
                 <myControl:IconButton 
                     x:Name="upBtn" 
                     Click="upBtn_Click"
@@ -62,6 +63,7 @@
                     HorizontalContentAlignment="Center"
                     MouseOverForeground="Black"
                     MouseOverBackground="White" Content="上一步" />
+                <!--next-->
                 <myControl:IconButton 
                     x:Name="nextBtn" 
                     Click="nextBtn_Click"
@@ -81,6 +83,7 @@
                     HorizontalContentAlignment="Center"
                     MouseOverForeground="Black"
                     MouseOverBackground="White" Content="下一步" />
+                <!--finish-->
                 <myControl:IconButton 
                     x:Name="finishedBtn" 
                     Click="finishedBtn_Click"
@@ -100,8 +103,7 @@
                     HorizontalAlignment="Center"      
                     HorizontalContentAlignment="Center"
                     MouseOverForeground="Black"
-                    MouseOverBackground="White" Content="完 成" />
-               
+                    MouseOverBackground="White" Content="完 成" />               
             </StackPanel>
         </Border>
     </Grid>

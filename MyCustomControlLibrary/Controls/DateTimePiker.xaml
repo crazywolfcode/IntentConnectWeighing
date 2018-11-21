@@ -38,7 +38,6 @@
                     </WrapPanel>
                 </Border>
             </Grid>
-
         </Popup>
         <Popup x:Name="HourP" Margin="0,20,0,0" IsOpen="False">
             <Grid Background="White" >
@@ -89,7 +88,6 @@
                 </Border>
             </Grid>
         </Popup>
-
         <Popup x:Name="MinuteP" IsOpen="False" >
             <Grid Background="White" >
                 <Grid.RowDefinitions>

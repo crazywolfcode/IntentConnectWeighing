@@ -24,8 +24,7 @@ namespace MyCustomControlLibrary
         {
             InitializeComponent();
         }
-
-
+        
         public MDateTime Value
         {
             get { return (MDateTime)GetValue(ValueProperty); }
@@ -48,8 +47,6 @@ namespace MyCustomControlLibrary
 
         public static DependencyProperty ValueProperty =
             DependencyProperty.Register("Value", typeof(MDateTime), typeof(DateTimePicker), new FrameworkPropertyMetadata(GetDefaultValue(), new PropertyChangedCallback(OnValueChanged)));
-
-
 
         public String StringValue
         {
@@ -156,10 +153,7 @@ namespace MyCustomControlLibrary
         public static readonly DependencyProperty SecondProperty =
             DependencyProperty.Register("Second", typeof(int), typeof(DateTimePicker), new FrameworkPropertyMetadata(DateTime.Now.Second, new PropertyChangedCallback(OnSecondChanged)));
 
-
-
         public static readonly RoutedEvent ValueChangedEvent = EventManager.RegisterRoutedEvent("ValueChanged", RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventHandler<String>), typeof(DateTimePicker));
-
 
         public event RoutedPropertyChangedEventHandler<String> ValueChanged
         {

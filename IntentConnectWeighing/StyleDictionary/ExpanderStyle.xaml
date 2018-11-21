@@ -128,8 +128,12 @@
              </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="IsExpanded" Value="true">
-                <Setter Property="Visibility" TargetName="ExpandSite" Value="Visible"/>         
+                <Setter Property="Visibility" TargetName="ExpandSite" Value="Visible"/>
+             
                 <Setter Property="Background" Value="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}" TargetName="ExpanderBorder"/>
+            </Trigger>
+            <Trigger Property="IsExpanded" Value="false">
+                <Setter Property="BorderBrush" TargetName="ExpanderBorder" Value="Transparent"/>
             </Trigger>
             <Trigger Property="IsExpanded" Value="false">
                 <Setter Property="Visibility" TargetName="ExpandSite" Value="Collapsed"/>                        
@@ -153,13 +157,13 @@
                                          <StackPanel Orientation="Horizontal" VerticalAlignment="Center"  Height="{Binding Path=Height,ElementName=HeaderSite}">
                                              <Image x:Name="imageBtn" Source="/IntentConnectWeighing;component/Themes/Img/png/expand_right_no_10.png" Width="10" Height="20"></Image>
                                              <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Margin="4,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" SnapsToDevicePixels="True"  />
-                                    </StackPanel>      
+                                          </StackPanel>      
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsChecked" Value="true">
                                                 <Setter Property="Source" TargetName="imageBtn" Value="/IntentConnectWeighing;component/Themes/Img/png/expand_right_active_10.png"></Setter>
                                                 <Setter Property="HorizontalAlignment" Value="Right"/>
                                                 <Setter Property="Margin" Value="0 0 -14 0"/>
-                                            </Trigger>
+                                            </Trigger>                                           
                                             <Trigger Property="IsMouseOver" Value="true">
                                                 <Setter Property="Source" TargetName="imageBtn" Value="/IntentConnectWeighing;component/Themes/Img/png/expand_right_active_10.png"></Setter>
                                             </Trigger>
@@ -210,10 +214,9 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
     
-        <Style x:Key="InDataExpenderStyle" TargetType="Expander">
+    <Style x:Key="InDataExpenderStyle" TargetType="Expander">
         <Setter Property="Background" Value="{StaticResource F9}"/>
         <Setter Property="Foreground" Value="#696969"/>
-            <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Template" Value="{StaticResource InDataExpenderControlTemplate}"/>
+        <Setter Property="Template" Value="{StaticResource InDataExpenderControlTemplate}"/>       
     </Style>
 </ResourceDictionary>

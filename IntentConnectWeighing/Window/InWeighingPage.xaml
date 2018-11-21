@@ -40,7 +40,7 @@
         </Grid.ColumnDefinitions>
         <!--Left-->
         <Border Grid.Column="0" CornerRadius="0,0,0,2" x:Name="LeftBorder" Panel.ZIndex="2">
-            <Expander Background="Transparent" ExpandDirection="Left"  Style="{DynamicResource InDataExpenderStyle}">
+            <Expander Background="Transparent" ExpandDirection="Left"  Style="{DynamicResource InDataExpenderStyle}" BorderThickness="0,0,1,0"  BorderBrush="#e4e4e4">
                 <Expander.Content>
                     <Border  CornerRadius="0,0,0,4" Width="230">
                         <Grid Background="{StaticResource F9}" Margin="0,0,0,4">
@@ -476,7 +476,7 @@
         </Border>
         <!--Right-->
         <Border Grid.Column="2" CornerRadius="0,0,4,0" Panel.ZIndex="2" >
-            <Expander ExpandDirection="Right" x:Name="RightEapander" IsExpanded="True"  Background="Transparent" HorizontalContentAlignment="Right" BorderThickness="0" Style="{DynamicResource InDataExpenderStyle}">
+            <Expander ExpandDirection="Right" x:Name="RightEapander" IsExpanded="True"  Background="Transparent" HorizontalContentAlignment="Right" BorderThickness="1,0,0,0" BorderBrush="#e4e4e4" Style="{DynamicResource InDataExpenderStyle}">
                 <Expander.Content>
                     <Border  CornerRadius="0,0,4,0" Width="230">
                         <Grid Background="{StaticResource F9}" Margin="0,0,0,4">

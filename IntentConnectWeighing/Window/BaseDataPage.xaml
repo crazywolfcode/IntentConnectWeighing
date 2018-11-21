@@ -101,22 +101,32 @@
 
                         </StackPanel>
                     </myControl:MyScrollViewer>                
-            </StackPanel>
+            </StackPanel>            
         </Border>
-        <myControl:IconButton x:Name="AddBtn"
-                Grid.Column="0" 
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"      
-                Margin="0,0,18,10" ToolTip="添加"  Click="AddBtn_Click"
-                Width="34" Height="30"  IsTransparency="True"
-                IsShowIcon="True" CornerRadius="17"
-                Icon="&#xe626;" IconSize="30" IconMargin="0,-2,0,2"
-                MouseOverForeground ="{DynamicResource myBlue}" MouseOverBackground="{DynamicResource F9}"
-                BorderBrush="{x:Null}"           
-         />
+        <WrapPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent" Margin="0,0,0,20" >
+            <myControl:IconButton x:Name="SendCarListBtn"   Background="#e4e4e4e4"  Icon="&#xe9ce;" Margin="5,0,0,0" CornerRadius="10,0,0,10" Width="30" IconSize="20"   IconMargin="2,-1,0,0" Height="20" ToolTip="查看所有的派车单" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}"/>
+            <myControl:IconButton x:Name="AddBtn"   Background="#e4e4e4e4"  Icon="&#xe626;" Margin="0" Width="30" IconSize="20"  IconMargin="0,-4,0,0" Height="20" ToolTip="添加" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}" Click="AddBtn_Click"/>
+            <myControl:IconButton x:Name="SendCarRefreshBtn"  Background="#e4e4e4e4"  Icon="&#xe653;" Margin="-1,-1,0,0" CornerRadius="0,10,10,0" AllowsAnimation="False" Width="30" IconMargin="2,-1,0,0"  IconSize="20" Height="20" ToolTip="刷新" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}"/>
+        </WrapPanel>
+       
         <Border Background="White"  Grid.Column="1" CornerRadius="0,0,4,0" x:Name="RightContentBorderPanel">
             <StackPanel>
                 <StackPanel Height="34" x:Name="ToolBarPanel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,0" Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
+                        <Border BorderBrush="#e1e1e1" BorderThickness="1" CornerRadius="10">
+                            <StackPanel Orientation="Horizontal" Margin="4,1,4,1" >
+                                <TextBox Width="260" BorderThickness="0" Height="28" VerticalContentAlignment="Center" Padding="2,0,2,0" FontSize="13"/>
+                                <myControl:IconButton           
+                                   x:Name="SearchTabBtn"
+                                   IsTransparency="True" Foreground="#878787"
+                                   MouseOverForeground="{DynamicResource myBlue}"
+                                   VerticalAlignment="Bottom" ToolTip="搜索"
+                                   IsShowIcon="True" Icon="&#xe86e;" IconSize="26"
+                                  Width="28" Height="28" IconMargin="-2,0,0,0"
+                                   Margin="0,0,4,0"/>
+                            </StackPanel>
+                        </Border>                      
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <myControl:IconButton                
                             x:Name="AddMaterialCategoryBtn" Click="AddMaterialCategoryBtn_Click"

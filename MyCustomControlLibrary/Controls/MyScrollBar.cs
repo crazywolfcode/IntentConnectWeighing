@@ -42,9 +42,7 @@ namespace MyCustomControlLibrary
 
         public static readonly DependencyProperty UpRepeatButtonVisibilityProperty =
             DependencyProperty.Register("UpRepeatButtonVisibility", typeof(Visibility), typeof(MyScrollBar), new FrameworkPropertyMetadata(Visibility.Visible));
-
-
-
+        
         public Visibility DownRepeatButtonVisibility
         {
             get { return (Visibility)GetValue(DownRepeatButtonVisibilityProperty); }
@@ -53,9 +51,7 @@ namespace MyCustomControlLibrary
 
         public static readonly DependencyProperty DownRepeatButtonVisibilityProperty =
             DependencyProperty.Register("DownRepeatButtonVisibility", typeof(Visibility), typeof(MyScrollBar), new FrameworkPropertyMetadata(Visibility.Visible));
-
-
-
+               
         public String LeftIcon
         {
             get { return (String)GetValue(LeftIconProperty); }
