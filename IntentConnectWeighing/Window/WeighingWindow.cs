@@ -9,13 +9,14 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using MyCustomControlLibrary;
 
 namespace IntentConnectWeighing
 {
-     /// <summary>
+    /// <summary>
     /// 称重的公供代码 
     /// </summary>
-    public  class WeighingWindow : Window
+    public class WeighingWindow : Window
     {
         // left center right
         public Action<bool, bool, bool> RefershParent;
@@ -194,16 +195,17 @@ namespace IntentConnectWeighing
             DecuationDescriptionCb.ItemsSource = null;
             DecuationDescriptionCb.ItemsSource = App.decuationDesList;
         }
-        protected void SetRemarkDefaultSource(ComboBox RemardCombox ,int type = 0)
+        protected void SetRemarkDefaultSource(ComboBox RemardCombox, int type = 0)
         {
             RemardCombox.ItemsSource = null;
             if (type == 0)
             {
                 RemardCombox.ItemsSource = App.inputRemarkList;
             }
-            else {
+            else
+            {
                 RemardCombox.ItemsSource = App.outputRemarkList;
-            }       
+            }
         }
         #endregion
 
@@ -265,7 +267,7 @@ namespace IntentConnectWeighing
             }
             new PrintBillW(type, mWeighingBill, auto) { }.ShowDialog();
         }
-  
+
         /// <summary>
         /// 刷新父窗口数据
         /// </summary>
@@ -284,7 +286,7 @@ namespace IntentConnectWeighing
 
         protected List<CHCNetSDK.NET_DVR_DEVICEINFO_V30> mDeviceInfors;
         protected List<System.Windows.Forms.PictureBox> mPictureBoxs;
-        
+
         public void GetCameraInfo()
         {
             String @condition = CameraInfoEnum.client_id.ToString() + "=" + Constract.valueSplit + App.CurrClientId + Constract.valueSplit + " and " +
@@ -296,7 +298,7 @@ namespace IntentConnectWeighing
         /// <summary>
         /// 显示摄像头
         /// </summary>        
-        protected void ShowCamera(Border CameraBorder, StackPanel CameraStackPanel,IconButton settingVideoBtn)
+        protected void ShowCamera(Border CameraBorder, StackPanel CameraStackPanel, IconButton settingVideoBtn)
         {
             if (mCameraInfos.Count <= 0)
             {
@@ -447,6 +449,22 @@ namespace IntentConnectWeighing
                 String fileNamePath = System.IO.Path.Combine(filePath, fileName);
                 CameraHelper.CaptureJpeg(fileNamePath, CameraIds[i], mDeviceInfors[i].byChanNum);
             }
+        }
+
+        /// <summary>
+        /// 显示提示窗口
+        /// </summary>
+        /// <param name="content">提示内容</param>
+        /// <param name="Title">标题</param>
+        ///   /// <param name="orientation">方向</param>
+        protected void ShowAlert(String content, String Title = "提示", Orientation orientation = Orientation.Horizontal)
+        {
+            MMessageBox.GetInstance().ShouBox(content, Title, MMessageBox.ButtonType.No, MMessageBox.IconType.error, orientation);
+        }
+
+        protected MMessageBox.Reault ShowAlertResult()
+        {
+            return MMessageBox.GetInstance().ShouBox("保存成功 ! 要继续过磅吗？", "恭喜", MMessageBox.ButtonType.YesNo, MMessageBox.IconType.success, Orientation.Vertical, "是");
         }
     }
 }

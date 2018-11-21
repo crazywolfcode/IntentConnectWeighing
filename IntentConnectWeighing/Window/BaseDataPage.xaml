@@ -106,7 +106,7 @@
         <WrapPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent" Margin="0,0,0,20" >
             <myControl:IconButton x:Name="SendCarListBtn"   Background="#e4e4e4e4"  Icon="&#xe9ce;" Margin="5,0,0,0" CornerRadius="10,0,0,10" Width="30" IconSize="20"   IconMargin="2,-1,0,0" Height="20" ToolTip="查看所有的派车单" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}"/>
             <myControl:IconButton x:Name="AddBtn"   Background="#e4e4e4e4"  Icon="&#xe626;" Margin="0" Width="30" IconSize="20"  IconMargin="0,-4,0,0" Height="20" ToolTip="添加" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}" Click="AddBtn_Click"/>
-            <myControl:IconButton x:Name="SendCarRefreshBtn"  Background="#e4e4e4e4"  Icon="&#xe653;" Margin="-1,-1,0,0" CornerRadius="0,10,10,0" AllowsAnimation="False" Width="30" IconMargin="2,-1,0,0"  IconSize="20" Height="20" ToolTip="刷新" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}"/>
+            <myControl:IconButton x:Name="RefreshBtn"  Background="#e4e4e4e4"  Icon="&#xe653;" Margin="-1,-1,0,0" CornerRadius="0,10,10,0" AllowsAnimation="False" Width="30" IconMargin="2,-1,0,0"  IconSize="20" Height="20" ToolTip="刷新" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}"/>
         </WrapPanel>
        
         <Border Background="White"  Grid.Column="1" CornerRadius="0,0,4,0" x:Name="RightContentBorderPanel">

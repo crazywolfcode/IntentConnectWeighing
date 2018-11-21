@@ -76,8 +76,7 @@
         </Border>
 
         <Border Grid.Row="2" CornerRadius="0,0,4,4"   Background="#e4e4e4">
-            <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,4,4">
-               
+            <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,4,4">               
                     <myControl:IconButton 
                         x:Name="BackDownLoadBtn"                
                         VerticalAlignment="Center" 
@@ -95,8 +94,7 @@
                         HorizontalAlignment="Center"      
                         HorizontalContentAlignment="Center"
                         MouseOverForeground="Black"
-                        MouseOverBackground="White" Content="后台下载" />
-      
+                        MouseOverBackground="White" Content="后台下载" />      
                     <myControl:IconButton 
                     x:Name="UpdateBtn"                
                     VerticalAlignment="Center"
@@ -115,10 +113,8 @@
                     HorizontalAlignment="Center"      
                     HorizontalContentAlignment="Center"
                     MouseOverForeground="Black"
-                    MouseOverBackground="White" Content="更 新" />
-             
-            </WrapPanel>
-            
+                    MouseOverBackground="White" Content="更 新" />             
+            </WrapPanel>            
         </Border>
     </Grid>
 </Window>

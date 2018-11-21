@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using MyCustomControlLibrary;
 namespace IntentConnectWeighing
 {
     /// <summary>
@@ -285,9 +286,8 @@ namespace IntentConnectWeighing
         #region save 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            //使用线程更新 备注
+            //使用线程更新 备注     
             UpdateRemark();
-
             if (CheckInput() == true)
             {
                 if (isInsert == true)
@@ -308,41 +308,41 @@ namespace IntentConnectWeighing
         private bool CheckInput()
         {
             if (string.IsNullOrEmpty(mWeighingBill.sendCompanyId) || string.IsNullOrEmpty(mWeighingBill.sendCompanyId))
-            {
-                MessageBox.Show("请选择供应商信息");
+            {                
+                ShowAlert("请选择供应商信息");
                 this.SupplyCb.Focus();
                 return false;
             }
             if (string.IsNullOrEmpty(mWeighingBill.sendYardId) || string.IsNullOrEmpty(mWeighingBill.sendYardName))
             {
-                MessageBox.Show("请选择发货货场");
+                ShowAlert("请选择发货货场");
                 this.SendYardCb.Focus();
                 return false;
             }
             if (string.IsNullOrEmpty(mWeighingBill.receiveCompanyId) || string.IsNullOrEmpty(mWeighingBill.receiveCompanyName))
             {
-                MessageBox.Show("请选择收货公司");
+                ShowAlert("请选择收货公司");
                 this.ReceiverCompanyCb.Focus();
                 return false;
             }
 
             if (string.IsNullOrEmpty(mWeighingBill.receiveYardId) || string.IsNullOrEmpty(mWeighingBill.receiveYardName))
             {
-                MessageBox.Show("请选择收货场");
+                ShowAlert("请选择收货场");
                 this.ReceiverYardCb.Focus();
                 return false;
             }
 
             if (string.IsNullOrEmpty(mWeighingBill.sendMaterialId) || string.IsNullOrEmpty(mWeighingBill.sendMaterialName))
             {
-                MessageBox.Show("请选择物资名称");
+                ShowAlert("请选择物资名称");
                 this.MaterialNameCb.Focus();
                 return false;
             }
 
             if (string.IsNullOrEmpty(mWeighingBill.carId) || string.IsNullOrEmpty(mWeighingBill.plateNumber))
             {
-                MessageBox.Show("请输入车辆信息");
+                ShowAlert("请输入车辆信息");
                 this.CarNumberCb.Focus();
                 return false;
             }
@@ -362,16 +362,14 @@ namespace IntentConnectWeighing
                 if(mCameraInfos !=null || mCameraInfos.Count > 0)
                 {
                     new Thread(new ThreadStart(this.CaptureJpeg)) { IsBackground = true }.Start();
-                }               
-                MessageBoxResult result = MessageBox.Show("保存成功 ! 要继续过磅吗？", "恭喜", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            
+                }  
                 //Update Send Bill
                 new Thread(new ThreadStart(this.UpdateSendCarBill)).Start();
              
                 // success to do TempUpdateUsedBase
                 UpdateUsedBaseData();
 
-                if (result == MessageBoxResult.No)
+                if (ShowAlertResult() == MMessageBox.Reault.No)
                 {
                     this.Close();
                 }
@@ -397,11 +395,10 @@ namespace IntentConnectWeighing
                 new Thread(new ThreadStart(this.UpdateSendCarBill)).Start();
                 // success to do TempUpdateUsedBase
                 UpdateUsedBaseData();
-                MessageBoxResult result = MessageBox.Show("保存成功 ! 要继续过磅吗？", "恭喜", MessageBoxButton.YesNo, MessageBoxImage.Question);
-               //print
+                //print
                 PrintBill(WeightingBillType.CK);
 
-                if (result == MessageBoxResult.No)
+                if (ShowAlertResult() == MMessageBox.Reault.No)
                 {
                     this.Close();
                 }
@@ -510,7 +507,7 @@ namespace IntentConnectWeighing
                 sendCompany = company;
                 if (checkSupplyCustomer() == false)
                 {
-                    MessageBox.Show("发货公司和收货公司不能是同一个！");
+                    MMessageBox.GetInstance().ShouBox("发货公司和收货公司不能是同一个", "提示", MMessageBox.ButtonType.No, MMessageBox.IconType.error, Orientation.Vertical);
                     //this.SupplyCb.Text = null;
                     this.SupplyCb.SelectedIndex = -1;
                     sendCompany = null;
@@ -583,7 +580,7 @@ namespace IntentConnectWeighing
                 receiverCompany = company;
                 if (checkSupplyCustomer() == false)
                 {
-                    MessageBox.Show("发货公司和收货公司不能是同一个！");
+                    MMessageBox.GetInstance().ShouBox("发货公司和收货公司不能是同一个", "提示", MMessageBox.ButtonType.No, MMessageBox.IconType.error, Orientation.Vertical);               
                     //this.ReceiverCompanyCb.Text = null;
                     this.ReceiverCompanyCb.SelectedIndex = -1;
                     receiverCompany = null;
@@ -761,8 +758,8 @@ namespace IntentConnectWeighing
             isShowSendYard = true;
             if (this.SendYardCb.ItemsSource == null)
             {
-                MessageBoxResult result = MessageBox.Show($"您还没有设置货场名称", "提示", MessageBoxButton.YesNo, MessageBoxImage.Hand);
-                if (result == MessageBoxResult.Yes)
+                MMessageBox.Reault result = MMessageBox.GetInstance().ShouBox($"您还没有设置货场名称", "提示", MMessageBox.ButtonType.YesNo, MMessageBox.IconType.success, Orientation.Vertical, "是");
+                if (result == MMessageBox.Reault.Yes)
                 {
                     new YardAddW(sendCompany) { ParentRefreshData = new Action<Yard>(AffterAddYard) }.ShowDialog();
                 }
@@ -828,8 +825,9 @@ namespace IntentConnectWeighing
             isShowSendYard = false;
             if (this.ReceiverYardCb.ItemsSource == null)
             {
-                MessageBoxResult result = MessageBox.Show($"您还没有设置收货货场名称", "提示", MessageBoxButton.YesNo, MessageBoxImage.Hand);
-                if (result == MessageBoxResult.Yes)
+                MMessageBox.Reault result = MMessageBox.GetInstance().ShouBox($"您还没有设置收货货场名称", "提示", MMessageBox.ButtonType.YesNo, MMessageBox.IconType.success, Orientation.Vertical, "是");
+
+                if (result == MMessageBox.Reault.Yes)
                 {
                     new YardAddW(receiverCompany) { ParentRefreshData = new Action<Yard>(AffterAddYard) }.ShowDialog();
                 }

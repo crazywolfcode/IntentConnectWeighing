@@ -61,12 +61,13 @@ namespace MyCustomControlLibrary
                     BindingLoadingTemple();
                     break;
                 case ShowType.nomal:
-
+                    Console.WriteLine("---nomal:" + mShowType);
                     break;
                 case ShowType.messageBox:
                     BindingMessageBoxTemple();
                     break;
                 default:
+                    Console.WriteLine("--- jo" + mShowType);
                     this.Close();
                     break;
 
@@ -93,32 +94,31 @@ namespace MyCustomControlLibrary
         /// <param name="isShowBtn">是否显示关闭按钮</param>
         /// <param name="AutoClose">是否设置自动关闭</param>
         /// <param name="AutoTime">自动关闭时间 3s</param>
-        public static void ShowAlert(String alertText, Orientation orientation = Orientation.Horizontal, string icon = null, object brush = null, bool isShowBtn = true, bool AutoClose = true, int AutoTime = 3)
-        {
-            if (mTimer != null)
-            {
-                mTimer.Dispose();
-            }
-            var instance = GetInstance();
-            instance.mAlterText = alertText;
-            instance.mShowType = ShowType.Alert;
-            instance.mOrientation = orientation;
-            instance.mIcon = icon;
-            instance.mBrush = brush;
-            instance.mIsShowClosedBtn = isShowBtn;
-            instance.Style = instance.FindResource(MMRK.AlertStyle.ToString()) as Style;
+        public void ShowAlert(String alertText, Orientation orientation = Orientation.Horizontal, string icon = null, object brush = null, bool isShowBtn = true, bool AutoClose = true, int AutoTime = 3)
+        {                 
+            Instance.mAlterText = alertText;
+            Instance.mShowType = ShowType.Alert;
+            Instance.mOrientation = orientation;
+            Instance.mIcon = icon;
+            Instance.mBrush = brush;
+            Instance.mIsShowClosedBtn = isShowBtn;
+            Instance.Style = Instance.FindResource(MMRK.AlertStyle.ToString()) as Style;
 
             if (AutoClose == true)
             {
+                if (mTimer != null)
+                {
+                    mTimer.Dispose();
+                }
                 mTimer = new System.Threading.Timer(delegate
                 {
-                    instance.Dispatcher.Invoke(new Action(delegate
+                    Instance.Dispatcher.Invoke(new Action(delegate
                         {
-                            instance.Close();
+                            Instance.Close();
                         }));
                 }, null, AutoTime * 1000, 0);
             }
-            instance.Show();
+            Instance.Show();
         }
 
         /// <summary>
@@ -133,50 +133,47 @@ namespace MyCustomControlLibrary
         /// <param name="isShowBtn">是否显示关闭按钮</param>
         /// <param name="AutoClose">是否设置自动关闭</param>
         /// <param name="AutoTime">自动关闭时间 3s</param>
-        public static void ShowModalAlert(String alertText, Point point, Size size, Orientation orientation = Orientation.Horizontal, string icon = null, object brush = null, bool isShowBtn = true, bool AutoClose = true, int AutoTime = 3)
-        {
-            if (mTimer != null)
-            {
-                mTimer.Dispose();
-            }
-            var instance = GetInstance();
-            instance.mAlterText = alertText;
-            instance.mShowType = ShowType.AlertModel;
-            instance.mPoint = point;
-            instance.mSize = size;
-            instance.mOrientation = orientation;
-            instance.mIcon = icon;
-            instance.mBrush = brush;
-            instance.mIsShowClosedBtn = isShowBtn;
-            instance.Style = instance.FindResource(MMRK.AlertStyle.ToString()) as Style;
+        public  void ShowModalAlert(String alertText, Point point, Size size, Orientation orientation = Orientation.Horizontal, string icon = null, object brush = null, bool isShowBtn = true, bool AutoClose = true, int AutoTime = 3)
+        {                  
+            Instance.mAlterText = alertText;
+            Instance.mShowType = ShowType.AlertModel;
+            Instance.mPoint = point;
+            Instance.mSize = size;
+            Instance.mOrientation = orientation;
+            Instance.mIcon = icon;
+            Instance.mBrush = brush;
+            Instance.mIsShowClosedBtn = isShowBtn;
+            Instance.Style = Instance.FindResource(MMRK.AlertStyle.ToString()) as Style;
             if (AutoClose == true)
             {
+                if (mTimer != null)
+                {
+                    mTimer.Dispose();
+                }
                 mTimer = new System.Threading.Timer(delegate
                 {
-                    instance.Dispatcher.Invoke(new Action(delegate
+                    Instance.Dispatcher.Invoke(new Action(delegate
                     {
-                        instance.Close();
+                        Instance.Close();
                     }));
                 }, null, AutoTime * 1000, 0);
             }
-            instance.Show();
+            Instance.Show();
         }
 
-        public static void ShowSuccessAlert(String alertText = "操作成功！")
-        {
-            //ShowAlert(alertText, Orientation.Horizontal, "&#xe6b2;", Brushes.Green, false);
+        public void ShowSuccessAlert(String alertText = "操作成功！")
+        {           
             ShowAlert(alertText, Orientation.Horizontal, null, Brushes.Green, false);
         }
-        public static void ShowErrorAlert(String alertText = "操作失败！")
+        public void ShowErrorAlert(String alertText = "操作失败！")
         {
             ShowAlert(alertText, Orientation.Horizontal, "&#xe508;", Brushes.Red, false);
         }
-        public static void ShowSuccessModelAlert(Size size, Point point, String alertText = "操作成功！")
-        {
-           // ShowModalAlert(alertText, point, size, Orientation.Horizontal, "&#xe6b2;", Brushes.Green, false);
+        public  void ShowSuccessModelAlert(Size size, Point point, String alertText = "操作成功！")
+        {           
             ShowModalAlert(alertText, point, size, Orientation.Horizontal, null, Brushes.Green, false);
         }
-        public static void ShowErrorModelAlert(Size size, Point point, String alertText = "操作失败！")
+        public void ShowErrorModelAlert(Size size, Point point, String alertText = "操作失败！")
         {
             ShowModalAlert(alertText, point, size, Orientation.Horizontal, "&#xe508;", Brushes.Red, false);
         }
@@ -194,7 +191,6 @@ namespace MyCustomControlLibrary
                     mBrush = (Brush)new BrushConverter().ConvertFromString(str);
                 }
             }
-
             if (String.IsNullOrEmpty(mAlterText))
             {
                 return;
@@ -212,7 +208,6 @@ namespace MyCustomControlLibrary
                     return;
                 }
             }
-
             if (mOrientation == Orientation.Vertical)
             {
                 if (currControlTemplate.FindName("MPanel", Instance) is StackPanel panel)
@@ -231,7 +226,6 @@ namespace MyCustomControlLibrary
                     icontb.FontFamily = ff;
                     icontb.Foreground = (Brush)mBrush;
                     icontb.InvalidateVisual();
-
                 }
                 else
                 {
@@ -335,35 +329,37 @@ namespace MyCustomControlLibrary
         /// <param name="orientation">方向</param>
         /// <param name="brush">颜色</param>
         /// <param name="outTime">超时关闭时间 5s</param>
-        public static void ShowLoading(LoadType type, String alertText, Point point, Size size, String icon = null, Orientation orientation = Orientation.Horizontal, object brush = null, int outTime = 5)
+        public void ShowLoading(LoadType type, String alertText, Point point, Size size, String icon = null, Orientation orientation = Orientation.Horizontal, object brush = null, int outTime = 5)
         {
-            if (mTimer != null)
+            if (mTimer != null) 
             {
                 mTimer.Dispose();
             }
-            var instance = GetInstance();
-            instance.mAlterText = alertText;
-            instance.mLoadType = type;
-            instance.mShowType = ShowType.Loading;
-            instance.mPoint = point;
-            instance.mSize = size;
-            instance.mIcon = icon;
-            instance.MOutTime = outTime;
-            instance.mBrush = brush;
-            instance.mOrientation = orientation;
-            instance.Style = instance.FindResource(MMRK.LoadingStyle.ToString()) as Style;
+            Instance.mAlterText = alertText;
+            Instance.mLoadType = type;
+            Instance.mShowType = ShowType.Loading;
+            Instance.mPoint = point;
+            Instance.mSize = size;
+            Instance.mIcon = icon;
+            Instance.MOutTime = outTime;
+            Instance.mBrush = brush;
+            Instance.mOrientation = orientation;
+            Instance.Style = Instance.FindResource(MMRK.LoadingStyle.ToString()) as Style;
 
             mTimer = new System.Threading.Timer(delegate
             {
-                instance.Dispatcher.Invoke(new Action(delegate
+                Instance.Dispatcher.Invoke(new Action(delegate
                 {
                     Instance.Close();
                 }));
             }, null, outTime * 1000, 0);
-            instance.Show();
+            Instance.Show();
         }
 
-        public static void ShowIconLoading() { }
+        /// <summary>
+        /// 未实现
+        /// </summary>
+        private void ShowIconLoading() { }
 
         private void BindingLoadingTemple()
         {
@@ -533,23 +529,29 @@ namespace MyCustomControlLibrary
         #endregion
 
         #region Box
-        public static Reault ShouBox(String alertText, string caption, ButtonType buttonType, IconType iconType, Orientation orientation = Orientation.Horizontal,string yesBtnText=null,String nobtnText=null)
-        {
-            if (mTimer != null)
-            {
-                mTimer.Dispose();
-            }
-            var instance = GetInstance();
-            instance.ShowInTaskbar = true;
-            instance.Style = instance.FindResource(MMRK.BoxStyle.ToString()) as Style;
-            instance.mShowType = ShowType.messageBox;
-            instance.mAlterText = alertText;
-            instance.mCapution = caption;
-            instance.MYesBtnText = yesBtnText;
-            instance.MNoBtnText = nobtnText;
-            instance.mButtonType = buttonType;
-            instance.mOrientation = orientation;
-            instance.mIconType = iconType;
+        /// <summary>
+        /// 弹窗提示
+        /// </summary>
+        /// <param name="alertText">提示的文本</param>
+        /// <param name="caption">标题</param>
+        /// <param name="buttonType">按钮类型</param>
+        /// <param name="iconType">图标类型</param>
+        /// <param name="orientation">内容显示方向</param>
+        /// <param name="yesBtnText">确定按键的文本</param>
+        /// <param name="nobtnText">取消按键的文本</param>
+        /// <returns></returns>
+        public Reault ShouBox(String alertText, string caption, ButtonType buttonType, IconType iconType, Orientation orientation = Orientation.Horizontal,string yesBtnText=null,String nobtnText=null)
+        {            
+            Instance.ShowInTaskbar = true;
+            Instance.Style = Instance.FindResource(MMRK.BoxStyle.ToString()) as Style;
+            Instance.mShowType = ShowType.messageBox;
+            Instance.mAlterText = alertText;
+            Instance.mCapution = caption;
+            Instance.MYesBtnText = yesBtnText;
+            Instance.MNoBtnText = nobtnText;
+            Instance.mButtonType = buttonType;
+            Instance.mOrientation = orientation;
+            Instance.mIconType = iconType;
             bool result = (bool)Instance.ShowDialog();
             return result == true ? Reault.Yes : Reault.No;
         }
@@ -651,8 +653,6 @@ namespace MyCustomControlLibrary
         }
         #endregion
 
-
-
         #region close
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
@@ -726,14 +726,6 @@ namespace MyCustomControlLibrary
             nomal,
         }
         #endregion
-
-        public static void MClosed()
-        {
-            if (Instance != null)
-            {
-                Instance.Close();
-            }
-        }
 
         private void HeaderBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

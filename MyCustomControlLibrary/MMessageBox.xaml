@@ -66,12 +66,12 @@
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Height" Value="260"/>
-            <Setter Property="Width" Value="360"/>
+            <Setter Property="Height" Value="180"/>
+            <Setter Property="Width" Value="300"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate  TargetType="Window">
-                        <Border x:Name="border" Background="White"  BorderBrush="Black" BorderThickness="0" CornerRadius="4">
+                        <Border x:Name="border" Background="White"   BorderBrush="#e4e4e4" BorderThickness="1,0,1,1" CornerRadius="4">
                             <Grid Margin="0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="35"/>
@@ -95,7 +95,7 @@
                                     </StackPanel>
                                 </Border>
                                 <local:IconButton Grid.Row="0" x:Name="CloseBtn" IsTransparency="True" HorizontalAlignment="Right" VerticalAlignment="Center" Width="24" Height="20" CornerRadius="9" Icon="&#xe508;" Foreground="White" MouseOverForeground="Red" MouseOverBackground="Transparent" Background="Transparent" IconMargin="0" IconSize="14" Margin="0,0,2,0" Click="CloseBtn_Click"/>
-                                <Border Grid.Row="2" CornerRadius="0,0,4,4" x:Name="FooterBorder" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Border Grid.Row="2" CornerRadius="0,0,4,4" x:Name="FooterBorder" HorizontalAlignment="Center" VerticalAlignment="Center"  >
                                     <WrapPanel>
                                         <local:IconButton x:Name="YesBtn" Content="确 定"  Click="YesBtn_Click"
                                           CornerRadius="4" Visibility="Collapsed"

@@ -138,6 +138,7 @@ namespace IntentConnectWeighing
         /// </summary>
         private void FillCustomerSendData()
         {
+            MyLoadingLib.GridLoading loading = new MyLoadingLib.GridLoading();
             List<WeighingBill> sendList = WeighingBillModel.GetInvoice();
             if (sendList != null && sendList.Count > 0)
             {
@@ -210,8 +211,7 @@ namespace IntentConnectWeighing
             RefreshStaticData();
         }
         public void RefreshCurrBillData()
-        {
-            //todo
+        {            
             if (mWeighingBill == null)
             {
                 return;
@@ -234,6 +234,7 @@ namespace IntentConnectWeighing
                 }
             }
         }
+        //TODO
         private void RefreshStaticData() { }
         #endregion
 

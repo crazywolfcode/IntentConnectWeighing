@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using MyCustomControlLibrary;
 namespace IntentConnectWeighing
 {
     /// <summary>
@@ -381,38 +382,38 @@ namespace IntentConnectWeighing
         {
             if (string.IsNullOrEmpty(mWeighingBill.sendCompanyId) || string.IsNullOrEmpty(mWeighingBill.sendCompanyId))
             {
-                MessageBox.Show("请选择供应商信息");
+                ShowAlert("请选择供应商信息");
                 this.SupplyCb.Focus();
                 return false;
             }
             if (string.IsNullOrEmpty(mWeighingBill.sendYardId) || string.IsNullOrEmpty(mWeighingBill.sendYardName))
             {
-                MessageBox.Show("请选择发货货场");
+                ShowAlert("请选择发货货场");
                 this.SendYardCb.Focus();
                 return false;
             }
             if (string.IsNullOrEmpty(mWeighingBill.receiveCompanyId) || string.IsNullOrEmpty(mWeighingBill.receiveCompanyName))
             {
-                MessageBox.Show("请选择收货公司");
+                ShowAlert("请选择收货公司");
                 this.ReceiverCompanyCb.Focus();
                 return false;
             }
             if (string.IsNullOrEmpty(mWeighingBill.receiveYardId) || string.IsNullOrEmpty(mWeighingBill.receiveYardName))
             {
-                MessageBox.Show("请选择收货货场");
+                ShowAlert("请选择收货货场");
                 this.ReceiverYardCb.Focus();
                 return false;
             }
             if (string.IsNullOrEmpty(mWeighingBill.receiveMaterialId) || string.IsNullOrEmpty(mWeighingBill.receiveMaterialName))
             {
-                MessageBox.Show("请选择物资名称");
+                ShowAlert("请选择物资名称");
                 this.MaterialNameCb.Focus();
                 return false;
             }
 
             if (string.IsNullOrEmpty(mWeighingBill.carId) || string.IsNullOrEmpty(mWeighingBill.plateNumber))
             {
-                MessageBox.Show("请输入车辆信息");
+                ShowAlert("请输入车辆信息");
                 this.CarNumberCb.Focus();
                 return false;
             }
@@ -432,13 +433,12 @@ namespace IntentConnectWeighing
                 {
                     new Thread(new ThreadStart(this.CaptureJpeg)) { IsBackground = true }.Start();
                 }
-                MessageBoxResult result = MessageBox.Show("保存成功 ! 要继续过磅吗？", "恭喜", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 //Update Send Bill
                 new Thread(new ThreadStart(this.UpdateSendBill)).Start();
                 // success to do TempUpdateUsedBase
                 UpdateUsedBaseData();
                 
-                if (result == MessageBoxResult.No)
+                if (ShowAlertResult() == MMessageBox.Reault.No)
                 {
                     this.Close();
                 }
@@ -463,14 +463,12 @@ namespace IntentConnectWeighing
 
                 //Update Send Bill
                 new Thread(new ThreadStart(this.UpdateSendBill)).Start();
-
-                MessageBoxResult result = MessageBox.Show("保存成功 ! 要继续过磅吗？", "恭喜", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                // success to do TempUpdateUsedBase
+                 // success to do TempUpdateUsedBase
                 UpdateUsedBaseData();
                 // print 
                 PrintBill(WeightingBillType.RK);
 
-                if (result == MessageBoxResult.No)
+                if (ShowAlertResult() == MMessageBox.Reault.No)
                 {
                     this.Close();
                 }
