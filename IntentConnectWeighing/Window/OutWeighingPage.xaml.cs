@@ -402,11 +402,21 @@ namespace IntentConnectWeighing
         }
         #endregion
         #region 补录 外来 过磅
+  
         private void BuLuBtn_Click(object sender, RoutedEventArgs e)
         {
-            new OutputBuLuW() { RefershParent = new Action<bool, bool, bool>(RefreshData) }.ShowDialog();
+            openBuluWindow();
         }
 
+        private void BuluBill_Click(object sender, RoutedEventArgs e)
+        {
+            openBuluWindow();
+        }
+
+        private void openBuluWindow()
+        {
+            new InputBuluW() { RefershParent = new Action<bool, bool, bool>(RefreshData) }.ShowDialog();
+        }
         private void WLBtn_Click(object sender, RoutedEventArgs e)
         {
 

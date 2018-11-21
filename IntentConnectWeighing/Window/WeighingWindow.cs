@@ -200,7 +200,10 @@ namespace IntentConnectWeighing
             if (type == 0)
             {
                 RemardCombox.ItemsSource = App.inputRemarkList;
-            }           
+            }
+            else {
+                RemardCombox.ItemsSource = App.outputRemarkList;
+            }       
         }
         #endregion
 

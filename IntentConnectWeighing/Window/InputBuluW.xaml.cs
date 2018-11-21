@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using MyHelper;
 using System.Printing;
 using System.Drawing;
+using System.Threading;
 
 namespace IntentConnectWeighing
 {
@@ -22,22 +23,10 @@ namespace IntentConnectWeighing
     /// WeihgingBillDetailW.xaml 的交互逻辑
     ///  WeihgingBillDetailW.xaml's interactive logical 
     /// </summary>
-    public partial class InputBuluW : Window
-    {
-        public Action<bool,bool,bool> RefershParent;
-        #region 本机使用的临时基础数据
-        private Dictionary<String, Company> tempSupplyCompanys = new Dictionary<string, Company>();
-        private Dictionary<String, Company> tempCustomerCompanys = new Dictionary<string, Company>();
-        private Dictionary<String, Material> tempMaterials = new Dictionary<string, Material>();
-        private Dictionary<String, CarInfo> tempCars = new Dictionary<string, CarInfo>();
-        #endregion
+    public partial class InputBuluW : WeighingWindow    {
+        
         #region Variable              
-        private WeighingBill mWeighingBill;
-        private bool isOptionSuccess = false;
-        private Company sendCompany;
-        private Company receiverCompany;
-        private Material material;
-        private CarInfo car;
+
         #endregion
         public InputBuluW()
         {
@@ -59,7 +48,9 @@ namespace IntentConnectWeighing
             SetCustomerCompanyDefaultSource();
             SetMaterialDefaultSource();
             SetCarDefaultSource();
-        
+
+            SetCarDecuationDescriptionDefaultSource(this.DecuationDescriptionCb);
+            SetRemarkDefaultSource(this.RemarkCbox);
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
@@ -710,11 +701,15 @@ namespace IntentConnectWeighing
         private void ReceivedRemardTbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (IsLoaded == false) { return; }
-            mWeighingBill.receiveRemark = this.RemarkTbox.Text;
+            mWeighingBill.receiveRemark = this.RemarkCbox.Text;
         }
         #region save
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
+            //使用线程更新 备注 和 扣重说明
+            UpdateRemark();
+            UpdateDecuationList();
+
             if (CheckInput() == true)
             {
                 Insert();                
@@ -773,25 +768,26 @@ namespace IntentConnectWeighing
             {
                 isOptionSuccess = true;      
                 MessageBoxResult result = MessageBox.Show("保存成功 ？", "恭喜");              
-                PrintBill();
+                PrintBill(WeightingBillType.RK);
                 this.Close();
             }
         }
+
+        private void UpdateRemark()
+        {
+            Thread thread = new Thread(new ParameterizedThreadStart(CommonFunction.UpdateInputReamak));
+            thread.Start(mWeighingBill.receiveRemark);
+            SetRemarkDefaultSource(this.RemarkCbox);
+        }
+
+        private void UpdateDecuationList()
+        {
+            Thread thread = new Thread(new ParameterizedThreadStart(CommonFunction.UpdateDecuationList));
+            thread.Start(mWeighingBill.decuationDescription);
+            SetCarDecuationDescriptionDefaultSource(this.DecuationDescriptionCb);
+        }
         #endregion
 
-
-        /// <summary>
-        /// 打印
-        /// </summary>
-        private void PrintBill()
-        {
-            bool auto = false;
-            if (MyHelper.ConfigurationHelper.GetConfig(ConfigItemName.autoPrint.ToString()) == "true")
-            {
-                auto = true;
-            }
-            new PrintBillW(WeightingBillType.RK, mWeighingBill, auto) { }.Show();
-        }
 
         private void InDTP_ValueChanged(object sender, RoutedPropertyChangedEventArgs<string> e)
         {
@@ -804,7 +800,6 @@ namespace IntentConnectWeighing
             if (this.IsLoaded == true)
                 mWeighingBill.receiveOutTime = OutDTP.StringValue;
         }
-
-
+        
     }
 }

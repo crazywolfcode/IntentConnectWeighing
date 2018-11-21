@@ -22,22 +22,10 @@ namespace IntentConnectWeighing
     /// WeihgingBillDetailW.xaml 的交互逻辑
     ///  WeihgingBillDetailW.xaml's interactive logical 
     /// </summary>
-    public partial class OutputBuLuW : Window
+    public partial class OutputBuLuW : WeighingWindow
     {
-        public Action<bool,bool,bool> RefershParent;
-        #region 本机使用的临时基础数据
-        private Dictionary<String, Company> tempSupplyCompanys = new Dictionary<string, Company>();
-        private Dictionary<String, Company> tempCustomerCompanys = new Dictionary<string, Company>();
-        private Dictionary<String, Material> tempMaterials = new Dictionary<string, Material>();
-        private Dictionary<String, CarInfo> tempCars = new Dictionary<string, CarInfo>();
-        #endregion
+
         #region Variable              
-        private WeighingBill mWeighingBill;
-        private bool isOptionSuccess = false;
-        private Company sendCompany;
-        private Company receiverCompany;
-        private Material material;
-        private CarInfo car;
 
         #endregion
         public OutputBuLuW()
@@ -61,6 +49,7 @@ namespace IntentConnectWeighing
             SetMaterialDefaultSource();
             SetCarDefaultSource();
 
+            SetRemarkDefaultSource(this.RemarkCbox);
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
@@ -684,11 +673,13 @@ namespace IntentConnectWeighing
         private void ReceivedRemardTbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (IsLoaded == false) { return; }
-            mWeighingBill.sendRemark = this.RemarkTbox.Text;
+            mWeighingBill.sendRemark = this.RemarkCbox.Text;
         }
         #region save
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
+            //使用线程更新 备注
+            UpdateRemark();
             if (CheckInput() == true)
             {
                 Insert();
@@ -704,16 +695,11 @@ namespace IntentConnectWeighing
                 isOptionSuccess = true;
                 MessageBoxResult result = MessageBox.Show("保存成功", "恭喜");                
                 UpdateUsedBaseData();       
-                PrintBill();
+                PrintBill(WeightingBillType.CK);
                 this.Close();
             }
         }
-        private void UpdateUsedBaseData()
-        {
-            // success to do TempUpdateUsedBase
-            Thread thread = new Thread(new ParameterizedThreadStart(CommonFunction.TempUpdateUsedBase));
-            thread.Start(new BaseDataClassV() { send = sendCompany, receive = receiverCompany, material = material, carInfo = car });
-        }
+
 
         private bool CheckInput()
         {
@@ -758,22 +744,16 @@ namespace IntentConnectWeighing
             }
             return true;
         }
-        
+
+        private void UpdateRemark()
+        {
+            Thread thread = new Thread(new ParameterizedThreadStart(CommonFunction.UpdateOutputReamak));
+            thread.Start(mWeighingBill.sendRemark);
+            SetRemarkDefaultSource(this.RemarkCbox,1);
+        }
         #endregion
 
 
-        /// <summary>
-        /// 打印
-        /// </summary>
-        private void PrintBill()
-        {
-            bool auto = false;
-            if (ConfigurationHelper.GetConfig(ConfigItemName.autoPrint.ToString()) == "true")
-            {
-                auto = true;
-            }
-            new PrintBillW(WeightingBillType.CK, mWeighingBill, auto) { }.Show();
-        }
 
         private void InDTP_ValueChanged(object sender, RoutedPropertyChangedEventArgs<string> e)
         {

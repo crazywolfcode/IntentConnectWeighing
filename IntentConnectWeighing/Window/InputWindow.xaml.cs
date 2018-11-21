@@ -41,7 +41,7 @@ namespace IntentConnectWeighing
             SetMaterialDefaultSource(this.MaterialNameCb);
             SetCarDefaultSource(this.CarNumberCb);
             SetCarDecuationDescriptionDefaultSource(this.DecuationDescriptionCb);
-            SetRemarkDefaultSource(ReceivedRemardCombox);
+            SetRemarkDefaultSource(this.ReceivedRemardCombox);
             
             if (mSendWeighingBill == null)
             {

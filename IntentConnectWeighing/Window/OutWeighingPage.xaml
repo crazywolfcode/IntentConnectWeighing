@@ -83,6 +83,16 @@
                             Width="30" Height="30" IconMargin="-2,0,0,0"
                             Margin="0,0,4,0"
                          />
+                        <myControl:IconButton 
+                          x:Name="BuluBill" Click="BuluBill_Click"
+                          IsTransparency="True" ToolTip="补录出库磅单"
+                           MouseOverForeground="{DynamicResource myBlue}"
+                           VerticalAlignment="Bottom" 
+                            Foreground="Orange"
+                           IsShowIcon="True" Icon="&#xe644;" IconSize="28"
+                           Width="30" Height="30" IconMargin="-2,0,0,0"
+                            Margin="0,0,4,0"
+                         />
                         <myControl:IconButton x:Name="NewOutPutBtn" Click="NewOutPutBtn_Click" ToolTip="新增出库"
                                 IsTransparency="True"
                                 MouseOverForeground="{DynamicResource myBlue}"
@@ -154,7 +164,8 @@
                                                 Margin="0,0,4,0" />
                                         </StackPanel>
                                     </Border>
-                                    <TextBlock Grid.Row="0" Margin="20,27,0,27" TextAlignment="Left" VerticalAlignment="Center" Text="{Binding receiveCompanyName}" Foreground="{DynamicResource myBlue}" FontSize="20"/>
+                                    <TextBlock Grid.Row="0" Margin="20,27,0,27" TextAlignment="Left" VerticalAlignment="Center" Text="{Binding receiveCompanyName}" Foreground="{DynamicResource myBlue}" FontSize="20" ToolTip="收货公司"/>
+                                    <TextBlock Grid.Row="0" Margin="20,0,73,2" TextAlignment="Left" VerticalAlignment="Bottom" Text="{Binding sendNumber}" Foreground="#777777" FontSize="12" ToolTip="出库磅单编号"/>
                                     <Border Grid.Row="1" Background="White" BorderThickness="1" BorderBrush="{DynamicResource E4}" CornerRadius="0,0,4,4" Grid.RowSpan="2">
                                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,30,0,30">
                                             <StackPanel>
@@ -171,7 +182,7 @@
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendTraeWeight}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendGrossWeight}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendNetWeight}"/>
-                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendRemark}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendRemark}" TextTrimming="CharacterEllipsis" MaxWidth="220"/>
                                             </StackPanel>
 
                                             <StackPanel>
@@ -233,7 +244,8 @@
                                                 Margin="0,0,4,0" />
                                         </StackPanel>
                                     </Border>
-                                    <TextBlock Grid.Row="0" Margin="20,27,0,27" TextAlignment="Left" VerticalAlignment="Center" Text="{Binding sendCompanyName}" Foreground="{DynamicResource myBlue}" FontSize="20"/>
+                                    <TextBlock Grid.Row="0" Margin="20,27,0,27" TextAlignment="Left" VerticalAlignment="Center" Text="{Binding receiveCompanyName}" Foreground="{DynamicResource myBlue}" FontSize="20" ToolTip="收货公司"/>
+                                    <TextBlock Grid.Row="0" Margin="20,0,73,2" TextAlignment="Left" VerticalAlignment="Bottom" Text="{Binding sendNumber}" Foreground="#777777" FontSize="12" ToolTip="出库磅单编号"/>
                                     <Border Grid.Row="1" Background="White" BorderThickness="1" BorderBrush="{DynamicResource E4}" CornerRadius="0,0,4,4" Grid.RowSpan="2">
                                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,30,0,30">
                                             <StackPanel>
@@ -256,7 +268,7 @@
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendInTime,Converter={StaticResource DateTimeFriendConverter}}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendOutTime,Converter={StaticResource DateTimeFriendConverter}}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendUserName}"/>
-                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendRemark}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendRemark}" TextTrimming="CharacterEllipsis" MaxWidth="220"/>
                                             </StackPanel>
 
                                             <StackPanel>
@@ -279,7 +291,7 @@
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding receiveInTime,Converter={StaticResource DateTimeFriendConverter}}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding receiveOutTime,Converter={StaticResource DateTimeFriendConverter}}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding receiveUserName}"/>
-                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding receiveRemark}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding receiveRemark}" TextTrimming="CharacterEllipsis" MaxWidth="220"/>
                                             </StackPanel>
 
                                             <StackPanel>
@@ -323,8 +335,9 @@
                                                    Margin="0,0,4,0" />
                                         </StackPanel>
                                     </Border>
-                                    <TextBlock Grid.Row="0" Margin="20,27,0,27" TextAlignment="Left" VerticalAlignment="Center" Text="{Binding sendCompanyName}" Foreground="{DynamicResource myBlue}" FontSize="20"/>
-                                    <TextBlock  Text="派车单" Width="70" Margin="10,0,0,0" Height="20" TextAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Left" FontSize="16" Foreground="White" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="0" Margin="20,27,0,27" TextAlignment="Left" VerticalAlignment="Center" Text="{Binding receiveCompanyName}" Foreground="{DynamicResource myBlue}" FontSize="20"/>
+                                    <TextBlock  Text="派车单" Width="70" Margin="10,0,0,0" Height="20" TextAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Left" FontSize="14" Foreground="White" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="0" Margin="74,0,73,2" TextAlignment="Left" VerticalAlignment="Bottom" Text="{Binding number}" Foreground="#777777" FontSize="12" ToolTip="派车单编号"/>
                                     <Border Grid.Row="1" Background="White" BorderThickness="1" BorderBrush="{DynamicResource E4}" CornerRadius="0,0,4,4" Grid.RowSpan="2">
                                         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,30,0,30">
                                             <StackPanel>
@@ -332,7 +345,6 @@
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="发货货场："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="物资名称："/>
                                                 <TextBlock Style="{StaticResource DetailAlertLeableStyle}" Text="车辆信息："/>
-
                                             </StackPanel>
                                             <StackPanel >
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding sendCompanyName}"/>
@@ -353,8 +365,9 @@
                                             </StackPanel>
                                             <StackPanel>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding receiveCompanyName}"/>
-                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding receiveYardName}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding receiveYardName}"/> 
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding expiryDate}"/>
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding remark}" TextTrimming="CharacterEllipsis" MaxWidth="220"/>
                                             </StackPanel>
                                         </StackPanel>
                                     </Border>

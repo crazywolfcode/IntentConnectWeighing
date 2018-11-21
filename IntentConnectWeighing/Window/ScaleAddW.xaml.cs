@@ -116,14 +116,13 @@ namespace IntentConnectWeighing
                 this.BaudRateCB.Text = mScale.baudRate.ToString();
                 this.DataByteCB.Text = mScale.dataByte.ToString();
                 this.EndByteCB.Text = mScale.endByte.ToString();
-             
+                this.DefaultTypeCB.SelectedIndex = mScale.defaultType;
                 for(int i=0; i < mScaleBrands.Count;i++) {
                     if (mScaleBrands[i].brandName == mScale.brand) {
                         this.BrandCB.SelectedIndex = i;
                         continue;
                     }
                 }
-
                 for (int i = 0; i < mScaleSeries.Count; i++)
                 {
                     if (mScaleSeries[i].name == mScale.series)

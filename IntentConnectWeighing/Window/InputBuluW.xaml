@@ -1,4 +1,4 @@
-﻿<Window x:Class="IntentConnectWeighing.InputBuluW"
+﻿<local:WeighingWindow x:Class="IntentConnectWeighing.InputBuluW"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"     
@@ -24,7 +24,7 @@
         </Style>
         <Style x:Key="SendValueCbStyle" TargetType="ComboBox">
             <Setter Property="Foreground" Value="#777777"/>
-            <Setter Property="Width" Value="180"/>
+            <Setter Property="Width" Value="210"/>
             <Setter Property="IsEditable" Value="True"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Margin" Value=" 0,2,0,2"/>
@@ -32,7 +32,7 @@
         </Style>
         <Style x:Key="SendValueTbStyle" TargetType="TextBox">
             <Setter Property="Foreground" Value="#777777"/>
-            <Setter Property="Width" Value="180"/>
+            <Setter Property="Width" Value="210"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Margin" Value=" 0,2,0,2"/>
@@ -84,7 +84,7 @@
                             <ComboBox x:Name="SendYardCb" Style="{StaticResource SendValueCbStyle}" MaxDropDownHeight="150" DisplayMemberPath="name"  DropDownOpened="SendYardCb_DropDownOpened" SelectionChanged="SendYardCb_SelectionChanged" Width="191"/>
                         </StackPanel>
                         <!--   -->
-                        <StackPanel Margin="10,0,0,0">
+                        <StackPanel Margin="11,0,0,0">
                             <TextBlock Style="{StaticResource SendSendAlertTbStyle}" Margin="30,0,0,0">收货公司：</TextBlock>
                             <TextBlock Style="{StaticResource SendSendAlertTbStyle}" Margin="30,6,0,0">收货货场：</TextBlock>
                         </StackPanel>
@@ -95,7 +95,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
                         <!--   -->
-                        <StackPanel Margin="10,0,0,0">
+                        <StackPanel Margin="12,0,0,0">
                             <TextBlock Style="{StaticResource SendSendAlertTbStyle}">货物名称:</TextBlock>
                             <TextBlock Style="{StaticResource SendSendAlertTbStyle}">车牌号:</TextBlock>
                             <TextBlock Style="{StaticResource SendSendAlertTbStyle}">驾驶员:</TextBlock>
@@ -141,7 +141,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,2,0,10">
                         <TextBlock Style="{StaticResource SendSendAlertTbStyle}" Margin="20,0,0,0">备 注:</TextBlock>
-                        <TextBox x:Name="RemarkTbox" Style="{StaticResource SendValueTbStyle}" Margin="10,0,0,0" Width="604" TextChanged="ReceivedRemardTbox_TextChanged"/>
+                        <ComboBox x:Name="RemarkCbox" Style="{StaticResource SendValueCbStyle}" Margin="10,0,0,0" Width="604" TextBoxBase.TextChanged="ReceivedRemardTbox_TextChanged"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
@@ -159,4 +159,4 @@
             </StackPanel>
         </Border>
     </Grid>
-</Window>
+</local:WeighingWindow>
