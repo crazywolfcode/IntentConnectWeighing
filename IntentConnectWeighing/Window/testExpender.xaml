@@ -29,7 +29,7 @@
 
     </Window.Resources>
     <Grid>
-        <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+        <ScrollViewer Style="{DynamicResource DefaultScrollViewer}">
             <StackPanel>
                 <Expander  x:Name="expander"   IsExpanded="True"
                  IsEnabledChanged="expander_IsEnabledChanged"    

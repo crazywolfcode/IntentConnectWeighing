@@ -42,9 +42,9 @@ namespace IntentConnectWeighing
             CreateClientId();
             
             //devlepment
-            new MainWindow().Show();
+            //new MainWindow().Show();
             // new TestExpender().Show();
-            //Navigation();
+            Navigation();
             currentCompany = new Company()
             {
                 id = ConfigurationHelper.GetConfig(ConfigItemName.companyId.ToString()),

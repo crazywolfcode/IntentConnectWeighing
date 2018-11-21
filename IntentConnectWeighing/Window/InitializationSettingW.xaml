@@ -112,7 +112,7 @@
                          Style="{StaticResource LabelTextBox}" 
                          Background="Transparent"       
                          Foreground="Black"
-                        TextChanged="Pwd_TextChanged"
+                         TextChanged="Pwd_TextChanged"
                          local:ControlAttachProperty.Label="密码："></TextBox>
 
                 <TextBox x:Name="connStr" TextWrapping="Wrap"  Height="50" Margin="10"></TextBox>
@@ -123,8 +123,7 @@
                     <myControl:IconButton 
                          x:Name="SaveMysqlBtn" 
                             Margin="0,5,10,5"
-                            Padding="1"                      
-                            Style="{StaticResource IconButtonStyle}"  
+                            Padding="1"                  
                             Background="#f9f9f9f9" 
                             BorderBrush="#e0e0e0" 
                             Foreground="#666"
@@ -161,7 +160,6 @@
                           x:Name="SaveSqliteBtn" 
                            Click="SaveSqliteBtn_Click"
                             Padding="1"                      
-                            Style="{StaticResource IconButtonStyle}"  
                             Background="#f9f9f9f9" 
                             BorderBrush="#e0e0e0" 
                             Foreground="#666"
