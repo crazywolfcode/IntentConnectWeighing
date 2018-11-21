@@ -485,6 +485,9 @@ namespace IntentConnectWeighing
             thread.Start(mWeighingBill.decuationDescription);
             SetCarDecuationDescriptionDefaultSource(this.DecuationDescriptionCb);
         }
+        /// <summary>
+        /// 更新发货单
+        /// </summary>
         private void UpdateSendBill()
         {
             if (mSendWeighingBill != null)
@@ -1138,8 +1141,7 @@ namespace IntentConnectWeighing
         }
 
         private void SelectSendBillInFactory(WeighingBill bill)
-        {
-            
+        {            
             if (bill == null)
             {
                 this.InFactoryRB.IsChecked = true;

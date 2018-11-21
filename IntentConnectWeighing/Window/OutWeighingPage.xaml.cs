@@ -401,6 +401,7 @@ namespace IntentConnectWeighing
             }
         }
         #endregion
+
         #region 补录 外来 过磅
   
         private void BuLuBtn_Click(object sender, RoutedEventArgs e)
