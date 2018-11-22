@@ -20,7 +20,6 @@ namespace MyCustomControlLibrary
     public partial class MMessageBox : Window
     {
         #region Variable
-        private static Style currStyle;
         private static ControlTemplate currControlTemplate;
         private static System.Threading.Timer mTimer;
         private LoadType mLoadType;
@@ -61,16 +60,14 @@ namespace MyCustomControlLibrary
                     BindingLoadingTemple();
                     break;
                 case ShowType.nomal:
-                    Console.WriteLine("---nomal:" + mShowType);
+
                     break;
                 case ShowType.messageBox:
                     BindingMessageBoxTemple();
                     break;
                 default:
-                    Console.WriteLine("--- jo" + mShowType);
                     this.Close();
                     break;
-
             }
         }
         private static MMessageBox Instance;
@@ -94,7 +91,7 @@ namespace MyCustomControlLibrary
         /// <param name="isShowBtn">是否显示关闭按钮</param>
         /// <param name="AutoClose">是否设置自动关闭</param>
         /// <param name="AutoTime">自动关闭时间 3s</param>
-        public void ShowAlert(String alertText, Orientation orientation = Orientation.Horizontal, string icon = null, object brush = null, bool isShowBtn = true, bool AutoClose = true, int AutoTime = 3)
+        public void ShowAlert(String alertText, Orientation orientation = Orientation.Horizontal, string icon = null, object brush = null, bool isShowBtn = true, bool AutoClose = true, int AutoTime = 2)
         {                 
             Instance.mAlterText = alertText;
             Instance.mShowType = ShowType.Alert;
@@ -133,7 +130,7 @@ namespace MyCustomControlLibrary
         /// <param name="isShowBtn">是否显示关闭按钮</param>
         /// <param name="AutoClose">是否设置自动关闭</param>
         /// <param name="AutoTime">自动关闭时间 3s</param>
-        public  void ShowModalAlert(String alertText, Point point, Size size, Orientation orientation = Orientation.Horizontal, string icon = null, object brush = null, bool isShowBtn = true, bool AutoClose = true, int AutoTime = 3)
+        public  void ShowModalAlert(String alertText, Point point, Size size, Orientation orientation = Orientation.Horizontal, string icon = null, object brush = null, bool isShowBtn = true, bool AutoClose = true, int AutoTime = 2)
         {                  
             Instance.mAlterText = alertText;
             Instance.mShowType = ShowType.AlertModel;
@@ -163,7 +160,7 @@ namespace MyCustomControlLibrary
 
         public void ShowSuccessAlert(String alertText = "操作成功！")
         {           
-            ShowAlert(alertText, Orientation.Horizontal, null, Brushes.Green, false);
+            ShowAlert(alertText, Orientation.Horizontal, null, Brushes.White, false);
         }
         public void ShowErrorAlert(String alertText = "操作失败！")
         {

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 using MyHelper;
 using MyCustomControlLibrary;
 namespace IntentConnectWeighing
@@ -633,6 +634,55 @@ namespace IntentConnectWeighing
             }
             catch { }
           
+        }
+
+
+        private void SearchBar_SearchContentChanged(object sender, RoutedPropertyChangedEventArgs<string> e)
+        {
+            SearchBar searchBar = sender as SearchBar;
+            String querystr = searchBar.SearchContent;
+            if (String.IsNullOrWhiteSpace(querystr))
+            {
+                AnimateCloseSearchBorder();
+            }
+        }
+
+        private void SearchBar_SeachButtonClick(object sender, EventArgs e)
+        {
+            SearchBar searchBar = sender as SearchBar;
+            String querystr = searchBar.SearchContent;
+            if (!string.IsNullOrWhiteSpace(querystr))
+            {
+                AnimateOpenSearchBorder();
+            }         
+        }
+        /// <summary>
+        /// 动画打开搜索结果显示区
+        /// </summary>
+        private void  AnimateOpenSearchBorder() {
+            if (this.SearchBorder.Margin.Right < 0)
+            {
+             Storyboard storyboard = AnimationHelper.GetSerachBorderOutAnimation(SearchBorder, 1.2, (this.SearchBorder.Margin.Right + 10.0), 0);
+                storyboard.Completed += Storyboard_Completed;
+                storyboard.Begin();
+            }                
+        }
+
+        private void Storyboard_Completed(object sender, EventArgs e)
+        {
+            Point point = this.SearchBorder.PointToScreen(new Point());
+            Size size = new Size(this.SearchBorder.Width, this.SearchBorder.ActualHeight);
+            MMessageBox.GetInstance().ShowLoading(MMessageBox.LoadType.Circle,"正在加载中。。。",point,size,null,Orientation.Vertical,Brushes.White,4);
+        }
+
+        /// <summary>
+        /// 动画关闭搜索结果显示区 
+        /// </summary>
+        private void AnimateCloseSearchBorder() {
+            if (this.SearchBorder.Margin.Right >= 0)
+            {
+                AnimationHelper.GetSerachBorderOutAnimation(this.SearchBorder, 1, 0, -(this.SearchBorder.ActualWidth + 10.0)).Begin();
+            }               
         }
     }
 }

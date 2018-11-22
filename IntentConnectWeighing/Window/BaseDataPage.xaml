@@ -107,25 +107,14 @@
             <myControl:IconButton x:Name="SendCarListBtn"   Background="#e4e4e4e4"  Icon="&#xe9ce;" Margin="5,0,0,0" CornerRadius="10,0,0,10" Width="30" IconSize="20"   IconMargin="2,-1,0,0" Height="20" ToolTip="查看所有的派车单" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}"/>
             <myControl:IconButton x:Name="AddBtn"   Background="#e4e4e4e4"  Icon="&#xe626;" Margin="0" Width="30" IconSize="20"  IconMargin="0,-4,0,0" Height="20" ToolTip="添加" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}" Click="AddBtn_Click"/>
             <myControl:IconButton x:Name="RefreshBtn"  Background="#e4e4e4e4"  Icon="&#xe653;" Margin="-1,-1,0,0" CornerRadius="0,10,10,0" AllowsAnimation="False" Width="30" IconMargin="2,-1,0,0"  IconSize="20" Height="20" ToolTip="刷新" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}"/>
-        </WrapPanel>
-       
+        </WrapPanel>       
         <Border Background="White"  Grid.Column="1" CornerRadius="0,0,4,0" x:Name="RightContentBorderPanel">
             <StackPanel>
-                <StackPanel Height="34" x:Name="ToolBarPanel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,0" Orientation="Horizontal">
+                <StackPanel Height="34" x:Name="ToolBarPanel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,0" Orientation="Horizontal">                   
                     <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
-                        <Border BorderBrush="#e1e1e1" BorderThickness="1" CornerRadius="10">
-                            <StackPanel Orientation="Horizontal" Margin="4,1,4,1" >
-                                <TextBox Width="260" BorderThickness="0" Height="28" VerticalContentAlignment="Center" Padding="2,0,2,0" FontSize="13"/>
-                                <myControl:IconButton           
-                                   x:Name="SearchTabBtn"
-                                   IsTransparency="True" Foreground="#878787"
-                                   MouseOverForeground="{DynamicResource myBlue}"
-                                   VerticalAlignment="Bottom" ToolTip="搜索"
-                                   IsShowIcon="True" Icon="&#xe86e;" IconSize="26"
-                                  Width="28" Height="28" IconMargin="-2,0,0,0"
-                                   Margin="0,0,4,0"/>
-                            </StackPanel>
-                        </Border>                      
+                        <myControl:SearchBar x:Name="baseDataSearchBar" BarHeight="28" SearchAreaWidth="180" ToolTip="输入要查询的关键内容"
+                                             SeachButtonClick="SearchBar_SeachButtonClick" SearchContentChanged="SearchBar_SearchContentChanged"
+                                             ActivatedBrush="{DynamicResource myBlue}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <myControl:IconButton                
@@ -226,7 +215,6 @@
                                     </Border>
                                 </Grid>
                             </StackPanel>
-
                             <!--Material-->
                             <StackPanel x:Name="MaterialContentStackPanel" Visibility="{Binding Path=IsChecked,ElementName=MaterialTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" HorizontalAlignment="Center">
                                 <Grid Width="300" Margin="0,0,0,0" x:Name="MatereialDetailInfoGrid">
@@ -330,6 +318,20 @@
                     </myControl:MyScrollViewer>
                 </StackPanel>
             </StackPanel>
+        </Border>
+        <Border x:Name="SearchBorder" Grid.Column="1" Width="180" Margin="0,0,-188,0" HorizontalAlignment="Right" BorderBrush="#f4f4f4" BorderThickness="1" CornerRadius="0,0,2,0" Background="#f4f4f4" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="34"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <StackPanel Height="33" >
+                        <TextBlock Text="正在搜索公司.." Foreground="{DynamicResource myBlue}" FontSize="14" TextAlignment="Center" VerticalAlignment="Center" Padding="0,10,0,0"/>
+                    </StackPanel>
+                    <StackPanel Height="1" Margin="2,0,0,0" Background="{DynamicResource E4}"></StackPanel>                    
+                </StackPanel>                
+            </Grid>
         </Border>
     </Grid>
 </Page>
