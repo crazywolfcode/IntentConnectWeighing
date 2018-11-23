@@ -674,7 +674,6 @@ namespace IntentConnectWeighing
             Size size = new Size(this.SearchBorder.Width, this.SearchBorder.ActualHeight);
             MMessageBox.GetInstance().ShowLoading(MMessageBox.LoadType.Circle,"正在加载中。。。",point,size,null,Orientation.Vertical,Brushes.White,4);
         }
-
         /// <summary>
         /// 动画关闭搜索结果显示区 
         /// </summary>
