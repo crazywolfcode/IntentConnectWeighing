@@ -675,9 +675,7 @@
     <Resource Include="aislogo.ico" />
     <Resource Include="aislogo_48.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="dll\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
       <Visible>False</Visible>
@@ -773,6 +771,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon2w.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dll\MyLoadingLib.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
