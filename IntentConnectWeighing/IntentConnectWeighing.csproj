@@ -771,6 +771,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="dll\MyLoadingLib.dll" />
+    <Content Include="dll\System.Data.SQLite.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
