@@ -684,7 +684,5 @@ namespace IntentConnectWeighing
                 AnimationHelper.GetSerachBorderOutAnimation(this.SearchBorder, 1, 0, -(this.SearchBorder.ActualWidth + 10.0)).Begin();
             }               
         }
-
-        ///text bat git 
     }
 }
