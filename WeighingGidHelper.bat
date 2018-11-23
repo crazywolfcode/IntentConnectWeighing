@@ -22,7 +22,7 @@ if "%n%" =="1"( goto commit) else(if "%n%" =="2"( goto pushDev)else(if "%n%" =="
 
 :commit
 git add .
-set/p  ca=  ----------请输入提交内容描述：
+set/p  ca=  请输入提交内容描述：
 git commit -m "%ca%"
 echo  ----------完成
 echo  ----------去 推送
