@@ -38,6 +38,7 @@ if "%f%" == "y"( goto mergetomaster )else( if "%f%" == "n" ( exit ))
 
 :mergetomaster 
 git checkout master
+git pull origin master
 git merge dev
 
 echo  Íê³É
