@@ -36,7 +36,8 @@ namespace MyHelper
                     }
                     catch (Exception e)
                     {
-                        ConsoleHelper.writeLine(e.Message);
+                        ConsoleHelper.SvaeErrorToFile("数据打开失败  " + e.Message);
+                        throw new Exception("SQLite 数据打开失败！");
                     }
                 }
                 return connection;

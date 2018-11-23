@@ -63,12 +63,31 @@ namespace MyHelper
         /// <param name="content">内容</param>
         public static void Write(string path, string content)
         {
-            using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
-            {
-                fs.SetLength(0);
+            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            {                      
+                fs.SetLength(0);          
                 using (StreamWriter writer = new StreamWriter(fs))
                 {
                     writer.BaseStream.Seek(0, SeekOrigin.Begin);
+                    writer.Write(content);
+                    writer.Flush();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 写文件
+        /// </summary>
+        /// <param name="path">路径</param>
+        /// <param name="content">内容</param>
+        public static void WriteAppend(string path, string content)
+        {
+            using (FileStream fs = new FileStream(path, FileMode.Append, FileAccess.Write))
+            {
+               fs.Position = fs.Length;
+                using (StreamWriter writer = new StreamWriter(fs))
+                {
+                    writer.BaseStream.Seek(0, SeekOrigin.End);
                     writer.Write(content);
                     writer.Flush();
                 }

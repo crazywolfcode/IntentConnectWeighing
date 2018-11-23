@@ -10,11 +10,11 @@ namespace MyHelper
 {
     public class MySqlHelper : DbBaseHelper
     {
-        private static  string connectionString = ConfigurationHelper.GetConnectionConfig("mysqlConn");
+        private static string connectionString = ConfigurationHelper.GetConnectionConfig("mysqlConn");
         private static readonly string connectionStringTemplate = "Database={0};Data Source={1};User Id={2};Password={3};pooling=false;CharSet=utf8;port={4};MultipleActiveResultSets=true";
         //"Data Source=192.168.1.64;Initial Catalog=classzone;Persist Security Info=True;User ID=root;Password=root;Pooling=False;charset=utf8;MAX Pool Size=2000;Min Pool Size=1;Connection Lifetime=30;";
         // "Database=weightsys;Data Source=192.168.88.3;User Id=admin;Password=Txmy0071;pooling=false;CharSet=utf8;port=33069";
-      
+
         private MySqlConnection connection;
 
         private MySqlConnection mConnection
@@ -32,7 +32,8 @@ namespace MyHelper
                         }
                         catch (Exception e)
                         {
-                            ConsoleHelper.writeLine("联接数据库失败、/r/n 有可能是Server关机或者mysql没有启动  " + e.Message);
+                            ConsoleHelper.SvaeErrorToFile("联接数据库失败、有可能是Server关机或者mysql没有启动  " + e.Message);
+                            throw new Exception("Mysql 数据打开失败！");
                         }
                     }
                     return connection;
@@ -47,7 +48,8 @@ namespace MyHelper
                         }
                         catch (Exception e)
                         {
-                            ConsoleHelper.writeLine("联接数据库失败、/r/n 有可能是Server关机或者mysql没有启动  " + e.Message);
+                            ConsoleHelper.SvaeErrorToFile("联接数据库失败、 有可能是Server关机或者mysql没有启动  " + e.Message);
+                            throw new Exception("Mysql 数据打开失败！");
                         }
                     }
                     return connection;
@@ -61,7 +63,8 @@ namespace MyHelper
         /// </summary>
         public MySqlHelper(string connstring = null)
         {
-            if (!string.IsNullOrEmpty(connstring)) {
+            if (!string.IsNullOrEmpty(connstring))
+            {
                 connectionString = connstring;
             }
             if (connectionString == null || connectionString.Length <= 0)
@@ -85,7 +88,7 @@ namespace MyHelper
                 }
                 catch (Exception)
                 {
-                    return false;
+                    throw new Exception("Mysql 数据打开失败！");
                 }
             }
         }
@@ -97,7 +100,7 @@ namespace MyHelper
         /// <returns></returns>
         public DataTable getAllTable(string dbbame)
         {
-            string sql =$"SELECT table_name as `name` from information_schema.tables where table_schema='{dbbame}' and table_type='base table';";
+            string sql = $"SELECT table_name as `name` from information_schema.tables where table_schema='{dbbame}' and table_type='base table';";
             return this.ExcuteDataTable(sql, null);
         }
         /// <summary>
@@ -117,12 +120,13 @@ namespace MyHelper
         }
 
 
-        public List<DbSchema> getAllTableSchema(string dbname) {
+        public List<DbSchema> getAllTableSchema(string dbname)
+        {
             List<DbSchema> dss = new List<DbSchema>();
-            string sql=$"SELECT TABLE_NAME as tableName,TABLE_COMMENT as tableComment,CREATE_TIME as createTime,UPDATE_TIME as updateTime ,TABLE_ROWS as tableRows,DATA_LENGTH as dataLength   from information_schema.tables where table_schema='{dbname}'  and table_type='base table';";
+            string sql = $"SELECT TABLE_NAME as tableName,TABLE_COMMENT as tableComment,CREATE_TIME as createTime,UPDATE_TIME as updateTime ,TABLE_ROWS as tableRows,DATA_LENGTH as dataLength   from information_schema.tables where table_schema='{dbname}'  and table_type='base table';";
             DataTable dt = this.ExcuteDataTable(sql, null);
-            string json= JsonHelper.ObjectToJson(dt);
-            dss = (List<DbSchema>) JsonHelper.JsonToObject(json, typeof(List<DbSchema>));
+            string json = JsonHelper.ObjectToJson(dt);
+            dss = (List<DbSchema>)JsonHelper.JsonToObject(json, typeof(List<DbSchema>));
             return dss;
         }
         /// <summary>
@@ -131,8 +135,10 @@ namespace MyHelper
         /// <param name="dbName"></param>
         /// <param name="table"></param>
         /// <returns></returns>
-        public bool ExistTable(string dbName,string table) {
-            if (string.IsNullOrEmpty(dbName) || string.IsNullOrEmpty(table)) {
+        public bool ExistTable(string dbName, string table)
+        {
+            if (string.IsNullOrEmpty(dbName) || string.IsNullOrEmpty(table))
+            {
                 return false;
             }
             string sql = $"SELECT * FROM information_schema.TABLES WHERE TABLE_SCHEMA = '{dbName}' and table_name ='{table}' and table_type='base table' ;";
@@ -166,9 +172,11 @@ namespace MyHelper
             return ts;
         }
 
-        public List<MysqlTableColumnSchema> getTableColumnSchema(string dbname,string tablename) {
-            List<MysqlTableColumnSchema> list=null;
-            if (string.IsNullOrEmpty(dbname) && string.IsNullOrEmpty(tablename)) {
+        public List<MysqlTableColumnSchema> getTableColumnSchema(string dbname, string tablename)
+        {
+            List<MysqlTableColumnSchema> list = null;
+            if (string.IsNullOrEmpty(dbname) && string.IsNullOrEmpty(tablename))
+            {
                 return null;
             }
             string sqlT = @"select COLUMN_NAME as columnName ,
@@ -187,9 +195,10 @@ namespace MyHelper
 
         public string getCreateSql(string tableName)
         {
-            string  sql= $"show create table {tableName};";
+            string sql = $"show create table {tableName};";
             DataTable dt = this.ExcuteDataTable(sql, null);
-            if (dt.Rows.Count > 0) {
+            if (dt.Rows.Count > 0)
+            {
                 return dt.Rows[0][1].ToString();
             }
             return null;
@@ -265,10 +274,11 @@ namespace MyHelper
             }
         }
 
-        public int ExcuteNoQuery(string sql) {
+        public int ExcuteNoQuery(string sql)
+        {
             using (MySqlCommand command = new MySqlCommand(sql, mConnection))
             {
-             return   command.ExecuteNonQuery();              
+                return command.ExecuteNonQuery();
             }
         }
 
@@ -325,7 +335,7 @@ namespace MyHelper
                     {
                         command.CommandText = sqls[i];
                         affectedRows = command.ExecuteNonQuery();
-                    }               
+                    }
                     transation.Commit();
                 }
             }
