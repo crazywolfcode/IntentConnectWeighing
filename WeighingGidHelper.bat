@@ -49,5 +49,6 @@ if "%f%" == "y"( goto pushmaster )else( if "%f%" == "n" ( exit ))
 :pushmaster 
 git push origin master
 git checkout dev
+pause
 :exitt
 exit
