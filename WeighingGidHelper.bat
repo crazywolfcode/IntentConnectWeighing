@@ -17,22 +17,22 @@ cd /d D:\WorkSpace\VisualStudio\WPF\IntentConnectWeighing
 goto select
 
 :select
-set/p n=  请选择：
+set/p n=  ----------请选择：
 if "%n%" =="1"( goto commit) else(if "%n%" =="2"( goto pushDev)else(if "%n%" =="3"( goto mergetomaster ) else(if "%n%" =="4"( goto pushmaster) else(if "%n%" =="5"( goto exitt) else( exit )))))
 
 :commit
 git add .
-set/p  ca=  请输入提交内容描述：
+set/p  ca=  ----------请输入提交内容描述：
 git commit -m "%ca%"
-echo  完成
-echo  去 推送
+echo  ----------完成
+echo  ----------去 推送
 set/p  r=  请输入 y/n：
 if "%r%" == "y"( goto pushDev) else( if "%r%" == "n" ( exit ))
 
 :pushDev 
 git push origin dev
-echo  完成
-echo  是否合并到Master
+echo  ----------完成
+echo  ----------是否合并到Master
 set/p  f=  请输入 y/n：
 if "%f%" == "y"( goto mergetomaster )else( if "%f%" == "n" ( exit ))
 
@@ -41,14 +41,15 @@ git checkout master
 git pull origin master
 git merge dev
 
-echo  完成
-echo  是否推送Master
+echo  ----------完成
+echo  ----------是否推送Master
 set/p  f=  请输入 y/n：
 if "%f%" == "y"( goto pushmaster )else( if "%f%" == "n" ( exit ))
 
 :pushmaster 
 git push origin master
 git checkout dev
+echo  ----------完成
 pause
 :exitt
 exit
