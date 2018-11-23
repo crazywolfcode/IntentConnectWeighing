@@ -18,7 +18,8 @@ goto select
 
 :select
 set/p n=  请选择：
-if "%n%" =="1"( goto commit) else(if "%n%" =="2"( goto pushDev)else(if "%n%" =="3"( goto mergetomaster ) else(if "%n%" =="1"( goto pushmaster) else(if "%n%" =="5"( goto exitt) else( exit )))))
+if "%n%" =="1"( goto commit) else(if "%n%" =="2"( goto pushDev)else(if "%n%" =="3"( goto mergetomaster ) else(if "%n%" =="4"( goto pushmaster) else(if "%n%" =="5"( goto exitt) else( exit )))))
+
 :commit
 git add .
 set/p  ca=  请输入提交内容描述：
