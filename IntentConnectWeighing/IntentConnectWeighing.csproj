@@ -86,9 +86,6 @@
     <Reference Include="Loya.Dameer">
       <HintPath>dll\Loya.Dameer.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Expression.Drawing">
-      <HintPath>C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\.NETFramework\v4.0\Libraries\Microsoft.Expression.Drawing.dll</HintPath>
-    </Reference>
     <Reference Include="MyLoadingLib">
       <HintPath>..\..\MyLoadingLib\MyLoadingLib\bin\Debug\MyLoadingLib.dll</HintPath>
     </Reference>
