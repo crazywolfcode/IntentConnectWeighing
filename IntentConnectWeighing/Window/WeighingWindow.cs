@@ -459,12 +459,12 @@ namespace IntentConnectWeighing
         ///   /// <param name="orientation">方向</param>
         protected void ShowAlert(String content, String Title = "提示", Orientation orientation = Orientation.Horizontal)
         {
-            MMessageBox.GetInstance().ShouBox(content, Title, MMessageBox.ButtonType.No, MMessageBox.IconType.error, orientation);
+            MMessageBox.GetInstance().ShowBox(content, Title, MMessageBox.ButtonType.No, MMessageBox.IconType.error, orientation);
         }
 
-        protected MMessageBox.Reault ShowAlertResult()
+        protected MMessageBox.Result ShowAlertResult()
         {
-            return MMessageBox.GetInstance().ShouBox("保存成功 ! 要继续过磅吗？", "恭喜", MMessageBox.ButtonType.YesNo, MMessageBox.IconType.success, Orientation.Vertical, "是");
+            return MMessageBox.GetInstance().ShowBox("保存成功 ! 要继续过磅吗？", "恭喜", MMessageBox.ButtonType.YesNo, MMessageBox.IconType.success, Orientation.Vertical, "是");
         }
     }
 }

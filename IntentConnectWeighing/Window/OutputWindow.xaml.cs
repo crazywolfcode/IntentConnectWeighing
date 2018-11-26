@@ -369,7 +369,7 @@ namespace IntentConnectWeighing
                 // success to do TempUpdateUsedBase
                 UpdateUsedBaseData();
 
-                if (ShowAlertResult() == MMessageBox.Reault.No)
+                if (ShowAlertResult() == MMessageBox.Result.No)
                 {
                     this.Close();
                 }
@@ -398,7 +398,7 @@ namespace IntentConnectWeighing
                 //print
                 PrintBill(WeightingBillType.CK);
 
-                if (ShowAlertResult() == MMessageBox.Reault.No)
+                if (ShowAlertResult() == MMessageBox.Result.No)
                 {
                     this.Close();
                 }
@@ -507,7 +507,7 @@ namespace IntentConnectWeighing
                 sendCompany = company;
                 if (checkSupplyCustomer() == false)
                 {
-                    MMessageBox.GetInstance().ShouBox("发货公司和收货公司不能是同一个", "提示", MMessageBox.ButtonType.No, MMessageBox.IconType.error, Orientation.Vertical);
+                    MMessageBox.GetInstance().ShowBox("发货公司和收货公司不能是同一个", "提示", MMessageBox.ButtonType.No, MMessageBox.IconType.error, Orientation.Vertical);
                     //this.SupplyCb.Text = null;
                     this.SupplyCb.SelectedIndex = -1;
                     sendCompany = null;
@@ -580,7 +580,7 @@ namespace IntentConnectWeighing
                 receiverCompany = company;
                 if (checkSupplyCustomer() == false)
                 {
-                    MMessageBox.GetInstance().ShouBox("发货公司和收货公司不能是同一个", "提示", MMessageBox.ButtonType.No, MMessageBox.IconType.error, Orientation.Vertical);               
+                    MMessageBox.GetInstance().ShowBox("发货公司和收货公司不能是同一个", "提示", MMessageBox.ButtonType.No, MMessageBox.IconType.error, Orientation.Vertical);               
                     //this.ReceiverCompanyCb.Text = null;
                     this.ReceiverCompanyCb.SelectedIndex = -1;
                     receiverCompany = null;
@@ -758,8 +758,8 @@ namespace IntentConnectWeighing
             isShowSendYard = true;
             if (this.SendYardCb.ItemsSource == null)
             {
-                MMessageBox.Reault result = MMessageBox.GetInstance().ShouBox($"您还没有设置货场名称", "提示", MMessageBox.ButtonType.YesNo, MMessageBox.IconType.success, Orientation.Vertical, "是");
-                if (result == MMessageBox.Reault.Yes)
+                MMessageBox.Result result = MMessageBox.GetInstance().ShowBox($"您还没有设置货场名称", "提示", MMessageBox.ButtonType.YesNo, MMessageBox.IconType.success, Orientation.Vertical, "是");
+                if (result == MMessageBox.Result.Yes)
                 {
                     new YardAddW(sendCompany) { ParentRefreshData = new Action<Yard>(AffterAddYard) }.ShowDialog();
                 }
@@ -825,9 +825,9 @@ namespace IntentConnectWeighing
             isShowSendYard = false;
             if (this.ReceiverYardCb.ItemsSource == null)
             {
-                MMessageBox.Reault result = MMessageBox.GetInstance().ShouBox($"您还没有设置收货货场名称", "提示", MMessageBox.ButtonType.YesNo, MMessageBox.IconType.success, Orientation.Vertical, "是");
+                MMessageBox.Result result = MMessageBox.GetInstance().ShowBox($"您还没有设置收货货场名称", "提示", MMessageBox.ButtonType.YesNo, MMessageBox.IconType.success, Orientation.Vertical, "是");
 
-                if (result == MMessageBox.Reault.Yes)
+                if (result == MMessageBox.Result.Yes)
                 {
                     new YardAddW(receiverCompany) { ParentRefreshData = new Action<Yard>(AffterAddYard) }.ShowDialog();
                 }

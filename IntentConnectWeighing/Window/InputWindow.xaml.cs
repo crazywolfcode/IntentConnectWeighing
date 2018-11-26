@@ -438,7 +438,7 @@ namespace IntentConnectWeighing
                 // success to do TempUpdateUsedBase
                 UpdateUsedBaseData();
                 
-                if (ShowAlertResult() == MMessageBox.Reault.No)
+                if (ShowAlertResult() == MMessageBox.Result.No)
                 {
                     this.Close();
                 }
@@ -468,7 +468,7 @@ namespace IntentConnectWeighing
                 // print 
                 PrintBill(WeightingBillType.RK);
 
-                if (ShowAlertResult() == MMessageBox.Reault.No)
+                if (ShowAlertResult() == MMessageBox.Result.No)
                 {
                     this.Close();
                 }

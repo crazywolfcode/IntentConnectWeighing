@@ -537,7 +537,7 @@ namespace MyCustomControlLibrary
         /// <param name="yesBtnText">确定按键的文本</param>
         /// <param name="nobtnText">取消按键的文本</param>
         /// <returns></returns>
-        public Reault ShouBox(String alertText, string caption, ButtonType buttonType, IconType iconType, Orientation orientation = Orientation.Horizontal,string yesBtnText=null,String nobtnText=null)
+        public Result ShowBox(String alertText, string caption, ButtonType buttonType, IconType iconType, Orientation orientation = Orientation.Horizontal,string yesBtnText=null,String nobtnText=null)
         {            
             Instance.ShowInTaskbar = true;
             Instance.Style = Instance.FindResource(MMRK.BoxStyle.ToString()) as Style;
@@ -550,7 +550,7 @@ namespace MyCustomControlLibrary
             Instance.mOrientation = orientation;
             Instance.mIconType = iconType;
             bool result = (bool)Instance.ShowDialog();
-            return result == true ? Reault.Yes : Reault.No;
+            return result == true ? Result.Yes : Result.No;
         }
 
         private void BindingMessageBoxTemple()
@@ -694,7 +694,7 @@ namespace MyCustomControlLibrary
             LoadingStyle,
         }
 
-        public enum Reault
+        public enum Result
         {
             Yes,
             No

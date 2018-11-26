@@ -9,7 +9,9 @@ using MyHelper;
 using Baidu.Aip;
 using System.Text;
 using System.Windows.Input;
-
+using System.Threading.Tasks;
+using System.Windows.Threading;
+using MyCustomControlLibrary;
 namespace IntentConnectWeighing
 {
     /// <summary>
@@ -61,6 +63,13 @@ namespace IntentConnectWeighing
             currentYard = YardModel.GetById(MyHelper.ConfigurationHelper.GetConfig(ConfigItemName.yardId.ToString()));
             //Scanner Gun
             StartKeyBoardHook();
+
+            //UI线程未捕获异常处理事件（UI主线程）
+            this.DispatcherUnhandledException += App_DispatcherUnhandledException;
+            //非UI线程未捕获异常处理事件(例如自己创建的一个子线程)
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            //Task线程内未捕获异常处理事件
+            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
         }
 
         private void StartKeyBoardHook() {
@@ -179,9 +188,9 @@ namespace IntentConnectWeighing
         private void QuitMenuItem_Click(object sender, EventArgs e)
         {
             currWindow.Activate();
-            MessageBoxResult result;
-            result = MessageBox.Show("你确定退出程系吗", "提示", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
-            if (result == MessageBoxResult.Yes)
+   
+            MMessageBox.Result result = MMessageBox.GetInstance().ShowBox("你确定退出程系吗", "提示",MMessageBox.ButtonType.YesNo,MMessageBox.IconType.Info);
+            if (result == MMessageBox.Result.Yes)
             {
                 Application.Current.Shutdown();
             }
@@ -192,10 +201,6 @@ namespace IntentConnectWeighing
         }
         #endregion
 
-        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
-        {
-            ConsoleHelper.writeLine("There are unhandled exceptions in the program");
-        }
         /// <summary>
         /// save the config file's config Item to database 
         /// </summary>
@@ -423,5 +428,53 @@ namespace IntentConnectWeighing
         }
         #endregion
 
+
+        #region 全局异常处理 TODO
+
+        //UI线程未捕获异常处理事件（UI主线程）
+        private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            Exception ex = e.Exception;
+            string msg = String.Format("{0}\n\n{1}", ex.Message, ex.StackTrace);//异常信息 和 调用堆栈信息
+            MessageBox.Show(msg, "UI线程异常");
+
+            e.Handled = true;//表示异常已处理，可以继续运行
+        }
+
+        //非UI线程未捕获异常处理事件
+        //如果UI线程异常DispatcherUnhandledException未注册，则如果发生了UI线程未处理异常也会触发此异常事件
+        //此机制的异常捕获后应用程序会直接终止。没有像DispatcherUnhandledException事件中的Handler=true的处理方式，可以通过比如Dispatcher.Invoke将子线程异常丢在UI主线程异常处理机制中处理
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (e.ExceptionObject is Exception ex)
+            {
+                string msg = String.Format("{0}\n\n{1}", ex.Message, ex.StackTrace);//异常信息 和 调用堆栈信息
+                MessageBox.Show(msg, "非UI线程异常");
+            }
+        }
+        //Task线程内未捕获异常处理事件
+        private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        {
+            Exception ex = e.Exception;
+            string msg = String.Format("{0}\n\n{1}", ex.Message, ex.StackTrace);
+            MessageBox.Show(msg, "Task异常");
+        }
+
+        //异常处理 封装
+        private void OnExceptionHandler(Exception ex)
+        {
+            if (ex != null)
+            {
+                string errorMsg = "";
+                if (ex.InnerException != null)
+                {
+                    errorMsg += String.Format("【InnerException】{0}\n{1}\n", ex.InnerException.Message, ex.InnerException.StackTrace);
+                }
+                errorMsg += String.Format("{0}\n{1}", ex.Message, ex.StackTrace);
+
+                ConsoleHelper.writeLine(errorMsg);
+            }
+        }
+        #endregion
     }
 }

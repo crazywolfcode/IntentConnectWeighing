@@ -239,14 +239,14 @@ namespace IntentConnectWeighing
 
         private void MessageboxOne_Click(object sender, RoutedEventArgs e)
         {
-            MyCustomControlLibrary.MMessageBox.Reault reault = MyCustomControlLibrary.MMessageBox.GetInstance().ShouBox(
+            MyCustomControlLibrary.MMessageBox.Result reault = MyCustomControlLibrary.MMessageBox.GetInstance().ShowBox(
                 "操作成功！",
                 "信息",
                 MyCustomControlLibrary.MMessageBox.ButtonType.No,
                 MyCustomControlLibrary.MMessageBox.IconType.success
                 );
 
-            if (reault == MyCustomControlLibrary.MMessageBox.Reault.No)
+            if (reault == MyCustomControlLibrary.MMessageBox.Result.No)
             {
                 MyCustomControlLibrary.MMessageBox.GetInstance().ShowSuccessAlert("你点了 取消");
             }
@@ -254,7 +254,7 @@ namespace IntentConnectWeighing
 
         private void MessageboxTwo_Click(object sender, RoutedEventArgs e)
         {
-            MyCustomControlLibrary.MMessageBox.Reault reault = MyCustomControlLibrary.MMessageBox.GetInstance().ShouBox(
+            MyCustomControlLibrary.MMessageBox.Result reault = MyCustomControlLibrary.MMessageBox.GetInstance().ShowBox(
              "操作成功！",
              "信息",
              MyCustomControlLibrary.MMessageBox.ButtonType.Yes,
@@ -263,7 +263,7 @@ namespace IntentConnectWeighing
             var point = new Point();
             //Mborder 窗口内容区域的边框
             var size = new Size(this.Mborder.ActualWidth, 300);
-            if (reault == MyCustomControlLibrary.MMessageBox.Reault.Yes)
+            if (reault == MyCustomControlLibrary.MMessageBox.Result.Yes)
             {
                 MyCustomControlLibrary.MMessageBox.GetInstance().ShowSuccessModelAlert(size, point, "你点了 确定");
             }
@@ -271,7 +271,7 @@ namespace IntentConnectWeighing
 
         private void MessageboxThree_Click(object sender, RoutedEventArgs e)
         {
-            MyCustomControlLibrary.MMessageBox.Reault reault = MyCustomControlLibrary.MMessageBox.GetInstance().ShouBox(
+            MyCustomControlLibrary.MMessageBox.Result reault = MyCustomControlLibrary.MMessageBox.GetInstance().ShowBox(
            "是否要删除！",
            "警 告",
            MyCustomControlLibrary.MMessageBox.ButtonType.YesNo,
@@ -281,7 +281,7 @@ namespace IntentConnectWeighing
            "否"
            );
 
-            if (reault == MyCustomControlLibrary.MMessageBox.Reault.Yes)
+            if (reault == MyCustomControlLibrary.MMessageBox.Result.Yes)
             {
                 MyCustomControlLibrary.MMessageBox.GetInstance().ShowSuccessAlert("你点了 是");
             }
