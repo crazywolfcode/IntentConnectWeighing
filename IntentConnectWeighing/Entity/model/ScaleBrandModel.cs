@@ -11,8 +11,8 @@ namespace IntentConnectWeighing
         
         public List<ScaleBrand> getAll() {
             List<ScaleBrand> list = null;
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.scale_brand.ToString()) ;
-            list = MyHelper.DbBaseHelper.DataTableToEntitys<ScaleBrand>(DatabaseOPtionHelper.GetInstance().select(sql));
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.scale_brand.ToString()) ;
+            list = DatabaseOPtionHelper.GetInstance().select<ScaleBrand>(sql);
             return list;
         }
     }

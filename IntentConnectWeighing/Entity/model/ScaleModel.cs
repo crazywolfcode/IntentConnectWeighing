@@ -15,9 +15,9 @@ namespace IntentConnectWeighing
         /// <returns> true 存在 false 不存在</returns>
         public bool isExist(Scale scale) {
             string condition = ScaleEnum.brand + " = '" + scale.brand + "' and " + ScaleEnum.com + " = '" + scale.com + "' and " + ScaleEnum.series + " ='" + scale.series + "'";
-            string sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.scale.ToString(),null,condition);
-            System.Data.DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            if (dt.Rows.Count > 0)
+            string sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.scale.ToString(),null,condition);
+            List<Scale> list= DatabaseOPtionHelper.GetInstance().select<Scale>(sql);
+            if (list.Count > 0)
             {
                 return true;
             }          

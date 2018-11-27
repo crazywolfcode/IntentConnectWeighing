@@ -8,8 +8,8 @@ using System.Text;
 
 	 /// <summary>
 	 /// 过磅单
-	 /// 数据条数:97
-	 /// 数据大小:112KB
+	 /// 数据条数:122
+	 /// 数据大小:128KB
 	 /// </summary>
 
 
@@ -363,6 +363,21 @@ using System.Text;
 	 /// </summary>
 
 	 public Int32 receiveStatus{ get; set; }
+
+	 /// <summary>
+	 /// 注释:税务系统的上传状态 0 未传 1 已传 大于0代表上传的次数
+	 /// 可空:NO
+	 ///默认值:0
+	 /// </summary>
+
+	 public Int32 taxationUpStatus{ get; set; }
+
+	 /// <summary>
+	 /// 可空:NO
+	 ///默认值:CURRENT_TIMESTAMP
+	 /// </summary>
+
+	 public DateTime taxationUpTime{ get; set; }
 
 	 }
 }

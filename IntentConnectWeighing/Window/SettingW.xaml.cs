@@ -149,16 +149,14 @@ namespace IntentConnectWeighing
         private void refreshBaseSettingData() { }
         private void refreshScaleSettingData()
         {
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.scale.ToString());
-            DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            mScales = DbBaseHelper.DataTableToEntitys<Scale>(dt);
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.scale.ToString());        
+            mScales = DatabaseOPtionHelper.GetInstance().select<Scale>(sql);
             this.ScaleDataGrid.ItemsSource = mScales;
         }
         private void refreshCameraSettingData()
         {
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.camera_info.ToString());
-            DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            mCameraInfos = DbBaseHelper.DataTableToEntitys<CameraInfo>(dt);
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.camera_info.ToString());
+            mCameraInfos = DatabaseOPtionHelper.GetInstance().select<CameraInfo>(sql);
             this.CamreaDataGrid.ItemsSource = mCameraInfos;
         }
        
@@ -249,7 +247,7 @@ namespace IntentConnectWeighing
                 {
                     return;
                 }
-                String sql = DbBaseHelper.getDeleteSql(DataTabeName.camera_info.ToString(), CameraInfoEnum.id.ToString() + "=" + Constract.valueSplit + id + Constract.valueSplit);
+                String sql = DatabaseOPtionHelper.GetInstance().getDeleteSql(DataTabeName.camera_info.ToString(), CameraInfoEnum.id.ToString() + "=" + Constract.valueSplit + id + Constract.valueSplit);
                 int res = DatabaseOPtionHelper.GetInstance().delete(sql);
                 if (res > 0)
                 {
@@ -310,7 +308,7 @@ namespace IntentConnectWeighing
                 {
                     return;
                 }
-                String sql = DbBaseHelper.getDeleteSql(DataTabeName.scale.ToString(), ScaleEnum.id.ToString() + "=" + Constract.valueSplit + id + Constract.valueSplit);
+                String sql = DatabaseOPtionHelper.GetInstance().getDeleteSql(DataTabeName.scale.ToString(), ScaleEnum.id.ToString() + "=" + Constract.valueSplit + id + Constract.valueSplit);
                 int res = DatabaseOPtionHelper.GetInstance().delete(sql);
                 if (res > 0)
                 {

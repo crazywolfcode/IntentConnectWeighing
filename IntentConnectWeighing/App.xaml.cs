@@ -239,23 +239,19 @@ namespace IntentConnectWeighing
         /// </summary>
         private void InsertOrUpdateConnectionStrings()
         {
-            ConnectionStringSettingsCollection conns = ConfigurationManager.ConnectionStrings;
-            DatabaseOPtionHelper helper = null;
+            ConnectionStringSettingsCollection conns = ConfigurationManager.ConnectionStrings;        
             string sql = string.Empty;
             for (int i = 0; i < conns.Count; i++)
             {
                 Config config = null;
                 if (!conns[i].Name.Contains("Local"))
                 {
-                    sql = DbBaseHelper.getSelectSql("config", null, "client_id =' " + ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString()) + "' and config_name = ' " + conns[i].Name + "'", null, null, null, 1);
-                    if (helper == null)
+                    sql = DatabaseOPtionHelper.GetInstance().getSelectSql("config", null, "client_id =' " + ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString()) + "' and config_name = ' " + conns[i].Name + "'", null, null, null, 1);
+                 
+                    List<Config> configs = DatabaseOPtionHelper.GetInstance().select<Config>(sql);
+                    if (configs!=null && configs.Count > 0)
                     {
-                        helper = DatabaseOPtionHelper.GetInstance();
-                    }
-                    DataTable dt = helper.select(sql);
-                    if (dt.Rows.Count > 0)
-                    {
-                        config = JsonHelper.JsonToObject(JsonHelper.ObjectToJson(dt.Rows[0]), typeof(Config)) as Config;
+                        config = JsonHelper.JsonToObject(JsonHelper.ObjectToJson(configs[0]), typeof(Config)) as Config;
                         if (config != null)
                         {
                             if (config.configValue != conns[i].ConnectionString)
@@ -269,7 +265,7 @@ namespace IntentConnectWeighing
                                     config.updateUserName = config.addUserName;
                                 }
                             }
-                            helper.update(config);
+                             DatabaseOPtionHelper.GetInstance().update(config);
                         }
                         else
                         {
@@ -294,7 +290,7 @@ namespace IntentConnectWeighing
                             config.updateUserId = config.addUserId;
                             config.updateUserName = config.addUserName;
                         }
-                        helper.insert(config);
+                        DatabaseOPtionHelper.GetInstance().insert(config);
                     }
                 }
             }
@@ -304,22 +300,17 @@ namespace IntentConnectWeighing
         /// </summary>
         private void InsertOrUpdateAppSettings()
         {
-            DatabaseOPtionHelper helper = null;
+            SqlDao.DbHelper helper =  DatabaseOPtionHelper.GetInstance(); ;
             string sql = string.Empty;
             NameValueCollection collection = ConfigurationManager.AppSettings;
             string[] keys = collection.AllKeys;
             foreach (string key in keys)
             {
-                Config config = null;
-                if (helper == null)
-                {
-                    helper = DatabaseOPtionHelper.GetInstance();
-                }
-                sql = DbBaseHelper.getSelectSql("config", null, "client_id ='" + ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString()) + "' and config_name = '" + key + "'", null, null, null, 1);
-                DataTable dt = helper.select(sql);
-                if (dt.Rows.Count > 0)
-                {
-                    List<Config> configs = DbBaseHelper.DataTableToEntitys<Config>(dt);
+                Config config = null;              
+                sql = helper.getSelectSql("config", null, "client_id ='" + ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString()) + "' and config_name = '" + key + "'", null, null, null, 1);
+                List<Config> configs = helper.select<Config>(sql);
+                if (configs != null && configs.Count > 0)
+                {                 
                     if (configs[0] != null)
                     {
                         config = configs[0];

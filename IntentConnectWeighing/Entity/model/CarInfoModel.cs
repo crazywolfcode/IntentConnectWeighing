@@ -10,9 +10,9 @@ namespace IntentConnectWeighing
     {
         public static List<CarInfo> FuzzySearch(String palteNumberPart)
         {
-            string condition = CarInfoEnum.car_number.ToString() + " like '%" + palteNumberPart + "%' ";
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.car_info.ToString(), null, condition);
-            List<CarInfo> list = MyHelper.DbBaseHelper.DataTableToEntitys<CarInfo>(DatabaseOPtionHelper.GetInstance().select(sql));
+            string condition = CarInfoEnum.car_number.ToString() + " like '%" + palteNumberPart + "%' ";           
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.car_info.ToString(), null, condition);
+            List<CarInfo> list = DatabaseOPtionHelper.GetInstance().select<CarInfo>(sql);
             return list;
         }
     }

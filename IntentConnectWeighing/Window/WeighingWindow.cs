@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using MyCustomControlLibrary;
 
 namespace IntentConnectWeighing
 {
@@ -214,8 +213,8 @@ namespace IntentConnectWeighing
         {
             String @condition = ScaleEnum.client_id.ToString() + "=" + Constract.valueSplit + App.CurrClientId + Constract.valueSplit + " and " +
                 ScaleEnum.company_id.ToString() + "=" + Constract.valueSplit + App.currentCompany.id + Constract.valueSplit;
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.scale.ToString(), null, condition, null, null, ScaleEnum.default_type.ToString() + " desc");
-            mScales = DbBaseHelper.DataTableToEntitys<Scale>(DatabaseOPtionHelper.GetInstance().select(sql));
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.scale.ToString(), null, condition, null, null, ScaleEnum.default_type.ToString() + " desc");
+            mScales =DatabaseOPtionHelper.GetInstance().select<Scale>(sql);
         }
 
         protected void ReadScaleData()
@@ -292,8 +291,8 @@ namespace IntentConnectWeighing
             String @condition = CameraInfoEnum.client_id.ToString() + "=" + Constract.valueSplit + App.CurrClientId + Constract.valueSplit + " and " +
                CameraInfoEnum.company_id.ToString() + "=" + Constract.valueSplit + App.currentCompany.id + Constract.valueSplit + " and " +
                 CameraInfoEnum.scale_id.ToString() + "=" + Constract.valueSplit + mCurrScale.id + Constract.valueSplit;
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.camera_info.ToString(), null, condition, null, null);
-            mCameraInfos = DbBaseHelper.DataTableToEntitys<CameraInfo>(DatabaseOPtionHelper.GetInstance().select(sql));
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.camera_info.ToString(), null, condition, null, null);
+            mCameraInfos = DatabaseOPtionHelper.GetInstance().select<CameraInfo>(sql);
         }
         /// <summary>
         /// 显示摄像头

@@ -217,8 +217,8 @@ namespace IntentConnectWeighing
                 return;
             }
             string condition = WeighingBillEnum.id.ToString() + "=" + Constract.valueSplit + mWeighingBill.id + Constract.valueSplit;
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition, null, null, null, 1);
-            List<WeighingBill> list = DbBaseHelper.DataTableToEntitys<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition, null, null, null, 1);
+            List<WeighingBill> list = DatabaseOPtionHelper.GetInstance().select<WeighingBill>(sql);
             if (list.Count > 0)
             {
                 mWeighingBill = list[0];

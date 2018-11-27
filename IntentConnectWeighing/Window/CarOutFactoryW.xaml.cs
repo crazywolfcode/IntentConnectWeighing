@@ -69,8 +69,8 @@ namespace IntentConnectWeighing
             {
                 condition += WeighingBillEnum.send_status.ToString() + "=" + Constract.valueSplit + 0 + Constract.valueSplit;
             }
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
-            mWeighingBills = DbBaseHelper.DataTableToEntitys<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
+            mWeighingBills = DatabaseOPtionHelper.GetInstance().select<WeighingBill>(sql);
             if (mType == WeightingBillType.RK)
             {
                 this.INDataGrid.ItemsSource = mWeighingBills;

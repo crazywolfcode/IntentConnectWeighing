@@ -9,10 +9,8 @@ namespace IntentConnectWeighing
     class ProvinceModel
     {
         public static List<Province> GetProvince() {
-            List<Province> provinces;
-            string sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.province.ToString());
-            provinces = MyHelper.DbBaseHelper.DataTableToEntitys<Province>(DatabaseOPtionHelper.GetInstance().select(sql));
-            return provinces;
+            string sql =DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.province.ToString());             
+            return DatabaseOPtionHelper.GetInstance().select<Province>(sql);
         }
     }
 }

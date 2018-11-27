@@ -71,7 +71,7 @@ namespace IntentConnectWeighing
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-            DatabaseOPtionHelper optionHelper = DatabaseOPtionHelper.GetInstance();
+            SqlDao.DbHelper optionHelper = DatabaseOPtionHelper.GetInstance();
             int res = 0;
             if (isAdd ==false)
             {
@@ -151,9 +151,8 @@ namespace IntentConnectWeighing
             string @condition = YardEnum.name.ToString() + "=" + Constract.valueSplit + name + Constract.valueSplit
                 + " and "
                 + YardEnum.affiliated_company_id.ToString() + "+" + Constract.valueSplit + mYard.affiliatedCompanyId + Constract.valueSplit;
-            string sql = DbBaseHelper.getSelectSqlNoSoftDeleteCondition(DataTabeName.yard.ToString(), null, condition, null, null, null, 1, 0);
-            DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            List<Yard> list = DbBaseHelper.DataTableToEntitys<Yard>(dt);
+            string sql = DatabaseOPtionHelper.GetInstance().getSelectSqlNoSoftDeleteCondition(DataTabeName.yard.ToString(), null, condition, null, null, null, 1, 0);
+            List<Yard> list = DatabaseOPtionHelper.GetInstance().select<Yard>(sql);
             if (list == null || list.Count <= 0)
             {
                 this.AlertInfoTb.Text = "该货场名称可以添加！";
@@ -162,7 +161,7 @@ namespace IntentConnectWeighing
             }
             else
             {
-                mYard = DbBaseHelper.DataTableToEntitys<Yard>(dt)[0];
+                mYard = list[0];
             }
             if (mYard != null)
             {
@@ -218,9 +217,8 @@ namespace IntentConnectWeighing
 
         private void InitCompanyData()
         {
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.company.ToString());
-            DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            mCompanys = DbBaseHelper.DataTableToEntitys<Company>(dt);
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.company.ToString());
+            mCompanys = DatabaseOPtionHelper.GetInstance().select<Company>(sql);
             this.CompanyNameCb.ItemsSource = mCompanys;
             if (mYard != null) {
                 for (int i = 0; i < this.CompanyNameCb.Items.Count; i++)

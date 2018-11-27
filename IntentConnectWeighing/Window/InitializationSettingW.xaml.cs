@@ -59,7 +59,7 @@ namespace IntentConnectWeighing
             {
                 MessageBox.Show("请填写所的配置项");
             }
-            if (MySqlHelper.CheckConn(connstring))
+            if (DatabaseOPtionHelper.GetInstance().CheckConn(connstring))
             {
                 try
                 {
@@ -72,13 +72,7 @@ namespace IntentConnectWeighing
 
                     AlertInfoTB.Text = "连接数据库成功";
 
-
-
                     //disable save button
-
-
-                    
-
 
                     SaveMysqlBtn.IsEnabled = false;
                 }
@@ -97,7 +91,7 @@ namespace IntentConnectWeighing
             string port = Port.Text.Trim();
             string pwd = Pwd.Text.Trim();
             if (string.IsNullOrEmpty(dbname) || string.IsNullOrEmpty(address) || string.IsNullOrEmpty(userid) || string.IsNullOrEmpty(port)) { return; }
-            string conn = MyHelper.MySqlHelper.BuildConnectionString(address, dbname, userid, pwd, port);
+            string conn =DatabaseOPtionHelper.GetInstance().BuildConnectionString(address, dbname, userid, pwd, port);
             connStr.Text = conn;
         }
 
@@ -146,7 +140,7 @@ namespace IntentConnectWeighing
 
         private void SqliteRB_Checked(object sender, RoutedEventArgs e)
         {
-            string defaultconn = SQLiteHelper.createConnString(ConfigurationHelper.GetConfig(ConfigItemName.sqliteDbName.ToString()));
+            string defaultconn = DatabaseOPtionHelper.GetInstance().createConnString(ConfigurationHelper.GetConfig(ConfigItemName.sqliteDbName.ToString()));
             SqliteDBNameTb.Text = ConfigurationHelper.GetConfig(ConfigItemName.sqliteDbName.ToString());
             SqlietConnStrTB.Text = defaultconn;
             if (string.IsNullOrEmpty(currentDbType))
@@ -154,7 +148,7 @@ namespace IntentConnectWeighing
                 SqliteAlertTB.Text = "数据库已经配置成功，建议不要轻易改变";
             }
 
-            if (SQLiteHelper.CheckConn(defaultconn)) {
+            if (DatabaseOPtionHelper.GetInstance().CheckConn(defaultconn)) {
                 SqliteRB.IsEnabled = false;
             }
         }
@@ -170,11 +164,11 @@ namespace IntentConnectWeighing
                     return;
                 }
             }
-            if (SQLiteHelper.CheckConn(defaultconn))
+            if (DatabaseOPtionHelper.GetInstance().CheckConn(defaultconn))
             {
                 currentDbType = DbType.sqlite.ToString();
                 ConfigurationHelper.SetConnectionConfig(ConfigItemName.sqliteConn.ToString(), defaultconn);
-                ConfigurationHelper.SetConfig(ConfigItemName.sqliteDbPath.ToString(), SQLiteHelper.getDbSavePath());
+                ConfigurationHelper.SetConfig(ConfigItemName.sqliteDbPath.ToString(), System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data"));
                 ConfigurationHelper.SetConfig(ConfigItemName.dbType.ToString(),DbType.sqlite.ToString());
                 SqliteAlertTB.Text = "Sqlite 数据库配置成功";
                 //disable save button               

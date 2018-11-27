@@ -10,8 +10,8 @@ namespace IntentConnectWeighing
     {
         public static Yard GetById(String id) {
             String conditon = YardEnum.id.ToString() + "=" + Constract.valueSplit + id + Constract.valueSplit;
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.yard.ToString(),null,conditon,null,null,null,1);
-            List<Yard> list =MyHelper.DbBaseHelper.DataTableToEntitys<Yard>(DatabaseOPtionHelper.GetInstance().select(sql));
+            String sql =DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.yard.ToString(),null,conditon,null,null,null,1);
+            List<Yard> list =DatabaseOPtionHelper.GetInstance().select<Yard>(sql);
             if (list == null || list.Count <= 0)
             {
                 return null;
@@ -23,8 +23,8 @@ namespace IntentConnectWeighing
 
         public static List<Yard> GetListByCompanyId(String companyId) {
             String condition = YardEnum.affiliated_company_id.ToString() + "=" + Constract.valueSplit + companyId + Constract.valueSplit;
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.yard.ToString(), null, condition);
-            List<Yard> list =MyHelper.DbBaseHelper.DataTableToEntitys<Yard>(DatabaseOPtionHelper.GetInstance().select(sql));
+            String sql =DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.yard.ToString(), null, condition);
+            List<Yard> list =DatabaseOPtionHelper.GetInstance().select<Yard>(sql);
             return list;
         }
     }

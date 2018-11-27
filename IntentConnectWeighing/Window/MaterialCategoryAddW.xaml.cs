@@ -45,15 +45,8 @@ namespace IntentConnectWeighing
         {
             if (!String.IsNullOrEmpty(mId))
             {
-                BindingCurrrData();
+               // BindingCurrrData();
             }
-        }
-
-        private void BindingCurrrData()
-        {
-            String condition = CameraInfoEnum.id.ToString() + "=" + Constract.valueSplit + mId + Constract.valueSplit;
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.camera_info.ToString(), null, condition);
-            DataTable dt =  DatabaseOPtionHelper.GetInstance().select(sql);
         }
 
         /// <summary>
@@ -72,7 +65,7 @@ namespace IntentConnectWeighing
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
 
-            DatabaseOPtionHelper optionHelper =  DatabaseOPtionHelper.GetInstance();
+            SqlDao.DbHelper optionHelper =  DatabaseOPtionHelper.GetInstance();
             String condition = String.Empty;
             String sql = string.Empty;
             int res = 0;
@@ -178,9 +171,8 @@ namespace IntentConnectWeighing
         private void CheckedExist(String name)
         {
             string condition = MaterialCategoryEnum.name.ToString() + "=" + Constract.valueSplit + name + Constract.valueSplit;
-            string sql = DbBaseHelper.getSelectSqlNoSoftDeleteCondition(DataTabeName.material_category.ToString(), null, condition, null, null, null, 1, 0);
-            DataTable dt =  DatabaseOPtionHelper.GetInstance().select(sql);
-            List<MaterialCategory> list = DbBaseHelper.DataTableToEntitys<MaterialCategory>(dt);
+            string sql = DatabaseOPtionHelper.GetInstance().getSelectSqlNoSoftDeleteCondition(DataTabeName.material_category.ToString(), null, condition, null, null, null, 1, 0);
+            List<MaterialCategory> list =  DatabaseOPtionHelper.GetInstance().select<MaterialCategory>(sql);
             if (list == null || list.Count <= 0)
             {
                 this.AlertInfoTb.Text = "该分类名称可以添加！";
@@ -189,7 +181,7 @@ namespace IntentConnectWeighing
             }
             else
             {
-                mMaterialCategory = DbBaseHelper.DataTableToEntitys<MaterialCategory>(dt)[0];
+                mMaterialCategory = list[0];
             }
             if (mMaterialCategory != null)
             {

@@ -7,6 +7,7 @@ using System.Text;
 {
 
 	 /// <summary>
+	 /// 磅称
 	 /// 数据条数:2
 	 /// 数据大小:16KB
 	 /// </summary>

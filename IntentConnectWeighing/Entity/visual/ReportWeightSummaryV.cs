@@ -12,7 +12,6 @@ namespace IntentConnectWeighing
 
     public class ReportWeightSummaryV
     {
-
         public Int64 companys { get; set; }
         public Int64 materials { get; set; }
         public Int64 cars { get; set; }

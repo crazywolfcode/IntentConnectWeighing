@@ -73,9 +73,9 @@ namespace IntentConnectWeighing
             if (response.StatusCode == 1)
             {
                 MessageBox.Show("ok" + response.ErrorMsg + " " + response.Data);
-                MySqlHelper helper = new MySqlHelper();
+  
                 Company coms = JsonHelper.JsonToObject(response.Data.ToString(), typeof(Company)) as Company;
-                helper.insertOrUpdate(coms);
+                DatabaseOPtionHelper.GetInstance().insertOrUpdate(coms);
             }
             else
             {
@@ -247,11 +247,10 @@ namespace IntentConnectWeighing
             if (response.StatusCode == 1)
             {
                 MessageBox.Show("ok" + response.ErrorMsg + " " + response.Data);
-                MySqlHelper helper = new MySqlHelper();
                 DataTable dt = JsonHelper.JsonToDataTable(response.Data.ToString()) as DataTable;
                 foreach (DataRow row in dt.Rows)
                 {
-                    helper.update(row);
+                    DatabaseOPtionHelper.GetInstance().update(row);
                 }
             }
             else

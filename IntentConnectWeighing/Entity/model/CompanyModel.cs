@@ -15,8 +15,8 @@ namespace IntentConnectWeighing
             }
             else {
                 string condition = CompanyEnum.name.ToString() + " like '%" + queryStr+ "%' " + " OR " + CompanyEnum.name_first_case.ToString() + " like '%" + queryStr.ToUpper() + "%'";
-                String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.company.ToString(), null, condition);
-                List<Company> list =MyHelper. DbBaseHelper.DataTableToEntitys<Company>(DatabaseOPtionHelper.GetInstance().select(sql));
+                String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.company.ToString(), null, condition);
+                List<Company> list =DatabaseOPtionHelper.GetInstance().select<Company>(sql);
                 return list;
             }
         }

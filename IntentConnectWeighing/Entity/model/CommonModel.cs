@@ -14,7 +14,7 @@ namespace IntentConnectWeighing
             try
             {
                 string set = fieldName + "=" + fieldName + " + " + number;
-                string sql = DbBaseHelper.getUpdateSql(tableName, set, condition);
+                string sql = DatabaseOPtionHelper.GetInstance().getUpdateSql(tableName, set, condition);
                 res =  DatabaseOPtionHelper.GetInstance().update(sql);               
                 return res;
             }
@@ -30,7 +30,7 @@ namespace IntentConnectWeighing
             try
             {
                 string set = fieldName + "=" + fieldName + " - " + number;
-                string sql = DbBaseHelper.getUpdateSql(tableName, set, condition);
+                string sql = DatabaseOPtionHelper.GetInstance().getUpdateSql(tableName, set, condition);
                 res = DatabaseOPtionHelper.GetInstance().update(sql);          
                 return res;
             }
@@ -46,8 +46,7 @@ namespace IntentConnectWeighing
         /// <param name="type"></param>
         /// <returns></returns>
         public static int GetTodayCount(WeightingBillType type) {
-            int count = 0;
-            String condition = WeighingBillEnum.type.ToString()+"="+((int)type);
+                String condition = WeighingBillEnum.type.ToString()+"="+((int)type);
             if (type == WeightingBillType.RK)
             {
                 condition +=" and "+ WeighingBillEnum.receive_in_time + " like '%" + DateTimeHelper.getCurrentDateTime(DateTimeHelper.DateFormat) + "%'";
@@ -55,13 +54,9 @@ namespace IntentConnectWeighing
             else {
                 condition += " and " + WeighingBillEnum.send_in_time + " like '%" + DateTimeHelper.getCurrentDateTime(DateTimeHelper.DateFormat) + "%'";
             }
-            string sql = DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(),WeighingBillEnum.id.ToString(),condition);
-            System.Data.DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-           if(dt.Rows.Count > 0)
-            {
-                count = dt.Rows.Count;
-            }
-            return count;
+            string sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(),WeighingBillEnum.id.ToString(),condition);
+           List<WeighingBill > list = DatabaseOPtionHelper.GetInstance().select<WeighingBill>(sql);         
+            return list.Count;
         }
     }
 }

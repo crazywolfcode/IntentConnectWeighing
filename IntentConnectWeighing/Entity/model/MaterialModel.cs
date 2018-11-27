@@ -14,8 +14,8 @@ namespace IntentConnectWeighing
                 return null;
             }
             string condition = MaterialEnum.name.ToString() + " like '%" + queryStr + "%' " + " OR " + MaterialEnum.name_first_case.ToString() + " like '%" + queryStr.ToUpper() + "%'";
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.material.ToString(), null, condition);
-            List<Material> list = DbBaseHelper.DataTableToEntitys<Material>(DatabaseOPtionHelper.GetInstance().select(sql));
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.material.ToString(), null, condition);
+            List<Material> list = DatabaseOPtionHelper.GetInstance().select<Material>(sql);
             return list;
         }
     }

@@ -59,12 +59,10 @@ namespace IntentConnectWeighing
 
         private void bindingCurrrCamera() {
             String condition = CameraInfoEnum.id.ToString() + "=" + Constract.valueSplit + mId + Constract.valueSplit;
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.camera_info.ToString(), null, condition);
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.camera_info.ToString(), null, condition);
 
-            DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            if (dt.Rows.Count > 0) {
-                mCameraInfo =(DbBaseHelper.DataTableToEntitys<CameraInfo>(dt))[0];
-            }
+            mCameraInfo = DatabaseOPtionHelper.GetInstance().select<CameraInfo>(sql)[0];
+                  
             this.IpTB.Text = mCameraInfo.ip;
             this.portTB.Text = mCameraInfo.port;
             this.userNameTB.Text = mCameraInfo.userName;
@@ -137,10 +135,10 @@ namespace IntentConnectWeighing
                     condition = CameraInfoEnum.client_id.ToString() + "=" + Constract.valueSplit + cid + Constract.valueSplit + " and " +
                         CameraInfoEnum.ip.ToString() + "=" + Constract.valueSplit + IpTB.Text.ToString() + Constract.valueSplit +
                         " and " + CameraInfoEnum.port.ToString() + "=" + Constract.valueSplit + this.portTB.Text.ToString() + Constract.valueSplit;
-                    sql = DbBaseHelper.getSelectSqlNoSoftDeleteCondition(DbBaseHelper.getTableName(camera), null, condition, null, null, null, 1, 0);
-                    DatabaseOPtionHelper optionHelper =  DatabaseOPtionHelper.GetInstance();
-                    DataTable dt = optionHelper.select(sql);
-                    if (dt.Rows.Count > 0)
+                    sql = DatabaseOPtionHelper.GetInstance().getSelectSqlNoSoftDeleteCondition(DatabaseOPtionHelper.GetInstance().getTableName(camera), null, condition, null, null, null, 1, 0);
+                    SqlDao.DbHelper optionHelper =  DatabaseOPtionHelper.GetInstance();
+                   List<CameraInfo> list = optionHelper.select<CameraInfo>(sql);
+                    if (list.Count > 0)
                     {
                         MessageBox.Show("该摄像头已经存在，不要再添加拉！");
                         return;

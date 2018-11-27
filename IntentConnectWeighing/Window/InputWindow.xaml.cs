@@ -495,7 +495,7 @@ namespace IntentConnectWeighing
                     String condition = @WeighingBillEnum.id.ToString() + " = " + Constract.valueSplit + mWeighingBill.relativeBillId + Constract.valueSplit+
                      " and "+ WeighingBillEnum.type.ToString() +"="+ ((int)WeightingBillType.CK);
                     String set = WeighingBillEnum.relative_bill_id.ToString() + "=" + Constract.valueSplit + mWeighingBill.id + Constract.valueSplit;
-                    string sql = DbBaseHelper.getUpdateSql(DataTabeName.weighing_bill.ToString(), set, condition);
+                    string sql = DatabaseOPtionHelper.GetInstance().getUpdateSql(DataTabeName.weighing_bill.ToString(), set, condition);
                     DatabaseOPtionHelper.GetInstance().update(sql);
                 }
                 catch (Exception e)
@@ -506,8 +506,8 @@ namespace IntentConnectWeighing
             else if (mWeighingBill.relativeBillId != null)
             {
                 String where = WeighingBillEnum.id.ToString() + "=" + Constract.valueSplit + mWeighingBill.relativeBillId + Constract.valueSplit;
-                String sql = DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, where);
-                List<WeighingBill> list = DbBaseHelper.DataTableToEntitys<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+                String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), null, where);
+                List<WeighingBill> list = DatabaseOPtionHelper.GetInstance().select<WeighingBill>(sql);
                 WeighingBill wb = null;
                 if (list.Count > 0) {
                     wb = list[0];

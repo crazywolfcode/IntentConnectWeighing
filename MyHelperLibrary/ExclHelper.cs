@@ -396,7 +396,7 @@ namespace MyHelper
                 return 1;
             }
             catch (Exception e)
-            {
+            {                
                 return 0;
             }
 

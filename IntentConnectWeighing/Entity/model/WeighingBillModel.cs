@@ -11,8 +11,8 @@ namespace IntentConnectWeighing
         public static WeighingBill GetById(String id)
         {
             string condition = WeighingBillEnum.id.ToString() + "=" + Constract.valueSplit + id + Constract.valueSplit;
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition, null, null, null, 1);
-            List<WeighingBill> list = MyHelper.DbBaseHelper.DataTableToEntitys<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition, null, null, null, 1);
+            List<WeighingBill> list = DatabaseOPtionHelper.GetInstance().select<WeighingBill>(sql);
             if (list.Count > 0)
             {
                 return list[0];
@@ -34,8 +34,8 @@ namespace IntentConnectWeighing
               WeighingBillEnum.receive_yard_id.ToString() + "=" + Constract.valueSplit + App.currentYard.id + Constract.valueSplit + " and " +
               WeighingBillEnum.receive_company_id.ToString() + "=" + Constract.valueSplit + App.currentCompany.id + Constract.valueSplit;
 
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, conditon, null, null, WeighingBillEnum.send_out_time + " desc ", 20);
-            list = MyHelper.DbBaseHelper.DataTableToEntitys<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), null, conditon, null, null, WeighingBillEnum.send_out_time + " desc ", 20);
+            list = DatabaseOPtionHelper.GetInstance().select<WeighingBill>(sql);
             return list;
         }
         /// <summary>
@@ -60,8 +60,8 @@ namespace IntentConnectWeighing
             {
                 condition += " and " + where;
             }
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
-            List<WeighingBill> list = MyHelper.DbBaseHelper.DataTableToEntitys<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
+            List<WeighingBill> list = DatabaseOPtionHelper.GetInstance().select<WeighingBill>(sql);
             return list;
         }
 
@@ -94,8 +94,8 @@ namespace IntentConnectWeighing
             {
                 condition += " and " + where;
             }
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
-            List<WeighingBill> list = MyHelper.DbBaseHelper.DataTableToEntitys<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
+            List<WeighingBill> list = DatabaseOPtionHelper.GetInstance().select<WeighingBill>(sql);
             return list;
         }
 
@@ -121,8 +121,8 @@ namespace IntentConnectWeighing
             {
                 condition += " and " + where;
             }
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
-            List<WeighingBill> list = MyHelper.DbBaseHelper.DataTableToEntitys<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
+            List<WeighingBill> list = DatabaseOPtionHelper.GetInstance().select<WeighingBill>(sql);
             return list;
         }
         /// <summary>
@@ -154,8 +154,8 @@ namespace IntentConnectWeighing
             {
                 condition += " and " + where;
             }
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
-            List<WeighingBill> list = MyHelper.DbBaseHelper.DataTableToEntitys<WeighingBill>(DatabaseOPtionHelper.GetInstance().select(sql));
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), null, condition);
+            List<WeighingBill> list = DatabaseOPtionHelper.GetInstance().select<WeighingBill>(sql);
             return list;
         }
 
@@ -190,12 +190,12 @@ namespace IntentConnectWeighing
             {
                 condition += " and " + where;
             }
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), WeighingBillEnum.receive_material_name.ToString() + ", count(" + WeighingBillEnum.id.ToString() + ") as id", condition, WeighingBillEnum.receive_material_name.ToString());
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), WeighingBillEnum.receive_material_name.ToString() + ", count(" + WeighingBillEnum.id.ToString() + ") as sync_time", condition, WeighingBillEnum.receive_material_name.ToString());
             Dictionary<String, Int32> list = new Dictionary<String, Int32>() { };
-            System.Data.DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            for (int i = 0; i < dt.Rows.Count; i++)
+           List<WeighingBill> ll= DatabaseOPtionHelper.GetInstance().select<WeighingBill>(sql);
+            for (int i = 0; i < ll.Count; i++)
             {
-                list.Add(dt.Rows[i][WeighingBillEnum.receive_material_name.ToString()].ToString(), Convert.ToInt32(dt.Rows[i][WeighingBillEnum.id.ToString()]));
+                list.Add(ll[i].receiveMaterialName, Convert.ToInt32(ll[i].syncTime));
             }
             return list;
         }
@@ -231,12 +231,12 @@ namespace IntentConnectWeighing
             {
                 condition += " and " + where;
             }
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), WeighingBillEnum.receive_material_name.ToString() + ", sum(" + WeighingBillEnum.receive_net_weight.ToString() + ") as num", condition, WeighingBillEnum.receive_material_name.ToString());
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), WeighingBillEnum.receive_material_name.ToString() + ", sum(" + WeighingBillEnum.receive_net_weight.ToString() + ") as receive_net_weight", condition, WeighingBillEnum.receive_material_name.ToString());
             Dictionary<String, Double> list = new Dictionary<String, Double>() { };
-            System.Data.DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            for (int i = 0; i < dt.Rows.Count; i++)
+           List<WeighingBill> ll= DatabaseOPtionHelper.GetInstance().select<WeighingBill>(sql);
+            for (int i = 0; i < ll.Count; i++)
             {
-                list.Add(dt.Rows[i][WeighingBillEnum.receive_material_name.ToString()].ToString(), Convert.ToDouble(dt.Rows[i]["num"]));
+                list.Add(ll[i].receiveMaterialName, Convert.ToDouble(ll[i].receiveNetWeight));
             }
             return list;
         }
@@ -271,12 +271,12 @@ namespace IntentConnectWeighing
             {
                 condition += " and " + where;
             }
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), WeighingBillEnum.send_company_name.ToString() + ", count(" + WeighingBillEnum.id.ToString() + ")  as id ", condition, WeighingBillEnum.send_company_name.ToString());
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), WeighingBillEnum.send_company_name.ToString() + ", count(" + WeighingBillEnum.id.ToString() + ")  as sync_time ", condition, WeighingBillEnum.send_company_name.ToString());
             Dictionary<String, Int32> list = new Dictionary<String, Int32>() { };
-            System.Data.DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            for (int i = 0; i < dt.Rows.Count; i++)
+            List<WeighingBill> ll = DatabaseOPtionHelper.GetInstance().select<WeighingBill>(sql);
+            for (int i = 0; i <ll.Count; i++)
             {
-                list.Add(dt.Rows[i][WeighingBillEnum.send_company_name.ToString()].ToString(), Convert.ToInt32(dt.Rows[i][WeighingBillEnum.id.ToString()]));
+                list.Add(ll[i].sendCompanyName, Convert.ToInt32(ll[i].syncTime));
             }
             return list;
         }
@@ -312,12 +312,12 @@ namespace IntentConnectWeighing
             {
                 condition += " and " + where;
             }
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), WeighingBillEnum.send_company_name.ToString() + ", sum(" + WeighingBillEnum.receive_net_weight.ToString() + ")  as num", condition, WeighingBillEnum.send_company_name.ToString());
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), WeighingBillEnum.send_company_name.ToString() + ", sum(" + WeighingBillEnum.receive_net_weight.ToString() + ")  as receive_net_weight", condition, WeighingBillEnum.send_company_name.ToString());
             Dictionary<String, double> list = new Dictionary<String, double>() { };
-            System.Data.DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            for (int i = 0; i < dt.Rows.Count; i++)
+            List<WeighingBill> ll = DatabaseOPtionHelper.GetInstance().select<WeighingBill>(sql);
+            for (int i = 0; i < ll.Count; i++)
             {
-                list.Add(dt.Rows[i][WeighingBillEnum.send_company_name.ToString()].ToString(), Convert.ToDouble(dt.Rows[i]["num"]));
+                list.Add(ll[i].sendCompanyName, Convert.ToDouble(ll[i].receiveNetWeight));
             }
             return list;
         }
@@ -353,12 +353,12 @@ namespace IntentConnectWeighing
             {
                 condition += " and " + where;
             }
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), WeighingBillEnum.send_material_name.ToString() + ", count(" + WeighingBillEnum.id.ToString() + ") as id", condition, WeighingBillEnum.send_material_name.ToString());
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), WeighingBillEnum.send_material_name.ToString() + ", count(" + WeighingBillEnum.id.ToString() + ") as sync_time", condition, WeighingBillEnum.send_material_name.ToString());
             Dictionary<String, Int32> list = new Dictionary<String, Int32>() { };
-            System.Data.DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            for (int i = 0; i < dt.Rows.Count; i++)
+             List<WeighingBill> ll = DatabaseOPtionHelper.GetInstance().select<WeighingBill>(sql);
+            for (int i = 0; i < ll.Count; i++)
             {
-                list.Add(dt.Rows[i][WeighingBillEnum.send_material_name.ToString()].ToString(), Convert.ToInt32(dt.Rows[i][WeighingBillEnum.id.ToString()]));
+                list.Add(ll[i].sendMaterialName, Convert.ToInt32(ll[i].syncTime));
             }
             return list;
         }
@@ -394,12 +394,12 @@ namespace IntentConnectWeighing
             {
                 condition += " and " + where;
             }
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), WeighingBillEnum.send_material_name.ToString() + ", sum(" + WeighingBillEnum.send_net_weight.ToString() + ") as num", condition, WeighingBillEnum.send_material_name.ToString());
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), WeighingBillEnum.send_material_name.ToString() + ", sum(" + WeighingBillEnum.send_net_weight.ToString() + ") as send_net_weight", condition, WeighingBillEnum.send_material_name.ToString());
             Dictionary<String, Double> list = new Dictionary<String, Double>() { };
-            System.Data.DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            for (int i = 0; i < dt.Rows.Count; i++)
+             List<WeighingBill> ll = DatabaseOPtionHelper.GetInstance().select<WeighingBill>(sql);
+            for (int i = 0; i < ll.Count; i++)
             {
-                list.Add(dt.Rows[i][WeighingBillEnum.send_material_name.ToString()].ToString(), Convert.ToDouble(dt.Rows[i]["num"]));
+                list.Add(ll[i].sendMaterialName, Convert.ToDouble(ll[i].sendNetWeight));
             }
             return list;
         }
@@ -434,12 +434,12 @@ namespace IntentConnectWeighing
             {
                 condition += " and " + where;
             }
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), WeighingBillEnum.receive_company_name.ToString() + ", count(" + WeighingBillEnum.id.ToString() + ")  as id ", condition, WeighingBillEnum.receive_company_name.ToString());
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), WeighingBillEnum.receive_company_name.ToString() + ", count(" + WeighingBillEnum.id.ToString() + ")  as sync_time ", condition, WeighingBillEnum.receive_company_name.ToString());
             Dictionary<String, Int32> list = new Dictionary<String, Int32>() { };
-            System.Data.DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            for (int i = 0; i < dt.Rows.Count; i++)
+             List<WeighingBill> ll = DatabaseOPtionHelper.GetInstance().select<WeighingBill>(sql);
+            for (int i = 0; i < ll.Count; i++)
             {
-                list.Add(dt.Rows[i][WeighingBillEnum.receive_company_name.ToString()].ToString(), Convert.ToInt32(dt.Rows[i][WeighingBillEnum.id.ToString()]));
+                list.Add(ll[i].receiveCompanyName, Convert.ToInt32(ll[i].syncTime));
             }
             return list;
         }
@@ -475,12 +475,12 @@ namespace IntentConnectWeighing
             {
                 condition += " and " + where;
             }
-            String sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), WeighingBillEnum.receive_company_name.ToString() + ", sum(" + WeighingBillEnum.send_net_weight.ToString() + ")  as num", condition, WeighingBillEnum.receive_company_name.ToString());
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), WeighingBillEnum.receive_company_name.ToString() + ", sum(" + WeighingBillEnum.send_net_weight.ToString() + ")  as send_net_weight", condition, WeighingBillEnum.receive_company_name.ToString());
             Dictionary<String, double> list = new Dictionary<String, double>() { };
-            System.Data.DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            for (int i = 0; i < dt.Rows.Count; i++)
+             List<WeighingBill> ll = DatabaseOPtionHelper.GetInstance().select<WeighingBill>(sql);
+            for (int i = 0; i < ll.Count; i++)
             {
-                list.Add(dt.Rows[i][WeighingBillEnum.receive_company_name.ToString()].ToString(), Convert.ToDouble(dt.Rows[i]["num"]));
+                list.Add(ll[i].receiveCompanyName, Convert.ToDouble(ll[i].sendNetWeight));
             }
             return list;
         }
@@ -564,18 +564,17 @@ namespace IntentConnectWeighing
             string sql = string.Empty;
             if (type == WeightingBillType.RK)
             {
-                sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), infield, condition, inGroupBy);
+                sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), infield, condition, inGroupBy);
             }
             else if (type == WeightingBillType.CK)
             {
-                sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), outfield, condition, outGroupBy);
+                sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), outfield, condition, outGroupBy);
             }
             else
             {
                 return null;
             }
-
-            list = MyHelper.DbBaseHelper.DataTableToEntitys<ReportWeightListV>(DatabaseOPtionHelper.GetInstance().select(sql));
+            list =DatabaseOPtionHelper.GetInstance().select<ReportWeightListV>(sql);
             return list;
         }
         /// <summary>
@@ -655,21 +654,17 @@ namespace IntentConnectWeighing
             string sql = string.Empty;
             if (type == WeightingBillType.RK)
             {
-                sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), infield, condition);
+                sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), infield, condition);
             }
             else if (type == WeightingBillType.CK)
             {
-                sql = MyHelper.DbBaseHelper.getSelectSql(DataTabeName.weighing_bill.ToString(), outfield, condition);
+                sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.weighing_bill.ToString(), outfield, condition);
             }
             else
             {
                 return null;
             }
-            System.Data.DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            if (dt != null && dt.Rows.Count > 0)
-            {
-                reportWeightSummaryV = MyHelper.DbBaseHelper.DataTableToEntity<ReportWeightSummaryV>(dt);
-            }
+            reportWeightSummaryV = DatabaseOPtionHelper.GetInstance().select<ReportWeightSummaryV>(sql)[0];       
             return reportWeightSummaryV;
         }
         /// <summary>

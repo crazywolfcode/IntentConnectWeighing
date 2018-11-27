@@ -146,11 +146,10 @@ namespace IntentConnectWeighing
                 mProvinceVs.Clear();
             }
             List<Province> provinces = new List<Province>();
-            String pSql = DbBaseHelper.getSelectSql(DataTabeName.province.ToString());
-            DataTable cateDt = DatabaseOPtionHelper.GetInstance().select(pSql);
-            if (cateDt.Rows.Count > 0)
-            {
-                provinces = DbBaseHelper.DataTableToEntitys<Province>(cateDt);
+            String pSql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.province.ToString());
+            provinces = DatabaseOPtionHelper.GetInstance().select<Province>(pSql);
+            if (provinces.Count > 0)
+            {               
                 if (provinces == null || provinces.Count <= 0)
                 {
                     FillCompanyAlretData();
@@ -159,14 +158,12 @@ namespace IntentConnectWeighing
                 Province p = null;
                 String condition = string.Empty;
                 String sql = string.Empty;
-                DataTable mDt = null;
                 for (int i = 0; i < provinces.Count; i++)
                 {
                     p = provinces[i];
                     condition = CompanyEnum.affiliated_province_id + "=" + Constract.valueSplit + p.id + Constract.valueSplit;
-                    sql = DbBaseHelper.getSelectSql(DataTabeName.company.ToString(), null, condition);
-                    mDt = DatabaseOPtionHelper.GetInstance().select(sql);
-                    List<Company> mlist = DbBaseHelper.DataTableToEntitys<Company>(mDt);
+                    sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.company.ToString(), null, condition);
+                    List<Company> mlist = DatabaseOPtionHelper.GetInstance().select<Company>(sql);                   
                     if(mlist!=null && mlist.Count > 0)
                     {
                         ProvinceV v = new ProvinceV()
@@ -260,11 +257,10 @@ namespace IntentConnectWeighing
                 mMaterialVs.Clear();
             }
             List<MaterialCategory> cates = new List<MaterialCategory>();
-            String CategorySql = DbBaseHelper.getSelectSql(DataTabeName.material_category.ToString());
-            DataTable cateDt = DatabaseOPtionHelper.GetInstance().select(CategorySql);
-            if (cateDt.Rows.Count > 0)
-            {
-                cates = DbBaseHelper.DataTableToEntitys<MaterialCategory>(cateDt);
+            String CategorySql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.material_category.ToString());
+            cates = DatabaseOPtionHelper.GetInstance().select<MaterialCategory>(CategorySql);
+            if (cates.Count > 0)
+            {               
                 if (cates == null || cates.Count <= 0)
                 {
                     FillMaterialAlretData();
@@ -273,14 +269,12 @@ namespace IntentConnectWeighing
                 MaterialCategory mc = null;
                 String condition = string.Empty;
                 String sql = string.Empty;
-                DataTable mDt = null;
                 for (int i = 0; i < cates.Count; i++)
                 {
                     mc = cates[i];
                     condition = MaterialEnum.category_id + "=" + Constract.valueSplit + mc.id + Constract.valueSplit;
-                    sql = DbBaseHelper.getSelectSql(DataTabeName.material.ToString(), null, condition);
-                    mDt = DatabaseOPtionHelper.GetInstance().select(sql);
-                    List<Material> mlist = DbBaseHelper.DataTableToEntitys<Material>(mDt);
+                    sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.material.ToString(), null, condition);                 
+                    List<Material> mlist = DatabaseOPtionHelper.GetInstance().select<Material>(sql);
                     MaterialV v = new MaterialV()
                     {
                         Category = mc,
@@ -385,11 +379,10 @@ namespace IntentConnectWeighing
                 mCarHeaderVs.Clear();
             }
             List<CarHeader> cates = new List<CarHeader>();
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.car_header.ToString(), null, null, null, null, CarHeaderEnum.content.ToString() + " asc ");
-            DataTable Dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            if (Dt.Rows.Count > 0)
-            {
-                cates = DbBaseHelper.DataTableToEntitys<CarHeader>(Dt);
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.car_header.ToString(), null, null, null, null, CarHeaderEnum.content.ToString() + " asc ");
+            cates = DatabaseOPtionHelper.GetInstance().select<CarHeader>(sql);
+            if (cates.Count > 0)
+            {             
                 if (cates == null || cates.Count <= 0)
                 {
                     FillMaterialAlretData();
@@ -398,14 +391,12 @@ namespace IntentConnectWeighing
                 CarHeader ch = null;
                 String condition = string.Empty;
                 String carsql = string.Empty;
-                DataTable mDt = null;
                 for (int i = 0; i < cates.Count; i++)
                 {
                     ch = cates[i];
                     condition = CarInfoEnum.car_number + " like " + Constract.valueSplit + ch.content + "%" + Constract.valueSplit;
-                    sql = DbBaseHelper.getSelectSql(DataTabeName.car_info.ToString(), null, condition);
-                    mDt = DatabaseOPtionHelper.GetInstance().select(sql);
-                    List<CarInfo> mlist = DbBaseHelper.DataTableToEntitys<CarInfo>(mDt);
+                    sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.car_info.ToString(), null, condition);
+                    List<CarInfo> mlist = DatabaseOPtionHelper.GetInstance().select<CarInfo>(sql);
                     if (mlist.Count > 0)
                     {
                         CarHeaderV v = new CarHeaderV()

@@ -20,7 +20,7 @@ namespace IntentConnectWeighing
     /// <summary>
     /// 数据库类型
     /// </summary>
-    enum DbType
+   public enum DbType
     {
         mysql,
         sqlite

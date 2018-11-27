@@ -69,7 +69,7 @@ namespace IntentConnectWeighing
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-            DatabaseOPtionHelper optionHelper =  DatabaseOPtionHelper.GetInstance();
+            SqlDao.DbHelper optionHelper =  DatabaseOPtionHelper.GetInstance();
             int res = 0;
             if (!String.IsNullOrEmpty(mMaterial.id))
             {
@@ -157,7 +157,7 @@ namespace IntentConnectWeighing
             else {
                 set = MaterialCategoryEnum.children_count.ToString() + " = " + MaterialCategoryEnum.children_count.ToString() +"-"+" 1";
             }
-            sql = DbBaseHelper.getUpdateSql(DataTabeName.material_category.ToString(), set, condition);
+            sql = DatabaseOPtionHelper.GetInstance().getUpdateSql(DataTabeName.material_category.ToString(), set, condition);
              DatabaseOPtionHelper.GetInstance().update(sql);
         }
 
@@ -180,9 +180,8 @@ namespace IntentConnectWeighing
             string @condition = MaterialEnum.name.ToString() + "=" + Constract.valueSplit + name + Constract.valueSplit
                 + " and "
                 + MaterialEnum.category_id.ToString() + "+" + Constract.valueSplit + mMaterial.categoryId + Constract.valueSplit;
-            string sql = DbBaseHelper.getSelectSqlNoSoftDeleteCondition(DataTabeName.material.ToString(), null, condition, null, null, null, 1, 0);
-            DataTable dt =  DatabaseOPtionHelper.GetInstance().select(sql);
-            List<Material> list = DbBaseHelper.DataTableToEntitys<Material>(dt);
+            string sql = DatabaseOPtionHelper.GetInstance().getSelectSqlNoSoftDeleteCondition(DataTabeName.material.ToString(), null, condition, null, null, null, 1, 0);
+            List<Material> list =  DatabaseOPtionHelper.GetInstance().select<Material>(sql);           
             if (list == null || list.Count <= 0)
             {
                 this.AlertInfoTb.Text = "该物资名称可以添加！";
@@ -190,7 +189,7 @@ namespace IntentConnectWeighing
             }
             else
             {
-                mMaterial = DbBaseHelper.DataTableToEntitys<Material>(dt)[0];
+                mMaterial = list[0];
             }
             if (mMaterial != null)
             {
@@ -245,9 +244,8 @@ namespace IntentConnectWeighing
 
         private void InitCateGoryData()
         {
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.material_category.ToString());
-            DataTable dt =  DatabaseOPtionHelper.GetInstance().select(sql);
-            mMaterialCategorys = DbBaseHelper.DataTableToEntitys<MaterialCategory>(dt);
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.material_category.ToString());
+            mMaterialCategorys =  DatabaseOPtionHelper.GetInstance().select<MaterialCategory>(sql);   
             this.CateNameCb.ItemsSource = mMaterialCategorys;
             for (int i = 0; i < this.CateNameCb.Items.Count; i++)
             {

@@ -103,11 +103,11 @@ namespace IntentConnectWeighing
         private void bindingCurrrScale()
         {
             String condition = ScaleEnum.id.ToString() + "=" + Constract.valueSplit + mScale.id + Constract.valueSplit;
-            String sql = DbBaseHelper.getSelectSql(DataTabeName.scale.ToString(), null, condition);
-            DataTable dt = DatabaseOPtionHelper.GetInstance().select(sql);
-            if (dt.Rows.Count > 0)
+            String sql = DatabaseOPtionHelper.GetInstance().getSelectSql(DataTabeName.scale.ToString(), null, condition);
+            List <Scale> scales = DatabaseOPtionHelper.GetInstance().select<Scale>(sql);
+            if (scales!= null || scales.Count > 0)
             {
-                mScale = (DbBaseHelper.DataTableToEntitys<Scale>(dt))[0];
+                mScale = scales[0];
             }
             if (mScale != null)
             {

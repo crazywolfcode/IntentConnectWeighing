@@ -444,6 +444,8 @@ namespace IntentConnectWeighing
 	 	 is_delete,
 	 	 delete_time,
 	 	 receive_status,
+	 	 taxation_up_status,
+	 	 taxation_up_time,
 	 }
 
 
