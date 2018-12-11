@@ -112,10 +112,8 @@ namespace IntentConnectWeighing
             if (mWeighingBill != null)
             {
                 // update
-                this.BillNumberTb.Text = mWeighingBill.receiveNumber;
-                #region 控制控件状态
-                this.BingValue();
-                #endregion
+                this.BillNumberTb.Text = mWeighingBill.receiveNumber;              
+                this.BingValue();               
             }
             else
             {

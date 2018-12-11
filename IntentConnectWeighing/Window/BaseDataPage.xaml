@@ -37,7 +37,7 @@
             <Setter Property="Height" Value="20"/>
         </Style>
 
-        
+
     </Page.Resources>
     <Grid x:Name="RootView">
         <Grid.ColumnDefinitions>
@@ -85,32 +85,30 @@
                             Content="车辆"
                             ActiveIndicatorColor="RoyalBlue" />
                 </StackPanel>
-                <StackPanel Height="1" Background="{DynamicResource E4}"></StackPanel>                
-                    <myControl:MyScrollViewer x:Name="LeftScrollViewer"
-                        Background="Transparent" Padding="0,0,0,6"                     
-                        >
-                        <StackPanel>
-                            <!--Company-->
-                            <StackPanel x:Name="CompanyListContentStackPanel"  Width="{Binding Source=StackPanel,Path=ActualWidth}" Visibility="{Binding Path=IsChecked,ElementName=CompanyTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" ContextMenu="{DynamicResource CompanyContextMenu}"/>
+                <StackPanel Height="1" Background="{DynamicResource E4}"></StackPanel>
+                <myControl:MyScrollViewer x:Name="LeftScrollViewer"  Background="Transparent" Padding="0,0,0,6">
+                    <StackPanel>
+                        <!--Company-->
+                        <StackPanel x:Name="CompanyListContentStackPanel"  Width="{Binding Source=StackPanel,Path=ActualWidth}" Visibility="{Binding Path=IsChecked,ElementName=CompanyTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" ContextMenu="{DynamicResource CompanyContextMenu}"/>
 
-                            <!--Material-->
-                            <StackPanel x:Name="MaterialListContentStackPanel" Width="{Binding Source=StackPanel,Path=ActualWidth}" Visibility="{Binding Path=IsChecked,ElementName=MaterialTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" ContextMenu="{DynamicResource MaterialContextMenu}"/>
+                        <!--Material-->
+                        <StackPanel x:Name="MaterialListContentStackPanel" Width="{Binding Source=StackPanel,Path=ActualWidth}" Visibility="{Binding Path=IsChecked,ElementName=MaterialTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" ContextMenu="{DynamicResource MaterialContextMenu}"/>
 
-                            <!--Car-->
-                            <StackPanel x:Name="CarListContentStackPanel" Width="{Binding Source=StackPanel,Path=ActualWidth}" Visibility="{Binding Path=IsChecked,ElementName=CarTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" ContextMenu="{DynamicResource CarContextMenu}"/>
+                        <!--Car-->
+                        <StackPanel x:Name="CarListContentStackPanel" Width="{Binding Source=StackPanel,Path=ActualWidth}" Visibility="{Binding Path=IsChecked,ElementName=CarTabBtn,Converter={StaticResource CheckedToVisibleConverter}}" ContextMenu="{DynamicResource CarContextMenu}"/>
 
-                        </StackPanel>
-                    </myControl:MyScrollViewer>                
-            </StackPanel>            
+                    </StackPanel>
+                </myControl:MyScrollViewer>
+            </StackPanel>
         </Border>
         <WrapPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent" Margin="0,0,0,20" >
             <myControl:IconButton x:Name="SendCarListBtn"   Background="#e4e4e4e4"  Icon="&#xe9ce;" Margin="5,0,0,0" CornerRadius="10,0,0,10" Width="30" IconSize="20"   IconMargin="2,-1,0,0" Height="20" ToolTip="查看所有的派车单" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}"/>
             <myControl:IconButton x:Name="AddBtn"   Background="#e4e4e4e4"  Icon="&#xe626;" Margin="0" Width="30" IconSize="20"  IconMargin="0,-4,0,0" Height="20" ToolTip="添加" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}" Click="AddBtn_Click"/>
             <myControl:IconButton x:Name="RefreshBtn"  Background="#e4e4e4e4"  Icon="&#xe653;" Margin="-1,-1,0,0" CornerRadius="0,10,10,0" AllowsAnimation="False" Width="30" IconMargin="2,-1,0,0"  IconSize="20" Height="20" ToolTip="刷新" Foreground="RoyalBlue" MouseOverForeground="White" MouseOverBackground="{DynamicResource myBlue}"/>
-        </WrapPanel>       
+        </WrapPanel>
         <Border Background="White"  Grid.Column="1" CornerRadius="0,0,4,0" x:Name="RightContentBorderPanel">
             <StackPanel>
-                <StackPanel Height="34" x:Name="ToolBarPanel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,0" Orientation="Horizontal">                   
+                <StackPanel Height="34" x:Name="ToolBarPanel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,0" Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
                         <myControl:SearchBar x:Name="baseDataSearchBar" BarHeight="28" SearchAreaWidth="180" ToolTip="输入要查询的关键内容"
                                              SeachButtonClick="SearchBar_SeachButtonClick" SearchContentChanged="SearchBar_SearchContentChanged"
@@ -270,7 +268,7 @@
                                         <RowDefinition Height="80" />
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Border Grid.Row="0" Background="{DynamicResource E4}" CornerRadius="4,4,0,0" >                                        
+                                    <Border Grid.Row="0" Background="{DynamicResource E4}" CornerRadius="4,4,0,0" >
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                                             <myControl:IconButton  
                                                 IsTransparency="True"            
@@ -329,8 +327,8 @@
                     <StackPanel Height="33" >
                         <TextBlock Text="正在搜索公司.." Foreground="{DynamicResource myBlue}" FontSize="14" TextAlignment="Center" VerticalAlignment="Center" Padding="0,10,0,0"/>
                     </StackPanel>
-                    <StackPanel Height="1" Margin="2,0,0,0" Background="{DynamicResource E4}"></StackPanel>                    
-                </StackPanel>                
+                    <StackPanel Height="1" Margin="2,0,0,0" Background="{DynamicResource E4}"></StackPanel>
+                </StackPanel>
             </Grid>
         </Border>
     </Grid>

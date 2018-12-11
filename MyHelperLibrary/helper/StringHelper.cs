@@ -203,6 +203,11 @@ namespace MyHelper
                         {
                             result += "_" + array[i].ToString().ToLower();
                         }
+
+                        else if (IsInt(array[i].ToString()))
+                        {
+                            result += "_" + array[i].ToString();
+                        }
                         else
                         {
                             result += array[i].ToString();
@@ -213,7 +218,10 @@ namespace MyHelper
             }
             return "";
         }
-
+        public static bool IsInt(string value)
+        {
+            return Regex.IsMatch(value, @"^[+-]?/d*$");
+        }
         public static string jsonCamelCaseToDBnameing(string json)
         {
             if (string.IsNullOrEmpty(json))

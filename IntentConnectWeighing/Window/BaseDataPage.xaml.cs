@@ -98,7 +98,6 @@ namespace IntentConnectWeighing
                         expander.Style = FindResource(ResourceName.BaseDataExpenderStyle.ToString()) as Style;
                         expander.Header = mProvinceVs[i].Province;
                         expander.HeaderTemplate = FindResource(ResourceName.CompanyBaseDataTemplate.ToString()) as DataTemplate;
-
                         ListView listView = new ListView();
                         listView.ItemsSource = mProvinceVs[i].Companys;
                         listView.Style = FindResource(ResourceName.BaseDataListViewStyle.ToString()) as Style;
@@ -109,7 +108,6 @@ namespace IntentConnectWeighing
                     }
                 }
             }
-
         }
 
         private void CompanyListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

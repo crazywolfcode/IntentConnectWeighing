@@ -7,6 +7,7 @@ using System.Text;
 {
 
 	 /// <summary>
+	 /// 显示控制器品牌
 	 /// 数据条数:4
 	 /// 数据大小:16KB
 	 /// </summary>
