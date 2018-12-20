@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using MyCustomControlLibrary;
+using ScaleDataInterpreter;
 namespace IntentConnectWeighing
 {
     /// <summary>
@@ -236,19 +237,19 @@ namespace IntentConnectWeighing
            mTimer = new Timer(SerialPortCallBack, 1, 1000, 1000);         
         }
         /// <summary>
-        /// 回调显示数据
+        /// 显示数据
         /// </summary>
         /// <param name="stae"></param>
         private void SerialPortCallBack(Object stae)
         {
-            ScaleDataResult result = mScaleDataFormarter.ReadValue(mSerialPort);
+            ScaleDataResult result = mScaleDataInterpreter.ReadValue();
             if (result.ErrCode == 0)
-            {
-                this.ComAlertTb.Visibility = Visibility.Collapsed;
-                this.ComAlertTb.Content = "";
+            {                
                 this.Dispatcher.Invoke(
                     new Action(delegate
                     {
+                        this.ComAlertTb.Visibility = Visibility.Collapsed;
+                        this.ComAlertTb.Content = "";
                         this.ShowValueTb.Text = result.Value + "";
                     }));
             }

@@ -20,8 +20,8 @@
         <Border Grid.Column="0" CornerRadius="4,0,0,4" Background="#e4e4e4" Padding="0"  MouseMove="ConfigItemPanel_MouseMove">
             <StackPanel x:Name="ConfigItemPanel" >
                 <myControl:IconTextBlock  Width="80" Height="80" Text="&#xe74c;" Foreground="{StaticResource myBlue}" FontSize="50" VerticalAlignment="Center" HorizontalAlignment="Center"></myControl:IconTextBlock>
-                <RadioButton x:Name="BaseSetting" Checked="BaseSetting_Checked"  Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"  IsChecked="True">基本</RadioButton>
-                <RadioButton x:Name="PrintSetting" Checked="PrintSetting_Checked"  Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969" >打印</RadioButton>
+                <RadioButton x:Name="BaseSetting" Checked="BaseSetting_Checked"  Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"  IsChecked="False">基本</RadioButton>
+                <RadioButton x:Name="PrintSetting" Checked="PrintSetting_Checked"  Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969" IsChecked="True">打印</RadioButton>
                 <RadioButton x:Name="ScaleSetting" Checked="ScaleSetting_Checked" Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"   >磅秤</RadioButton>
                 <RadioButton x:Name="CameraSetting" Checked="CameraSetting_Checked" Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"  >视频</RadioButton>
                 <RadioButton x:Name="BalanceSetting" Checked="BalanceSetting_Checked" Style="{DynamicResource menuRadioButtonStyle}" Foreground="#696969"   >平衡</RadioButton>

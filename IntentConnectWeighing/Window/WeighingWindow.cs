@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using ScaleDataInterpreter;
 
 namespace IntentConnectWeighing
 {
@@ -50,7 +51,7 @@ namespace IntentConnectWeighing
         protected Material material;
         protected CarInfo car;
         protected WeighingBill mWeighingBill;
-        protected ScaleDataInterpreter mScaleDataFormarter;
+        protected IScaleDataInterpreter mScaleDataInterpreter;
         protected bool isInsert = true;
         protected List<Int32> CameraIds;
         #endregion
@@ -229,7 +230,7 @@ namespace IntentConnectWeighing
                 Parity = Parity.None,
             };
             //设置当前显示控制的解释器。
-            mScaleDataFormarter = CommonFunction.SetInterpreter(mCurrScale.brandType);
+            mScaleDataInterpreter = DataInterpreter.GetDataInterpreter(mCurrScale.brandType,mSerialPort);
         }
 
         protected void DisposeSerialPort()

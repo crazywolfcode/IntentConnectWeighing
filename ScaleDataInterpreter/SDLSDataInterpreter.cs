@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntentConnectWeighing
+namespace ScaleDataInterpreter
 {
-    class SDLSDataInterpreter : ScaleDataInterpreter
+    public class SDLSDataInterpreter : DataInterpreter, IScaleDataInterpreter
     {
-        public ScaleDataResult ReadValue(SerialPort port)
+        public ScaleDataResult ReadValue()
         {
             return new ScaleDataResult(-1, "不支持的显示控制器，请联系系统管理员", 0);
         }

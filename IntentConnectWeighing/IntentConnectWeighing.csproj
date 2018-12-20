@@ -227,13 +227,6 @@
     <Compile Include="Helper\ResourceHelper.cs" />
     <Compile Include="Helper\TemplateHelper.cs" />
     <Compile Include="mScannerGunInterface.cs" />
-    <Compile Include="Scale\LBKLDataInterpreter.cs" />
-    <Compile Include="Scale\NotSuporInterprete.cs" />
-    <Compile Include="Scale\ScaleBrandType.cs" />
-    <Compile Include="Scale\ScaleDataInterpreter.cs" />
-    <Compile Include="Scale\SDLSDataInterpreter.cs" />
-    <Compile Include="Scale\TLDDataInterpreter.cs" />
-    <Compile Include="Scale\YaoHuanDataInterpreter.cs" />
     <Compile Include="ScannerGun\ScannerGunHelper.cs" />
     <Compile Include="ScannerGun\ScannerGunHook.cs" />
     <Compile Include="ScannerGun\ScannerGunInterface.cs" />
@@ -704,6 +697,10 @@
     <ProjectReference Include="..\MyHelperLibrary\MyHelperLibrary.csproj">
       <Project>{73f19083-ff57-4531-b7a8-0fd874639e3b}</Project>
       <Name>MyHelperLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScaleDataInterpreter\ScaleDataInterpreter.csproj">
+      <Project>{c4e5a3a3-3b9d-4672-a886-e919cd4a4d94}</Project>
+      <Name>ScaleDataInterpreter</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

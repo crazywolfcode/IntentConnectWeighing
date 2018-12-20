@@ -132,7 +132,7 @@
         <Setter Property="Width" Value="Auto"/>
         <Setter Property="Margin" Value="0"/>        
         <Setter Property="local:ControlAttachProperty.IconSize" Value="12"/>
-        <Setter Property="Template" Value="{StaticResource IconMenuItemTemplate}"></Setter>
+        <Setter Property="Template" Value="{StaticResource IconMenuItemTemplate}"></Setter>        
     </Style>
 
 

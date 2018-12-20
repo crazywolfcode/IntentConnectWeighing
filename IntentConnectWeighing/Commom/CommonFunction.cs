@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ScaleDataInterpreter;
 
 namespace IntentConnectWeighing
 {
@@ -291,33 +292,6 @@ namespace IntentConnectWeighing
             sendCarBill.weighingNumber = weighingBill.sendNumber;
             sendCarBill.weighingBillId = weighingBill.id;
             sendCarBill.syncTime = MyHelper.DateTimeHelper.GetTimeStamp();
-        }
-
-        /// <summary>
-        /// 设置当前显示控制的解释器
-        /// </summary>
-        public static ScaleDataInterpreter SetInterpreter(int brandType)
-        {
-            ScaleDataInterpreter formarter;
-            switch (brandType)
-            {
-                case (int)ScaleBrandType.YH:
-                    formarter = new YaoHuanDataInterpreter();
-                    break;
-                case (int)ScaleBrandType.LBKL:
-                    formarter = new   LBKLDataInterpreter();
-                    break;
-                case (int)ScaleBrandType.TLD:
-                    formarter = new   TLDDataInterpreter();
-                    break;
-                case (int)ScaleBrandType.SDLS:
-                    formarter = new SDLSDataInterpreter();
-                    break;
-                default:
-                    formarter = new NotSuporInterprete();
-                    break;
-            }
-            return formarter;
         }
     }
 }
