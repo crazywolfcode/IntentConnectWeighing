@@ -271,7 +271,15 @@ namespace IntentConnectWeighing
         
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-
+            if (mPictureBoxs != null && mPictureBoxs.Count > 0) {
+                int count = mPictureBoxs.Count;
+                Double screemWidth = this.ActualWidth;
+                double nowWidth =Math.Floor( screemWidth / count);             
+                for (int i = 0; i < count; i++)
+                {
+                    mPictureBoxs[i].Width = (int)nowWidth;
+                }
+            }            
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

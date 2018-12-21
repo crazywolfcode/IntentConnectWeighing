@@ -143,9 +143,8 @@ namespace IntentConnectWeighing
             notifyIcon = new System.Windows.Forms.NotifyIcon
             {
                 BalloonTipTitle = "BalloonTipTitle",
-                BalloonTipText = "BalloonTipText intel connectation weighing" + ResourceHelper.getStringFromDictionaryResource(ResourceName.CompanyName),
-                //notifyIcon.Icon = new System.Drawing.Icon("../../aislogo.ico");
-                Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.ExecutablePath),
+                BalloonTipText = "BalloonTipText intel connectation weighing" + ResourceHelper.getStringFromDictionaryResource(ResourceName.CompanyName),             
+               Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.ExecutablePath),
                 Visible = true,
                 BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info
             };
