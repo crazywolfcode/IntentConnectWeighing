@@ -10,6 +10,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using ScaleDataInterpreter;
+using System.Windows.Input;
 
 namespace IntentConnectWeighing
 {
@@ -93,6 +94,9 @@ namespace IntentConnectWeighing
                     FileHelper.CreateFile(path);
                 }
             }
+            else {
+                SupplyCb.ItemsSource = App.tempSupplyCompanys.Values.ToList();
+            }
         }
         protected void SetCustomerCompanyDefaultSource(ComboBox ReceiverCompanyCb)
         {
@@ -123,6 +127,9 @@ namespace IntentConnectWeighing
                 {
                     FileHelper.CreateFile(path);
                 }
+            }
+            else {
+                ReceiverCompanyCb.ItemsSource = App.tempCustomerCompanys.Values.ToList();
             }
         }
         protected void SetMaterialDefaultSource(ComboBox MaterialNameCb)
@@ -156,10 +163,12 @@ namespace IntentConnectWeighing
                     FileHelper.CreateFile(path);
                 }
             }
+            else {
+                MaterialNameCb.ItemsSource = App.tempMaterials.Values.ToList();
+            }
         }
         protected void SetCarDefaultSource(ComboBox CarNumberCb)
         {
-
             if (App.tempCars.Count <= 0)
             {
                 String path = System.IO.Path.Combine(Constract.tempPath, Constract.tempCarFileName);
@@ -188,6 +197,9 @@ namespace IntentConnectWeighing
                 {
                     FileHelper.CreateFile(path);
                 }
+            }
+            else {
+                CarNumberCb.ItemsSource = App.tempCars.Values.ToList();
             }
         }
         protected void SetCarDecuationDescriptionDefaultSource(ComboBox DecuationDescriptionCb)
@@ -300,11 +312,13 @@ namespace IntentConnectWeighing
         /// </summary>        
         protected void ShowCamera(Border CameraBorder, StackPanel CameraStackPanel, IconButton settingVideoBtn)
         {
+
             if (mCameraInfos.Count <= 0)
             {
                 settingVideoBtn.Visibility = Visibility.Visible;
                 return;
             }
+            this.Cursor = Cursors.Wait;
             CameraPanelWidth = CameraBorder.ActualWidth;
             CameraWidth = Math.Floor(CameraPanelWidth / mCameraInfos.Count);
             CameraHeight = CameraBorder.ActualHeight - 2;
@@ -378,6 +392,7 @@ namespace IntentConnectWeighing
                     CameraStackPanel.Children.Add(textBlock);
                 }
             }
+            this.Cursor = Cursors.Arrow;
         }
 
         protected void LogoutCamera()
