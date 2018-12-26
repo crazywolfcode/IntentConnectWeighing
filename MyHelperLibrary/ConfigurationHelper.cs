@@ -156,7 +156,7 @@ namespace MyHelper
             if (groupName == "connectionStrings")
             {
                 name = "name";
-                value = "connectionString";
+                valuetag = "connectionString";
             }
             XmlNode node = doc.CreateElement("add") as XmlNode;
             XmlAttribute att = doc.CreateAttribute(name);
