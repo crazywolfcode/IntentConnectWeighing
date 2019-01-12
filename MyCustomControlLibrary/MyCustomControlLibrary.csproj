@@ -97,6 +97,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Style\MCombox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Style\MProgressBarStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -133,6 +137,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Style\ComboBoxToggleButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Style\TwoPointLoadingStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -150,7 +158,9 @@
     <Compile Include="Controls\IconLoading.cs" />
     <Compile Include="Controls\IconTextBlock.cs" />
     <Compile Include="Controls\ImageButton.cs" />
+    <Compile Include="Controls\MCombox.cs" />
     <Compile Include="Controls\MProgressBar.cs" />
+    <Compile Include="Controls\ComboBoxToggleButton.cs" />
     <Compile Include="Controls\MyScrollBar.cs" />
     <Compile Include="Controls\MyScrollViewer.cs" />
     <Compile Include="Controls\OnePointLoading.cs" />

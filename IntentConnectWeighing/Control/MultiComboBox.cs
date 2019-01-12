@@ -71,5 +71,16 @@ namespace IntentConnectWeighing
         {
             this._ListBox.UnselectAll();
         }
+
+        internal class MultiCbxBaseData
+        {
+            public MultiCbxBaseData()
+            {
+            }
+
+            public int ID { get; set; }
+            public string ViewName { get; set; }
+            public bool IsCheck { get; set; }
+        }
     }
 }

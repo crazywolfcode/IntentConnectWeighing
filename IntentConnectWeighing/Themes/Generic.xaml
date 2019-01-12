@@ -25,4 +25,5 @@
     <local:CompanyCustomerTypeConverter x:Key="CompanyCustomerTypeConverter"/>
     <local:CompanyTypeConverter x:Key="CompanyTypeConverter"/>
     <SolidColorBrush x:Key="myBlue" Color="#3ca9fe"/>
+    <SolidColorBrush x:Key="mydeepBlue" Color="#1991ee"/>
 </ResourceDictionary>

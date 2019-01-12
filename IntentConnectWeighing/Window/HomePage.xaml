@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:IntentConnectWeighing"
       xmlns:MyControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
-      mc:Ignorable="d"  d:DesignHeight="300" d:DesignWidth="500"
+      mc:Ignorable="d"  d:DesignHeight="300" d:DesignWidth="500" Loaded="Page_Loaded"
       Title="HomePage">
     <Page.Resources>
         <local:SexConverter x:Key="SexConverter"/>
@@ -110,6 +110,7 @@
                 </Expander.Content>
             </Expander>
         </Border>
+        
         <WrapPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock ContextMenu="{StaticResource TextBoxContextMenu}" Text="{Binding  Source={StaticResource man} ,Converter={StaticResource ResourceKey=SexConverter}}" />
             <TextBlock Text="{Binding Source={StaticResource feman} ,Converter={StaticResource ResourceKey=SexConverter}}"/>
@@ -159,6 +160,8 @@
             <!--<TextBlock Foreground="#787978" FontSize="14" Text="正在检测新版本..."  Padding="10,15,0,0"  MouseLeftButtonUp="OnePointLoading_MouseLeftButtonUp"/>-->
             <!--          
                 </StackPanel>-->
+            <MyControl:MCombox x:Name="TestComBox" DisplayMemberPath="name" SelectBackground="AliceBlue" SelectForegound="White" BorderBrush="#e8e8e8"/>
+           
         </StackPanel>
     </Grid>
 </Page>

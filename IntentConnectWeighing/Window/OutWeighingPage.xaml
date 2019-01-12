@@ -397,23 +397,25 @@
                                 </vc:Chart.AxesY>
                                 <vc:Chart.Series >
                                     <vc:DataSeries RenderAs="Spline" LegendText="车数">
-                                        <vc:DataSeries.DataPoints>
-                                            <vc:DataPoint YValue="210"/>
-                                            <vc:DataPoint YValue="120"/>
-                                            <vc:DataPoint YValue="210"/>
-                                            <vc:DataPoint YValue="220"/>
-                                            <vc:DataPoint YValue="120"/>
-                                            <vc:DataPoint  YValue="80"/>
+                                        <vc:DataSeries.DataPoints> 
+                                            <vc:DataPoint   YValue="210" />
+                                            <vc:DataPoint   YValue="120"/>
+                                            <vc:DataPoint   YValue="210"/>
+                                            <vc:DataPoint   YValue="220"/>
+                                            <vc:DataPoint   YValue="120"/>
+                                            <vc:DataPoint   YValue="80"/>
+                                            <vc:DataPoint   YValue="0"/>                                        
                                         </vc:DataSeries.DataPoints>
                                     </vc:DataSeries>
                                     <vc:DataSeries RenderAs="Spline" LegendText="吨数">
                                         <vc:DataSeries.DataPoints>
-                                            <vc:DataPoint AxisXLabel="2018-05" YValue="210"/>
-                                            <vc:DataPoint AxisXLabel="2018-05" YValue="150"/>
-                                            <vc:DataPoint AxisXLabel="2018-05" YValue="210"/>
-                                            <vc:DataPoint AxisXLabel="2018-05" YValue="220"/>
-                                            <vc:DataPoint AxisXLabel="2018-05" YValue="110"/>
-                                            <vc:DataPoint AxisXLabel="2018-05" YValue="110"/>
+                                            <vc:DataPoint  YValue="210"/>
+                                            <vc:DataPoint  YValue="150"/>
+                                            <vc:DataPoint  YValue="210"/>
+                                            <vc:DataPoint  YValue="220"/>
+                                            <vc:DataPoint  YValue="110"/>
+                                            
+                                           
                                         </vc:DataSeries.DataPoints>
                                     </vc:DataSeries>
                                 </vc:Chart.Series>

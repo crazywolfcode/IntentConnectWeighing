@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -41,7 +42,7 @@ namespace IntentConnectWeighing
         private void ErrorButton_Click(object sender, RoutedEventArgs e)
         {
             //MessageBox.Show(FileHelper.GetRunTimeRootPath());
-            App.notifyIcon.ShowBalloonTip(30,"tipTitle","tipText",System.Windows.Forms.ToolTipIcon.Info);
+            App.notifyIcon.ShowBalloonTip(30, "tipTitle", "tipText", System.Windows.Forms.ToolTipIcon.Info);
             //if (this.ParentWindow != null)
             //{
             //    ParentWindow.changeAlertNumber(ResourceName.MenuIndexNumber, 1, 0);
@@ -123,7 +124,7 @@ namespace IntentConnectWeighing
             MyCustomControlLibrary.MMessageBox.GetInstance().ShowLoading(
                 MyCustomControlLibrary.MMessageBox.LoadType.Circle,
                 String.Empty,
-                new Point(0,0),
+                new Point(0, 0),
                  size,
                 "&#xe62e;",
                 Orientation.Horizontal,
@@ -162,7 +163,7 @@ namespace IntentConnectWeighing
         }
 
         private void loadfive_Click(object sender, RoutedEventArgs e)
-        {            
+        {
             //Mborder 窗口内容区域的边框
             var size = new Size(this.Mborder.ActualWidth, 300);
             MyCustomControlLibrary.MMessageBox.GetInstance().ShowLoading(
@@ -178,7 +179,7 @@ namespace IntentConnectWeighing
 
         private void loadSix_Click(object sender, RoutedEventArgs e)
         {
-            var point =new Point(0,0);
+            var point = new Point(0, 0);
             //Mborder 窗口内容区域的边框
             var size = new Size(this.Mborder.ActualWidth, 300);
             MyCustomControlLibrary.MMessageBox.GetInstance().ShowLoading(
@@ -207,7 +208,7 @@ namespace IntentConnectWeighing
 
         private void loadeight_Click(object sender, RoutedEventArgs e)
         {
-            var point =new Point();
+            var point = new Point();
             //Mborder 窗口内容区域的边框
             var size = new Size(this.Mborder.ActualWidth, 300);
             MyCustomControlLibrary.MMessageBox.GetInstance().ShowLoading(
@@ -223,7 +224,7 @@ namespace IntentConnectWeighing
 
         private void loadnine_Click(object sender, RoutedEventArgs e)
         {
-            var point =new Point();
+            var point = new Point();
             //Mborder 窗口内容区域的边框
             var size = new Size(this.Mborder.ActualWidth, 300);
             MyCustomControlLibrary.MMessageBox.GetInstance().ShowLoading(
@@ -291,5 +292,32 @@ namespace IntentConnectWeighing
             }
         }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.TestComBox.ItemsSource = getSource();       
+        }
+        private List<VV> getSource()
+        {
+            List<VV> vl = new List<VV>();
+            vl.Add(new VV() { age = 15, name = "name11" });
+            vl.Add(new VV() { age = 15, name = "name12" });
+            vl.Add(new VV() { age = 15, name = "name13" });
+            vl.Add(new VV() { age = 15, name = "name14" });
+            vl.Add(new VV() { age = 15, name = "name16" });
+            vl.Add(new VV() { age = 15, name = "name18" });
+            vl.Add(new VV() { age = 15, name = "name110"});
+            return vl;
+        }
+
     }
+
+
+
+    class VV
+    {
+        public int age { get; set; }
+        public String name { get; set; }
+    }
+
+
 }

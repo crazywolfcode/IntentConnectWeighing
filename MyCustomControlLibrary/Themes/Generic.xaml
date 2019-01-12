@@ -20,6 +20,8 @@
         <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/GridLoadingStyle.xaml"/>
         <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/FiveColumnLoadingStyle.xaml"/>
         <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/IconLoadingStyle.xaml"/>
-        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/MProgressBarStyle.xaml"/>        
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/MProgressBarStyle.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/ComboBoxToggleButton.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/MCombox.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

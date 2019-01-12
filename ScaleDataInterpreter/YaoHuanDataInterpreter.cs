@@ -17,7 +17,7 @@ namespace ScaleDataInterpreter
                 }
                 catch (Exception e)
                 {
-                    return new ScaleDataResult(-1, "串口打开失败：" + e.Message, 0);
+                    return new ScaleDataResult(-1, "串口打开失败：" + e.Message, -1.0);
                 }
             }
             Int32 value = -1;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -125,6 +126,9 @@ namespace MyHelper
         /// <returns>首字母</returns>   
         public static string GetFirstPinyin(string str)
         {
+            if (String.IsNullOrEmpty(str)) {
+                return "";
+            }
             string r = string.Empty;
             foreach (char obj in str)
             {
@@ -148,7 +152,7 @@ namespace MyHelper
         /// <param name="name"></param>
         /// <param name="isBigCamelCaes">is Big Camel Caes</param>
         /// <returns></returns>
-        public static string DBNamingToCamelCase(string name,bool isBigCamelCaes = false)
+        public static string DBNamingToCamelCase(string name, bool isBigCamelCaes = false)
         {
             if (name == null || name.Length == 0) { return ""; }
             if (name.Contains("_"))
@@ -166,8 +170,9 @@ namespace MyHelper
                         result += upperCaseFirstLetter(words[i]);
                     }
                 }
-                if (isBigCamelCaes == true) {
-                    return upperCaseFirstLetter(result); 
+                if (isBigCamelCaes == true)
+                {
+                    return upperCaseFirstLetter(result);
                 }
                 return result;
             }
@@ -182,11 +187,12 @@ namespace MyHelper
         /// <param name="name"></param>
         /// <param name="isBigCamelCaes">is Big Camel Caes</param>
         /// <returns></returns>
-        public static string camelCaseToDBnameing(string name,bool isBigCamelCaes = false)
+        public static string camelCaseToDBnameing(string name, bool isBigCamelCaes = false)
         {
             if (name != null && name.Length > 0)
             {
-                if (isBigCamelCaes == true) {
+                if (isBigCamelCaes == true)
+                {
                     name = LowerCaseFirstLetter(name);
                 }
                 char[] array = name.ToCharArray();
@@ -234,7 +240,7 @@ namespace MyHelper
             for (int i = 0; i < colls.Count; i++)
             {
                 json = json.Replace(colls[i].ToString(), DBNamingToCamelCase(colls[i].ToString()));
-            }          
+            }
             return json;
         }
 
@@ -319,5 +325,6 @@ namespace MyHelper
             }
             return result;
         }
+
     }
 }

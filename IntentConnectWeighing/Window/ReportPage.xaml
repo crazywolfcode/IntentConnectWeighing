@@ -43,7 +43,7 @@
                     <StackPanel Orientation="Horizontal">
                         <myControl:TabButton     
                             x:Name="TodayInTabBtn" Checked="TodayInTabBtn_Checked"
-                             FontSize="14" IsChecked="False"
+                             FontSize="14" IsChecked="tr"
                              Width="70" Height="30"                    
                             Foreground="#666"
                             ActiveForground="RoyalBlue"
@@ -80,7 +80,7 @@
                         <myControl:TabButton 
                             x:Name="InDetialReportTabBtn" Checked="InDetialReportTabBtn_Checked"
                             Width="90" Height="30"  FontSize="14"
-                            IsChecked="True"
+                            IsChecked="False"
                             ActiveForground="RoyalBlue" 
                             Foreground="#666"
                             IndicatorHeight="3" 
