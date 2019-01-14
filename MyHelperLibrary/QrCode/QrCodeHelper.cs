@@ -107,7 +107,7 @@ namespace MyHelper.QrCode
         }
 
         /// <summary>
-        /// 读取二维码内容
+        /// 读取条码内容
         /// </summary>
         /// <param name="imgPath"> 路径 </param>
         /// <returns></returns>

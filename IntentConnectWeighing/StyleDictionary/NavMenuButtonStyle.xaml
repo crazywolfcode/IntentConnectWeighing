@@ -32,7 +32,7 @@
                         </TextBlock>
                         <Image x:Name="EnterNavImage" Grid.Row="0" Source="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=ActivityedImageUrl}" Visibility="Collapsed"></Image>
                         <TextBlock x:Name="content" Grid.Row="1" Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Content}" HorizontalAlignment="Center"></TextBlock>
-                        <Image  x:Name="EnterNavArrowImage" Grid.Row="2" Source="/IntentConnectWeighing;component/Themes/Img/Menu/activity_up.png" Visibility="Collapsed"></Image>
+                        <Path x:Name="EnterNavArrowImage" Grid.Row="2" Data="M 0 6 6 0 12 6  6 6" VerticalAlignment="Bottom" HorizontalAlignment="Center" Stretch="None" Fill="White" Visibility="Collapsed"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsShowContent" Value="true">

@@ -55,12 +55,6 @@ namespace IntentConnectWeighing
             //OverridesDefaultStyleProperty.OverrideMetadata(typeof(MultiComboBox), new FrameworkPropertyMetadata(typeof(MultiComboBox)));
         }
 
-        public MultiComboBox()
-        {
-            ListBox ls = new ListBox();
-            //ls.SelectedItems
-        }
-
         public void SelectAll()
         {
             this._ListBox.SelectAll();

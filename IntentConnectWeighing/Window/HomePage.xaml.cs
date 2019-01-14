@@ -56,7 +56,7 @@ namespace IntentConnectWeighing
 
         private void getIp_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(CommomHelpre.getLoclIp());
+            MessageBox.Show(NetBaseHelper.getLoclIp());
         }
 
         private void AlertOne_Click(object sender, RoutedEventArgs e)

@@ -35,9 +35,7 @@ namespace IntentConnectWeighing
             {
                 return null;
             }
-            Object obj = MyHelper.JsonHelper.JsonToObject(RecognitionJson, typeof(Object));
-            
-            Company company = new Company();
+            Company company =(Company) MyHelper.JsonHelper.JsonToObject(RecognitionJson, typeof(Company));          
             return company;
         }
 

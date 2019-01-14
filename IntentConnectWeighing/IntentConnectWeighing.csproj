@@ -137,7 +137,7 @@
     <Compile Include="CameraSdk\PlayCtrl.cs" />
     <Compile Include="Command\SendCarInFactoryCommand.cs" />
     <Compile Include="Command\ShowSettingWindowsCommand.cs" />
-    <Compile Include="Commom\AddCommand.cs" />
+    <Compile Include="Command\AddCommand.cs" />
     <Compile Include="Commom\CommonFunction.cs" />
     <Compile Include="Commom\Constract.cs" />
     <Compile Include="Commom\GlobalStatus.cs" />
