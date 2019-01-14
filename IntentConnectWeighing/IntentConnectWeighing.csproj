@@ -226,7 +226,6 @@
     <Compile Include="Helper\LoginHelper.cs" />
     <Compile Include="Helper\ResourceHelper.cs" />
     <Compile Include="Helper\TemplateHelper.cs" />
-    <Compile Include="mScannerGunInterface.cs" />
     <Compile Include="ScannerGun\ScannerGunHelper.cs" />
     <Compile Include="ScannerGun\ScannerGunHook.cs" />
     <Compile Include="ScannerGun\ScannerGunInterface.cs" />

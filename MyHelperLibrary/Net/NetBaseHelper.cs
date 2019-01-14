@@ -94,6 +94,22 @@ namespace MyHelper
             }
             return 0;
         }
+        /// <summary>
+        /// 获取本地IP
+        /// </summary>
+        /// <returns>IP</returns>       
+        public static string getLoclIp()
+        {
+            string ip = string.Empty;
+            foreach (System.Net.IPAddress address in System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName()).AddressList)
+            {
+                if (address.AddressFamily.ToString() == "InterNetwork")
+                {
+                    ip = address.ToString();
+                }
+            }
+            return ip;
+        }
     }
     
     public class RequestContent

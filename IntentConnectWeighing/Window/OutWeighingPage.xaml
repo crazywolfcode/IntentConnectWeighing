@@ -365,7 +365,7 @@
                                             </StackPanel>
                                             <StackPanel>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding receiveCompanyName}"/>
-                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding receiveYardName}"/> 
+                                                <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding receiveYardName}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding expiryDate}"/>
                                                 <TextBlock Style="{StaticResource DetailValueStyle}" Text="{Binding remark}" TextTrimming="CharacterEllipsis" MaxWidth="220"/>
                                             </StackPanel>
@@ -376,7 +376,6 @@
 
 
                             <StackPanel Height="1" Background="{StaticResource E4}"/>
-                            <!-- statis Data-->
                             <vc:Chart BorderThickness="0" Height="200" VerticalAlignment="Bottom">
                                 <vc:Chart.Titles>
                                     <vc:Title Text="统计数据 车数 和 吨数"/>
@@ -397,14 +396,14 @@
                                 </vc:Chart.AxesY>
                                 <vc:Chart.Series >
                                     <vc:DataSeries RenderAs="Spline" LegendText="车数">
-                                        <vc:DataSeries.DataPoints> 
+                                        <vc:DataSeries.DataPoints>
                                             <vc:DataPoint   YValue="210" />
                                             <vc:DataPoint   YValue="120"/>
                                             <vc:DataPoint   YValue="210"/>
                                             <vc:DataPoint   YValue="220"/>
                                             <vc:DataPoint   YValue="120"/>
                                             <vc:DataPoint   YValue="80"/>
-                                            <vc:DataPoint   YValue="0"/>                                        
+                                            <vc:DataPoint   YValue="0"/>
                                         </vc:DataSeries.DataPoints>
                                     </vc:DataSeries>
                                     <vc:DataSeries RenderAs="Spline" LegendText="吨数">
@@ -414,12 +413,13 @@
                                             <vc:DataPoint  YValue="210"/>
                                             <vc:DataPoint  YValue="220"/>
                                             <vc:DataPoint  YValue="110"/>
-                                            
-                                           
+
+
                                         </vc:DataSeries.DataPoints>
                                     </vc:DataSeries>
                                 </vc:Chart.Series>
                             </vc:Chart>
+                            <!-- statis Data-->
                         </StackPanel>
                     </myControl:MyScrollViewer>
                 </StackPanel>
@@ -501,7 +501,7 @@
                AllowsTransparency="True" StaysOpen="False" 
                PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
                VerticalOffset="0" HorizontalOffset="0"
-               IsOpen="False"  Placement="MousePoint" PlacementTarget="{Binding ElementName=MoreMenuBtn}"> 
+               IsOpen="False"  Placement="MousePoint" PlacementTarget="{Binding ElementName=MoreMenuBtn}">
             <Border BorderBrush="{StaticResource MenuBorderBrush}" BorderThickness="1" CornerRadius="4" Background="White"  >
                 <Border.Effect>
                     <DropShadowEffect Opacity="0.4" Color="RoyalBlue" ShadowDepth="1" BlurRadius="2"></DropShadowEffect>

@@ -30,21 +30,6 @@ namespace MyHelper
             return new Random().NextDouble();
         }
 
-      /// <summary>
-      /// 获取本地IP
-      /// </summary>
-      /// <returns>IP</returns>       
-        public static string getLoclIp()
-        {
-            string ip = string.Empty;
-            foreach (IPAddress address in Dns.GetHostEntry(Dns.GetHostName()).AddressList)
-            {              
-                if (address.AddressFamily.ToString() == "InterNetwork")
-                {
-                    ip = address.ToString();
-                }
-            }
-            return ip;
-        }
+  
     }
 }

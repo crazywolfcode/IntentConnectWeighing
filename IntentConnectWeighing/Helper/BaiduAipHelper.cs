@@ -182,6 +182,5 @@ namespace IntentConnectWeighing
         vehicle_license,
         business_license,
         license_plate,
-
     }
 }

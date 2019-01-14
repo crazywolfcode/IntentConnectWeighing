@@ -38,8 +38,8 @@ namespace MyHelper
             {
                 string respstr = GetStreamReader(url, responseStream, requestStream, streamReader, webResponse, postData, contentType);
                 ConsoleHelper.writeLine(respstr);
-                ResponseContent hrc = (ResponseContent)JsonHelper.JsonToObject(respstr, typeof(ResponseContent));
-                return hrc;
+                ResponseContent responseContent = (ResponseContent)JsonHelper.JsonToObject(respstr, typeof(ResponseContent));
+                return responseContent;
             }
             catch (Exception e)
             {
@@ -168,7 +168,7 @@ namespace MyHelper
                 fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
                 byte[] fileByteArr = new byte[fileStream.Length];
                 fileStream.Read(fileByteArr, 0, fileByteArr.Length);
-                fileStream.Close();
+                fileStream.Close();              
                 requestStream = webRequest.GetRequestStream();
                 requestStream.Write(itemBoundaryBytes, 0, itemBoundaryBytes.Length);
                 requestStream.Write(postHeaderBytes, 0, postHeaderBytes.Length);
