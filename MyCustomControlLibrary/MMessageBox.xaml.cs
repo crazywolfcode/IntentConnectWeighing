@@ -40,7 +40,9 @@ namespace MyCustomControlLibrary
 
         public string mblue = "#3ca9fe";
         public string mgreen = "#1ab394";
+        public static Window parentWindow;
         #endregion
+
 
         public MMessageBox()
         {
@@ -48,6 +50,9 @@ namespace MyCustomControlLibrary
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            if (parentWindow != null) {
+                this.Owner = parentWindow;
+            }
             switch (mShowType)
             {
                 case ShowType.Alert:
@@ -71,11 +76,14 @@ namespace MyCustomControlLibrary
             }
         }
         private static MMessageBox Instance;
-        public static MMessageBox GetInstance()
+        public static MMessageBox GetInstance(Window parent = null)
         {
             if (Instance != null)
             {
                 Instance.Close();
+            }
+            if (parent != null) {
+                parentWindow = parent;
             }
             return Instance = new MMessageBox();
         }
