@@ -21,7 +21,6 @@ namespace MyHelper
         private static readonly int MaxResponseContentBufferSize = 25600;
         static HttpClientHelper()
         {
-
             #region 初始化和预热 httpClient
             mHttpClient = new HttpClient();
             mHttpClient.BaseAddress = new Uri(baseAddress);
@@ -31,6 +30,7 @@ namespace MyHelper
             HttpRequestMessage hrm = new HttpRequestMessage();
             hrm.Method = new HttpMethod("HEAD");
             hrm.RequestUri = new Uri(baseAddress + headAddress);
+           
             mHttpClient.SendAsync(hrm).Result.EnsureSuccessStatusCode();
             #endregion
 

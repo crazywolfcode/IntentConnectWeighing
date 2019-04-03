@@ -70,16 +70,16 @@ namespace IntentConnectWeighing
                 MessageBox.Show("failure");
                 return;
             }
-            if (response.StatusCode == 1)
+            if (response.Code == 1)
             {
-                MessageBox.Show("ok" + response.ErrorMsg + " " + response.Data);
+                MessageBox.Show("ok" + response.Msg + " " + response.Data);
   
                 Company coms = JsonHelper.JsonToObject(response.Data.ToString(), typeof(Company)) as Company;
                 DatabaseOPtionHelper.GetInstance().insertOrUpdate(coms);
             }
             else
             {
-                MessageBox.Show("failure" + response.ErrorMsg);
+                MessageBox.Show("failure" + response.Msg);
             }
             double time = DateTimeHelper.DateDifflMilliseconds(uptime, finshed);
             ConsoleHelper.writeLine(time + " 微秒");
@@ -227,7 +227,7 @@ namespace IntentConnectWeighing
             DateTime finshed = DateTime.Now;
             if (response != null)
             {
-                MessageBox.Show("statusCode:" + response.StatusCode + " ErrorMsg: " + response.ErrorMsg);
+                MessageBox.Show("Code:" + response.Code + " Msg: " + response.Msg);
             }
             double time = DateTimeHelper.DateDifflMilliseconds(uptime, finshed);
             ConsoleHelper.writeLine(time + " 微秒");
@@ -244,9 +244,9 @@ namespace IntentConnectWeighing
                 MessageBox.Show("failure");
                 return;
             }
-            if (response.StatusCode == 1)
+            if (response.Code == 1)
             {
-                MessageBox.Show("ok" + response.ErrorMsg + " " + response.Data);
+                MessageBox.Show("ok" + response.Msg + " " + response.Data);
                 DataTable dt = JsonHelper.JsonToDataTable(response.Data.ToString()) as DataTable;
                 foreach (DataRow row in dt.Rows)
                 {
@@ -255,7 +255,7 @@ namespace IntentConnectWeighing
             }
             else
             {
-                MessageBox.Show("failure" + response.ErrorMsg);
+                MessageBox.Show("failure" + response.Msg);
             }
             double time = DateTimeHelper.DateDifflMilliseconds(uptime, finshed);
             ConsoleHelper.writeLine(time + " 微秒");

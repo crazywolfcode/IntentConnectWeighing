@@ -130,11 +130,11 @@ namespace MyHelper
         /// <summary>
         /// 错误消息
         /// </summary>
-        public string ErrorMsg { get; set; }
+        public string Msg { get; set; }
         /// <summary>
         /// 状态码
         /// </summary>
-        public int StatusCode { get; set; }
+        public int Code { get; set; }
         /// <summary>
         /// 返回数据
         /// </summary>

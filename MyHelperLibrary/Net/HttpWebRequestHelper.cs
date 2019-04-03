@@ -14,7 +14,8 @@ namespace MyHelper
     {
         private static readonly string contentType = "application/x-www-form-urlencoded;multipart/form-data";
         private static readonly string encodeType = "UTF-8";
-        private static readonly int timeoput = 5000;
+        private static readonly int timeout = 5000;
+        private static CookieContainer mCookieContainer = new CookieContainer();
 
         /// <summary>
         /// Post Http请求
@@ -24,11 +25,15 @@ namespace MyHelper
         /// <param name="postData">传输数据</param>
 
         /// <returns>泛型集合</returns>
-        public static ResponseContent Post(string url, string postData)
+        public static ResponseContent Post(string url, string postData,bool withCookes = true)
         {
+            ResponseContent responseContent = new ResponseContent();
             if (string.IsNullOrEmpty(url))
             {
-                throw new Exception("请求的地址不能为空！");
+                responseContent.Code = -1;
+                responseContent.Msg = "请求的地址不能为空";
+                responseContent.Data = "";
+                return responseContent;
             }
             HttpWebResponse webResponse = null;
             Stream responseStream = null;
@@ -36,15 +41,17 @@ namespace MyHelper
             StreamReader streamReader = null;
             try
             {
-                string respstr = GetStreamReader(url, responseStream, requestStream, streamReader, webResponse, postData, contentType);
+                string respstr = PostStreamReader(url, responseStream, requestStream, streamReader, webResponse, postData, contentType);
                 ConsoleHelper.writeLine(respstr);
-                ResponseContent responseContent = (ResponseContent)JsonHelper.JsonToObject(respstr, typeof(ResponseContent));
-                return responseContent;
+                responseContent = (ResponseContent)JsonHelper.JsonToObject(respstr, typeof(ResponseContent));                
             }
             catch (Exception e)
             {
-                ConsoleHelper.writeLine(" 请求失败 " + e.Message);
-                throw;
+                ConsoleHelper.writeLine(" 请求失败: " + e.Message);
+                responseContent.Code = -1;
+                responseContent.Msg = "请求失败：客户端口或者服务有误。";
+                responseContent.Data = "";
+                throw e;
             }
             finally
             {
@@ -53,6 +60,7 @@ namespace MyHelper
                 if (requestStream != null) requestStream.Dispose();
                 if (streamReader != null) streamReader.Dispose();
             }
+            return responseContent;
         }
 
         /// <summary>
@@ -75,7 +83,7 @@ namespace MyHelper
             StreamReader streamReader = null;
             try
             {
-                string respstr = GetStreamReader(url, responseStream, requestStream, streamReader, webResponse, postData, contentType);
+                string respstr = PostStreamReader(url, responseStream, requestStream, streamReader, webResponse, postData, contentType);
                 return (List<T>)JsonHelper.JsonToObject(respstr, typeof(List<T>));
             }
             catch
@@ -102,27 +110,29 @@ namespace MyHelper
         /// <param name="postData"></param>
         /// <param name="contentType"></param>
         /// <returns></returns>
-        private static string GetStreamReader(string url, Stream responseStream, Stream requestStream, StreamReader streamReader, WebResponse webResponse, string postData, string contentType)
+        private static string PostStreamReader(string url, Stream responseStream, Stream requestStream, StreamReader streamReader, HttpWebResponse webResponse, string postData, string contentType, bool withCookes = true)
         {
             byte[] data = Encoding.GetEncoding("UTF-8").GetBytes(postData);
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
             webRequest.Method = "post";
             webRequest.ContentType = contentType + ";" + encodeType;
             webRequest.ContentLength = data.Length;
-            webRequest.Timeout = timeoput;
+            webRequest.Timeout = timeout;
+            if (withCookes) {
+                webRequest.CookieContainer = mCookieContainer;
+            }
             requestStream = webRequest.GetRequestStream();
             requestStream.Write(data, 0, data.Length);
-            webResponse = webRequest.GetResponse();
+            webResponse = (HttpWebResponse)webRequest.GetResponse();
             responseStream = webResponse.GetResponseStream();
             if (responseStream == null)
             {
                 return string.Empty;
             }
-            //if (responseStream.Length <= 0)
-            //{
-            //    return string.Empty;
-            //}
             streamReader = new StreamReader(responseStream, Encoding.UTF8);
+            if (webRequest.CookieContainer != null) {
+                mCookieContainer = webRequest.CookieContainer; 
+            }
             return streamReader.ReadToEnd();
         }
         /// <summary>
@@ -168,7 +178,7 @@ namespace MyHelper
                 fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
                 byte[] fileByteArr = new byte[fileStream.Length];
                 fileStream.Read(fileByteArr, 0, fileByteArr.Length);
-                fileStream.Close();              
+                fileStream.Close();
                 requestStream = webRequest.GetRequestStream();
                 requestStream.Write(itemBoundaryBytes, 0, itemBoundaryBytes.Length);
                 requestStream.Write(postHeaderBytes, 0, postHeaderBytes.Length);
@@ -186,12 +196,12 @@ namespace MyHelper
                 if (responseStream == null)
                 {
                     response.Data = string.Empty;
-                    response.ErrorMsg = "no respose 没有返回！";
-                    response.StatusCode = 0;
+                    response.Msg = "no respose 没有返回！";
+                    response.Code = 0;
                 }
                 streamReader = new StreamReader(responseStream, Encoding.UTF8);
                 response.Data = streamReader.ReadToEnd();
-                response.StatusCode = 1;
+                response.Code = 1;
                 return response;
             }
             catch (Exception e)
@@ -213,23 +223,26 @@ namespace MyHelper
         ///  Get http请求
         /// </summary>
         /// <param name="url"></param>
-        /// <param name="timeout"></param>
-        /// <param name="encode"></param>
         /// <returns>响应流字符串</returns>
-        public static string GetResponseString(string url, int timeout = 5000)
+        public static ResponseContent Get(string url)
         {
+            ResponseContent responseContent = new ResponseContent();
             if (!string.IsNullOrEmpty(url))
             {
                 Stream responseStream = null;
                 StreamReader streamReader = null;
-                WebResponse webResponse = null;
+                HttpWebResponse webResponse = null;
                 try
                 {
-                    return GetRespStr(url, responseStream, streamReader, webResponse, timeout);
+                    String res = GetRespStr(url, responseStream, streamReader, webResponse);
+                    responseContent = (ResponseContent)JsonHelper.JsonToObject(res, typeof(ResponseContent));
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    ConsoleHelper.writeLine(ex.Message + "location: HttpWebRequestHelper Get");
+                    responseContent.Code = -1;
+                    responseContent.Msg = "请求失败：客户端口或者服务有误。";
+                    responseContent.Data = "";
                 }
                 finally
                 {
@@ -237,20 +250,26 @@ namespace MyHelper
                     if (streamReader != null) streamReader.Dispose();
                     if (webResponse != null) webResponse.Dispose();
                 }
-
             }
-            return null;
+            else
+            {
+                responseContent.Code = -1;
+                responseContent.Msg = "请求地址错误！";
+                responseContent.Data = "";
+            }
+            return responseContent;
         }
 
-        private static string GetRespStr(string url, Stream responseStream, StreamReader streamReader, WebResponse webResponse, int timeout)
+        private static string GetRespStr(string url, Stream responseStream, StreamReader streamReader, HttpWebResponse webResponse)
         {
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
             webRequest.Method = "GET";
-            webRequest.Timeout = timeout;
-            webResponse = webRequest.GetResponse();
-            responseStream = webResponse.GetResponseStream();
+            webRequest.Timeout = timeout;       
+            webRequest.CookieContainer = mCookieContainer;
+            webResponse = (HttpWebResponse)webRequest.GetResponse();            
+            responseStream = webResponse.GetResponseStream();           
             if (responseStream == null) { return ""; }
-            streamReader = new StreamReader(responseStream, Encoding.UTF8);
+            streamReader = new StreamReader(responseStream, Encoding.UTF8);      
             return streamReader.ReadToEnd();
         }
 

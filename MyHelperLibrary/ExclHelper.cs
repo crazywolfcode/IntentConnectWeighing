@@ -395,7 +395,7 @@ namespace MyHelper
                 //  PubHelper.Instance.KillAllExcel(ExcelApp);
                 return 1;
             }
-            catch (Exception e)
+            catch (Exception )
             {                
                 return 0;
             }
