@@ -254,10 +254,15 @@ namespace MyHelper
                 }
                 catch (Exception ex)
                 {
+                    
                     ConsoleHelper.writeLine(ex.Message + "location: HttpWebRequestHelper Get");
                     responseContent.Code = -1;
                     responseContent.Msg = "请求失败：客户端口或者服务有误。";
                     responseContent.Data = "";
+                    if (ex is WebException)
+                    {
+                        responseContent.Msg = "请求失败：" + ex.Message;
+                    }
                 }
                 finally
                 {
