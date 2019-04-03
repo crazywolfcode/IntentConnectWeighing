@@ -27,7 +27,15 @@ namespace MyHelper
         /// <returns>泛型集合</returns>
         public static ResponseContent Post(string url, string postData,bool withCookes = true)
         {
+
             ResponseContent responseContent = new ResponseContent();
+            if (getLocalConnectionStatus() <= 0) {
+                responseContent.Code = -1;
+                responseContent.Msg = "网络未连接";
+                responseContent.Data = "";
+                return responseContent;
+            }
+
             if (string.IsNullOrEmpty(url))
             {
                 responseContent.Code = -1;
@@ -227,6 +235,13 @@ namespace MyHelper
         public static ResponseContent Get(string url)
         {
             ResponseContent responseContent = new ResponseContent();
+            if (getLocalConnectionStatus() <= 0)
+            {
+                responseContent.Code = -1;
+                responseContent.Msg = "网络未连接";
+                responseContent.Data = "";
+                return responseContent;
+            }
             if (!string.IsNullOrEmpty(url))
             {
                 Stream responseStream = null;
