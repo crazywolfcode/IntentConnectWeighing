@@ -22,7 +22,7 @@ namespace MyHelper
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="url">请求地址</param>
-        /// <param name="postData">传输数据</param>
+        /// <param name="postData">传输数据  "table=company&data=00"</param>
 
         /// <returns>泛型集合</returns>
         public static ResponseContent Post(string url, string postData,bool withCookes = true)
@@ -59,7 +59,9 @@ namespace MyHelper
                 responseContent.Code = -1;
                 responseContent.Msg = "请求失败：客户端口或者服务有误。";
                 responseContent.Data = "";
-                throw e;
+                if (e is WebException) {
+                    responseContent.Msg = e.Message;
+                }
             }
             finally
             {
@@ -212,10 +214,10 @@ namespace MyHelper
                 response.Code = 1;
                 return response;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                ConsoleHelper.writeLine("请求错误：" + e.Message);
-                throw;
+                ConsoleHelper.writeLine("请求错误：" + ex.Message);
+                return null;
             }
             finally
             {

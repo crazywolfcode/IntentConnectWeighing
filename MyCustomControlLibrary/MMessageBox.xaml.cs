@@ -46,13 +46,14 @@ namespace MyCustomControlLibrary
 
         public MMessageBox()
         {
-            InitializeComponent();
-        }
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (parentWindow != null) {
+            if (parentWindow != null)
+            {
                 this.Owner = parentWindow;
             }
+            InitializeComponent();           
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {          
             switch (mShowType)
             {
                 case ShowType.Alert:
@@ -123,7 +124,7 @@ namespace MyCustomControlLibrary
                         }));
                 }, null, AutoTime * 1000, 0);
             }
-            Instance.Show();
+            Instance.ShowDialog();
         }
 
         /// <summary>
@@ -163,7 +164,7 @@ namespace MyCustomControlLibrary
                     }));
                 }, null, AutoTime * 1000, 0);
             }
-            Instance.Show();
+            Instance.ShowDialog();
         }
 
         public void ShowSuccessAlert(String alertText = "操作成功！")
@@ -736,6 +737,9 @@ namespace MyCustomControlLibrary
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
+                if (this.Owner != null) {
+                    this.Owner.DragMove();
+                }
                 this.DragMove();
             }
         }
@@ -749,6 +753,7 @@ namespace MyCustomControlLibrary
         {
             this.DialogResult = false;
         }
+               
     }
 
 }
