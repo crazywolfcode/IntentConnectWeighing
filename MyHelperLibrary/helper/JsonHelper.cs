@@ -43,6 +43,18 @@ namespace MyHelper
             return JsonConvert.DeserializeObject(jsonString, type);
         }
         /// <summary>
+        /// 一个Json串生成具体对象
+        /// </summary>
+        /// <typeparam name="T">对象的类</typeparam>
+        /// <param name="jsonString"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static T JsonToObject<T>(string jsonString)
+        {
+            return (T)JsonConvert.DeserializeObject(jsonString, typeof(T));            
+        }
+
+        /// <summary>
         /// 从一个Json串生成DataTable对象信息
         /// </summary>
         /// <param name="jsonString"></param>
