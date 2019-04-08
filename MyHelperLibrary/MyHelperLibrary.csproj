@@ -98,6 +98,7 @@
     <Compile Include="ConfigurationHelper.cs" />
     <Compile Include="ExclHelper.cs" />
     <Compile Include="helper\ConsoleHelper.cs" />
+    <Compile Include="helper\ControlResizerHelper.cs" />
     <Compile Include="helper\CookieHelper.cs" />
     <Compile Include="helper\DateTimeHelper.cs" />
     <Compile Include="helper\EncryptHelper.cs" />
