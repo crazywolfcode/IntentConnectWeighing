@@ -57,6 +57,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Paginator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MMessageBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -129,6 +133,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Style\PageButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\Style\TabButtonStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -164,6 +172,11 @@
     <Compile Include="Controls\MyScrollBar.cs" />
     <Compile Include="Controls\MyScrollViewer.cs" />
     <Compile Include="Controls\OnePointLoading.cs" />
+    <Compile Include="Controls\PageButton.cs" />
+    <Compile Include="Controls\PageButtonType.cs" />
+    <Compile Include="Controls\Paginator.xaml.cs">
+      <DependentUpon>Paginator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RadnerLoading.cs" />
     <Compile Include="Controls\SwitchButton.cs" />
     <Compile Include="Controls\TabButton.cs" />
@@ -174,6 +187,7 @@
     <Compile Include="MMessageBox.xaml.cs">
       <DependentUpon>MMessageBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="panel\WaterfallPaenel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

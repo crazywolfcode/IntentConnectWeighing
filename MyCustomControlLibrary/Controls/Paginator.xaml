@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="MyCustomControlLibrary.Paginator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MyCustomControlLibrary"
+             mc:Ignorable="d" Background="White"
+             Loaded="UserControl_Loaded"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+       
+            <StackPanel Orientation="Horizontal" x:Name="PageContine" VerticalAlignment="Center">                
+            <local:PageButton x:Name="RadiusFirstPage" Tag="First" Width="50" Content="首页" Type="2" Margin="2" ActiveBackground="{StaticResource myBlue}" ActiveForground="White" Padding="1" Click="PageButton_Click"/>
+            <local:PageButton x:Name="CircleFirstPage" Tag="First" Content="首" Type="1" Margin="2" ActiveBackground="{StaticResource myBlue}" ActiveForground="White" Padding="1"  Click="PageButton_Click"/>
+            <local:PageButton x:Name="UdLineFirstPage" Tag="First" Content="首" Type="0" Margin="2" ActiveBackground="{StaticResource myBlue}" ActiveForground="{StaticResource myBlue}" Padding="1"  Click="PageButton_Click"/>
+
+            <local:PageButton x:Name="RadiusUpPage" Tag="Up" Width="50" Content="上一页" Type="2" Margin="2" ActiveBackground="{StaticResource myBlue}" ActiveForground="White" Padding="1"  Click="PageButton_Click"/>
+            <local:PageButton x:Name="CircleUpPage" Tag="Up" Content="上" Type="1" Margin="2" ActiveBackground="{StaticResource myBlue}" ActiveForground="White" Padding="1"  Click="PageButton_Click"/>
+            <local:PageButton x:Name="UdLineUpPage" Tag="Up" Content="上" Type="0" Margin="2" ActiveBackground="{StaticResource myBlue}" ActiveForground="{StaticResource myBlue}" Padding="1"  Click="PageButton_Click"/>
+
+
+                <TextBlock x:Name="leftDot" Text="……" FontSize="14" VerticalAlignment="Bottom" Margin="2" Visibility="Collapsed"/>
+                <WrapPanel x:Name="PagePanel" Visibility="Visible">
+                <local:PageButton  Content="1"  Type="2" Margin="2"  ActiveBackground="{StaticResource myBlue}" ActiveForground="White" Padding="1" IsChecked="True"  Click="PageButton_Click"/>
+                <local:PageButton  Content="2"  Type="2" Margin="2"  ActiveBackground="{StaticResource myBlue}" ActiveForground="White" Padding="1"  Click="PageButton_Click"/>
+                <local:PageButton  Content="3"  Type="2" Margin="2"  ActiveBackground="{StaticResource myBlue}" ActiveForground="White" Padding="1"  Click="PageButton_Click"/>
+                <local:PageButton  Content="4"  Type="2" Margin="2"  ActiveBackground="{StaticResource myBlue}" ActiveForground="White" Padding="1"  Click="PageButton_Click"/>
+                <local:PageButton  Content="5"  Type="2" Margin="2"  ActiveBackground="{StaticResource myBlue}" ActiveForground="White" Padding="1"  Click="PageButton_Click"/>
+                <local:PageButton  Content="6"  Type="2" Margin="2"  ActiveBackground="{StaticResource myBlue}" ActiveForground="White" Padding="1"  Click="PageButton_Click"/>
+                <local:PageButton  Content="7"  Type="2" Margin="2"  ActiveBackground="{StaticResource myBlue}" ActiveForground="White" Padding="1"  Click="PageButton_Click"/>
+                </WrapPanel>
+            <TextBlock x:Name="RightDot" Text="……" FontSize="14" VerticalAlignment="Bottom" Margin="2" Visibility="Collapsed"/>
+
+            <local:PageButton x:Name="RadiusNextPage" Tag="Next" Content="下一页" Width="50"  Type="2" Margin="2"  ActiveBackground="{StaticResource myBlue}" ActiveForground="White" Padding="1"  Click="PageButton_Click"/>
+            <local:PageButton x:Name="CircleNextPage" Tag="Next" Content="下" Type="1" Margin="2"  ActiveBackground="{StaticResource myBlue}" ActiveForground="White" Padding="1"  Click="PageButton_Click"/>
+            <local:PageButton x:Name="UdLineNextPage" Tag="Next" Content="下" Type="0" Margin="2" ActiveIndicatorColor="{StaticResource myBlue}" ActiveBackground="{StaticResource myBlue}" ActiveForground="{StaticResource myBlue}" Padding="1"  Click="PageButton_Click"/>
+
+            <local:PageButton x:Name="RadiusLastPage" Tag="Last" Width="50" Content="尾页" Type="2" Margin="2"  ActiveBackground="{StaticResource myBlue}" ActiveForground="White" Padding="1"  Click="PageButton_Click"/>
+            <local:PageButton x:Name="CircleLastPage" Tag="Last"  Content="尾" Type="2" Margin="1"  ActiveBackground="{StaticResource myBlue}" ActiveForground="White" Padding="1"  Click="PageButton_Click"/>
+            <local:PageButton x:Name="UdLineLastPage" Tag="Last" Content="尾" Type="0" Margin="2"  ActiveBackground="{StaticResource myBlue}" ActiveForground="{StaticResource myBlue}" Padding="1"  Click="PageButton_Click"/>
+            </StackPanel>
+
+    </Grid>
+</UserControl>

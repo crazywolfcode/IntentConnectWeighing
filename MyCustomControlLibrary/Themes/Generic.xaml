@@ -23,5 +23,7 @@
         <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/MProgressBarStyle.xaml"/>
         <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/ComboBoxToggleButton.xaml"/>
         <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/MCombox.xaml"/>
+        <ResourceDictionary Source="/MyCustomControlLibrary;component/Themes/Style/PageButtonStyle.xaml"/>
+        
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

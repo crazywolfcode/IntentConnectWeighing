@@ -100,7 +100,6 @@ namespace MyCustomControlLibrary
             set { SetValue(IconColorProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for IconColor.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IconColorProperty =
             DependencyProperty.Register("IconColor", typeof(Brush), typeof(DateTimePicker), new PropertyMetadata(Brushes.DarkGray));
 
@@ -149,7 +148,6 @@ namespace MyCustomControlLibrary
             set { SetValue(SecondProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Second.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SecondProperty =
             DependencyProperty.Register("Second", typeof(int), typeof(DateTimePicker), new FrameworkPropertyMetadata(DateTime.Now.Second, new PropertyChangedCallback(OnSecondChanged)));
 

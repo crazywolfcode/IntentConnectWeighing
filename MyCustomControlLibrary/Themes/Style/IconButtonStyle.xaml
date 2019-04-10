@@ -55,9 +55,9 @@
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="IsMouseOver" Value="true"></Condition>
+                    <Condition Property="IsMouseOver" Value="true"/>
                     <Condition Property="IsTransparency" Value="false"/>
-                    <Condition Property="AllowsAnimation" Value="true"></Condition>
+                    <Condition Property="AllowsAnimation" Value="true"/>
                 </MultiTrigger.Conditions>
                 <MultiTrigger.EnterActions>
                     <BeginStoryboard>
@@ -94,7 +94,7 @@
                             <DoubleAnimation Storyboard.TargetName="icon"  Storyboard.TargetProperty="(TextBlock.FontSize)"
                                              To="24"
                                              Duration="0:0:0.4"
-                                             />
+                                             />                          
                         </Storyboard>
                     </BeginStoryboard>
                 </MultiTrigger.EnterActions>
