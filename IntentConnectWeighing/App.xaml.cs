@@ -60,7 +60,7 @@ namespace IntentConnectWeighing
                 company = currentCompany.name,
                 affiliatedCompanyId = currentCompany.id
             };
-            currentYard = YardModel.GetById(MyHelper.ConfigurationHelper.GetConfig(ConfigItemName.yardId.ToString()));
+           // currentYard = YardModel.GetById(MyHelper.ConfigurationHelper.GetConfig(ConfigItemName.yardId.ToString()));
             //Scanner Gun
             StartKeyBoardHook();
 
