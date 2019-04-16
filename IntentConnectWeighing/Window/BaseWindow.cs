@@ -13,18 +13,33 @@ namespace IntentConnectWeighing
     public class BaseWindow :Window
     {
         private ControlTemplate baseWindowTemplate;
-       
+        private Thickness mainBorderMargin;
+
+
         public BaseWindow()
         {
             InitializeStyle();
 
             //缩放，最大化 等默认事件的修复
             RepairWindowDefaultEvent();
+
+            this.StateChanged += BaseWindow_StateChanged;
+    
         }
 
+        private void BaseWindow_StateChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized) {
+                HideShadowEffect();
+            } else {
+                ShowShadowEffect();
+            }
+
+        }
+              
         private void InitializeStyle()
         {
-            this.Style = (Style)App.Current.Resources["BaseWindowStyle"];            
+           this.Style = (Style)App.Current.Resources["BaseWindowStyle"];            
         }
 
         public void MyInitializeStyle(Window window, MyWindowsStyle style)
@@ -166,7 +181,7 @@ namespace IntentConnectWeighing
         /// </summary>
         /// <param name="isShow"> 是否显示 </param>
         /// <param name="parent">父控件</param>
-        public void initThemeBtn(System.Windows.Window window, bool isShow = true)
+        public void initThemeBtn(Window window, bool isShow = true)
         {
             ImageButton btn = GetBaseWindowTemplate().FindName("ThemeBtn", window) as ImageButton;
             if (isShow == true)
@@ -197,7 +212,15 @@ namespace IntentConnectWeighing
         }
 
 
-
+        private void ShowShadowEffect() {
+            FrameworkElement border = (FrameworkElement)GetBaseWindowTemplate().FindName("Windows_Border", this);            
+            border.Margin = mainBorderMargin ;
+        }
+        private void HideShadowEffect() {
+            FrameworkElement border = (FrameworkElement)GetBaseWindowTemplate().FindName("Windows_Border", this);
+            mainBorderMargin = border.Margin;
+            border.Margin = new Thickness(0);
+        }
 
         /// <summary>
         /// 初始化最小化按键
@@ -352,6 +375,5 @@ namespace IntentConnectWeighing
         }
 
         #endregion
-
     }
 }

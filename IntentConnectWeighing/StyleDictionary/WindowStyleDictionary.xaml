@@ -14,7 +14,7 @@
     </Style>
 
     <ControlTemplate x:Key="BaseWindowControlTemplate" TargetType="local:BaseWindow">
-        <DockPanel LastChildFill="True" Margin="5">
+        <DockPanel x:Name="Windows_Border" LastChildFill="True" Margin="5">
             <!--阴影-->
             <DockPanel.Effect>
                 <DropShadowEffect ShadowDepth="0" Opacity="0.5" BlurRadius="10"  Color="Black"></DropShadowEffect>

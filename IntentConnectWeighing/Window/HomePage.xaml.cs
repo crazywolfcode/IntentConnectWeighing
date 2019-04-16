@@ -10,7 +10,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MyHelper;
 namespace IntentConnectWeighing
@@ -35,7 +34,7 @@ namespace IntentConnectWeighing
             {
                 ParentWindow.ChangeAlertNumber(ResourceName.MenuIndexNumber, 1, 1);
             }
-
+            
         }
 
 
@@ -309,6 +308,10 @@ namespace IntentConnectWeighing
             return vl;
         }
 
+        private void TextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            t1.Text = "希望你看到的话可以加下我的";
+        }
     }
 
 

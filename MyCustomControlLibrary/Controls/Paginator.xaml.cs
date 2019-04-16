@@ -164,15 +164,27 @@ namespace MyCustomControlLibrary
         {
             if (DataCount <= 0 || ItemCount <= 0)
             {
+                this.Visibility = Visibility.Collapsed;
                 return;
+            }
+            else
+            {
+                this.Visibility = Visibility.Visible;
             }
             int pages = DataCount / ItemCount;
             if (DataCount % ItemCount > 0)
             {
                 pages += 1;
             }
+            if (pages <= 1)
+            {
+                this.Visibility = Visibility.Collapsed;
+            }
+            else {
+                this.Visibility = Visibility.Visible;
+            }
             LastPage = pages;
-            //处理不需要动态生成的页面按键
+            //处理不需要动态生成的页面按键           
             HandleStaticPageBtn();
 
             int side = 2;
@@ -180,6 +192,11 @@ namespace MyCustomControlLibrary
 
             if (pages > 1)
             {
+                if (pages < (side * windows))
+                {
+                    HideStaticBtn();
+                }
+                this.Visibility = Visibility.Visible;
                 this.PagePanel.Visibility = Visibility.Visible;
                 this.PagePanel.Children.Clear();
                 if (pages < (side * windows))
@@ -196,7 +213,8 @@ namespace MyCustomControlLibrary
                         CircleUpPage.Visibility = Visibility.Collapsed;
                         UdLineUpPage.Visibility = Visibility.Collapsed;
                     }
-                    if (CurrentPage - windows <= 1) {
+                    if (CurrentPage - windows <= 1)
+                    {
                         leftDot.Visibility = Visibility.Collapsed;
                         RadiusFirstPage.Visibility = Visibility.Collapsed;
                         CircleFirstPage.Visibility = Visibility.Collapsed;
@@ -207,7 +225,7 @@ namespace MyCustomControlLibrary
                     {
                         RadiusNextPage.Visibility = Visibility.Collapsed;
                         CircleNextPage.Visibility = Visibility.Collapsed;
-                        UdLineNextPage.Visibility = Visibility.Collapsed;                       
+                        UdLineNextPage.Visibility = Visibility.Collapsed;
                     }
                     if ((CurrentPage + windows) < pages)
                     {
@@ -231,7 +249,7 @@ namespace MyCustomControlLibrary
                             case PageButtonType.UdLine:
                                 UdLineFirstPage.Visibility = Visibility.Visible;
                                 break;
-                        }                        
+                        }
                     }
                     else
                     {
@@ -280,7 +298,7 @@ namespace MyCustomControlLibrary
                             case PageButtonType.UdLine:
                                 UdLineLastPage.Visibility = Visibility.Visible;
                                 break;
-                        }                        
+                        }
                     }
                     if (CurrentPage <= windows)
                     {
@@ -323,6 +341,7 @@ namespace MyCustomControlLibrary
             }
             else
             {
+                this.Visibility = Visibility.Collapsed;
                 this.PagePanel.Visibility = Visibility.Collapsed;
                 leftDot.Visibility = Visibility.Collapsed;
                 RightDot.Visibility = Visibility.Collapsed;
@@ -347,29 +366,27 @@ namespace MyCustomControlLibrary
         }
         #endregion
 
+        private void HideStaticBtn()
+        {
+            RadiusFirstPage.Visibility = Visibility.Collapsed;
+            RadiusUpPage.Visibility = Visibility.Collapsed;
+            RadiusNextPage.Visibility = Visibility.Collapsed;
+            RadiusLastPage.Visibility = Visibility.Collapsed;
+            CircleFirstPage.Visibility = Visibility.Collapsed;
+            CircleNextPage.Visibility = Visibility.Collapsed;
+            CircleUpPage.Visibility = Visibility.Collapsed;
+            CircleLastPage.Visibility = Visibility.Collapsed;
+            UdLineFirstPage.Visibility = Visibility.Collapsed;
+            UdLineUpPage.Visibility = Visibility.Collapsed;
+            UdLineNextPage.Visibility = Visibility.Collapsed;
+            UdLineLastPage.Visibility = Visibility.Collapsed;
+        }
+
         /// <summary>
         /// 处理不需要动态生成的页面按键
         /// </summary>
         private void HandleStaticPageBtn()
         {
-            if (LastPage <= 1)
-            {
-                RadiusFirstPage.Visibility = Visibility.Collapsed;
-                RadiusUpPage.Visibility = Visibility.Collapsed;
-                RadiusNextPage.Visibility = Visibility.Collapsed;
-                RadiusLastPage.Visibility = Visibility.Collapsed;
-
-                CircleFirstPage.Visibility = Visibility.Collapsed;
-                CircleNextPage.Visibility = Visibility.Collapsed;
-                CircleUpPage.Visibility = Visibility.Collapsed;
-                CircleLastPage.Visibility = Visibility.Collapsed;
-
-                UdLineFirstPage.Visibility = Visibility.Collapsed;
-                UdLineUpPage.Visibility = Visibility.Collapsed;
-                UdLineNextPage.Visibility = Visibility.Collapsed;
-                UdLineLastPage.Visibility = Visibility.Collapsed;
-                return;
-            }
             switch (ButtonType)
             {
                 case PageButtonType.UdLine:
@@ -438,7 +455,6 @@ namespace MyCustomControlLibrary
                     UdLineLastPage.Visibility = Visibility.Collapsed;
                     break;
             }
-
         }
 
         private PageButton CreateBtn(int PaginatorIndex, Boolean isCurrent = false)
@@ -489,7 +505,7 @@ namespace MyCustomControlLibrary
                     default:
                         break;
                 }
-            }           
+            }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:IntentConnectWeighing"
       xmlns:MyControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
-      mc:Ignorable="d"  d:DesignHeight="300" d:DesignWidth="500" Loaded="Page_Loaded"
+      mc:Ignorable="d"  d:DesignHeight="300" d:DesignWidth="600" Loaded="Page_Loaded"
       Title="HomePage">
     <Page.Resources>
         <local:SexConverter x:Key="SexConverter"/>
@@ -110,8 +110,39 @@
                 </Expander.Content>
             </Expander>
         </Border>
+
+        <StackPanel  Grid.Column="1" Visibility="Collapsed">
+            <MyControl:IndictorPanel 
+                Margin="50"
+                TailHeight="10"
+                Background="White"                
+                Placement="LeftCenter"  
+                BorderBrush="#ccc" 
+                BorderThickness="2"
+                CornerRadius="6" 
+                >
+                <StackPanel >
+                    <TextBox  x:Name="t1" BorderThickness="0" TextWrapping="Wrap">hel asdfasdfasdfaasdfasdfasdfaasdfasdfasdfaasdfasdfasdfa sdfasd worol adfasdf;kljdl;fajsd ;;al</TextBox>
+                    <TextBox  BorderThickness="0" MouseDoubleClick="TextBox_MouseDoubleClick">hello worol</TextBox>
+                </StackPanel>            
+            </MyControl:IndictorPanel>
+
+            <MyControl:IndictorPanel  
+                Background="Transparent"
+                Height="Auto"           
+                TailVerticalOffset="10"
+                TailHorizontalOffset="20"                  
+                TailHeight="10"
+                Placement="TopLeft"
+                BorderBrush="#e9e9e9" 
+                BorderThickness="2"
+                CornerRadius="6" 
+                Padding="5">
+                <Image Source="/IntentConnectWeighing;Component/Themes/Img/Temp/beautifly2.jpg" Stretch="UniformToFill" Width="300"/>
+            </MyControl:IndictorPanel>
+        </StackPanel>
         
-        <WrapPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <WrapPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
             <TextBlock ContextMenu="{StaticResource TextBoxContextMenu}" Text="{Binding  Source={StaticResource man} ,Converter={StaticResource ResourceKey=SexConverter}}" />
             <TextBlock Text="{Binding Source={StaticResource feman} ,Converter={StaticResource ResourceKey=SexConverter}}"/>
             <TextBlock Text="{Binding Source={StaticResource nan} ,Converter={StaticResource ResourceKey=SexConverter}}"/>
@@ -123,7 +154,9 @@
             <MyControl:IconButton x:Name="ErrorButton" Background="Gray"  Icon="&#xe647;" CornerRadius="0,16,16,0" AllowsAnimation="True" Width="70" Click="ErrorButton_Click" >Error</MyControl:IconButton>
             <MyControl:IconTextBlock Text="&#xe64f;" FontSize="20"/>            
         </WrapPanel>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" >
+        
+        
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Visibility="Collapsed" >
             <TextBlock Text="提示效果" Foreground="Black" FontSize="16" FontWeight="DemiBold" HorizontalAlignment="Center"/>
             <WrapPanel>
                 <MyControl:IconButton Content="提示1" x:Name="AlertOne" Margin="5" Padding="2" IsShowIcon="False" Width="50" HorizontalAlignment="Center" Click="AlertOne_Click"/>
