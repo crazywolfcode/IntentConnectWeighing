@@ -45,7 +45,7 @@ namespace IntentConnectWeighing
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            WindowBehavior.newInstance(this).RepairWindowDefaultBehavior();
+            
         }
         private void Window_ContentRendered(object sender, EventArgs e)
         {

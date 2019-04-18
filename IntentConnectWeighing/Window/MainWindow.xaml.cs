@@ -35,7 +35,7 @@ namespace IntentConnectWeighing
         // 窗口加载
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            base.MyInitializeStyle(this, MyWindowsStyle.main);
+            //base.MyInitializeStyle(this, MyWindowsStyle.main);
             centerNavMenu();
             InitMainFrame();        
         }

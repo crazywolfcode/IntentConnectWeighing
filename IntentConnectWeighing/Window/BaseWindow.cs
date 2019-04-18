@@ -18,13 +18,20 @@ namespace IntentConnectWeighing
 
         public BaseWindow()
         {
-            InitializeStyle();
+            //InitializeStyle();
 
             //缩放，最大化 等默认事件的修复
             RepairWindowDefaultEvent();
 
+            this.ContentRendered += BaseWindow_ContentRendered;
+
             this.StateChanged += BaseWindow_StateChanged;
     
+        }
+
+        private void BaseWindow_ContentRendered(object sender, EventArgs e)
+        {
+            MyInitializeStyle(this,MyWindowsStyle.main);
         }
 
         private void BaseWindow_StateChanged(object sender, EventArgs e)
@@ -85,7 +92,7 @@ namespace IntentConnectWeighing
             WindowBehavior.newInstance(this).RepairWindowDefaultBehavior();           
         }
         public ControlTemplate GetBaseWindowTemplate()
-        {
+        {            
             if (baseWindowTemplate == null)
             {
                 baseWindowTemplate = TemplateHelper.GetControlTemplate(ResourceName.BaseWindowControlTemplate);
@@ -331,7 +338,7 @@ namespace IntentConnectWeighing
         /// <param name="e"></param>
         protected void MinBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.WindowState = WindowState.Minimized;
+            this.WindowState = WindowState.Minimized;            
         }
 
         /// <summary>

@@ -23,8 +23,10 @@
                            />
 
                 <!--Header-->
-                <ContentPresenter Grid.Column="1" x:Name="txtHeader" 
-                                  Margin="3,1,5,1" MinWidth="90"
+                <ContentPresenter Grid.Column="1" 
+                                  x:Name="txtHeader" 
+                                  Margin="3,1,5,1"
+                                  MinWidth="90"
                                   RecognizesAccessKey="True" 
                                   VerticalAlignment="Center" 
                                   ContentSource="Header"/>
@@ -123,7 +125,7 @@
 
     <!--菜单项MenuItem样式FIconMenuItem-->
     <Style x:Key="IconMenuItem" TargetType="MenuItem">
-        <Setter Property="BorderBrush"  Value="{DynamicResource MenuBorderBrush}"></Setter>
+        <Setter Property="BorderBrush"  Value="{DynamicResource MenuBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Background" Value="{DynamicResource MenuBackground}"/>
         <Setter Property="Foreground" Value="{DynamicResource MenuForeground}"/>
@@ -132,7 +134,7 @@
         <Setter Property="Width" Value="Auto"/>
         <Setter Property="Margin" Value="0"/>        
         <Setter Property="local:ControlAttachProperty.IconSize" Value="12"/>
-        <Setter Property="Template" Value="{StaticResource IconMenuItemTemplate}"></Setter>        
+        <Setter Property="Template" Value="{StaticResource IconMenuItemTemplate}"/>
     </Style>
 
 
@@ -201,9 +203,8 @@
                             <Grid>
                                 <ContentPresenter Margin="0,10" ContentSource="Header" Grid.Column="1" HorizontalAlignment="Left"/>
                                 <Popup x:Name="pop" Margin="10" IsOpen="{TemplateBinding IsSubmenuOpen}" AllowsTransparency="True" Placement="Bottom">
-                                <Border Margin="5" CornerRadius="4" Background="White" BorderThickness="1" BorderBrush="{DynamicResource MenuBorderBrush}">
-                                    <StackPanel IsItemsHost="True">
-                                        </StackPanel>
+                                    <Border Margin="5" CornerRadius="4" Background="White" BorderThickness="1" BorderBrush="{DynamicResource MenuBorderBrush}">
+                                        <StackPanel IsItemsHost="True"/>
                                     </Border>
                                 </Popup>
                             </Grid>

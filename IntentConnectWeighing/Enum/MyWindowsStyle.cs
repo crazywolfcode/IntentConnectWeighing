@@ -13,12 +13,12 @@ namespace IntentConnectWeighing
         nomal,
 
         /// <summary>
-        ///程序员的主窗口
+        ///主窗口
         /// </summary>
         main,
 
         /// <summary>
-        ///程序员弹出窗口
+        ///弹出窗口
         /// </summary>
         dialog
     }

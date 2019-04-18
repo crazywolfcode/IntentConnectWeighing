@@ -17,7 +17,7 @@
         <DockPanel x:Name="Windows_Border" LastChildFill="True" Margin="5">
             <!--阴影-->
             <DockPanel.Effect>
-                <DropShadowEffect ShadowDepth="0" Opacity="0.5" BlurRadius="10"  Color="Black"></DropShadowEffect>
+                <DropShadowEffect ShadowDepth="0" Opacity="0.5" BlurRadius="10"  Color="Black"/>
             </DockPanel.Effect>
             <!--头部-->
             <Border Width="Auto" Height="50" DockPanel.Dock="Top"   CornerRadius="4,4,0,0" x:Name="windowTitle">
@@ -105,9 +105,12 @@
                 </Grid>
             </Border>
             <!--主体-->
-            <Border  Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"                     
+            <Border Background="{TemplateBinding Background}" 
+                    BorderBrush="{TemplateBinding BorderBrush}"                     
                     BorderThickness="{TemplateBinding BorderThickness}"
-                    Width="Auto" Height="Auto" CornerRadius="0,0,4,4">
+                    Width="Auto" 
+                    Height="Auto" 
+                    CornerRadius="0,0,4,4">
                 <AdornerDecorator>
                     <ContentPresenter />
                 </AdornerDecorator>

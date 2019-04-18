@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.IO;
+using System.Windows.Media;
+
 namespace IntentConnectWeighing
 {
     class BitmapHelper
@@ -22,6 +24,15 @@ namespace IntentConnectWeighing
             image.StreamSource = stream;
             image.EndInit();
             return image;
+        }
+        
+        public static ImageSource FromString(String url)
+        {
+            if (String.IsNullOrEmpty(url))
+            {
+                return null;
+            }
+            return (ImageSource)new ImageSourceConverter().ConvertFromString(url);
         }
     }
 }

@@ -8,6 +8,7 @@
         Icon="/IntentConnectWeighing;component/aislogo_48.ico"    
         Activated="BaseWindow_Activated"
         Loaded="MainWindow_Loaded" 
+        Style="{DynamicResource BaseWindowStyle}"
         ContentRendered="BaseWindow_ContentRendered"
         StateChanged="BaseWindow_StateChanged"
         Closing="BaseWindow_Closing" 
@@ -92,10 +93,10 @@
         <Popup x:Name="userMenuPopup" Grid.Row="1" Width="160" Height="Auto" HorizontalAlignment="Left" 
                AllowsTransparency="True" StaysOpen="False" VerticalOffset="5" HorizontalOffset="-4"
                PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
-               IsOpen="False" PlacementTarget="{Binding ElementName=userHeaderImage}" Placement="Top" Grid.Column="1" Margin="-25,0,0,0">
-            <Border BorderBrush="{StaticResource MenuBorderBrush}" BorderThickness="1" CornerRadius="0" Background="White" Margin="0,0,2,2">
+               IsOpen="False" PlacementTarget="{Binding ElementName=userHeaderImage}" Placement="Bottom" Grid.Column="1" Margin="-25,0,0,0">
+            <Border BorderBrush="LightGray" BorderThickness="0" CornerRadius="0" Background="White" Margin="0,0,4,4">
                 <Border.Effect>
-                    <DropShadowEffect Opacity="0.4" Color="RoyalBlue" ShadowDepth="1" BlurRadius="2"/>
+                    <DropShadowEffect ShadowDepth="0" Opacity="0.5" BlurRadius="10"  Color="Black"/>
                 </Border.Effect>
                 <StackPanel Background="White">
                     <MenuItem Header="设置" Icon="&#xe74c;"  Style="{StaticResource IconMenuItem}" />

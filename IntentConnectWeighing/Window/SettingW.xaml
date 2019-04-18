@@ -8,7 +8,11 @@
         Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"  WindowStyle="None" Style="{StaticResource  settingWindowStyle}"
-        Title="设置" Height="430" Width="560" Activated="Window_Activated" ContentRendered="Window_ContentRendered">
+        Title="设置" 
+        Height="430" 
+        Width="560" 
+        Activated="Window_Activated" 
+        ContentRendered="Window_ContentRendered">
     <Window.Resources>
         <local:CheckedToVisibleConverter x:Key="CheckedToVisibleConverter"> </local:CheckedToVisibleConverter>
     </Window.Resources>
