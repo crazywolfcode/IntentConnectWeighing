@@ -14,7 +14,7 @@ namespace MyHelper
     {
         private static readonly string contentType = "application/x-www-form-urlencoded;multipart/form-data";
         private static readonly string encodeType = "UTF-8";
-        private static readonly int timeout = 5000;
+        private static readonly int timeout = 10000; //10s
         private static CookieContainer mCookieContainer = new CookieContainer();
 
         /// <summary>

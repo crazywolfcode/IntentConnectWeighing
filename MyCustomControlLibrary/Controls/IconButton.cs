@@ -11,6 +11,11 @@ namespace MyCustomControlLibrary
     public partial class IconButton : Button
     {
 
+        public Brush PressedBackground
+        {
+            get { return (Brush)GetValue(PressedBackgroundProperty); }
+            set { SetValue(PressedBackgroundProperty, value); }
+        }
         public static readonly DependencyProperty PressedBackgroundProperty =
          DependencyProperty.Register("PressedBackground", typeof(Brush), typeof(IconButton), new PropertyMetadata(Brushes.DarkBlue));
         /// <summary>
@@ -27,11 +32,7 @@ namespace MyCustomControlLibrary
         /// <summary>
         /// 鼠标按下背景样式
         /// </summary>
-        public Brush PressedBackground
-        {
-            get { return (Brush)GetValue(PressedBackgroundProperty); }
-            set { SetValue(PressedBackgroundProperty, value); }
-        }
+    
 
         public static readonly DependencyProperty PressedForegroundProperty =
             DependencyProperty.Register("PressedForeground", typeof(Brush), typeof(IconButton), new PropertyMetadata(Brushes.White));
@@ -141,9 +142,27 @@ namespace MyCustomControlLibrary
 
 
 
+        public Boolean IsChecked
+        {
+            get { return (Boolean)GetValue(IsCheckedProperty); }
+            set { SetValue(IsCheckedProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsCheckedProperty =
+            DependencyProperty.Register("IsChecked", typeof(Boolean), typeof(IconButton), new PropertyMetadata(false));
+
+
+
         static IconButton()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(IconButton), new FrameworkPropertyMetadata(typeof(IconButton)));
+            
+        }
+
+        protected override void OnClick()
+        {
+            this.IsChecked = !this.IsChecked;
+            base.OnClick();
         }
     }
 }

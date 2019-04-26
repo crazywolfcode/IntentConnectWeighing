@@ -45,6 +45,16 @@
                         <OuterGlowBitmapEffect/>
                     </Setter.Value>
                 </Setter>
+            </Trigger>f
+            <Trigger Property="IsChecked" Value="true">
+                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},  Path=MouseOverBackground}" TargetName="border" />
+                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},   Path=MouseOverForeground}" TargetName="icon"/>
+                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},   Path=MouseOverForeground}" TargetName="txt"/>
+                <Setter Property="BitmapEffect">
+                    <Setter.Value>
+                        <OuterGlowBitmapEffect/>
+                    </Setter.Value>
+                </Setter>
             </Trigger>
             <Trigger Property="IsShowIcon" Value="false">
                 <Setter Property="Visibility" Value="Collapsed" TargetName="icon"></Setter>

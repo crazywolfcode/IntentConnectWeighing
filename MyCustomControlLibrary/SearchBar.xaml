@@ -37,7 +37,7 @@
                                    MouseOverForeground="Red" Visibility="Collapsed"
                                    VerticalAlignment="Center" ToolTip="清除"
                                    IsShowIcon="True" Icon="&#xe648;" IconSize="18"
-                                  Width="22" Height="26" IconMargin="-1,-2,0,0"
+                                   Width="22" Height="26" IconMargin="-1,-2,0,0"
                                    Margin="0,0,4,0"/>
                 <local:IconButton           
                                    x:Name="SearchBtn" Click="SearchBtn_Click"
@@ -45,7 +45,7 @@
                                    MouseOverForeground="{DynamicResource myBlue}"
                                    VerticalAlignment="Center" ToolTip="搜索"
                                    IsShowIcon="True" Icon="&#xe86e;" IconSize="26"
-                                  Width="28" Height="26" IconMargin="-2,0,0,0"
+                                   Width="28" Height="26" IconMargin="-2,0,0,0"
                                    Margin="0,0,4,0"/>
             </StackPanel>
         </Border>

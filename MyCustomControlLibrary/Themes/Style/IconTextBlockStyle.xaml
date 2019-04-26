@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:MyCustomControlLibrary">
     
     <Style TargetType="{x:Type local:IconTextBlock}">
-        <Setter Property="FontFamily" Value="/MyCustomControlLibrary;component/Themes/Font/#iconfont"/>
+        <Setter Property="FontFamily" Value="/MyCustomControlLibrary;component/Themes/Font/#icomoon"/>
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="TextAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>

@@ -109,6 +109,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Style\NavMenuButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\Style\OnePointLoadingStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -172,6 +176,7 @@
     <Compile Include="Controls\ComboBoxToggleButton.cs" />
     <Compile Include="Controls\MyScrollBar.cs" />
     <Compile Include="Controls\MyScrollViewer.cs" />
+    <Compile Include="Controls\NavMenuButton.cs" />
     <Compile Include="Controls\OnePointLoading.cs" />
     <Compile Include="Controls\PageButton.cs" />
     <Compile Include="Controls\PageButtonType.cs" />
@@ -213,19 +218,19 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Themes\Font\icomoon.ttf" />
+    <Resource Include="Themes\Font\iconfont.ttf" />
     <Page Include="Themes\Style\IconLoadingStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Resource Include="Themes\Font\iconfont.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Themes\Img\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="lib\Microsoft.Expression.Drawing.dll" />
+    <Resource Include="Themes\Img\red_dot.png" />
+    <Resource Include="Themes\Img\mover.png" />
+    <Resource Include="Themes\Img\enter.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
