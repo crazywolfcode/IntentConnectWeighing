@@ -54,19 +54,19 @@
 
                         <!--Popup 可显示 ComboBox 中的项列表。IsOpen 已数据绑定到通过 ComboBoxToggleButton 来切换的 IsDropDownOpen-->
                         <Popup IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" x:Name="Popup" Focusable="False" AllowsTransparency="True" PopupAnimation="Slide">
-                            <Grid MaxHeight="150" MinWidth="{TemplateBinding ActualWidth}" x:Name="DropDown" SnapsToDevicePixels="True">
+                            <Grid MaxHeight="150" MinWidth="{TemplateBinding ActualWidth}" x:Name="DropDown" SnapsToDevicePixels="True" Background="{TemplateBinding Background}">
                                 <Border x:Name="DropDownBorder"  BorderBrush="#e8e8e8" BorderThickness="1 0 1 1"/>
-                                <ScrollViewer Margin="1"  SnapsToDevicePixels="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+                                <local:MyScrollViewer Margin="1"  SnapsToDevicePixels="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
                                     <!--StackPanel 用于显示子级，方法是将 IsItemsHost 设置为 True-->
                                     <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" />
-                                </ScrollViewer>
+                                </local:MyScrollViewer>
                             </Grid>
                         </Popup>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEditable" Value="true">
                             <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible" />
-                        </Trigger>
+                        </Trigger>                       
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

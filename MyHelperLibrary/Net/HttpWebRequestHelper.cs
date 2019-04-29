@@ -16,6 +16,33 @@ namespace MyHelper
         private static readonly string encodeType = "UTF-8";
         private static readonly int timeout = 10000; //10s
         private static CookieContainer mCookieContainer = new CookieContainer();
+        /// <summary>
+        /// 对你转化为Post 参数字符串 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        /// <returns> Like  table=company&data=00</returns>
+        public static string ObjecToPostData<T>(T data) {
+            String result = string.Empty;
+            char splitChart = '&';
+            Type type = typeof(T);            
+            System.Reflection.PropertyInfo[] propertyInfos = type.GetProperties();
+            Object temp;
+            foreach (System.Reflection.PropertyInfo info in propertyInfos)
+            {
+                temp = info.GetValue(data,null);               
+                if (temp == null)
+                {
+                    continue;
+                }
+                if (info.GetType() == typeof(DateTime) && Convert.ToDateTime(temp) < Convert.ToDateTime("1753-01-01"))
+                {
+                    continue;                    
+                }
+                result += $"{info.Name}={temp.ToString().Trim()}" + splitChart;             
+            }
+            return result.TrimEnd(splitChart);
+        }
 
         /// <summary>
         /// Post Http请求
@@ -23,7 +50,6 @@ namespace MyHelper
         /// <typeparam name="T"></typeparam>
         /// <param name="url">请求地址</param>
         /// <param name="postData">传输数据  "table=company&data=00"</param>
-
         /// <returns>泛型集合</returns>
         public static ResponseContent Post(string url, string postData, bool withCookes = true)
         {
@@ -81,7 +107,6 @@ namespace MyHelper
         /// <typeparam name="T"></typeparam>
         /// <param name="url">请求地址</param>
         /// <param name="postData">传输数据</param>
-
         /// <returns>泛型集合</returns>
         public static List<T> Post<T>(string url, string postData)
         {
@@ -128,14 +153,14 @@ namespace MyHelper
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
             webRequest.Method = "post";
             webRequest.ContentType = contentType + ";" + encodeType;
-            webRequest.ContentLength = data.Length;
+            webRequest.ContentLength = data.Length;            
             webRequest.Timeout = timeout;
             if (withCookes)
             {
                 webRequest.CookieContainer = mCookieContainer;
             }
             requestStream = webRequest.GetRequestStream();
-            requestStream.Write(data, 0, data.Length);
+            requestStream.Write(data, 0, data.Length);            
             webResponse = (HttpWebResponse)webRequest.GetResponse();
             responseStream = webResponse.GetResponseStream();
             if (responseStream == null)

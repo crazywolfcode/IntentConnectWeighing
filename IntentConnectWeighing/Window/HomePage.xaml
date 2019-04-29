@@ -156,7 +156,7 @@
         </WrapPanel>
         
         
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Visibility="Collapsed" >
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Visibility="Visible" >
             <TextBlock Text="提示效果" Foreground="Black" FontSize="16" FontWeight="DemiBold" HorizontalAlignment="Center"/>
             <WrapPanel>
                 <MyControl:IconButton Content="提示1" x:Name="AlertOne" Margin="5" Padding="2" IsShowIcon="False" Width="50" HorizontalAlignment="Center" Click="AlertOne_Click"/>

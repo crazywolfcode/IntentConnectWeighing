@@ -21,7 +21,7 @@ namespace IntentConnectWeighing
             InWeighingPage page = (InWeighingPage)(sender);
             page.CurrentWeighingBillIsSendBill = true;
             page.mWeighingBill = (WeighingBill)e.Parameter;
-            page.Infactory();
+            page.Infactory();   
         }
     }
 }

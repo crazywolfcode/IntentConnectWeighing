@@ -9,6 +9,9 @@ using System.Xml;
 
 namespace MyHelper
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class JsonHelper
     {
         /// <summary>

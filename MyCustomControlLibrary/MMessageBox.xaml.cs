@@ -49,6 +49,10 @@ namespace MyCustomControlLibrary
             if (parentWindow != null)
             {
                 this.Owner = parentWindow;
+                this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            }
+            else {
+                this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             }
             InitializeComponent();           
         }
@@ -205,6 +209,7 @@ namespace MyCustomControlLibrary
             {
                 if (currControlTemplate.FindName("MTextBox", Instance) is TextBlock text)
                 {
+                    text.MaxWidth = this.ActualWidth - 60;
                     text.Text = mAlterText;
                     text.Foreground = (Brush)mBrush;
                 }
