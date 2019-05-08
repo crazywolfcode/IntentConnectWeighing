@@ -48,8 +48,10 @@ namespace MyCustomControlLibrary
         {
             if (parentWindow != null)
             {
-                this.Owner = parentWindow;
-                this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                try {
+                    this.Owner = parentWindow;
+                    this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                } catch { }                
             }
             else {
                 this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
