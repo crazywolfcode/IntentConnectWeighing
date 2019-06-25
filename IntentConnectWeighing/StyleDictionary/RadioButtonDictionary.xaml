@@ -23,7 +23,7 @@
                           VerticalAlignment="Center" >
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <myControl:IconTextBlock x:Name="icon"                                        
-                                       Text="&#xe8b5;"
+                                       Text="&#xea6e;"
                                        SnapsToDevicePixels="True"
                                        FontSize="{TemplateBinding local:ControlAttachProperty.IconSize}"
                                        Margin="{TemplateBinding local:ControlAttachProperty.IconMargin}"
@@ -34,14 +34,14 @@
                     <!--触发器：设置选中状态符号-->
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="true">
-                            <Setter Property="Text" Value="&#xe8b6;" TargetName="icon"></Setter>
-                            <Setter Property="Foreground" Value="RoyalBlue"></Setter>
+                            <Setter Property="Text" Value="&#xea6c;" TargetName="icon"/>
+                            <Setter Property="Foreground" Value="{DynamicResource myBlue}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Foreground" Value="{DynamicResource myBlue}"></Setter>
+                            <Setter Property="Foreground" Value="{DynamicResource myBlue}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="{StaticResource DisableOpacity}" TargetName="grid" ></Setter>
+                            <Setter Property="Opacity" Value="{StaticResource DisableOpacity}" TargetName="grid" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -70,20 +70,19 @@
                             Height="{TemplateBinding Height}" 
                             HorizontalAlignment="Center"
                             Background="{TemplateBinding Background}" 
-                            Width="{TemplateBinding Width}">
-                            
+                            Width="{TemplateBinding Width}">                            
                             <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                         </Border>
                         <!--选中的状态标识-->
-                        <TextBlock Text="{TemplateBinding local:ControlAttachProperty.Icon}"
-                                   x:Name="checkState" 
-                                   Style="{DynamicResource IFontStyle}" 
-                                   VerticalAlignment="Bottom" 
-                                    HorizontalAlignment="Right" 
-                                   Visibility="Collapsed"
-                                   FontSize="{TemplateBinding local:ControlAttachProperty.IconSize}" 
-                                   Margin="1"
-                                   Foreground="{StaticResource RadioButtonCheckedForegroundColor}"/>
+                        <myControl:IconTextBlock 
+                            Text="&#xe8ba;"
+                            x:Name="checkState"                                   
+                            VerticalAlignment="Bottom" 
+                            HorizontalAlignment="Right" 
+                            Visibility="Collapsed"
+                            FontSize="{TemplateBinding local:ControlAttachProperty.IconSize}" 
+                            Margin="1"
+                            Foreground="{StaticResource RadioButtonCheckedForegroundColor}"/>
                     </Grid>
                     <!--触发器：设置选中状态符号-->
                     <ControlTemplate.Triggers>

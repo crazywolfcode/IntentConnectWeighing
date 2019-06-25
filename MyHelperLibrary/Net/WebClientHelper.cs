@@ -22,7 +22,7 @@ namespace MyHelper
             //client.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
             //client.ResponseHeaders.Add("*/*");
             String res = client.DownloadString(url);
-            ResponseContent response = (ResponseContent)MyHelper.JsonHelper.JsonToObject(res, typeof(ResponseContent));
+            ResponseContent response = (ResponseContent)JsonHelper.JsonToObject(res, typeof(ResponseContent));
             return response;
         }
 

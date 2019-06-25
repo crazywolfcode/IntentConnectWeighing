@@ -194,7 +194,9 @@
             <!--          
                 </StackPanel>-->
             <MyControl:MCombox x:Name="TestComBox" DisplayMemberPath="name" SelectBackground="AliceBlue" SelectForegound="White" BorderBrush="#e8e8e8"/>
-           
+            <RadioButton Style="{StaticResource RadioButtonDefaultStyle}" Content="Dfasdf"/>
+            <RadioButton Style="{StaticResource BoxRadioButtonStyle}" Content="Radio" Width="50"/>
+            <RadioButton Style="{StaticResource menuRadioButtonStyle}" Content="Mralajd"/>
         </StackPanel>
     </Grid>
 </Page>

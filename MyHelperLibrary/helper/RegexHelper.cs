@@ -553,9 +553,9 @@ namespace MyHelper
         /// <returns>是否匹配</returns>
         public static bool IsIDCard18(string input)
         {
-            //验证是否可以转换为正确的整数
+            //验证是否可以转换为正确的整数          
             long l = 0;
-            if (!long.TryParse(input.Remove(17), out l) || l.ToString().Length != 17 || !long.TryParse(input.Replace('x', '0').Replace('X', '0'), out l))
+            if (input.Length != 18 || !long.TryParse(input.Replace('x', '0').Replace('X', '0'), out l))
             {
                 return false;
             }
