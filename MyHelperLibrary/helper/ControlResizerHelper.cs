@@ -57,7 +57,6 @@ namespace MyHelper
             else
             {
                 double vertiChange, horiChange;
-                vertiChange = horiChange = 0;
                 var pointScr = mControl.PointToScreen(point);
                 if (LeftDirection.HasValue)
                 {

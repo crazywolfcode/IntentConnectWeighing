@@ -16,8 +16,7 @@ namespace MyCustomControlLibrary
         public bool IsShowValue
         {
             get { return (bool)GetValue(IsShowValueProperty); }
-            set { SetValue(IsShowValueProperty, value);          
-            }
+            set { SetValue(IsShowValueProperty, value); }
         }
 
         public static readonly DependencyProperty IsShowValueProperty = DependencyProperty.Register("IsShowValue", typeof(bool), typeof(MProgressBar), new PropertyMetadata(true));

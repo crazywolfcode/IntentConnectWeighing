@@ -3,7 +3,6 @@
                     xmlns:myControl="clr-namespace:MyCustomControlLibrary;assembly=MyCustomControlLibrary"
                     xmlns:local="clr-namespace:IntentConnectWeighing">
 
-
     <!--菜单项MenuItem Template-->
     <ControlTemplate x:Key="IconMenuItemTemplate" TargetType="MenuItem">
         <Border x:Name="border" Background="Transparent" Height="{TemplateBinding Height}" Opacity="1" >
@@ -356,7 +355,7 @@
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSelected" Value="True" />
-                                <Condition Property="Selector.IsSelectionActive" Value="True" />
+                                <Condition Property="Selector.IsSelectionActive" Value="True" />                            
                             </MultiTrigger.Conditions>
                             <Setter Property="Background" Value="{StaticResource ItemSelectedBackground}" />
                             <Setter Property="Foreground" Value="{StaticResource ItemSelectedForeground}" />
