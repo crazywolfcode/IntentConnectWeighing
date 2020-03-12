@@ -103,6 +103,7 @@
     <Compile Include="helper\ControlResizerHelper.cs" />
     <Compile Include="helper\CookieHelper.cs" />
     <Compile Include="helper\DateTimeHelper.cs" />
+    <Compile Include="helper\DpiHelper.cs" />
     <Compile Include="helper\EncryptHelper.cs" />
     <Compile Include="helper\EntityHelper.cs" />
     <Compile Include="helper\FileHelper.cs" />

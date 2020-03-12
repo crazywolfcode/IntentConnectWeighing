@@ -9,9 +9,12 @@
         mc:Ignorable="d" ResizeMode="NoResize"
         Icon="/IntentConnectWeighing;component/aislogo_48.ico"
         WindowStartupLocation="CenterScreen"         
-        Title="添加物资分类" Height="330" Width="460" WindowStyle="None"
-        Loaded="Window_Loaded"  Style="{DynamicResource settingWindowStyle}"     
+        Title="添加物资分类" 
+        BorderThickness="1"
+        BorderBrush="LightBlue"
+        Loaded="Window_Loaded"  Style="{DynamicResource settingWindowStyle}"        
         Background="#FFF9F9F9">
+  
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="65"/>

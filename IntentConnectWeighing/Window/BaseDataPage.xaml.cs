@@ -456,7 +456,7 @@ namespace IntentConnectWeighing
 
         private void AddMaterialCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
-            new MaterialCategoryAddW() { ParentRefreshData = new Action<Boolean, Boolean, Boolean>(RefreshData) }.ShowDialog();
+            new MaterialCategoryAddW() { ParentRefreshData = RefreshData,Owner=this.paretntWindow}.ShowDialog();
         }
         #endregion
 
@@ -516,6 +516,7 @@ namespace IntentConnectWeighing
 
         private void DeleteMaterialBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (currMaterial == null) return;
             MessageBoxResult result = MessageBox.Show($"你确定要删除 {currMaterial.name} 吗？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
             {
@@ -555,6 +556,7 @@ namespace IntentConnectWeighing
 
         private void DeleteCarInfoBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (currCarInfo == null) return;
             MessageBoxResult result = MessageBox.Show($"你确定要删除 {currCarInfo.carNumber} 吗？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
             {
@@ -582,6 +584,10 @@ namespace IntentConnectWeighing
         #region Company Info Update and Delete Event
         private void DeleteCompanyBtn_Click(object sender, RoutedEventArgs e)
         {
+            if(currCompany == null)
+            {
+                return;
+            }
             MessageBoxResult result = MessageBox.Show($"你确定要删除 {currCompany.name} 吗？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
             {

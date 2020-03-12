@@ -392,7 +392,7 @@ namespace IntentConnectWeighing
                                 this.InDetailDataGrid,
                                 MyHelper.DateTimeHelper.getCurrentDateTime(MyHelper.DateTimeHelper.DateFormat) + this.TodayInTabBtn.Content,
                                 mReportHeader.Title,
-                                this.TodayInTabBtn.Content.ToString(),
+                                this.InDetialReportTabBtn.Content.ToString(),
                                 this.mReportHeader.YardName + "       " + this.mReportHeader.DateArea + "     导出时间:" + MyHelper.DateTimeHelper.getCurrentDateTime(),
                                 this.InSummaryTextBlock.Text,
                                 GetListStatisticToListString(this.InStatisticListBox)
@@ -405,7 +405,7 @@ namespace IntentConnectWeighing
                         this.OutDetailDataGrid,
                         MyHelper.DateTimeHelper.getCurrentDateTime(MyHelper.DateTimeHelper.DateFormat) + this.TodayOutTabBtn.Content,
                         mReportHeader.Title,
-                        this.TodayOutTabBtn.Content.ToString(),
+                        this.OutDetialReportTabBtn.Content.ToString(),
                         this.mReportHeader.YardName + "       " + this.mReportHeader.DateArea + "     导出时间:" + MyHelper.DateTimeHelper.getCurrentDateTime(),
                         this.OutSummaryTextBlock.Text,
                         GetListStatisticToListString(this.OutStatisticListBox)

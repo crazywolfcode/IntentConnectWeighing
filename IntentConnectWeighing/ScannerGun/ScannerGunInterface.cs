@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IntentConnectWeighing
 {
-  public  interface ScannerGunInterface
+  public  interface IScannerGunInterface
     {
         void ScanedFinished(String result);
     }

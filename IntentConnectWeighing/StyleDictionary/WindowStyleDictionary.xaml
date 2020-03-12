@@ -139,10 +139,12 @@
 
     <!--设置窗口样式-->
     <Style x:Key="settingWindowStyle"  TargetType="{x:Type Window}">
-        <Setter Property="AllowsTransparency" Value="True"></Setter>
-        <Setter Property="Background" Value="Transparent"></Setter>
-        <Setter Property="BorderThickness" Value="0,0,0,0" ></Setter>
-        <Setter Property="WindowStyle" Value="None"></Setter>
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0,0,0,0" />
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="Width" Value="330"/>
+        <Setter Property="Height" Value="460"/>
         <Setter Property="Control.Template" Value="{StaticResource BaseComplate}"/>
     </Style>
 </ResourceDictionary>

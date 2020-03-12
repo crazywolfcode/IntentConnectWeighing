@@ -116,12 +116,13 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <myControl:IconButton                
-                            x:Name="AddMaterialCategoryBtn" Click="AddMaterialCategoryBtn_Click"
+                            x:Name="AddMaterialCategoryBtn" 
+                            Click="AddMaterialCategoryBtn_Click"
                            MouseOverForeground="{DynamicResource myBlue}"
                            VerticalAlignment="Bottom"
                             IsTransparency="True"
-                           IsShowIcon="True" Icon="&#xe617;" IconSize="28"
-                           Width="30" Height="30" IconMargin="-2,0,0,0"
+                           IsShowIcon="True" Icon="+" IconSize="35"
+                           Width="30" Height="30" IconMargin="0,-10,0,0"
                             Margin="0,0,4,0" />
                         <myControl:IconButton         
                            MouseOverForeground="{DynamicResource myBlue}"

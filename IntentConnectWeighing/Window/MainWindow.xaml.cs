@@ -93,20 +93,22 @@ namespace IntentConnectWeighing
                 pageAddress = "/IntentConnectWeighing;component/Window/pageAddress.xaml".Replace("pageAddress", button.Name + "Page");
                 this.MainFrame.Source = new Uri(pageAddress, UriKind.RelativeOrAbsolute);
                 App.Current.Resources[ResourceName.MenuIndexNumber.ToString()] = 12;
-                int a = ResourceHelper.getIntFromDictionaryResource(ResourceName.MenuIndexNumber);
                 switch (button.Name)
                 {
-                    case "NavIndex":
-
+                    case "Home":
+                       // this.MainFrame.Navigate(new HomePage() { ParentWindow = this });
                         break;
-                    case "NavWeighing":
-
+                    case "InWeighing":
+                      //  this.MainFrame.Navigate(new InWeighingPage() );
+                        break;
+                    case "OutWeighing":
+                       // this.MainFrame.Navigate(new OutWeighingPage() );
                         break;
                     case "NavReport":
-
+                      //  this.MainFrame.Navigate(new ReportPage());
                         break;
                     case "NavBaseData":
-
+                     //   this.MainFrame.Navigate(new BaseDataPage() { paretntWindow = this});
                         break;
                     default:
 

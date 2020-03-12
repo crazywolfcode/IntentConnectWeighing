@@ -64,6 +64,11 @@ namespace IntentConnectWeighing
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
+            if(String.IsNullOrEmpty(this.nameTb.Text) || this.nameTb.Text.Length < 1)
+            {
+                MessageBox.Show("请输入分类的名称！");
+                return;
+            }
 
             SqlDao.DbHelper optionHelper =  DatabaseOPtionHelper.GetInstance();
             String condition = String.Empty;

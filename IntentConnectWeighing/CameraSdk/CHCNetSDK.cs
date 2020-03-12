@@ -15276,14 +15276,6 @@ namespace IntentConnectWeighing.CameraSdk
 
 
 
-
-
-
-
-
-
-
-
         #region  取流模块相关结构与接口
 
         [StructLayoutAttribute(LayoutKind.Sequential)]

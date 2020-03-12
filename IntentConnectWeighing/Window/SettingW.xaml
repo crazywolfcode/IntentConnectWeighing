@@ -10,6 +10,7 @@
         mc:Ignorable="d"  WindowStyle="None" Style="{StaticResource  settingWindowStyle}"
         Title="设置" 
         Height="430" 
+        
         Width="560" 
         Activated="Window_Activated" 
         ContentRendered="Window_ContentRendered">

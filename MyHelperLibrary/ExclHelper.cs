@@ -350,7 +350,7 @@ namespace MyHelper
                     Microsoft.Office.Interop.Excel.Range range = ExcelSheet.get_Range(start, end);
                     range.Merge(0);
                     range = ExcelSheet.get_Range(start, end);
-                    range.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                    range.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
                     range.EntireColumn.AutoFit(); //自动调整列宽
                     range.Font.Size = 12; //设置字体大小
                     range.Font.Name = "黑体"; //设置字体的种类 

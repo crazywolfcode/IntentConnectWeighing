@@ -17,7 +17,7 @@ namespace IntentConnectWeighing
     /// <summary>
     /// App.xaml 的交互逻辑
     /// </summary>
-    public partial class App : Application,ScannerGunInterface
+    public partial class App : Application, IScannerGunInterface
     {
         public static User currentUser;
         public static Company currentCompany;
@@ -27,25 +27,25 @@ namespace IntentConnectWeighing
         public static String CurrClientId;
         public static string SoftwareVersion;
         public static System.Windows.Forms.NotifyIcon notifyIcon;
- 
+
         #region 本机使用的临时基础数据
         public static Dictionary<String, Company> tempSupplyCompanys = new Dictionary<string, Company>();
         public static Dictionary<String, Company> tempCustomerCompanys = new Dictionary<string, Company>();
         public static Dictionary<String, Material> tempMaterials = new Dictionary<string, Material>();
         public static Dictionary<String, CarInfo> tempCars = new Dictionary<string, CarInfo>();
-        public static List<String> decuationDesList = new List<string>() { "扣水", "扣杂物"};
-        public static List<String> inputRemarkList = new List<string>() {};
-        public static List<String> outputRemarkList = new List<string>() {};
+        public static List<String> decuationDesList = new List<string>() { "扣水", "扣杂物" };
+        public static List<String> inputRemarkList = new List<string>() { };
+        public static List<String> outputRemarkList = new List<string>() { };
         #endregion
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             CreateNotifyIcon();
 
             CreateClientId();
-            
+
             //devlepment
             new MainWindow().Show();
-           
+
             // new TestExpender().Show();
             //Navigation();
             currentCompany = new Company()
@@ -60,7 +60,7 @@ namespace IntentConnectWeighing
                 company = currentCompany.name,
                 affiliatedCompanyId = currentCompany.id
             };
-           // currentYard = YardModel.GetById(MyHelper.ConfigurationHelper.GetConfig(ConfigItemName.yardId.ToString()));
+            currentYard = YardModel.GetById(MyHelper.ConfigurationHelper.GetConfig(ConfigItemName.yardId.ToString()));
             //Scanner Gun
             StartKeyBoardHook();
 
@@ -72,7 +72,8 @@ namespace IntentConnectWeighing
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
         }
 
-        private void StartKeyBoardHook() {
+        private void StartKeyBoardHook()
+        {
             ScannerGunHelper.GetInstance(this).Start();
         }
 
@@ -143,12 +144,12 @@ namespace IntentConnectWeighing
             notifyIcon = new System.Windows.Forms.NotifyIcon
             {
                 BalloonTipTitle = "BalloonTipTitle",
-                BalloonTipText = "BalloonTipText intel connectation weighing" + ResourceHelper.getStringFromDictionaryResource(ResourceName.CompanyName),             
-               Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.ExecutablePath),
+                BalloonTipText = "BalloonTipText intel connectation weighing" + ResourceHelper.getStringFromDictionaryResource(ResourceName.CompanyName),
+                Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.ExecutablePath),
                 Visible = true,
                 BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info
             };
-           
+
             notifyIcon.ShowBalloonTip(1000);
             notifyIcon.Text = ResourceHelper.getStringFromDictionaryResource(ResourceName.AppTitle);
             notifyIcon.MouseDoubleClick += NotifyIcon_MouseDoubleClick;
@@ -187,8 +188,8 @@ namespace IntentConnectWeighing
         private void QuitMenuItem_Click(object sender, EventArgs e)
         {
             currWindow.Activate();
-   
-            MMessageBox.Result result = MMessageBox.GetInstance().ShowBox("你确定退出程系吗", "提示",MMessageBox.ButtonType.YesNo,MMessageBox.IconType.Info);
+
+            MMessageBox.Result result = MMessageBox.GetInstance().ShowBox("你确定退出程系吗", "提示", MMessageBox.ButtonType.YesNo, MMessageBox.IconType.Info);
             if (result == MMessageBox.Result.Yes)
             {
                 Application.Current.Shutdown();
@@ -208,7 +209,7 @@ namespace IntentConnectWeighing
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             ScannerGunHelper.Close();
-          
+
             //DateTime start = DateTime.Now;
             //    try
             //    {
@@ -230,7 +231,7 @@ namespace IntentConnectWeighing
             //}
             //double time = DateTimeHelper.DateDifflMilliseconds(start, DateTime.Now);
 
-            //ConsoleHelper.writeLine("suer time :" + time + " ms");
+            //ConsoleHelper.writeLine("use time :" + time + " ms");
 
         }
         /// <summary>
@@ -238,7 +239,7 @@ namespace IntentConnectWeighing
         /// </summary>
         private void InsertOrUpdateConnectionStrings()
         {
-            ConnectionStringSettingsCollection conns = ConfigurationManager.ConnectionStrings;        
+            ConnectionStringSettingsCollection conns = ConfigurationManager.ConnectionStrings;
             string sql = string.Empty;
             for (int i = 0; i < conns.Count; i++)
             {
@@ -246,9 +247,9 @@ namespace IntentConnectWeighing
                 if (!conns[i].Name.Contains("Local"))
                 {
                     sql = DatabaseOPtionHelper.GetInstance().getSelectSql("config", null, "client_id =' " + ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString()) + "' and config_name = ' " + conns[i].Name + "'", null, null, null, 1);
-                 
+
                     List<Config> configs = DatabaseOPtionHelper.GetInstance().select<Config>(sql);
-                    if (configs!=null && configs.Count > 0)
+                    if (configs != null && configs.Count > 0)
                     {
                         config = JsonHelper.JsonToObject(JsonHelper.ObjectToJson(configs[0]), typeof(Config)) as Config;
                         if (config != null)
@@ -264,7 +265,7 @@ namespace IntentConnectWeighing
                                     config.updateUserName = config.addUserName;
                                 }
                             }
-                             DatabaseOPtionHelper.GetInstance().update(config);
+                            DatabaseOPtionHelper.GetInstance().update(config);
                         }
                         else
                         {
@@ -299,17 +300,17 @@ namespace IntentConnectWeighing
         /// </summary>
         private void InsertOrUpdateAppSettings()
         {
-            SqlDao.DbHelper helper =  DatabaseOPtionHelper.GetInstance(); ;
+            SqlDao.DbHelper helper = DatabaseOPtionHelper.GetInstance(); ;
             string sql = string.Empty;
             NameValueCollection collection = ConfigurationManager.AppSettings;
             string[] keys = collection.AllKeys;
             foreach (string key in keys)
             {
-                Config config = null;              
+                Config config = null;
                 sql = helper.getSelectSql("config", null, "client_id ='" + ConfigurationHelper.GetConfig(ConfigItemName.clientId.ToString()) + "' and config_name = '" + key + "'", null, null, null, 1);
                 List<Config> configs = helper.select<Config>(sql);
                 if (configs != null && configs.Count > 0)
-                {                 
+                {
                     if (configs[0] != null)
                     {
                         config = configs[0];

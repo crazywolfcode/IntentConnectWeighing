@@ -31,7 +31,26 @@ namespace MyCustomControlLibrary
         private int MOutTime = 5; //Loading超时限定时间5s
         private String mAlterText;
         private ShowType mShowType = ShowType.nomal;
-        private Point mPoint;
+        private Point privatePoint;
+        private Point mPoint
+        {
+            get { return privatePoint; }
+            set
+            {
+                double dpiX;
+                double dpiY;
+
+                using (var graphics = System.Drawing.Graphics.FromHwnd(IntPtr.Zero))
+                {
+                    dpiX = graphics.DpiX;
+                    dpiY = graphics.DpiY;
+                }
+                value.X = value.X * (1 / (dpiX / 96));
+                value.Y = value.Y * (1 / (dpiY / 96));
+
+                privatePoint = value;
+            }
+        }
         private Size mSize;
         private Orientation mOrientation;
         private String mIcon;
@@ -48,18 +67,21 @@ namespace MyCustomControlLibrary
         {
             if (parentWindow != null)
             {
-                try {
+                try
+                {
                     this.Owner = parentWindow;
                     this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                } catch { }                
+                }
+                catch { }
             }
-            else {
+            else
+            {
                 this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             }
-            InitializeComponent();           
+            InitializeComponent();
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {          
+        {
             switch (mShowType)
             {
                 case ShowType.Alert:
@@ -89,12 +111,22 @@ namespace MyCustomControlLibrary
             {
                 Instance.Close();
             }
-            if (parent != null) {
+            if (parent != null)
+            {
                 parentWindow = parent;
             }
             return Instance = new MMessageBox();
         }
-
+        /// <summary>
+        /// 关闭正在显示的MMessageBox窗口
+        /// </summary>
+        public static void CloseInstance()
+        {
+            if(Instance != null)
+            {
+                try { Instance.Close(); } catch (Exception) { }
+            }
+        }
         #region alert
         /// <summary>
         /// show a window for alert 显示一个提示窗口
@@ -107,7 +139,7 @@ namespace MyCustomControlLibrary
         /// <param name="AutoClose">是否设置自动关闭</param>
         /// <param name="AutoTime">自动关闭时间 3s</param>
         public void ShowAlert(String alertText, Orientation orientation = Orientation.Horizontal, string icon = null, object brush = null, bool isShowBtn = true, bool AutoClose = true, int AutoTime = 2)
-        {                 
+        {
             Instance.mAlterText = alertText;
             Instance.mShowType = ShowType.Alert;
             Instance.mOrientation = orientation;
@@ -145,8 +177,8 @@ namespace MyCustomControlLibrary
         /// <param name="isShowBtn">是否显示关闭按钮</param>
         /// <param name="AutoClose">是否设置自动关闭</param>
         /// <param name="AutoTime">自动关闭时间 3s</param>
-        public  void ShowModalAlert(String alertText, Point point, Size size, Orientation orientation = Orientation.Horizontal, string icon = null, object brush = null, bool isShowBtn = true, bool AutoClose = true, int AutoTime = 2)
-        {                  
+        public void ShowModalAlert(String alertText, Point point, Size size, Orientation orientation = Orientation.Horizontal, string icon = null, object brush = null, bool isShowBtn = true, bool AutoClose = true, int AutoTime = 2)
+        {
             Instance.mAlterText = alertText;
             Instance.mShowType = ShowType.AlertModel;
             Instance.mPoint = point;
@@ -174,15 +206,15 @@ namespace MyCustomControlLibrary
         }
 
         public void ShowSuccessAlert(String alertText = "操作成功！")
-        {           
+        {
             ShowAlert(alertText, Orientation.Horizontal, null, Brushes.White, false);
         }
         public void ShowErrorAlert(String alertText = "操作失败！")
         {
             ShowAlert(alertText, Orientation.Horizontal, "&#xe508;", Brushes.Red, false);
         }
-        public  void ShowSuccessModelAlert(Size size, Point point, String alertText = "操作成功！")
-        {           
+        public void ShowSuccessModelAlert(Size size, Point point, String alertText = "操作成功！")
+        {
             ShowModalAlert(alertText, point, size, Orientation.Horizontal, null, Brushes.Green, false);
         }
         public void ShowErrorModelAlert(Size size, Point point, String alertText = "操作失败！")
@@ -344,7 +376,7 @@ namespace MyCustomControlLibrary
         /// <param name="outTime">超时关闭时间 5s</param>
         public void ShowLoading(LoadType type, String alertText, Point point, Size size, String icon = null, Orientation orientation = Orientation.Horizontal, object brush = null, int outTime = 5)
         {
-            if (mTimer != null) 
+            if (mTimer != null)
             {
                 mTimer.Dispose();
             }
@@ -553,8 +585,8 @@ namespace MyCustomControlLibrary
         /// <param name="yesBtnText">确定按键的文本</param>
         /// <param name="nobtnText">取消按键的文本</param>
         /// <returns></returns>
-        public Result ShowBox(String alertText, string caption, ButtonType buttonType, IconType iconType, Orientation orientation = Orientation.Horizontal,string yesBtnText=null,String nobtnText=null)
-        {            
+        public Result ShowBox(String alertText, string caption, ButtonType buttonType, IconType iconType, Orientation orientation = Orientation.Horizontal, string yesBtnText = null, String nobtnText = null)
+        {
             Instance.ShowInTaskbar = true;
             Instance.Style = Instance.FindResource(MMRK.BoxStyle.ToString()) as Style;
             Instance.mShowType = ShowType.messageBox;
@@ -577,11 +609,11 @@ namespace MyCustomControlLibrary
             {
                 if (String.IsNullOrEmpty(mCapution))
                 {
-                    mCapution = "提示";             
+                    mCapution = "提示";
                 }
                 CaptionText.Text = mCapution;
             }
-            
+
             //alert text
             var MPanel = currControlTemplate.FindName("MPanel", Instance) as StackPanel;
             if (mOrientation == Orientation.Vertical)
@@ -595,14 +627,16 @@ namespace MyCustomControlLibrary
             var TPanel = currControlTemplate.FindName("TPanel", Instance) as StackPanel;
 
             if (IPanel == null || TPanel == null)
-            {                
+            {
                 this.Close();
                 return;
             }
 
-            switch (mIconType) {
+            switch (mIconType)
+            {
                 case IconType.error:
-                    if (currControlTemplate.FindName("ErrorIcon", Instance) is IconTextBlock itb) {
+                    if (currControlTemplate.FindName("ErrorIcon", Instance) is IconTextBlock itb)
+                    {
                         itb.Visibility = Visibility.Visible;
                     }
                     break;
@@ -630,14 +664,16 @@ namespace MyCustomControlLibrary
                     break;
             }
 
-            if (String.IsNullOrEmpty(mAlterText)) {
+            if (String.IsNullOrEmpty(mAlterText))
+            {
                 mAlterText = " ";
             }
-            if (currControlTemplate.FindName("MTextBox", Instance) is TextBlock tb) {
+            if (currControlTemplate.FindName("MTextBox", Instance) is TextBlock tb)
+            {
                 tb.Text = mAlterText;
             }
             //button
-            var YesBtn = currControlTemplate.FindName("YesBtn", Instance) as IconButton; 
+            var YesBtn = currControlTemplate.FindName("YesBtn", Instance) as IconButton;
             var NoBtn = currControlTemplate.FindName("NoBtn", Instance) as IconButton;
             if (String.IsNullOrEmpty(MYesBtnText))
             {
@@ -647,9 +683,10 @@ namespace MyCustomControlLibrary
             {
                 MNoBtnText = "取消";
             }
-            switch (mButtonType) {
+            switch (mButtonType)
+            {
                 case ButtonType.Yes:
-                    YesBtn.Visibility = Visibility.Visible;               
+                    YesBtn.Visibility = Visibility.Visible;
                     YesBtn.Content = MYesBtnText;
                     break;
                 case ButtonType.No:
@@ -662,7 +699,7 @@ namespace MyCustomControlLibrary
                     YesBtn.Visibility = Visibility.Visible;
                     NoBtn.Content = MNoBtnText;
                     break;
-            }      
+            }
         }
         #endregion
 
@@ -674,12 +711,12 @@ namespace MyCustomControlLibrary
             {
                 this.DialogResult = false;
             }
-            catch { }            
+            catch { }
             this.Close();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {          
+        {
             if (mTimer != null)
             {
                 mTimer.Dispose();
@@ -744,7 +781,8 @@ namespace MyCustomControlLibrary
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (this.Owner != null) {
+                if (this.Owner != null)
+                {
                     this.Owner.DragMove();
                 }
                 this.DragMove();
@@ -760,6 +798,6 @@ namespace MyCustomControlLibrary
         {
             this.DialogResult = false;
         }
-               
+
     }
 }

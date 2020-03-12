@@ -10,10 +10,10 @@ namespace IntentConnectWeighing
     {
         private static ScannerGunHelper mHelper;
         private static ScannerGunHook hook = null;
-        private static ScannerGunInterface mInterface;
+        private static IScannerGunInterface mInterface;
         private static bool isShift = false;
 
-        public static ScannerGunHelper GetInstance(ScannerGunInterface gunInterface)
+        public static ScannerGunHelper GetInstance(IScannerGunInterface gunInterface)
         {
             mInterface = gunInterface;
             if (mHelper == null)

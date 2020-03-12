@@ -30,7 +30,7 @@ namespace IntentConnectWeighing
             String conditon = @WeighingBillEnum.send_status + "=" + 1 + " and " +
               WeighingBillEnum.type.ToString() + "=" + ((int)WeightingBillType.CK) + " and " +
               WeighingBillEnum.relative_bill_id.ToString() + " is null and " +
-               WeighingBillEnum.receive_status.ToString() + " != 1 and " +
+              WeighingBillEnum.receive_status.ToString() + " != 1 and " +
               WeighingBillEnum.receive_yard_id.ToString() + "=" + Constract.valueSplit + App.currentYard.id + Constract.valueSplit + " and " +
               WeighingBillEnum.receive_company_id.ToString() + "=" + Constract.valueSplit + App.currentCompany.id + Constract.valueSplit;
 
